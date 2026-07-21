@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>P.A.C.T. — Michigan Municipal Planner Network Map</title>
+  <title>Michigan Municipal Planner Network Map</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -378,6 +378,80 @@
       margin-top: 2px;
     }
 
+    /* ─── Disclaimer modal ────────────────────────────────────── */
+    #disclaimer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #disclaimer-box {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-top: 3px solid #E53935;
+      border-radius: 10px;
+      padding: 28px 32px 24px;
+      max-width: 480px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    #disclaimer-box h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #disclaimer-box p {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    #disclaimer-box a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+    #disclaimer-box a:hover { text-decoration: underline; }
+    #disclaimer-close {
+      margin-top: 18px;
+      width: 100%;
+      padding: 9px;
+      background: #1d4ed8;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    #disclaimer-close:hover { background: #1e40af; }
+
+    /* ─── Email correction link in map title ───────────────────── */
+    #map-correction-link {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 500;
+      white-space: nowrap;
+    }
+    #map-correction-link a {
+      color: white;
+      text-decoration: none;
+      background: #1d4ed8;
+      padding: 4px 12px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    #map-correction-link a:hover { background: #1e40af; }
+
     /* Legend */
     #legend {
       position: absolute;
@@ -462,8 +536,6 @@
 <div id="sidebar">
   <div id="sidebar-header">
     <div class="logo-line">
-      <span class="logo-badge">P.A.C.T.</span>
-      <span class="logo-title">Allen Park, Michigan</span>
     </div>
     <div class="map-subtitle">Michigan Municipal Planner Network — Accountability Map</div>
   </div>
@@ -524,6 +596,18 @@
   </div>
 </div>
 
+<!-- ════════════════════ DISCLAIMER MODAL ════════════════════ -->
+<div id="disclaimer-overlay">
+  <div id="disclaimer-box">
+    <h2>⚠️ Research Tool — Not a Verified Directory</h2>
+    <p>This map is a living research document being continuously updated and revalidated by hand.</p>
+    <p>All information — including planner names, firm assignments, and data center case status — <strong style="color:#f1f5f9">must be independently crosschecked before use</strong>. Some entries may reflect outdated contracts, pending transitions, or information gathered from public documents that has not yet been confirmed directly with the municipality.</p>
+    <p>Found an error or have updated information?</p>
+    <a href="mailto:melissachiaramonti@gmail.com" style="display:inline-block;margin-top:4px;padding:7px 16px;background:#1d4ed8;color:white;border-radius:5px;font-size:12px;font-weight:600;text-decoration:none;">✉ Submit a Correction</a>
+    <button id="disclaimer-close" onclick="document.getElementById('disclaimer-overlay').style.display='none'">I understand — take me to the map</button>
+  </div>
+</div>
+
 <!-- ════════════════════════════ MAP ════════════════════════════ -->
 <div id="map-container">
   <div id="map"></div>
@@ -531,6 +615,10 @@
   <div id="map-title">
     <h1>Michigan Municipal Planner Network</h1>
     <p id="map-subtitle-dynamic">Seed data — contribute via FOIA, public records, and municipal websites</p>
+  </div>
+
+  <div id="map-correction-link">
+    <a href="mailto:melissachiaramonti@gmail.com">✉ Submit a Correction</a>
   </div>
 
   <div id="gap-badge" onclick="showGaps()" title="Municipalities with incomplete data — click to filter">
@@ -614,6 +702,7 @@ const FIRMS = {
   "WUPPDR":                      { color: "#7B1FA2", short: "WUPPDR" },
   "CIB Planning":                { color: "#F57F17", short: "CIB" },
   "North of 45 LLC":             { color: "#00695C", short: "N45" },
+  "Region 2 Planning Commission": { color: "#D4A017", short: "R2PC" },
   "Unknown":                     { color: "#757575", short: "?" }
 };
 
@@ -637,7 +726,7 @@ const MUNICIPALITIES = [
     "notes": "Auerbach allowed Solstice Data application to advance through 4 postponements with 21 outstanding items. Authored May 13, 2026 minutes with possible vote tally error (2-3 recorded vs. actual outcome). Accepted noise study modeling only 4 of 20 chillers. Never required water capacity study, sewer discharge review, generator emissions aggregate analysis, decommissioning agreement, or written generator testing commitments \u2014 all baseline items in the U of M guidebook he co-reviewed.",
     "work_history": "Carlisle/Wortman Associates (current)",
     "sources": [
-      "P.A.C.T. research",
+      "Internal research",
       "Allen Park Planning Commission minutes 2026",
       "CWA website"
     ]
@@ -663,7 +752,7 @@ const MUNICIPALITIES = [
     "sources": [
       "Kozma affidavit 02/12/2026, Civil Action No. 25-001577-CZ",
       "Landry billing records",
-      "P.A.C.T. research"
+      "Internal research"
     ]
   },
   {
@@ -1022,16 +1111,17 @@ const MUNICIPALITIES = [
     "lng": -83.5906,
     "planner_name": "Elizabeth 'Beth' Corwin, P.E., AICP",
     "planner_title": "Planning and Development Director",
-    "firm": "In-House (City Staff)",
-    "employment_type": "In-House (City Staff)",
+    "firm": "Carlisle/Wortman Associates",
+    "employment_type": "Contracted",
     "status": "active",
-    "cwa_flag": false,
+    "cwa_flag": true,
     "cwa_alumni": false,
     "data_center_case": false,
-    "notes": "IN-HOUSE planning staff confirmed. Beth Corwin is Planning & Development Director. Additional staff: Tim McLean (Zoning Administrator), Samantha George (Asst. Zoning Administrator), Steven C. Tino (Building Official). No CWA involvement found. CWA blog reference was likely historical or project-based.",
+    "notes": "CWA prepared 2025 Master Plan Update (adopted Feb 6, 2025). In-house Planning Director Beth Corwin (P.E., AICP) runs day-to-day; CWA serves as planning consultant. Additional in-house staff: Tim McLean (ZA), Samantha George (Asst. ZA), Steven Tino (Building Official).",
     "work_history": null,
     "sources": [
-      "highlandtwp.net \u2014 Planning & Development Department staff page"
+      "2025 Highland Township Master Plan (adopted Feb 6, 2025) \u2014 Carlisle/Wortman Associates listed as consultant",
+      "highlandtwp.net Planning & Development staff page"
     ]
   },
   {
@@ -1178,7 +1268,7 @@ const MUNICIPALITIES = [
     "notes": "Lonnerstater previously worked for Carlisle/Wortman Associates before joining Madison Heights as in-house City Planner. He was the sole author of all staff memos in the June 15, 2026 Planning Commission packet. If a data center developer approaches Madison Heights, his prior CWA experience and remaining professional relationships with Auerbach/Montagno are worth monitoring.",
     "work_history": "Carlisle/Wortman Associates \u2192 City of Madison Heights (current, in-house)",
     "sources": [
-      "P.A.C.T. research",
+      "Internal research",
       "Madison Heights PC packet, June 15, 2026"
     ]
   },
@@ -6370,16 +6460,644 @@ const MUNICIPALITIES = [
   },
   {
     "id": 264,
-    "name": "Village of Dundee",
+    "municipality": "Village of Dundee",
     "county": "Monroe",
+    "type": "Village",
     "lat": 41.9567,
     "lng": -83.6613,
+    "planner_name": "Megan A. Masson-Minock",
+    "planner_title": "Principal, AICP",
     "firm": "Carlisle/Wortman Associates",
-    "planner": "Megan A. Masson-Minock, AICP",
+    "employment_type": "Contracted",
+    "status": "active",
     "cwa_flag": true,
+    "cwa_alumni": false,
     "data_center_case": true,
-    "notes": "CWA (Megan Masson-Minock) doing Master Plan, Strategic Plan, and DDA/TIFA Plan update (June 2026 joint meeting packet). Cloverleaf Infrastructure proposed large data center; strong community opposition; Village Council halted talks and voted to block water supply to project (late 2025). Dundee Township also fielding Cloverleaf proposals separately.",
-    "status": "active"
+    "data_center_notes": "Cloverleaf Infrastructure proposed large AI data center in Dundee area. Strong community opposition; Village Council halted talks and voted to block water supply to project (late 2025). Dundee Township also fielding Cloverleaf proposals separately.",
+    "notes": "CWA (Megan Masson-Minock) engaged for Master Plan, Strategic Plan, and DDA/TIFA Plan update. June 18, 2026 memo to joint Village Council/PC/DDA meeting confirms CWA work ongoing since January 2026. Master Plan draft expected August 2026.",
+    "work_history": "Carlisle/Wortman Associates (current)",
+    "sources": [
+      "Joint Meeting packet June 29, 2026 (Carlisle/Wortman memo signed by Megan Masson-Minock)"
+    ]
+  },
+  {
+    "id": 265,
+    "municipality": "Canton Township",
+    "county": "Wayne",
+    "type": "Township",
+    "lat": 42.3087,
+    "lng": -83.4824,
+    "planner_name": null,
+    "planner_title": null,
+    "firm": "In-House (City Staff)",
+    "employment_type": "In-House",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "In-house planning staff through Municipal Services Department. CWA did a one-off sub-area plan for Cherry Hill Village (historic hamlet at Cherry Hill/Ridge Roads) \u2014 New Urbanism zoning district. Project was largely complete by 2019. Not an ongoing CWA contract.",
+    "work_history": null,
+    "sources": [
+      "CWA blog \u2014 35 years success stories (2019)",
+      "cantonmi.gov Planning Services"
+    ]
+  },
+  {
+    "id": 266,
+    "municipality": "Huron Charter Township",
+    "county": "Wayne",
+    "type": "Township",
+    "lat": 42.1223,
+    "lng": -83.3294,
+    "planner_name": null,
+    "planner_title": null,
+    "firm": "In-House (City Staff)",
+    "employment_type": "In-House",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "CWA did a one-off TIF/LDFA project in 2011 on a 60-acre industrial site near I-275, attracting Plastic Omnium ($80M facility, ~400 jobs) and Brose. Not ongoing planning representation. Township has own planning/zoning staff.",
+    "work_history": null,
+    "sources": [
+      "CWA blog \u2014 35 years success stories (2019)"
+    ]
+  },
+  {
+    "id": 267,
+    "municipality": "City of Jackson",
+    "county": "Jackson",
+    "type": "City",
+    "lat": 42.2459,
+    "lng": -84.4013,
+    "planner_name": null,
+    "planner_title": null,
+    "firm": "In-House (City Staff)",
+    "employment_type": "In-House",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "City has in-house Planning & Zoning Department. Planning director position was recently reorganized (multiple department head turnovers since late 2024). County seat; largest city in Jackson County.",
+    "work_history": null,
+    "sources": [
+      "cityofjackson.org Planning & Zoning"
+    ]
+  },
+  {
+    "id": 268,
+    "municipality": "Blackman Charter Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.2528,
+    "lng": -84.4527,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "Region 2 Planning Commission (R2PC) is the contracted planner. R2PC prepared Blackman's 2019 Master Plan. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). Most populous township in Jackson County \u2014 major commercial corridor at I-94/Airport Rd.",
+    "work_history": null,
+    "sources": [
+      "Region 2 Planning Commission \u2014 region2planning.com",
+      "Blackman Charter Township Master Plan 2019 (R2PC)"
+    ]
+  },
+  {
+    "id": 269,
+    "municipality": "Columbia Charter Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.1334,
+    "lng": -84.5422,
+    "planner_name": "Brittany Stein",
+    "planner_title": "Planning, Zoning & Building Manager",
+    "firm": "In-House (City Staff)",
+    "employment_type": "In-House",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "In-house Planning, Zoning & Building Manager: Brittany Stein (bstein@twp.columbia.mi.us, 517-592-2000 x251). Township surrounds Brooklyn and Clark Lake \u2014 active resort/lake community with short-term rental and zoning activity (STR ordinance drafted 2024).",
+    "work_history": null,
+    "sources": [
+      "twp.columbia.mi.us Planning & Zoning Department"
+    ]
+  },
+  {
+    "id": 270,
+    "municipality": "Summit Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.2023,
+    "lng": -84.4041,
+    "planner_name": "Allan Hooper",
+    "planner_title": "Zoning Administrator",
+    "firm": "In-House (City Staff)",
+    "employment_type": "In-House",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "In-house Zoning Administrator: Allan Hooper (ext. 234). Summit Township is directly south of Jackson city \u2014 fast-growing residential and commercial area. R2PC has involvement in county-level planning reviews.",
+    "work_history": null,
+    "sources": [
+      "summittwp.com/departments/zoning"
+    ]
+  },
+  {
+    "id": 271,
+    "municipality": "Leoni Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.2262,
+    "lng": -84.3133,
+    "planner_name": null,
+    "planner_title": null,
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. Active planning cases in 2025: PC recommended golf course rezoning (split vote, resident opposition, Nov 2025); Jackson County PC opposed Leoni Township rezoning plan twice (Nov 2025). Michigan Center area (unincorporated). Planner name not confirmed \u2014 contact R2PC (Jacob Hurt/Kade Peck).",
+    "work_history": null,
+    "sources": [
+      "region2planning.com",
+      "wkhm.com \u2014 Jackson County PC opposes Leoni Township rezoning (Nov 2025)"
+    ]
+  },
+  {
+    "id": 272,
+    "municipality": "Grass Lake Charter Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.25,
+    "lng": -84.2167,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. Mentioned in R2PC October 2025 Jackson County PC packet as having active zoning review cases. Includes Village of Grass Lake within township boundaries.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com \u2014 JCPC October 2025 packet"
+    ]
+  },
+  {
+    "id": 273,
+    "municipality": "Spring Arbor Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.1958,
+    "lng": -84.5519,
+    "planner_name": null,
+    "planner_title": null,
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. Home of Spring Arbor University. Planner name not confirmed \u2014 contact R2PC.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com"
+    ]
+  },
+  {
+    "id": 274,
+    "municipality": "Napoleon Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.1611,
+    "lng": -84.2487,
+    "planner_name": null,
+    "planner_title": null,
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. Agricultural/rural township in southeastern Jackson County. Planner name not confirmed.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com"
+    ]
+  },
+  {
+    "id": 275,
+    "municipality": "Sandstone Charter Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.261,
+    "lng": -84.289,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). Located east of Jackson city along I-94 corridor. Sandstone is a charter township.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 276,
+    "municipality": "Waterloo Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.368,
+    "lng": -84.128,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). Home to Waterloo State Recreation Area \u2014 largest state park in lower Michigan. Rural/agricultural with strong conservation focus.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 277,
+    "municipality": "Pulaski Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.152,
+    "lng": -84.375,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). Rural agricultural township south of Jackson city.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 278,
+    "municipality": "Norvell Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.094,
+    "lng": -84.168,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). Rural township in southeastern Jackson County. Small population.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 279,
+    "municipality": "Rives Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.318,
+    "lng": -84.518,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). Northwestern Jackson County. Includes Rives Junction unincorporated community.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 280,
+    "municipality": "Hanover Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.114,
+    "lng": -84.566,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). Southwestern Jackson County. Note: Village of Hanover (within township) is NOT an R2PC member \u2014 has own planning.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 281,
+    "municipality": "Liberty Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.296,
+    "lng": -84.288,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). North-central Jackson County. Rural township adjacent to Sandstone.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 282,
+    "municipality": "Concord Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.178,
+    "lng": -84.641,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). Surrounds Village of Concord. Rural/agricultural southwestern Jackson County.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 283,
+    "municipality": "Henrietta Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.271,
+    "lng": -84.438,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). Adjacent to Jackson city on the west. Mix of suburban and agricultural land.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 284,
+    "municipality": "Parma Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.254,
+    "lng": -84.597,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). Surrounds Village of Parma. Western Jackson County along I-94.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 285,
+    "municipality": "Springport Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.374,
+    "lng": -84.687,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). Surrounds Village of Springport. Northwestern Jackson County \u2014 agricultural.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 286,
+    "municipality": "Village of Brooklyn",
+    "county": "Jackson",
+    "type": "Village",
+    "lat": 42.101,
+    "lng": -84.243,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). Located in Columbia Twp near Clark Lake and Irish Hills \u2014 active resort/lake community. Popular tourist corridor.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 287,
+    "municipality": "Village of Cement City",
+    "county": "Jackson",
+    "type": "Village",
+    "lat": 42.073,
+    "lng": -84.327,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). Small village in southern Jackson County. Historic cement industry heritage.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 288,
+    "municipality": "Village of Concord",
+    "county": "Jackson",
+    "type": "Village",
+    "lat": 42.177,
+    "lng": -84.647,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). In Concord Township. Small rural village along the Kalamazoo River.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 289,
+    "municipality": "Village of Parma",
+    "county": "Jackson",
+    "type": "Village",
+    "lat": 42.254,
+    "lng": -84.598,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). In Parma Township along I-94. Small commercial village.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 290,
+    "municipality": "Village of Springport",
+    "county": "Jackson",
+    "type": "Village",
+    "lat": 42.376,
+    "lng": -84.69,
+    "planner_name": "Kade Peck",
+    "planner_title": "Planner, Region 2 Planning Commission",
+    "firm": "Region 2 Planning Commission",
+    "employment_type": "Contracted",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "R2PC member. R2PC Executive Director: Jacob Hurt; Planner: Kade Peck (517-416-0405). In Springport Township. Small village in northwestern Jackson County.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county"
+    ]
+  },
+  {
+    "id": 291,
+    "municipality": "Village of Hanover",
+    "county": "Jackson",
+    "type": "Village",
+    "lat": 42.117,
+    "lng": -84.552,
+    "planner_name": null,
+    "planner_title": null,
+    "firm": "Unknown",
+    "employment_type": "Unknown",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "NOT an R2PC member. Has its own zoning ordinance (confirmed by R2PC zoning text page listing it separately). No professional planner identified \u2014 very small village, zoning likely handled by village council/officials. Needs direct contact to confirm current arrangement.",
+    "work_history": null,
+    "sources": [
+      "region2planning.com/jackson-county/zoning-text \u2014 Village of Hanover listed with own ordinance"
+    ]
+  },
+  {
+    "id": 292,
+    "municipality": "Tompkins Township",
+    "county": "Jackson",
+    "type": "Township",
+    "lat": 42.317,
+    "lng": -84.567,
+    "planner_name": "Chuck Woodburn",
+    "planner_title": "Township Supervisor (handles zoning)",
+    "firm": "In-House (City Staff)",
+    "employment_type": "In-House",
+    "status": "active",
+    "cwa_flag": false,
+    "cwa_alumni": false,
+    "data_center_case": false,
+    "data_center_notes": null,
+    "notes": "NOT an R2PC member. No professional planner on staff. Supervisor Chuck Woodburn (517-420-1056) handles zoning permits and land splits. John A. Tuttle Sr. (517-206-5540) handles zoning compliance permits. Small rural township \u2014 planning function absorbed by township leadership.",
+    "work_history": null,
+    "sources": [
+      "tompkinstwp-mi.org/contacts"
+    ]
   }
 ];
 
@@ -6963,7 +7681,7 @@ function downloadCSV() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'PACT_Michigan_Planners_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.download = 'Michigan_Planners_' + new Date().toISOString().slice(0,10) + '.csv';
   a.click();
   URL.revokeObjectURL(url);
 }
