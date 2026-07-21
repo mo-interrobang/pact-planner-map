@@ -6378,7 +6378,8 @@ const MUNICIPALITIES = [
     "planner": "Megan A. Masson-Minock, AICP",
     "cwa_flag": true,
     "data_center_case": true,
-    "notes": "CWA (Megan Masson-Minock) doing Master Plan, Strategic Plan, and DDA/TIFA Plan update (June 2026 joint meeting packet). Cloverleaf Infrastructure proposed large data center; strong community opposition; Village Council halted talks and voted to block water supply to project (late 2025). Dundee Township also fielding Cloverleaf proposals separately."
+    "notes": "CWA (Megan Masson-Minock) doing Master Plan, Strategic Plan, and DDA/TIFA Plan update (June 2026 joint meeting packet). Cloverleaf Infrastructure proposed large data center; strong community opposition; Village Council halted talks and voted to block water supply to project (late 2025). Dundee Township also fielding Cloverleaf proposals separately.",
+    "status": "active"
   }
 ];
 
@@ -6535,7 +6536,7 @@ function buildPopup(m) {
         <div class="popup-row">
           <span class="popup-row-label">Status</span>
           <span class="popup-row-value" style="color:${m.status==='active'?'#4ade80':m.status==='terminated'?'#ef4444':'#94a3b8'}">
-            ${m.status.charAt(0).toUpperCase() + m.status.slice(1)}
+            ${m.status ? m.status.charAt(0).toUpperCase() + m.status.slice(1) : "Unknown"}
           </span>
         </div>
         <div class="popup-row">
