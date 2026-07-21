@@ -94,7 +94,15 @@
     #filters {
       padding: 10px 12px;
       border-bottom: 1px solid #334155;
+      flex-shrink: 0;
     }
+    #firm-filters {
+      max-height: 160px;
+      overflow-y: auto;
+    }
+    #firm-filters::-webkit-scrollbar { width: 4px; }
+    #firm-filters::-webkit-scrollbar-track { background: #0f172a; }
+    #firm-filters::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
     .filter-title {
       font-size: 10px;
       font-weight: 700;
@@ -137,6 +145,7 @@
     #toggles {
       padding: 8px 12px;
       border-bottom: 1px solid #334155;
+      flex-shrink: 0;
     }
     .toggle-row {
       display: flex;
@@ -587,9 +596,23 @@
       <input type="checkbox" id="toggle-dc-only" />
       <span class="toggle-label">⚡ Show data center cases only</span>
     </label>
+    <label class="toggle-row">
+      <input type="checkbox" id="toggle-predictive" />
+      <span class="toggle-label">🔮 Edge DC predictive overlay</span>
+    </label>
   </div>
 
   <div id="muni-list-container">
+    <div id="predictive-legend" style="display:none;margin:8px 10px 4px;padding:10px 12px;background:#0c1220;border:1px solid #1e3a5f;border-radius:7px;font-size:11px;">
+      <div style="font-weight:700;color:#93c5fd;margin-bottom:7px;letter-spacing:0.04em;">🏚 BARN &nbsp;·&nbsp; 🍝 CANNOLI — Prediction Rings</div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="display:flex;align-items:center;gap:7px;"><span style="width:10px;height:10px;border-radius:50%;background:#ef4444;flex-shrink:0;display:inline-block"></span>High probability (score 9–10)</div>
+        <div style="display:flex;align-items:center;gap:7px;"><span style="width:10px;height:10px;border-radius:50%;background:#f97316;flex-shrink:0;display:inline-block"></span>Medium-high (7–8)</div>
+        <div style="display:flex;align-items:center;gap:7px;"><span style="width:10px;height:10px;border-radius:50%;background:#eab308;flex-shrink:0;display:inline-block"></span>Watch list (5–6)</div>
+        <div style="display:flex;align-items:center;gap:7px;"><span style="width:10px;height:10px;border-radius:50%;background:#6b7280;flex-shrink:0;display:inline-block"></span>Lower / monitoring</div>
+        <div style="margin-top:5px;color:#64748b;line-height:1.5;">Rings at 10 mi · 20 mi · 35 mi from each anchor. Click any halo for scoring detail.</div>
+      </div>
+    </div>
     <div id="muni-list"></div>
   </div>
 
@@ -8140,6 +8163,143 @@ refreshMap();
 // Subtitle with current data state
 document.getElementById('map-subtitle-dynamic').textContent =
   `${MUNICIPALITIES.length} municipalities mapped · ${MUNICIPALITIES.filter(m=>!m.planner_name).length} need planner data · July 2026`;
+
+
+// ═══════════════════════════════════════════════════════════════
+//  EDGE DC PREDICTIVE OVERLAY
+// ═══════════════════════════════════════════════════════════════
+
+const BARN    = { lat: 42.1731, lng: -83.7437, label: "The Barn",       color: "#2563eb", emoji: "🏚" };
+const CANNOLI = { lat: 42.222,  lng: -83.483,  label: "Project Cannoli", color: "#ea580c", emoji: "🍝" };
+
+const PREDICTIONS = [
+  // ── BARN ZONE ──────────────────────────────────────────────────────────
+  { name:"Augusta Township",    county:"Washtenaw", lat:42.1400, lng:-83.7513, site:"barn",   score:10, dcExisting:true,  tags:["I-94","Power","Water","Fiber"],    reason:"ACTIVE MAJOR CASE — JDS Equities 810-acre campus proposed. Ground zero for Barn-zone DC pressure. Neighboring municipalities receiving spillover inquiries." },
+  { name:"Saline Township",     county:"Washtenaw", lat:42.1731, lng:-83.7437, site:"barn",   score:10, dcExisting:true,  tags:["I-94","Power","Water","Fiber"],    reason:"ACTIVE DC CASE — Related Digital / 30 Hudson Yards-linked project. Primary Barn anchor. CWA engaged." },
+  { name:"Pittsfield Township", county:"Washtenaw", lat:42.2081, lng:-83.6835, site:"both",   score:9,  dcExisting:false, tags:["I-94","Power","Fiber"],           reason:"Dense fiber & telecom backbone along US-23/I-94 interchange. Existing tech-industrial corridor; CWA client — planners already aware of DC pressure." },
+  { name:"York Township",       county:"Washtenaw", lat:42.1200, lng:-83.6700, site:"barn",   score:8,  dcExisting:false, tags:["I-94","Power"],                   reason:"Directly south of Augusta Township active 810-acre campus. I-94 frontage. Cheap agricultural land. Planning capacity minimal — low resistance." },
+  { name:"Superior Township",   county:"Washtenaw", lat:42.3109, lng:-83.5744, site:"both",   score:7,  dcExisting:false, tags:["I-94","Power","Fiber"],           reason:"I-94/Geddes Rd corridor with significant undeveloped land. Growing industrial park footprint. Sits in overlap zone between both anchors." },
+  { name:"Saline City",         county:"Washtenaw", lat:42.1695, lng:-83.7802, site:"barn",   score:5,  dcExisting:false, tags:["Fiber","Power"],                  reason:"City core surrounded by active DC township cases. Fiber infrastructure present. CWA planning engagement — likely fielding preliminary inquiries." },
+  { name:"Bridgewater Township",county:"Washtenaw", lat:42.0800, lng:-83.8700, site:"barn",   score:6,  dcExisting:false, tags:["Power"],                          reason:"Quiet rural township SW of the Augusta/Saline cluster. US-12 corridor. Very low planning capacity. Land cheap and agricultural rezoning common." },
+  { name:"Lodi Township",       county:"Washtenaw", lat:42.2040, lng:-83.8200, site:"barn",   score:5,  dcExisting:false, tags:["Power"],                          reason:"West of Ann Arbor. Rural with agricultural land near major power transmission lines along M-52. Low planning capacity." },
+  // ── CANNOLI ZONE ────────────────────────────────────────────────────────
+  { name:"Van Buren Township",  county:"Wayne",     lat:42.2167, lng:-83.4833, site:"cannoli",score:10, dcExisting:false, tags:["I-94","DTW","Power","Water","Fiber"], reason:"PROJECT CANNOLI anchor. I-94 + I-275 interchange, DTW proximity (~5 mi). Belleville Lake cooling. Aggressive economic development posture." },
+  { name:"Romulus",             county:"Wayne",     lat:42.2223, lng:-83.3966, site:"cannoli",score:9,  dcExisting:false, tags:["I-94","DTW","Power","Water"],    reason:"Directly adjacent to DTW. I-94 frontage. Ford Rawsonville plant legacy = major power infrastructure. CWA client — staff engaged on zoning modernization." },
+  { name:"Belleville",          county:"Wayne",     lat:42.2042, lng:-83.4850, site:"cannoli",score:8,  dcExisting:false, tags:["I-94","DTW","Water","Power"],    reason:"I-94/I-275 gateway city. Belleville Lake offers cooling water. Adjacent to Van Buren Twp (Cannoli anchor). Active economic development recruitment." },
+  { name:"Sumpter Township",    county:"Wayne",     lat:42.1450, lng:-83.5400, site:"cannoli",score:8,  dcExisting:false, tags:["I-94","Power"],                   reason:"Large rural township along I-94 west of DTW. Flat agricultural land with low planning oversight. Power transmission corridors cross township. Low land cost." },
+  { name:"Huron Charter Twp",   county:"Wayne",     lat:42.1223, lng:-83.3294, site:"cannoli",score:7,  dcExisting:false, tags:["Power","Water","I-75"],           reason:"South Wayne with I-75 access, Downriver industrial corridor. Brownfield sites from legacy manufacturing. CWA prior TIF engagement." },
+  { name:"Canton Township",     county:"Wayne",     lat:42.3087, lng:-83.4824, site:"cannoli",score:6,  dcExisting:false, tags:["Fiber","Power","I-94"],           reason:"Major suburban township. Growing tech-service corridor along I-275/Cherry Hill. Northern industrial areas viable. Experienced in-house planning." },
+  { name:"Brownstown Township", county:"Wayne",     lat:42.1173, lng:-83.2674, site:"cannoli",score:6,  dcExisting:false, tags:["I-75","Power"],                   reason:"Expanding industrial park near I-75/Telegraph Rd interchange. SafeBuilt contract — limited planning capacity creates lower regulatory friction." },
+  { name:"Flat Rock",           county:"Wayne",     lat:42.0992, lng:-83.2752, site:"cannoli",score:5,  dcExisting:false, tags:["I-75","Power","Water"],           reason:"Huron River cooling water. Ford stamping plant power infrastructure. I-75 south of DTW. Small-city scale with limited planning depth." },
+  // ── OVERLAP ─────────────────────────────────────────────────────────────
+  { name:"Ypsilanti Township",  county:"Washtenaw", lat:42.2275, lng:-83.5871, site:"both",   score:9,  dcExisting:true,  tags:["I-94","Power","Water","Fiber"],   reason:"ACTIVE DC CASE. Willow Run megasite — massive industrial land with legacy Ford WWII substation infrastructure still active. Sits directly between both anchor zones." },
+];
+
+const predictiveLayer = L.layerGroup();
+let predictiveVisible = false;
+
+function tagBadge(tag) {
+  const colors = { "I-94":"#166534", "I-75":"#166534", "DTW":"#713f12", "Power":"#3b0764", "Fiber":"#1e3a5f", "Water":"#0c4a6e" };
+  const bg = colors[tag] || "#1e293b";
+  return `<span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;background:${bg};color:#e2e8f0;margin-right:3px;">${tag}</span>`;
+}
+
+function predScoreColor(score, dcExisting) {
+  if (dcExisting) return '#c026d3';
+  if (score >= 9) return '#ef4444';
+  if (score >= 7) return '#f97316';
+  if (score >= 5) return '#eab308';
+  return '#6b7280';
+}
+
+function drawPredictiveRings(focal) {
+  [10, 20, 35].forEach((mi, i) => {
+    L.circle([focal.lat, focal.lng], {
+      radius: mi * 1609.34,
+      color: focal.color, weight: i === 0 ? 2 : 1,
+      opacity: 0.6 - i * 0.12,
+      fillColor: focal.color,
+      fillOpacity: i === 0 ? 0.05 : 0.02,
+      dashArray: i === 2 ? '6 10' : null,
+      interactive: false,
+    }).addTo(predictiveLayer);
+  });
+}
+
+function drawPredictiveLayer() {
+  predictiveLayer.clearLayers();
+
+  // Anchor rings
+  drawPredictiveRings(BARN);
+  drawPredictiveRings(CANNOLI);
+
+  // Anchor focal markers
+  [BARN, CANNOLI].forEach(focal => {
+    L.circleMarker([focal.lat, focal.lng], {
+      radius: 13, color: focal.color, weight: 3,
+      fillColor: focal.color, fillOpacity: 0.25, pane: 'markerPane'
+    }).addTo(predictiveLayer)
+     .bindPopup(`<div style="font-size:13px;font-weight:700;color:#f1f5f9">${focal.emoji} ${focal.label}</div><div style="font-size:11px;color:#94a3b8;margin-top:4px">Focal anchor site for predictive analysis</div>`);
+
+    L.marker([focal.lat, focal.lng + 0.015], {
+      icon: L.divIcon({
+        className: '',
+        html: `<div style="font-size:11px;font-weight:700;color:#f1f5f9;text-shadow:0 1px 4px rgba(0,0,0,1),0 0 10px rgba(0,0,0,0.9);white-space:nowrap;">${focal.emoji} ${focal.label}</div>`,
+        iconAnchor: [0, 0]
+      }),
+      interactive: false,
+    }).addTo(predictiveLayer);
+  });
+
+  // DTW airport
+  L.marker([42.2162, -83.3554], {
+    icon: L.divIcon({
+      className: '',
+      html: `<div style="font-size:11px;font-weight:700;color:#fde68a;text-shadow:0 1px 4px rgba(0,0,0,1);white-space:nowrap;">✈ DTW</div>`,
+      iconAnchor: [0, 0]
+    }),
+    interactive: false,
+  }).addTo(predictiveLayer);
+
+  // Community prediction markers (deduplicated)
+  const seen = new Set();
+  PREDICTIONS.forEach(p => {
+    if (seen.has(p.name)) return;
+    seen.add(p.name);
+
+    const color = predScoreColor(p.score, p.dcExisting);
+    const radius = p.dcExisting ? 11 : 5 + p.score * 0.8;
+
+    const circle = L.circleMarker([p.lat, p.lng], {
+      radius, color: color, weight: p.dcExisting ? 3 : 2,
+      fillColor: color, fillOpacity: 0.35,
+      pane: 'markerPane',
+    }).addTo(predictiveLayer);
+
+    const siteLabel = p.site === 'both' ? '🏚+🍝 Overlap zone' : p.site === 'barn' ? '🏚 Barn radius' : '🍝 Cannoli radius';
+
+    circle.bindPopup(`
+      <div style="font-size:13px;font-weight:700;color:#f1f5f9;margin-bottom:4px">${p.name}</div>
+      <div style="font-size:11px;color:#94a3b8;margin-bottom:6px">${p.county} County · <strong style="color:${color}">Score ${p.score}/10</strong> · ${siteLabel}${p.dcExisting ? ' · <span style="color:#e879f9">⚠ Active DC Case</span>' : ''}</div>
+      <div style="font-size:11px;color:#cbd5e1;line-height:1.5;margin-bottom:6px">${p.reason}</div>
+      <div>${(p.tags||[]).map(tagBadge).join('')}</div>
+    `, { maxWidth: 300 });
+  });
+}
+
+// ── Wire up toggle ───────────────────────────────────────────────────────
+document.getElementById('toggle-predictive').addEventListener('change', function() {
+  const legend = document.getElementById('predictive-legend');
+  if (this.checked) {
+    drawPredictiveLayer();
+    predictiveLayer.addTo(map);
+    legend.style.display = '';
+    map.setView([42.21, -83.61], 11);
+  } else {
+    map.removeLayer(predictiveLayer);
+    legend.style.display = 'none';
+  }
+});
 
 </script>
 </body>
