@@ -203,7 +203,7 @@
       height: 100%;
       background: #0f172a !important;
     }
-    .leaflet-tile-pane { opacity: 0.55; filter: brightness(0.6) saturate(0.8); }
+    .leaflet-tile-pane { opacity: 0.85; filter: brightness(0.85) saturate(0.9); }
 
     /* ─── Leaflet popup overrides ──────────────────────────────── */
     .leaflet-popup-content-wrapper {
@@ -7163,14 +7163,7 @@ const michiganGeoJSON = {
   ]
 };
 
-const michiganOutline = L.geoJSON(michiganGeoJSON, {
-  style: {
-    color: '#334155',
-    weight: 2,
-    fillOpacity: 0,
-    dashArray: null
-  }
-}).addTo(map);
+// Michigan outline removed per user request
 
 // Apply dark overlay style to map background
 map.getContainer().style.background = '#0f172a';
