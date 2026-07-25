@@ -94,7 +94,13 @@
     #filters {
       padding: 10px 12px;
       border-bottom: 1px solid #334155;
+      max-height: 160px;
+      overflow-y: auto;
+      flex-shrink: 0;
     }
+    #filters::-webkit-scrollbar { width: 3px; }
+    #filters::-webkit-scrollbar-track { background: transparent; }
+    #filters::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
     .filter-title {
       font-size: 10px;
       font-weight: 700;
@@ -137,6 +143,7 @@
     #toggles {
       padding: 8px 12px;
       border-bottom: 1px solid #334155;
+      flex-shrink: 0;
     }
     .toggle-row {
       display: flex;
@@ -180,6 +187,8 @@
       border-top: 1px solid #334155;
       display: flex;
       gap: 6px;
+      flex-shrink: 0;
+      margin-top: auto;
     }
     .btn {
       flex: 1;
