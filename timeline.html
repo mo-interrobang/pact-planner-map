@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CWA Pattern — Michigan Communities Timeline</title>
+<style>
+/* ── Validated dark palette (reference palette dark column) ── */
+:root {
+  --surface-0:   #0f172a;
+  --surface-1:   #1e293b;
+  --surface-2:   #293548;
+  --surface-3:   #364560;
+  --border:      #334155;
+  --text-1:      #f1f5f9;
+  --text-2:      #94a3b8;
+  --text-3:      #64748b;
+
+  /* Event type colors — reference palette dark slots */
+  --c-cwa-hired:      #9085e9;  /* slot 7 violet  — CWA contract begins */
+  --c-developer:      #d95926;  /* slot 2 orange  — developer action    */
+  --c-cwa-action:     #e66767;  /* slot 8 red     — CWA enables or aids developer */
+  --c-community:      #c98500;  /* slot 4 amber   — community/public response */
+  --c-protection:     #199e70;  /* slot 3 aqua    — moratorium / denial / resolution */
+  --c-legal:          #3987e5;  /* slot 1 blue    — lawsuits / affidavits / consent judgments */
+  --c-cwa-terminated: #d55181;  /* slot 5 magenta — CWA fired */
+  --c-future:         #5b7ca0;  /* muted blue     — upcoming deadline */
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--surface-0);
+  color: var(--text-1);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ── PAGE HEADER ── */
+.page-header {
+  padding: 22px 28px 18px;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border);
+}
+.page-header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.25px;
+}
+.page-header .subtitle {
+  font-size: 12.5px;
+  color: var(--text-2);
+  margin-top: 4px;
+  max-width: 700px;
+}
+.cwa-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #e66767;
+  background: rgba(230,103,103,0.15);
+  border: 1px solid rgba(230,103,103,0.3);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-left: 8px;
+  vertical-align: middle;
+  letter-spacing: 0.05em;
+}
+
+/* ── LEGEND ── */
+.legend-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  padding: 11px 28px;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+.legend-heading {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-right: 4px;
+}
+.leg-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 3px 8px 3px 5px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  transition: border-color 0.15s, opacity 0.15s;
+  user-select: none;
+}
+.leg-item:hover { border-color: var(--border); }
+.leg-item.off { opacity: 0.3; }
+.leg-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.leg-label { font-size: 11.5px; color: var(--text-2); white-space: nowrap; }
+
+/* ── MAIN LAYOUT ── */
+.scroll-wrap {
+  overflow-x: auto;
+  padding: 20px 28px 32px;
+}
+.chart-area {
+  min-width: 960px;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 0;
+}
+
+/* ── AXIS ── */
+.axis-spacer { /* left column placeholder */ }
+.axis-svg-wrap { position: relative; }
+
+/* ── SWIMLANE ── */
+.lane {
+  display: contents;
+}
+.lane-header {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  padding: 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+}
+.lane-body {
+  border: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  border-radius: 0 8px 8px 0;
+  background: var(--surface-1);
+  position: relative;
+  margin-top: 8px;
+  overflow: hidden;
+}
+.lh-county {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+.lh-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-top: 1px;
+}
+.lh-planner {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-top: 6px;
+}
+.lh-title {
+  font-size: 10.5px;
+  color: var(--text-3);
+}
+.lh-status {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: 6px;
+  width: fit-content;
+}
+.lh-status.active {
+  color: #e66767;
+  background: rgba(230,103,103,0.18);
+}
+.lh-status.terminated {
+  color: #d55181;
+  background: rgba(213,81,129,0.18);
+}
+
+/* ── PATTERN CALLOUT STRIP ── */
+.pattern-strip {
+  padding: 16px 28px;
+  background: rgba(230,103,103,0.06);
+  border-bottom: 1px solid rgba(230,103,103,0.22);
+}
+.pattern-strip-heading {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e66767;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pattern-strip-heading::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(230,103,103,0.25);
+}
+.pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+.pattern-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-left: 3px solid #e66767;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+.pattern-card-num {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e66767;
+  margin-bottom: 3px;
+}
+.pattern-card-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.pattern-card-body {
+  font-size: 11px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.pattern-card-body strong { color: var(--text-1); font-weight: 600; }
+.pattern-card-body em { color: #e66767; font-style: normal; font-weight: 600; }
+
+/* ── TOOLTIP ── */
+#tt {
+  position: fixed;
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 10px;
+  padding: 13px 16px;
+  max-width: 330px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.1s;
+  box-shadow: 0 10px 32px rgba(0,0,0,0.5);
+}
+#tt.show { opacity: 1; }
+.tt-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.tt-label { font-size: 13.5px; font-weight: 600; color: #f1f5f9; line-height: 1.3; margin-bottom: 5px; }
+.tt-date { font-size: 11px; color: #94a3b8; margin-bottom: 7px; }
+.tt-detail { font-size: 12px; color: #cbd5e1; line-height: 1.55; }
+
+/* ── SEPARATORS ── */
+.section-break {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+  padding: 16px 28px 4px;
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div style="margin-bottom:8px;">
+    <a href="index.html" style="font-size:11px;color:#5b7ca0;text-decoration:none;font-weight:600;letter-spacing:0.03em;">← Back to Planner Map</a>
+  </div>
+  <h1>CWA Pattern — Michigan Communities vs. Data Center Developers <span class="cwa-badge">CARLISLE/WORTMAN ASSOCIATES</span></h1>
+  <p class="subtitle">When each community was approached, who CWA placed as planner, and how each case unfolded. Hover events for full detail.</p>
+</div>
+
+<div class="pattern-strip">
+  <div class="pattern-strip-heading">⚑ Four recurring patterns — same firm, four communities</div>
+  <div class="pattern-grid">
+    <div class="pattern-card">
+      <div class="pattern-card-num">Pattern 1 — Placement</div>
+      <div class="pattern-card-title">CWA is positioned before the developer arrives</div>
+      <div class="pattern-card-body">In all four communities, CWA holds the planning role when a data center proposal lands. <em>Saline</em>: Auerbach already retained. <em>Berlin</em>: Kreps hired Sept 2025, Microsoft surfaces months later. <em>Allen Park</em>: Auerbach advising when Solstice applies. <em>Ypsilanti</em>: CWA's own president is the planner. A developer navigating local zoning benefits from having a sympathetic planner already in the room.</div>
+    </div>
+    <div class="pattern-card">
+      <div class="pattern-card-num">Pattern 2 — Circular Authority</div>
+      <div class="pattern-card-title">CWA writes the guidebook CWA planners then cite</div>
+      <div class="pattern-card-body">Auerbach co-reviewed the <strong>U of M Data Center Guidebook</strong> (Feb 6, 2026). The guidebook recommends 8 protections <em>Auerbach refused to require in Allen Park</em>. He then taught it statewide at the MAP February 2026 webinar — disseminating to planners like Kreps (Berlin) the same framework he failed to follow himself. CWA writes the standard → CWA ignores the standard → CWA promotes the standard as authoritative.</div>
+    </div>
+    <div class="pattern-card">
+      <div class="pattern-card-num">Pattern 3 — Template Gap</div>
+      <div class="pattern-card-title">Same noise ordinance hole in every community</div>
+      <div class="pattern-card-body">Both Auerbach (Allen Park) and Kreps (Berlin) shaped noise standards capping <strong>backup generator noise at 65 dBA</strong> while leaving <em>continuous operational equipment — chillers, cooling towers, HVAC — completely unregulated</em>. These are the 24/7 sources neighbors actually live with. This is not two independent planners making the same mistake. It is one template replicated with the same structural gap that favors the developer.</div>
+    </div>
+    <div class="pattern-card">
+      <div class="pattern-card-num">Pattern 4 — Developer Law Firm</div>
+      <div class="pattern-card-title">Dykema Gossett follows CWA across jurisdictions</div>
+      <div class="pattern-card-body"><strong>Alan Greene / Dykema Gossett PLLC</strong> represented the Saline Township developer (RD Michigan LLC) AND sent a letter to Berlin Charter Township's Planning Commission in May 2026 — almost certainly representing Microsoft. The same developer-side law firm appears in every community where CWA planners are positioned. This is a known practitioner relationship: planning consultant and development attorney who work the same circuits.</div>
+    </div>
+  </div>
+</div>
+
+<div class="legend-bar" id="legend"></div>
+
+<div class="scroll-wrap">
+  <div class="chart-area" id="chart"></div>
+</div>
+
+<div id="tt"></div>
+
+<script>
+// ─────────────────────────────────────────────
+//  EVENT TYPES
+// ─────────────────────────────────────────────
+const TYPES = {
+  'cwa-hired':      { label: 'CWA Hired',           color: '#9085e9' },
+  'developer':      { label: 'Developer Action',     color: '#d95926' },
+  'cwa-action':     { label: 'CWA Planner Action',   color: '#e66767' },
+  'community':      { label: 'Community Response',   color: '#c98500' },
+  'protection':     { label: 'Protective Action',    color: '#199e70' },
+  'legal':          { label: 'Legal / Formal',       color: '#3987e5' },
+  'cwa-terminated': { label: 'CWA Terminated',       color: '#d55181' },
+  'future':         { label: 'Upcoming Deadline',    color: '#5b7ca0' },
+};
+
+// ─────────────────────────────────────────────
+//  COMMUNITIES & EVENTS
+// ─────────────────────────────────────────────
+const COMMUNITIES = [
+  {
+    name: 'Saline Township',
+    county: 'Washtenaw County',
+    planner: 'Mike Auerbach',
+    title: 'Senior Associate, AICP',
+    cwaStatus: 'terminated',
+    statusLabel: 'TERMINATED',
+    events: [
+      {
+        date: '2025-06-11', type: 'developer',
+        label: 'RD Michigan LLC formed',
+        detail: 'Delaware LLC registered at 30 Hudson Yards, Floor 83, NY — same address as The Related Companies flagship tower. Presented to township as "Related Digital." Developer attorney: Alan Greene, Dykema Gossett PLLC (same firm that later contacts Berlin Charter Twp). Project scale: ~700 acres, 1.4 GW (Stargate data center campus).'
+      },
+      {
+        date: '2025-08-01', type: 'cwa-action',
+        label: 'Auerbach cites ghost ordinance',
+        detail: 'In his conditional rezoning review, Auerbach cites §12.04(A)(2) — language from a 2013 draft ordinance that was NEVER ENACTED. The actual §12.04(A) prohibits conditional rezoning outright and requires the application be returned without review. Saline Township Clerk Kelly Marion confirmed via FOIA that no such amendment was ever adopted. This error made the developer\'s application appear legitimate.'
+      },
+      {
+        date: '2025-08-12', type: 'protection',
+        label: 'PC votes 5–2 to DENY',
+        detail: 'Planning Commission denies the rezoning application 5 votes to 2. Should have ended the process — instead it triggered a lawsuit that the Township was unprepared to defend, partly because Auerbach\'s flawed review created a procedural gap the developer could exploit.'
+      },
+      {
+        date: '2025-10-01', type: 'legal',
+        label: 'Consent judgment entered',
+        detail: 'Township Board approved a consent judgment on the same day it was presented. The developer\'s own attorney drafted it. No board resolution authorizing litigation counsel. Insurer declined coverage. The judgment overrides the 5-2 PC denial. Auerbach was in a Microsoft Teams conference with litigation attorneys on this exact date (billing records). Resident Kathryn Haushalter (atty. Ellis Boal) is challenging it in court: Civil Action No. 25-001577-CZ, Judge Julia B. Owdzziej.'
+      },
+      {
+        date: '2026-02-06', type: 'cwa-action',
+        label: 'U of M guidebook published — Auerbach reviewer',
+        detail: 'University of Michigan Graham School publishes "What Local Governments Need to Know about Data Centers" (Feb 6, 2026). Auerbach is a named reviewer. Published while the Saline Township consent judgment is being challenged in court. Guidebook footnote 66 cites the Saline consent judgment as an example of "enforcing community benefits" — sanitized framing that omits the key facts: the consent judgment was used to override a 5-2 PC denial, and Auerbach\'s planning error made the lawsuit possible in the first place. Paul Montagno (CWA) spoke in the NYT article about data centers the same month.'
+      },
+      {
+        date: '2026-02-12', type: 'cwa-action',
+        label: 'MAP webinar: Auerbach teaches data center planning to Michigan planners statewide',
+        detail: 'Michigan Association of Planning (MAP) hosts webinar promoting the U of M Data Center Guidebook. Auerbach (CWA) co-teaches Michigan planners — including planners from other communities facing data center proposals — how to use the same framework he applied in Saline Township and Allen Park. The framework includes the ordinance template with the generator-only noise cap that leaves operational equipment unregulated. This is the vehicle through which the CWA approach becomes the statewide default. Laura Kreps (CWA) is almost certainly in this audience, or applying the same guidance in Berlin Charter Township at the same time. Auerbach is disseminating standards he failed to follow in Saline Township as the authoritative approach for others.'
+      },
+      {
+        date: '2026-02-12', type: 'legal',
+        label: 'Kozma affidavit filed',
+        detail: 'Sworn affidavit by LuAnne Kozma (paralegal, atty. Ellis Boal) filed in Washtenaw County Circuit Court. Documents Auerbach\'s use of the non-existent ordinance section with citation to the 2013 un-enacted draft. Confirmed by FOIA to Clerk Kelly Marion: all five categories of records showing a §12.04(A) amendment "do not exist."'
+      },
+      {
+        date: '2026-05-01', type: 'developer',
+        label: 'Construction begins',
+        detail: 'Stargate data center construction starts despite the 5-2 PC denial and the pending legal challenge from Kathryn Haushalter. The consent judgment effectively handed the developer a go-ahead that the community never approved.'
+      },
+      {
+        date: '2026-06-12', type: 'cwa-terminated',
+        label: 'Township agrees to terminate CWA',
+        detail: 'Per LuAnne Kozma (email June 12, 2026, forwarded by Phoenix MacGregor): Saline Township agreed to retain CWA for only 60 more days. The written agreement was not yet confirmed in writing at time of report — Kozma planned to get it from "Tammie" at Saline Township. Status: UNCONFIRMED in writing.'
+      }
+    ]
+  },
+  {
+    name: 'Berlin Charter Twp.',
+    county: 'Monroe County',
+    planner: 'Laura Kreps',
+    title: 'Principal, AICP',
+    cwaStatus: 'active',
+    statusLabel: 'ACTIVE',
+    events: [
+      {
+        date: '2025-09-22', type: 'cwa-hired',
+        label: 'Township solicits planner bids',
+        detail: 'September 22, 2025 board minutes reference "Swiercz updated on planner bids" — township was actively seeking a planning consultant. CWA wins the contract within weeks. Timing: CWA is hired just as data center pressure is building in Monroe County.'
+      },
+      {
+        date: '2025-10-20', type: 'cwa-hired',
+        label: 'Kreps first PC appearance; introduces data center topic',
+        detail: 'Laura Kreps (CWA Principal, AICP) appears at October 20 Planning Commission meeting as Zoning Administrator. In the same meeting, she tells commissioners that current zoning permits data centers in commercial/mixed-use zones, flags energy/noise/water concerns, and offers to draft a "template ordinance" for the next meeting — immediately positioning CWA as the author of Berlin Township\'s regulatory response to data centers.'
+      },
+      {
+        date: '2025-11-03', type: 'cwa-action',
+        label: 'Draft data center ordinance circulated (CWA-authored)',
+        detail: 'Draft ordinance with attorney comments distributed (dated 10-27-2025 to 11-03-2025). No author is credited in the document — but CWA almost certainly drafted it, as Kreps offered to do exactly this at the prior meeting. The ordinance will set the framework for how Berlin Township regulates any Microsoft application when the moratorium expires.'
+      },
+      {
+        date: '2025-12-01', type: 'protection',
+        label: 'Original moratorium enacted',
+        detail: 'Township enacts a moratorium on data center applications while the permanent ordinance is developed. Originally set to expire May 24, 2026. Exact date approximate (late 2025 / early 2026).'
+      },
+      {
+        date: '2026-05-18', type: 'developer',
+        label: 'Dykema Gossett contacts Planning Commission',
+        detail: 'A letter from Dykema Gossett PLLC appears on the May 18, 2026 Planning Commission agenda. Dykema Gossett is the same law firm (Alan Greene) that represented the developer in the Saline Township case. CNBC identified Microsoft as the Berlin Charter Township developer in January 2026. This letter almost certainly represents Microsoft\'s formal move toward an application.'
+      },
+      {
+        date: '2026-05-24', type: 'protection',
+        label: 'Moratorium extended to November 2026',
+        detail: 'Township board extends the moratorium from May 24 to November 2026 — buying the community 6 more months. At expiration, the CWA-drafted ordinance takes effect and governs any Microsoft application. The quality of that ordinance is the critical question.'
+      },
+      {
+        date: '2026-11-01', type: 'future',
+        label: '⚠ Moratorium expires — decision point',
+        detail: 'The moratorium expires November 2026. CWA\'s Laura Kreps will have authored the ordinance that governs any Microsoft application at that point. Key question: does the CWA-drafted ordinance provide real protection, or does it create the appearance of protection while leaving gaps the developer can exploit — the same question Mo is raising about the Allen Park approach?'
+      }
+    ]
+  },
+  {
+    name: 'Allen Park',
+    county: 'Wayne County',
+    planner: 'Mike Auerbach',
+    title: 'Senior Associate, AICP',
+    cwaStatus: 'active',
+    statusLabel: 'ACTIVE',
+    events: [
+      {
+        date: '2025-08-26', type: 'developer',
+        label: 'Solstice LLC registers in Michigan — declared "Real Estate Co."',
+        detail: 'Solstice LLC files Application for Certificate of Authority in Michigan (Filing C0537-9372; Michigan Entity ID 900085060). Parent jurisdiction: Georgia (entity formed Oct 15, 2011 — 11 years before Phil Harvey\'s entry into US market). CRITICAL: The declared Michigan business purpose is "Real Estate Investment Company" — no mention of data centers, AI infrastructure, or technology. Resident agent: Danyal Ati, 1056 Canterbury Dr, Pontiac MI 48341 (a 1,051 sq ft residential home, last sold ~$41,600 in 2013, not a business address). Official mailing routed to a virtual mailbox at Mailbox Forwarding Inc., 2885 Sanford Ave SW #43557, Grandville MI 49418. Arshi Ati listed as process recipient at the same Pontiac residential address — apparent family member, no public trace in data center or tech industries. The Allen Park data center application follows exactly 3 months later (November 2025). Danyal Ati also runs Solstice Properties LLC (Michigan #802127826, formed 2017) — a Metro Detroit residential rental company — raising an unresolved question about who actually controls this LLC.'
+      },
+      {
+        date: '2025-11-06', type: 'developer',
+        label: 'First PC packet submitted',
+        detail: 'Solstice Data Group (claims Dubai HQ; engineering drawings list a Charlotte NC address belonging to a different, defunct company) submits site plan for 45,000 sq ft, 26 MW data center at 7500 Enterprise Dr. 21 outstanding items from day one. Noise study models only 4 of 20 chillers. Water source marked "TBD." Auerbach\'s firm prepares the staff review.'
+      },
+      {
+        date: '2026-01-08', type: 'community',
+        label: '1st postponement + 125-person protest',
+        detail: '125+ residents protest outside City Hall. 40 speakers testify, nearly all opposed. PC issues first postponement. Commissioner Fred Frank is the sole "no" vote on the delay. Prior conditions set by the PC remain unresolved — but the application keeps moving.'
+      },
+      {
+        date: '2026-03-05', type: 'community',
+        label: '2nd postponement',
+        detail: 'Commissioner Loyd motioned for delay. Water source still "TBD." Commissioner Tom Beals raises shell company concern (the Charlotte address on engineering drawings belongs to a different company — never answered). Commissioner Lloyd says "we need to go to Lansing; we need to go to Washington." Carlisle/Wortman does not resolve or escalate any of the outstanding items.'
+      },
+      {
+        date: '2026-02-06', type: 'cwa-action',
+        label: 'U of M Data Center Guidebook published — Auerbach listed as reviewer',
+        detail: 'University of Michigan Graham School publishes "What Local Governments Need to Know about Data Centers" (Feb 6, 2026). Auerbach is named as a reviewer. The guidebook recommends 8 specific protections Auerbach has failed to require in Allen Park: (1) written generator commitments, (2) independent sound standards, (3) water capacity analysis, (4) wastewater/sewer review, (5) decommissioning agreements with financial guarantees, (6) wetland/sensitive land review, (7) aggregate emissions analysis for generator fleets, (8) special land use designation for facilities >15,000 sq ft. EGLE funded the guidebook. DTE Energy and Consumers Energy — utilities that directly benefit from data center load growth — also reviewed it. MAP (Michigan Association of Planning) promoted it via the February 2026 webinar where Auerbach co-taught data center planning to municipal planners statewide. Auerbach reviewed a document that says to do the things he has refused to require in Allen Park.'
+      },
+      {
+        date: '2026-05-13', type: 'community',
+        label: '3rd postponement; motion to deny fails 2–3',
+        detail: 'Dan Lloyd motions to DENY. Motion fails 2-3 (Lloyd + Darin for denial; Frank + Palmisano + Randt against). Sound study and wastewater report submitted day-of the meeting. Water source "flip-flop" revealed. 21 items still outstanding after 4 meetings. Auerbach\'s firm allowed this to continue.'
+      },
+      {
+        date: '2026-06-04', type: 'cwa-action',
+        label: 'Auerbach presents minutes with likely vote error',
+        detail: 'Official May 13, 2026 minutes, authored by Auerbach\'s firm, are presented to the PC. They contain what appears to be a vote tally error — consistent with the Saline Township pattern where the CWA planner controlled the written record.'
+      },
+      {
+        date: '2026-06-09', type: 'protection',
+        label: '✓ Emergency moratorium adopted',
+        detail: 'City Council passes Ordinance #04-2026: 6-month ban on all data center activity in Allen Park. Solstice does NOT qualify for the exemption (no final site plan approval, no substantial construction). Also 1st/2nd reading of Noise Control Ordinance #03-2026. Community victory after 7 months of organizing by P.A.C.T. and neighbors.'
+      }
+    ]
+  },
+  {
+    name: 'Ypsilanti Township',
+    county: 'Washtenaw County',
+    planner: 'Benjamin R. Carlisle',
+    title: 'President, AICP, LEED-AP',
+    cwaStatus: 'active',
+    statusLabel: 'ACTIVE — CWA PRESIDENT',
+    events: [
+      {
+        date: '2025-11-01', type: 'protection',
+        label: 'Resolution 2025-23: Board unanimously opposes site',
+        detail: 'Township Board unanimously passes Resolution 2025-23 opposing the University of Michigan + Los Alamos National Laboratory high-performance computing/AI data center campus. Date approximate (late 2025). Developer/proposer: University of Michigan + Los Alamos National Laboratory (nuclear weapons research). Proposed site: Bridge Rd & Textile Rd.'
+      },
+      {
+        date: '2026-03-01', type: 'developer',
+        label: 'UM/LANL closes on 124-acre parcel',
+        detail: 'University of Michigan and Los Alamos National Laboratory close on a 124-acre parcel at Bridge Rd & Textile Rd. Critical complication: UM is exempt from local zoning, severely limiting the township\'s legal leverage. A DTE substation sits 500 feet from low/moderate income housing. Environmental justice issue. Ben Carlisle (CWA President) is the township\'s planning consultant throughout this period.'
+      },
+      {
+        date: '2026-04-15', type: 'protection',
+        label: 'Resolution 2026-08: Board requests moratorium',
+        detail: 'Township Board passes Resolution 2026-08 formally requesting a moratorium on data center development. Township has proposed an alternative site: American Center for Mobility (former GM Hydramatic site, 300+ acres) — a more appropriate industrial location.'
+      },
+      {
+        date: '2026-04-22', type: 'protection',
+        label: 'YCUA votes 12-month moratorium (water & sewer)',
+        detail: 'Ypsilanti Community Utilities Authority votes to impose a 12-month moratorium on water and sewer service to new data centers. A powerful tool — denying utility service can block development even where zoning doesn\'t apply (like UM\'s local zoning exemption). Township maintaining a dedicated "Data Center Information" page under its Board of Trustees.'
+      }
+    ]
+  }
+];
+
+// ─────────────────────────────────────────────
+//  TIME SCALE
+// ─────────────────────────────────────────────
+const T_START = new Date('2025-05-01');
+const T_END   = new Date('2026-12-31');
+const T_RANGE = T_END - T_START;
+
+function parseDate(str) {
+  // Handle YYYY-MM or YYYY-MM-DD
+  if (str.length === 7) return new Date(str + '-15');
+  return new Date(str);
+}
+
+function toX(dateStr, width) {
+  const t = parseDate(dateStr);
+  return Math.round(((t - T_START) / T_RANGE) * width);
+}
+
+function fmtDate(str) {
+  const d = parseDate(str);
+  if (str.length === 7) return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+// ─────────────────────────────────────────────
+//  SHAPE HELPERS
+// ─────────────────────────────────────────────
+function shape(type, cx, cy, r) {
+  switch(type) {
+    case 'cwa-hired':      // star
+      return starPath(cx, cy, r);
+    case 'developer':      // circle
+      return `<circle cx="${cx}" cy="${cy}" r="${r}"/>`;
+    case 'cwa-action':     // diamond
+      return `<polygon points="${cx},${cy-r*1.25} ${cx+r*1.25},${cy} ${cx},${cy+r*1.25} ${cx-r*1.25},${cy}"/>`;
+    case 'community':      // rounded square
+      return `<rect x="${cx-r*.9}" y="${cy-r*.9}" width="${r*1.8}" height="${r*1.8}" rx="2.5"/>`;
+    case 'protection':     // triangle (shield)
+      return `<polygon points="${cx},${cy-r*1.3} ${cx+r*1.3},${cy+r*.9} ${cx-r*1.3},${cy+r*.9}"/>`;
+    case 'legal':          // hexagon
+      return hexPath(cx, cy, r);
+    case 'cwa-terminated': // X
+      return xPath(cx, cy, r);
+    case 'future':         // dashed circle
+      return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke-width="2" stroke-dasharray="4,3"/>`;
+    default:
+      return `<circle cx="${cx}" cy="${cy}" r="${r}"/>`;
+  }
+}
+
+function starPath(cx, cy, r) {
+  const pts = [];
+  for (let i = 0; i < 10; i++) {
+    const a = (i * 36 - 90) * Math.PI / 180;
+    const rr = i % 2 === 0 ? r * 1.15 : r * 0.48;
+    pts.push(`${(cx + rr * Math.cos(a)).toFixed(1)},${(cy + rr * Math.sin(a)).toFixed(1)}`);
+  }
+  return `<polygon points="${pts.join(' ')}"/>`;
+}
+
+function hexPath(cx, cy, r) {
+  const pts = [];
+  for (let i = 0; i < 6; i++) {
+    const a = (i * 60 - 30) * Math.PI / 180;
+    pts.push(`${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`);
+  }
+  return `<polygon points="${pts.join(' ')}"/>`;
+}
+
+function xPath(cx, cy, r) {
+  const s = r * 0.78, sw = r * 0.4;
+  return `
+    <line x1="${cx-s}" y1="${cy-s}" x2="${cx+s}" y2="${cy+s}" stroke-width="${sw}" stroke-linecap="round"/>
+    <line x1="${cx+s}" y1="${cy-s}" x2="${cx-s}" y2="${cy+s}" stroke-width="${sw}" stroke-linecap="round"/>
+  `;
+}
+
+// ─────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────
+const activeTypes = new Set(Object.keys(TYPES));
+const LANE_H = 148;
+const TODAY = '2026-07-25';
+
+// ─────────────────────────────────────────────
+//  LEGEND
+// ─────────────────────────────────────────────
+function buildLegend() {
+  const el = document.getElementById('legend');
+  el.innerHTML = '<span class="legend-heading">Filter by:</span>';
+  Object.entries(TYPES).forEach(([key, meta]) => {
+    const item = document.createElement('div');
+    item.className = 'leg-item';
+    item.dataset.key = key;
+    item.innerHTML = `<div class="leg-dot" style="background:${meta.color}"></div><span class="leg-label">${meta.label}</span>`;
+    item.addEventListener('click', () => {
+      if (activeTypes.has(key)) { activeTypes.delete(key); item.classList.add('off'); }
+      else                       { activeTypes.add(key);    item.classList.remove('off'); }
+      renderChart();
+    });
+    el.appendChild(item);
+  });
+}
+
+// ─────────────────────────────────────────────
+//  SMART STAGGER — avoid label collisions
+// ─────────────────────────────────────────────
+function stagger(events, svgWidth) {
+  // Returns array of { event, x, dotY, labelAnchor, labelSide }
+  // dotY: above or below midline; labelSide: 'above' or 'below'
+  const MID = LANE_H / 2;
+  const DOT_OFFSET = 20;   // px from midline to dot center
+  const MIN_GAP    = 72;   // min px between events on same side before forcing flip
+
+  // Sort by date
+  const sorted = events
+    .filter(e => activeTypes.has(e.type))
+    .sort((a, b) => parseDate(a.date) - parseDate(b.date));
+
+  const lastX = { above: -Infinity, below: -Infinity };
+
+  return sorted.map((ev, i) => {
+    const x = toX(ev.date, svgWidth);
+    // Try preferred side first (alternate)
+    const preferred = i % 2 === 0 ? 'above' : 'below';
+    const alt = preferred === 'above' ? 'below' : 'above';
+
+    let side;
+    if (x - lastX[preferred] >= MIN_GAP) {
+      side = preferred;
+    } else if (x - lastX[alt] >= MIN_GAP) {
+      side = alt;
+    } else {
+      // Both sides crowded — pick the one with more room
+      side = (x - lastX[preferred] >= x - lastX[alt]) ? preferred : alt;
+    }
+
+    lastX[side] = x;
+    const dotY = side === 'above' ? MID - DOT_OFFSET : MID + DOT_OFFSET;
+    return { ev, x, dotY, side };
+  });
+}
+
+// ─────────────────────────────────────────────
+//  SVG AXIS
+// ─────────────────────────────────────────────
+function buildAxisSVG(svgWidth) {
+  const H = 36;
+  let s = [`<svg width="${svgWidth}" height="${H}" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;display:block">`];
+
+  let d = new Date(T_START);
+  while (d <= T_END) {
+    const x = toX(d.toISOString().slice(0,7), svgWidth);
+    const m = d.getMonth();
+
+    if (m === 0) {
+      s.push(`<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="#475569" stroke-width="1.5"/>`);
+      s.push(`<text x="${x+4}" y="13" fill="#94a3b8" font-size="12" font-weight="700" font-family="-apple-system,sans-serif">${d.getFullYear()}</text>`);
+    } else if (m % 3 === 0) {
+      s.push(`<line x1="${x}" y1="18" x2="${x}" y2="${H}" stroke="#334155" stroke-width="1"/>`);
+      const qLabel = ['','Q2','Q3','Q4'][Math.floor(m/3)];
+      s.push(`<text x="${x+4}" y="${H-2}" fill="#64748b" font-size="10" font-family="-apple-system,sans-serif">${qLabel}</text>`);
+    }
+
+    d.setMonth(d.getMonth() + 1);
+  }
+
+  // Today marker
+  const tx = toX(TODAY, svgWidth);
+  s.push(`<line x1="${tx}" y1="0" x2="${tx}" y2="${H}" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>`);
+
+  s.push('</svg>');
+  return s.join('');
+}
+
+// ─────────────────────────────────────────────
+//  LANE SVG
+// ─────────────────────────────────────────────
+function buildLaneSVG(community, svgWidth, communityIdx) {
+  const MID = LANE_H / 2;
+  const R   = 8;    // marker radius
+  const FONT = '-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif';
+
+  const positioned = stagger(community.events, svgWidth);
+
+  let s = [`<svg width="${svgWidth}" height="${LANE_H}" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;display:block">`];
+
+  // Quarterly gridlines
+  let d = new Date(T_START);
+  while (d <= T_END) {
+    if (d.getMonth() % 3 === 0) {
+      const gx = toX(d.toISOString().slice(0,7), svgWidth);
+      const isYear = d.getMonth() === 0;
+      s.push(`<line x1="${gx}" y1="0" x2="${gx}" y2="${LANE_H}" stroke="${isYear ? '#475569' : '#293548'}" stroke-width="${isYear ? 1.5 : 1}"/>`);
+    }
+    d.setMonth(d.getMonth() + 1);
+  }
+
+  // Today line
+  const tx = toX(TODAY, svgWidth);
+  s.push(`<line x1="${tx}" y1="0" x2="${tx}" y2="${LANE_H}" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>`);
+
+  // Central axis
+  s.push(`<line x1="0" y1="${MID}" x2="${svgWidth}" y2="${MID}" stroke="#475569" stroke-width="1.5"/>`);
+
+  // Events
+  positioned.forEach(({ ev, x, dotY, side }, i) => {
+    const meta = TYPES[ev.type];
+    const col  = meta.color;
+    const above = side === 'above';
+    const labelY = above ? dotY - R - 6 : dotY + R + 16;
+    const stemY1 = above ? MID - 2 : MID + 2;
+
+    // Connector stem
+    s.push(`<line x1="${x}" y1="${stemY1}" x2="${x}" y2="${dotY + (above ? R+1 : -(R+1))}" stroke="${col}" stroke-width="1.5" opacity="0.55"/>`);
+
+    // Hit target (invisible, larger area)
+    s.push(`<circle cx="${x}" cy="${dotY}" r="${R+7}" fill="transparent" class="ev-hit" data-ci="${communityIdx}" data-ei="${i}" style="cursor:pointer"/>`);
+
+    // Shape marker
+    const isX = ev.type === 'cwa-terminated';
+    const isFuture = ev.type === 'future';
+    if (isX) {
+      s.push(`<g fill="none" stroke="${col}">${shape(ev.type, x, dotY, R)}</g>`);
+    } else if (isFuture) {
+      s.push(`<g fill="none" stroke="${col}">${shape(ev.type, x, dotY, R)}</g>`);
+    } else {
+      s.push(`<g fill="${col}" stroke="${col}" stroke-width="1">${shape(ev.type, x, dotY, R)}</g>`);
+    }
+
+    // Label (short, two lines max)
+    const words = ev.label.replace(/[✓⚠]/g,'').trim().split(' ');
+    const LINE_MAX = 22;
+    let lines = [], cur = '';
+    words.forEach(w => {
+      if ((cur + ' ' + w).trim().length <= LINE_MAX) cur = (cur + ' ' + w).trim();
+      else { if (cur) lines.push(cur); cur = w; }
+    });
+    if (cur) lines.push(cur);
+    lines = lines.slice(0, 2); // max 2 lines
+
+    if (above) {
+      // labels go up, so first line is higher
+      lines.reverse().forEach((line, li) => {
+        const ly = dotY - R - 7 - li * 12;
+        s.push(`<text x="${x}" y="${ly}" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="${FONT}">${line}</text>`);
+      });
+    } else {
+      lines.forEach((line, li) => {
+        const ly = dotY + R + 13 + li * 12;
+        s.push(`<text x="${x}" y="${ly}" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="${FONT}">${line}</text>`);
+      });
+    }
+  });
+
+  s.push('</svg>');
+  return { svg: s.join(''), positioned };
+}
+
+// ─────────────────────────────────────────────
+//  TOOLTIP
+// ─────────────────────────────────────────────
+const ttEl = document.getElementById('tt');
+let ttVisible = false;
+
+// Store reference: communityIdx → positioned[]
+const laneData = [];
+
+function showTT(e, ev) {
+  const meta = TYPES[ev.type];
+  ttEl.innerHTML = `
+    <div class="tt-type" style="color:${meta.color}">${meta.label}</div>
+    <div class="tt-label">${ev.label}</div>
+    <div class="tt-date">${fmtDate(ev.date)}</div>
+    <div class="tt-detail">${ev.detail}</div>
+  `;
+  ttEl.classList.add('show');
+  ttVisible = true;
+  placeTT(e);
+}
+
+function placeTT(e) {
+  const W = 330, H = 200;
+  const vw = window.innerWidth, vh = window.innerHeight;
+  let l = e.clientX + 16, t = e.clientY + 16;
+  if (l + W > vw - 8) l = e.clientX - W - 16;
+  if (t + H > vh - 8) t = e.clientY - H - 16;
+  ttEl.style.left = l + 'px';
+  ttEl.style.top  = t + 'px';
+}
+
+document.addEventListener('mousemove', e => { if (ttVisible) placeTT(e); });
+
+// Event delegation on chart area
+document.getElementById('chart').addEventListener('mouseover', e => {
+  const hit = e.target.closest('.ev-hit');
+  if (!hit) return;
+  const ci = +hit.dataset.ci;
+  const ei = +hit.dataset.ei;
+  const positioned = laneData[ci];
+  if (positioned && positioned[ei]) showTT(e, positioned[ei].ev);
+});
+
+document.getElementById('chart').addEventListener('mouseout', e => {
+  if (!e.target.closest('.ev-hit')) return;
+  ttEl.classList.remove('show');
+  ttVisible = false;
+});
+
+// ─────────────────────────────────────────────
+//  RENDER
+// ─────────────────────────────────────────────
+function renderChart() {
+  const chart = document.getElementById('chart');
+  chart.innerHTML = '';
+  laneData.length = 0;
+
+  const svgWidth = Math.max(880, chart.offsetWidth - 4);
+
+  // Axis row
+  const axisSpacerDiv = document.createElement('div');
+  axisSpacerDiv.className = 'axis-spacer';
+
+  const axisWrap = document.createElement('div');
+  axisWrap.className = 'axis-svg-wrap';
+  axisWrap.style.paddingLeft = '12px';
+  axisWrap.innerHTML = buildAxisSVG(svgWidth);
+
+  chart.appendChild(axisSpacerDiv);
+  chart.appendChild(axisWrap);
+
+  // Swimlanes
+  COMMUNITIES.forEach((com, ci) => {
+    const { svg, positioned } = buildLaneSVG(com, svgWidth, ci);
+    laneData.push(positioned);
+
+    const header = document.createElement('div');
+    header.className = 'lane-header';
+    header.innerHTML = `
+      <div class="lh-county">${com.county}</div>
+      <div class="lh-name">${com.name}</div>
+      <div class="lh-planner">${com.planner}</div>
+      <div class="lh-title">${com.title}</div>
+      <div class="lh-status ${com.cwaStatus}">${com.statusLabel}</div>
+    `;
+
+    const body = document.createElement('div');
+    body.className = 'lane-body';
+    body.style.paddingLeft = '12px';
+    body.innerHTML = svg;
+
+    chart.appendChild(header);
+    chart.appendChild(body);
+  });
+}
+
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
+buildLegend();
+renderChart();
+
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(renderChart, 200);
+});
+</script>
+</body>
+</html>
