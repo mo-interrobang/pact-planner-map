@@ -217,7 +217,7 @@
       height: 100%;
       background: #0f172a !important;
     }
-    .leaflet-tile-pane { opacity: 0.55; filter: brightness(0.6) saturate(0.8); }
+    .leaflet-tile-pane { opacity: 0.82; filter: brightness(0.82) saturate(0.7); }
 
     /* ─── Leaflet popup overrides ──────────────────────────────── */
     .leaflet-popup-content-wrapper {
@@ -526,6 +526,14 @@
     <label class="toggle-row">
       <input type="checkbox" id="toggle-dc-only" />
       <span class="toggle-label">⚡ Show data center cases only</span>
+    </label>
+    <label class="toggle-row">
+      <input type="checkbox" id="toggle-cannoli" />
+      <span class="toggle-label" style="color:#fb923c">🍝 Project Cannoli prediction zone</span>
+    </label>
+    <label class="toggle-row">
+      <input type="checkbox" id="toggle-barn" />
+      <span class="toggle-label" style="color:#c4b5fd">🏚 The Barn prediction zone</span>
     </label>
   </div>
 
@@ -6688,10 +6696,11 @@ const michiganGeoJSON = {
   ]
 };
 
+// Michigan outline hidden — was generating unwanted grey border
 const michiganOutline = L.geoJSON(michiganGeoJSON, {
   style: {
-    color: '#334155',
-    weight: 2,
+    color: 'transparent',
+    weight: 0,
     fillOpacity: 0,
     dashArray: null
   }
@@ -6707,6 +6716,80 @@ map.getContainer().style.background = '#0f172a';
 const markersLayer    = L.layerGroup().addTo(map);
 const plannerLinesLayer = L.layerGroup().addTo(map);
 const firmLinesLayer  = L.layerGroup();
+
+// ═══════════════════════════════════════════════════════════════
+//  PREDICTION LAYERS — Project Cannoli & The Barn (Van Buren Twp)
+// ═══════════════════════════════════════════════════════════════
+
+// Van Buren Township, Wayne County — approximate center of data center activity
+const VAN_BUREN_CENTER = [42.218, -83.468];
+
+// Project Cannoli — Panattoni/Google, 282 acres, 1 GW approved
+// Inner zone: approximate project footprint (~600m radius ≈ 280 acres)
+// Outer zone: predicted influence / planner capture zone
+const cannoliFill = L.circle(VAN_BUREN_CENTER, {
+  radius: 850,           // ~280-acre project footprint
+  color: '#f97316',
+  fillColor: '#f97316',
+  fillOpacity: 0.12,
+  weight: 2,
+  opacity: 0.7,
+  dashArray: '6, 4'
+});
+cannoliFill.bindTooltip(`
+  <b>🍝 Project Cannoli</b><br>
+  Van Buren Township, Wayne County<br>
+  Developer: Panattoni (Google)<br>
+  Size: 282 acres · 1 GW<br>
+  Status: <span style="color:#4ade80">APPROVED</span><br>
+  <em>Prediction: CWA planner capture risk HIGH — adjacent to known CWA network municipalities</em>
+`, { sticky: true, className: 'dark-tooltip' });
+
+const cannoliRing = L.circle(VAN_BUREN_CENTER, {
+  radius: 4000,          // ~5 km prediction zone
+  color: '#f97316',
+  fillColor: '#f97316',
+  fillOpacity: 0.04,
+  weight: 1,
+  opacity: 0.35,
+  dashArray: '3, 8'
+});
+cannoliRing.bindTooltip(`<b>🍝 Project Cannoli — Predicted CWA Pressure Zone</b><br>5 km radius around Van Buren Twp data center site`, { sticky: true, className: 'dark-tooltip' });
+
+const cannoliLayer = L.layerGroup([cannoliRing, cannoliFill]);
+
+// The Barn — Van Buren Township build (alternate/companion development)
+// Shifted slightly NE to represent second build cluster
+const BARN_CENTER = [42.234, -83.440];
+
+const barnFill = L.circle(BARN_CENTER, {
+  radius: 650,
+  color: '#a78bfa',
+  fillColor: '#a78bfa',
+  fillOpacity: 0.13,
+  weight: 2,
+  opacity: 0.7,
+  dashArray: '6, 4'
+});
+barnFill.bindTooltip(`
+  <b>🏚 The Barn</b><br>
+  Van Buren Township, Wayne County<br>
+  Development cluster (Van Buren build)<br>
+  <em>Prediction: Secondary development expansion from Project Cannoli — zoning precedent set</em>
+`, { sticky: true, className: 'dark-tooltip' });
+
+const barnRing = L.circle(BARN_CENTER, {
+  radius: 3500,
+  color: '#a78bfa',
+  fillColor: '#a78bfa',
+  fillOpacity: 0.04,
+  weight: 1,
+  opacity: 0.35,
+  dashArray: '3, 8'
+});
+barnRing.bindTooltip(`<b>🏚 The Barn — Predicted Expansion Zone</b><br>Van Buren secondary build cluster`, { sticky: true, className: 'dark-tooltip' });
+
+const barnLayer = L.layerGroup([barnRing, barnFill]);
 
 // ═══════════════════════════════════════════════════════════════
 //  HELPERS
@@ -7137,6 +7220,24 @@ document.getElementById('toggle-firm-lines').addEventListener('change', e => {
 document.getElementById('toggle-dc-only').addEventListener('change', e => {
   showDCOnly = e.target.checked;
   refreshMap();
+});
+
+document.getElementById('toggle-cannoli').addEventListener('change', e => {
+  if (e.target.checked) {
+    cannoliLayer.addTo(map);
+    map.flyTo([42.218, -83.468], 12, { duration: 1.2 });
+  } else {
+    cannoliLayer.remove();
+  }
+});
+
+document.getElementById('toggle-barn').addEventListener('change', e => {
+  if (e.target.checked) {
+    barnLayer.addTo(map);
+    map.flyTo([42.234, -83.440], 12, { duration: 1.2 });
+  } else {
+    barnLayer.remove();
+  }
 });
 
 function showCWAOnly() {
