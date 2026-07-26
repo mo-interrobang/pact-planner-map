@@ -139,22 +139,6 @@
       font-weight: 700;
     }
 
-    /* Toggle options */
-    #toggles {
-      padding: 8px 12px;
-      border-bottom: 1px solid #334155;
-      flex-shrink: 0;
-    }
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 3px 0;
-      cursor: pointer;
-    }
-    .toggle-row input { cursor: pointer; accent-color: #a78bfa; }
-    .toggle-label { font-size: 12px; color: #cbd5e1; }
-
     /* Municipality list */
     #muni-list-container {
       flex: 1;
@@ -464,6 +448,95 @@
     #gap-badge .gap-label { font-size: 9px; color: #57534e; text-transform: uppercase; letter-spacing: 0.5px; }
     #gap-badge:hover { border-color: #78716c; }
 
+    /* ─── Floating Layers Panel ───────────────────────────────── */
+    #layers-panel {
+      position: absolute;
+      top: 80px;
+      left: 10px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid #334155;
+      border-radius: 8px;
+      z-index: 500;
+      min-width: 230px;
+      max-width: 260px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+    #layers-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      cursor: pointer;
+      user-select: none;
+      background: rgba(30,41,59,0.95);
+    }
+    #layers-panel-header:hover { background: rgba(51,65,85,0.95); }
+    .layers-panel-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+    .layers-panel-arrow {
+      font-size: 11px;
+      color: #64748b;
+      transition: transform 0.2s;
+      line-height: 1;
+    }
+    .layers-panel-arrow.open { transform: rotate(0deg); }
+    .layers-panel-arrow.closed { transform: rotate(-90deg); }
+    #layers-panel-body {
+      overflow: hidden;
+      max-height: 500px;
+      transition: max-height 0.25s ease;
+    }
+    #layers-panel-body.collapsed { max-height: 0; }
+    .layer-section {
+      border-top: 1px solid #1e293b;
+    }
+    .layer-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 12px;
+      cursor: pointer;
+      user-select: none;
+      background: rgba(15,23,42,0.6);
+    }
+    .layer-section-header:hover { background: rgba(30,41,59,0.8); }
+    .layer-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .layer-section-arrow {
+      font-size: 9px;
+      color: #475569;
+      transition: transform 0.2s;
+      line-height: 1;
+    }
+    .layer-section-arrow.closed { transform: rotate(-90deg); }
+    .layer-section-body {
+      padding: 4px 12px 8px;
+      overflow: hidden;
+      max-height: 300px;
+      transition: max-height 0.2s ease, padding 0.2s;
+    }
+    .layer-section-body.collapsed { max-height: 0; padding-top: 0; padding-bottom: 0; }
+    .layer-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 0;
+      cursor: pointer;
+    }
+    .layer-row input[type="checkbox"] { cursor: pointer; accent-color: #a78bfa; flex-shrink: 0; }
+    .layer-row-label { font-size: 11px; color: #cbd5e1; line-height: 1.3; }
+
     /* Responsive */
     @media (max-width: 700px) {
       #sidebar { width: 260px; min-width: 260px; }
@@ -513,29 +586,7 @@
     <div id="firm-filters"></div>
   </div>
 
-  <div id="toggles">
-    <div class="filter-title">Layer Options</div>
-    <label class="toggle-row">
-      <input type="checkbox" id="toggle-planner-lines" checked />
-      <span class="toggle-label">🔗 Same-planner connection lines</span>
-    </label>
-    <label class="toggle-row">
-      <input type="checkbox" id="toggle-firm-lines" />
-      <span class="toggle-label">〰 Same-firm network lines</span>
-    </label>
-    <label class="toggle-row">
-      <input type="checkbox" id="toggle-dc-only" />
-      <span class="toggle-label">⚡ Show data center cases only</span>
-    </label>
-    <label class="toggle-row">
-      <input type="checkbox" id="toggle-cannoli" />
-      <span class="toggle-label" style="color:#fb923c">🍝 Project Cannoli prediction zone</span>
-    </label>
-    <label class="toggle-row">
-      <input type="checkbox" id="toggle-barn" />
-      <span class="toggle-label" style="color:#c4b5fd">🏚 The Barn prediction zone</span>
-    </label>
-  </div>
+  <!-- Layer toggles moved to floating panel on map -->
 
   <div id="muni-list-container">
     <div id="muni-list"></div>
@@ -561,6 +612,79 @@
     <div class="gap-num" id="gap-num">0</div>
     <div class="gap-label">Data Gaps</div>
   </div>
+
+  <!-- ════ Floating Layers Panel ════ -->
+  <div id="layers-panel">
+    <div id="layers-panel-header">
+      <span class="layers-panel-title">≡ &nbsp;Layers</span>
+      <span class="layers-panel-arrow open" id="layers-panel-arrow">▾</span>
+    </div>
+    <div id="layers-panel-body">
+
+      <!-- Section 1: Map Layers -->
+      <div class="layer-section">
+        <div class="layer-section-header" data-section="map-layers">
+          <span class="layer-section-title">🗺 Map Layers</span>
+          <span class="layer-section-arrow" id="arrow-map-layers">▾</span>
+        </div>
+        <div class="layer-section-body" id="body-map-layers">
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-planner-lines" checked />
+            <span class="layer-row-label">🔗 Same-planner connections</span>
+          </label>
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-firm-lines" />
+            <span class="layer-row-label">〰 Same-firm network lines</span>
+          </label>
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-dc-only" />
+            <span class="layer-row-label">⚡ Data center cases only</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Section 2: Prediction Zones -->
+      <div class="layer-section">
+        <div class="layer-section-header" data-section="prediction-zones">
+          <span class="layer-section-title">🎯 Prediction Zones</span>
+          <span class="layer-section-arrow" id="arrow-prediction-zones">▾</span>
+        </div>
+        <div class="layer-section-body" id="body-prediction-zones">
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-cannoli" />
+            <span class="layer-row-label" style="color:#fb923c">🍝 Project Cannoli</span>
+          </label>
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-barn" />
+            <span class="layer-row-label" style="color:#c4b5fd">🏚 The Barn</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Section 3: Risk Facilities -->
+      <div class="layer-section">
+        <div class="layer-section-header" data-section="risk-facilities">
+          <span class="layer-section-title">⚠ Risk Facilities</span>
+          <span class="layer-section-arrow" id="arrow-risk-facilities">▾</span>
+        </div>
+        <div class="layer-section-body" id="body-risk-facilities">
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-coreweave" />
+            <span class="layer-row-label" style="color:#818cf8">🤖 CoreWeave AI (Roseville + Marysville)</span>
+          </label>
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-hyperscale" />
+            <span class="layer-row-label" style="color:#fbbf24">₿ Hyperscale Data (Dowagiac)</span>
+          </label>
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-switch" />
+            <span class="layer-row-label" style="color:#22d3ee">🏔 Switch Pyramid (Caledonia)</span>
+          </label>
+        </div>
+      </div>
+
+    </div><!-- /layers-panel-body -->
+  </div><!-- /layers-panel -->
 
   <div id="legend">
     <div class="legend-title">Firm</div>
@@ -7019,10 +7143,10 @@ const cannoliFill = L.circle(VAN_BUREN_CENTER, {
 });
 cannoliFill.bindTooltip(`
   <b>🍝 Project Cannoli</b><br>
-  Van Buren Township, Wayne County<br>
-  Developer: Panattoni (Google)<br>
-  Size: 282 acres · 1 GW<br>
-  Status: <span style="color:#4ade80">APPROVED</span><br>
+  Van Buren Township, Wayne County · MI 48111<br>
+  N. of I-94, between Haggerty Rd &amp; I-275<br>
+  Developer: Panattoni · 282 acres · 1 GW<br>
+  Status: <span style="color:#4ade80">APPROVED</span> (no street address yet)<br>
   <em>Prediction: CWA planner capture risk HIGH — adjacent to known CWA network municipalities</em>
 `, { sticky: true, className: 'dark-tooltip' });
 
@@ -7039,8 +7163,8 @@ cannoliRing.bindTooltip(`<b>🍝 Project Cannoli — Predicted CWA Pressure Zone
 
 const cannoliLayer = L.layerGroup([cannoliRing, cannoliFill]);
 
-// The Barn — eastern cluster, near I-275, north of I-94, Van Buren Township
-const BARN_CENTER = [42.244, -83.438];
+// The Barn — Related Digital / Oracle / OpenAI, US-12 & Braun Rd, Saline Township, Washtenaw County
+const BARN_CENTER = [42.168, -83.748];
 
 const barnFill = L.circle(BARN_CENTER, {
   radius: 650,
@@ -7052,9 +7176,11 @@ const barnFill = L.circle(BARN_CENTER, {
 });
 barnFill.bindTooltip(`
   <b>🏚 The Barn</b><br>
-  Van Buren Township, Wayne County<br>
-  Development cluster (Van Buren build)<br>
-  <em>Prediction: Secondary development expansion from Project Cannoli — zoning precedent set</em>
+  Saline Township, Washtenaw County<br>
+  US-12 &amp; Braun Rd · 575 acres · 1 GW<br>
+  Developer: Related Digital (Oracle / OpenAI)<br>
+  Status: <span style="color:#4ade80">UNDER CONSTRUCTION</span> · $16B campus<br>
+  <em>Prediction: CWA planner capture risk HIGH — Saline Township is already CWA-served; this is the site of the Auerbach consent judgment controversy</em>
 `, { sticky: true, className: 'dark-tooltip' });
 
 const barnRing = L.circle(BARN_CENTER, {
@@ -7066,9 +7192,88 @@ const barnRing = L.circle(BARN_CENTER, {
   opacity: 0.75,
   dashArray: '10, 6'
 });
-barnRing.bindTooltip(`<b>🏚 The Barn — Predicted Expansion Zone</b><br>6 km radius — Van Buren secondary build cluster influence zone`, { sticky: true, className: 'dark-tooltip' });
+barnRing.bindTooltip(`<b>🏚 The Barn — Predicted CWA Pressure Zone</b><br>6 km radius · Saline Township, Washtenaw County<br>Related Digital / Oracle / OpenAI · US-12 &amp; Braun Rd<br>Municipalities within this ring face elevated risk of data center development pressure`, { sticky: true, className: 'dark-tooltip' });
 
 const barnLayer = L.layerGroup([barnRing, barnFill]);
+
+// ═══════════════════════════════════════════════════════════════
+//  RISK FACILITY LAYERS — CoreWeave · Hyperscale Data · Switch Pyramid
+// ═══════════════════════════════════════════════════════════════
+
+// CoreWeave — AI hyperscaler, Roseville MI (Macomb County)
+const COREWEAVE_ROSEVILLE_C = [42.536, -82.937];
+const coreweaveRosevilleFill = L.circle(COREWEAVE_ROSEVILLE_C, {
+  radius: 400, color: '#6366f1', fillColor: '#6366f1', fillOpacity: 0.30, weight: 3, opacity: 1.0
+});
+coreweaveRosevilleFill.bindTooltip(`
+  <b>🤖 CoreWeave — Roseville</b><br>
+  Roseville, Macomb County<br>
+  AI cloud compute hyperscaler<br>
+  Status: <span style="color:#4ade80">OPERATIONAL</span><br>
+  <em>Risk: AI hyperscale footprint with expansion pressure on adjacent municipalities</em>
+`, { sticky: true, className: 'dark-tooltip' });
+const coreweaveRosevilleRing = L.circle(COREWEAVE_ROSEVILLE_C, {
+  radius: 6000, color: '#6366f1', fillColor: '#6366f1', fillOpacity: 0.06, weight: 2, opacity: 0.7, dashArray: '10, 6'
+});
+coreweaveRosevilleRing.bindTooltip(`<b>CoreWeave Roseville — AI Pressure Zone</b><br>6 km radius · municipalities within this ring face elevated AI data center expansion pressure`, { sticky: true, className: 'dark-tooltip' });
+const coreweaveRosevilleLayer = L.layerGroup([coreweaveRosevilleRing, coreweaveRosevilleFill]);
+
+// CoreWeave — AI hyperscaler, Marysville MI (St. Clair County)
+const COREWEAVE_MARYSVILLE_C = [42.912, -82.489];
+const coreweaveMarsyvilleFill = L.circle(COREWEAVE_MARYSVILLE_C, {
+  radius: 400, color: '#6366f1', fillColor: '#6366f1', fillOpacity: 0.30, weight: 3, opacity: 1.0
+});
+coreweaveMarsyvilleFill.bindTooltip(`
+  <b>🤖 CoreWeave — Marysville</b><br>
+  Marysville, St. Clair County<br>
+  AI cloud compute hyperscaler<br>
+  Status: <span style="color:#4ade80">OPERATIONAL</span><br>
+  <em>Risk: AI hyperscale footprint with expansion pressure on adjacent municipalities</em>
+`, { sticky: true, className: 'dark-tooltip' });
+const coreweaveMarsyvilleRing = L.circle(COREWEAVE_MARYSVILLE_C, {
+  radius: 6000, color: '#6366f1', fillColor: '#6366f1', fillOpacity: 0.06, weight: 2, opacity: 0.7, dashArray: '10, 6'
+});
+coreweaveMarsyvilleRing.bindTooltip(`<b>CoreWeave Marysville — AI Pressure Zone</b><br>6 km radius · municipalities within this ring face elevated AI data center expansion pressure`, { sticky: true, className: 'dark-tooltip' });
+const coreweaveMarsyvilleLayer = L.layerGroup([coreweaveMarsyvilleRing, coreweaveMarsyvilleFill]);
+
+// Combined CoreWeave layer (both sites toggled together)
+const coreweaveLayer = L.layerGroup([coreweaveRosevilleLayer, coreweaveMarsyvilleLayer]);
+
+// Hyperscale Data — Dowagiac MI (bitcoin mining → AI pivot, noise complaints)
+const HYPERSCALE_DOWAGIAC_C = [41.983, -86.107];
+const hyperscaleFill = L.circle(HYPERSCALE_DOWAGIAC_C, {
+  radius: 500, color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.30, weight: 3, opacity: 1.0
+});
+hyperscaleFill.bindTooltip(`
+  <b>₿ Hyperscale Data — Dowagiac</b><br>
+  Dowagiac, Cass County<br>
+  Bitcoin mining → AI pivot · community noise complaints on record<br>
+  Status: <span style="color:#fbbf24">ACTIVE / CONTESTED</span><br>
+  <em>Risk: crypto-to-AI conversion pattern with unresolved community opposition</em>
+`, { sticky: true, className: 'dark-tooltip' });
+const hyperscaleRing = L.circle(HYPERSCALE_DOWAGIAC_C, {
+  radius: 8000, color: '#f59e0b', fillColor: '#f59e0b', fillOpacity: 0.06, weight: 2, opacity: 0.7, dashArray: '10, 6'
+});
+hyperscaleRing.bindTooltip(`<b>Hyperscale Data Dowagiac — Influence Zone</b><br>8 km radius · bitcoin-to-AI facility with active community opposition`, { sticky: true, className: 'dark-tooltip' });
+const hyperscaleLayer = L.layerGroup([hyperscaleRing, hyperscaleFill]);
+
+// Switch Pyramid — Caledonia Township, Kent County (hyperscale campus)
+const SWITCH_PYRAMID_C = [42.790, -85.479];
+const switchFill = L.circle(SWITCH_PYRAMID_C, {
+  radius: 600, color: '#0891b2', fillColor: '#0891b2', fillOpacity: 0.30, weight: 3, opacity: 1.0
+});
+switchFill.bindTooltip(`
+  <b>🏔 Switch Pyramid — Caledonia</b><br>
+  Caledonia Township, Kent County<br>
+  Switch hyperscale campus · Pyramid data center<br>
+  Status: <span style="color:#4ade80">OPERATIONAL / EXPANDING</span><br>
+  <em>Risk: hyperscale campus expansion driving adjacent township zoning activity</em>
+`, { sticky: true, className: 'dark-tooltip' });
+const switchRing = L.circle(SWITCH_PYRAMID_C, {
+  radius: 8000, color: '#0891b2', fillColor: '#0891b2', fillOpacity: 0.06, weight: 2, opacity: 0.7, dashArray: '10, 6'
+});
+switchRing.bindTooltip(`<b>Switch Pyramid — Hyperscale Pressure Zone</b><br>8 km radius · hyperscale campus likely to drive adjacent municipality zoning and planning changes`, { sticky: true, className: 'dark-tooltip' });
+const switchPyramidLayer = L.layerGroup([switchRing, switchFill]);
 
 // ═══════════════════════════════════════════════════════════════
 //  HELPERS
@@ -7513,10 +7718,61 @@ document.getElementById('toggle-cannoli').addEventListener('change', e => {
 document.getElementById('toggle-barn').addEventListener('change', e => {
   if (e.target.checked) {
     barnLayer.addTo(map);
-    map.flyTo([42.244, -83.438], 10, { duration: 1.2 });
+    map.flyTo([42.168, -83.748], 10, { duration: 1.2 });
   } else {
     barnLayer.remove();
   }
+});
+
+// Risk facility toggles
+document.getElementById('toggle-coreweave').addEventListener('change', e => {
+  if (e.target.checked) {
+    coreweaveLayer.addTo(map);
+    // Fly to midpoint between Roseville and Marysville
+    map.flyTo([42.72, -82.71], 9, { duration: 1.2 });
+  } else {
+    coreweaveLayer.remove();
+  }
+});
+
+document.getElementById('toggle-hyperscale').addEventListener('change', e => {
+  if (e.target.checked) {
+    hyperscaleLayer.addTo(map);
+    map.flyTo([41.983, -86.107], 10, { duration: 1.2 });
+  } else {
+    hyperscaleLayer.remove();
+  }
+});
+
+document.getElementById('toggle-switch').addEventListener('change', e => {
+  if (e.target.checked) {
+    switchPyramidLayer.addTo(map);
+    map.flyTo([42.790, -85.479], 10, { duration: 1.2 });
+  } else {
+    switchPyramidLayer.remove();
+  }
+});
+
+// ─── Floating Layers Panel Accordion ──────────────────────────
+document.getElementById('layers-panel-header').addEventListener('click', () => {
+  const body = document.getElementById('layers-panel-body');
+  const arrow = document.getElementById('layers-panel-arrow');
+  body.classList.toggle('collapsed');
+  if (body.classList.contains('collapsed')) {
+    arrow.classList.replace('open', 'closed');
+  } else {
+    arrow.classList.replace('closed', 'open');
+  }
+});
+
+document.querySelectorAll('.layer-section-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const sectionId = header.getAttribute('data-section');
+    const body = document.getElementById('body-' + sectionId);
+    const arrow = document.getElementById('arrow-' + sectionId);
+    body.classList.toggle('collapsed');
+    arrow.classList.toggle('closed');
+  });
 });
 
 function showCWAOnly() {
