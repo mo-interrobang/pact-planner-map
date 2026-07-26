@@ -7003,20 +7003,19 @@ const firmLinesLayer  = L.layerGroup();
 //  PREDICTION LAYERS — Project Cannoli & The Barn (Van Buren Twp)
 // ═══════════════════════════════════════════════════════════════
 
-// Van Buren Township, Wayne County — approximate center of data center activity
-const VAN_BUREN_CENTER = [42.218, -83.468];
+// Project Cannoli — western cluster, near Haggerty Rd, north of I-94, Van Buren Township
+const VAN_BUREN_CENTER = [42.242, -83.474];
 
 // Project Cannoli — Panattoni/Google, 282 acres, 1 GW approved
-// Inner zone: approximate project footprint (~600m radius ≈ 280 acres)
+// Inner zone: approximate project footprint
 // Outer zone: predicted influence / planner capture zone
 const cannoliFill = L.circle(VAN_BUREN_CENTER, {
   radius: 850,           // ~280-acre project footprint
   color: '#f97316',
   fillColor: '#f97316',
-  fillOpacity: 0.12,
-  weight: 2,
-  opacity: 0.7,
-  dashArray: '6, 4'
+  fillOpacity: 0.25,
+  weight: 3,
+  opacity: 1.0
 });
 cannoliFill.bindTooltip(`
   <b>🍝 Project Cannoli</b><br>
@@ -7028,30 +7027,28 @@ cannoliFill.bindTooltip(`
 `, { sticky: true, className: 'dark-tooltip' });
 
 const cannoliRing = L.circle(VAN_BUREN_CENTER, {
-  radius: 4000,          // ~5 km prediction zone
+  radius: 8000,          // ~8 km CWA influence prediction zone
   color: '#f97316',
   fillColor: '#f97316',
-  fillOpacity: 0.04,
-  weight: 1,
-  opacity: 0.35,
-  dashArray: '3, 8'
+  fillOpacity: 0.07,
+  weight: 2,
+  opacity: 0.75,
+  dashArray: '10, 6'
 });
-cannoliRing.bindTooltip(`<b>🍝 Project Cannoli — Predicted CWA Pressure Zone</b><br>5 km radius around Van Buren Twp data center site`, { sticky: true, className: 'dark-tooltip' });
+cannoliRing.bindTooltip(`<b>🍝 Project Cannoli — Predicted CWA Pressure Zone</b><br>8 km radius — municipalities within this ring are at elevated risk of CWA planner capture following Van Buren approval`, { sticky: true, className: 'dark-tooltip' });
 
 const cannoliLayer = L.layerGroup([cannoliRing, cannoliFill]);
 
-// The Barn — Van Buren Township build (alternate/companion development)
-// Shifted slightly NE to represent second build cluster
-const BARN_CENTER = [42.234, -83.440];
+// The Barn — eastern cluster, near I-275, north of I-94, Van Buren Township
+const BARN_CENTER = [42.244, -83.438];
 
 const barnFill = L.circle(BARN_CENTER, {
   radius: 650,
   color: '#a78bfa',
   fillColor: '#a78bfa',
-  fillOpacity: 0.13,
-  weight: 2,
-  opacity: 0.7,
-  dashArray: '6, 4'
+  fillOpacity: 0.28,
+  weight: 3,
+  opacity: 1.0
 });
 barnFill.bindTooltip(`
   <b>🏚 The Barn</b><br>
@@ -7061,15 +7058,15 @@ barnFill.bindTooltip(`
 `, { sticky: true, className: 'dark-tooltip' });
 
 const barnRing = L.circle(BARN_CENTER, {
-  radius: 3500,
+  radius: 6000,
   color: '#a78bfa',
   fillColor: '#a78bfa',
-  fillOpacity: 0.04,
-  weight: 1,
-  opacity: 0.35,
-  dashArray: '3, 8'
+  fillOpacity: 0.07,
+  weight: 2,
+  opacity: 0.75,
+  dashArray: '10, 6'
 });
-barnRing.bindTooltip(`<b>🏚 The Barn — Predicted Expansion Zone</b><br>Van Buren secondary build cluster`, { sticky: true, className: 'dark-tooltip' });
+barnRing.bindTooltip(`<b>🏚 The Barn — Predicted Expansion Zone</b><br>6 km radius — Van Buren secondary build cluster influence zone`, { sticky: true, className: 'dark-tooltip' });
 
 const barnLayer = L.layerGroup([barnRing, barnFill]);
 
@@ -7507,7 +7504,7 @@ document.getElementById('toggle-dc-only').addEventListener('change', e => {
 document.getElementById('toggle-cannoli').addEventListener('change', e => {
   if (e.target.checked) {
     cannoliLayer.addTo(map);
-    map.flyTo([42.218, -83.468], 12, { duration: 1.2 });
+    map.flyTo([42.218, -83.468], 10, { duration: 1.2 });
   } else {
     cannoliLayer.remove();
   }
@@ -7516,7 +7513,7 @@ document.getElementById('toggle-cannoli').addEventListener('change', e => {
 document.getElementById('toggle-barn').addEventListener('change', e => {
   if (e.target.checked) {
     barnLayer.addTo(map);
-    map.flyTo([42.234, -83.440], 12, { duration: 1.2 });
+    map.flyTo([42.244, -83.438], 10, { duration: 1.2 });
   } else {
     barnLayer.remove();
   }
