@@ -387,7 +387,13 @@
       padding: 12px 14px;
       z-index: 500;
       min-width: 180px;
+      max-width: 220px;
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      overflow-x: hidden;
     }
+    #legend::-webkit-scrollbar { width: 6px; }
+    #legend::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
     .legend-title {
       font-size: 10px;
       font-weight: 700;
