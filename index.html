@@ -553,7 +553,7 @@
       <span class="logo-title">Allen Park, Michigan</span>
     </div>
     <div class="map-subtitle">Michigan Municipal Planner Network — Accountability Map</div>
-    <div style="font-size:9px;color:#475569;margin-top:3px;letter-spacing:0.04em;">Updated 2026-07-25</div>
+    <div style="font-size:9px;color:#475569;margin-top:3px;letter-spacing:0.04em;">Updated <span id="last-updated-header"></span></div>
   </div>
 
   <div id="search-box">
@@ -716,7 +716,7 @@
     <div class="legend-sep"></div>
     <div style="font-size:10px;color:#475569;line-height:1.5">
       Click any marker for full details.<br>
-      Last updated: July 2026
+      Last updated: <span id="last-updated-legend"></span>
     </div>
   </div>
 </div>
@@ -727,6 +727,12 @@
 // ═══════════════════════════════════════════════════════════════
 //  DATA
 // ═══════════════════════════════════════════════════════════════
+
+// ─── SINGLE SOURCE OF TRUTH FOR THE "LAST UPDATED" DATE SHOWN ON THE MAP ───
+// Update ONLY this line whenever MUNICIPALITIES changes. Every "Updated"/
+// "Last updated" label on the page reads from this one constant — nothing
+// else needs to be touched, and nothing else should be hand-edited to a date.
+const LAST_UPDATED = "2026-07-28"; // format: YYYY-MM-DD
 
 const FIRMS = {
   "Carlisle/Wortman Associates": { color: "#E53935", short: "CWA" },
@@ -10382,7 +10388,7 @@ function downloadCSV() {
     m.work_history || '',
     (m.notes || '').replace(/"/g, '""'),
     (m.sources || []).join('; '),
-    'Y', 'July 2026'
+    'Y', LAST_UPDATED
   ]);
 
   // Add blank template row
@@ -10434,7 +10440,11 @@ refreshMap();
 
 // Subtitle with current data state
 document.getElementById('map-subtitle-dynamic').textContent =
-  `${MUNICIPALITIES.length} municipalities mapped · ${MUNICIPALITIES.filter(m=>!m.planner_name).length} need planner data · July 2026`;
+  `${MUNICIPALITIES.length} municipalities mapped · ${MUNICIPALITIES.filter(m=>!m.planner_name).length} need planner data · ${LAST_UPDATED}`;
+
+// Populate every "last updated" label on the page from the one constant above.
+document.getElementById('last-updated-header').textContent = LAST_UPDATED;
+document.getElementById('last-updated-legend').textContent = LAST_UPDATED;
 
 </script>
 </body>
