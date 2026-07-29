@@ -735,14 +735,13 @@
 // ═══════════════════════════════════════════════════════════════
 
 // ─── SINGLE SOURCE OF TRUTH FOR THE "LAST UPDATED" DATE SHOWN ON THE MAP ───
-// This always reflects TODAY (computed from the visitor's own clock at page
-// load) — it is not tied to when the data was actually edited. Every
-// "Updated"/"Last updated" label on the page reads from this one constant.
-// Do not hand-edit any of the display spots directly.
-const LAST_UPDATED = (() => {
-  const d = new Date();
-  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
-})(); // always today's date (computed fresh on every page load) — nothing to hand-edit anymore
+// This is the date the underlying MUNICIPALITIES data was actually last
+// verified/edited — deliberately NOT the visitor's system clock, since
+// people rely on this date to judge how fresh the data is. Update ONLY
+// this one line, by hand, whenever MUNICIPALITIES changes. Every
+// "Updated"/"Last updated" label on the page reads from this one constant —
+// nothing else needs to be touched, and nothing else should be hand-edited.
+const LAST_UPDATED = "2026-07-28"; // format: YYYY-MM-DD — set this by hand on every data update
 
 const FIRMS = {
   "Carlisle/Wortman Associates": { color: "#E53935", short: "CWA" },
