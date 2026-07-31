@@ -1353,9 +1353,9 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
-        notes: "Giffels Webster is headquartered in Detroit and serves various Detroit-area communities. MAP Private Practice directory contact: Jill Bahm, AICP. Specific Detroit planning projects need verification.",
+        notes: "Giffels Webster is headquartered in Detroit and serves various Detroit-area communities. MAP Private Practice directory contact: Jill Bahm, AICP. Specific Detroit planning projects need verification. | Separately, worth noting: the city's actual civic Planning Director role (distinct from this private-firm MAP contact) was held by Antoine Bryant until he departed Dec 2024. Bryant faced an ethics investigation for unilaterally executing a $215,000 contract (Street Art Mankind, downtown NFL Draft murals) without City Council approval — Council later rejected the contract unanimously. The Board of Ethics dismissed the case in March 2025 after nine months, with no determination made; the board chair recused over unnamed conflicts, and it's unresolved whether the board even had jurisdiction over a former employee. Not connected to CWA, data centers, or this map's core tracking pattern — logged as general planning-official accountability context.",
         work_history: null,
-        sources: ["MAP Private Practice Directory — planningmi.org"]
+        sources: ["MAP Private Practice Directory — planningmi.org", "Bridge Detroit, March 20, 2025 — https://www.bridgedetroit.com/ethics-charges-against-ex-detroit-planning-director-dropped-but-questions-linger/"]
       },
       {
         id: 20,
@@ -1391,7 +1391,7 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
-        notes: "OHM Advisors has offices in Detroit and Lansing. MAP contact: Lynn Wilson, AICP; also Eric Dryer, AICP. Specific Lansing municipal planning assignments need verification.",
+        notes: "⚠️ DUPLICATE/STALE — see the other 'Lansing' entry (Rawley Van Fossen, Director of Economic Development and Planning, In-House) for confirmed current data and the active Deep Green data center case; this entry's OHM Advisors/Lynn Wilson info is from the generic MAP directory and hasn't been independently confirmed against the city's actual planning office. Kept rather than deleted pending cleanup.",
         work_history: null,
         sources: ["MAP Private Practice Directory — planningmi.org"]
       },
@@ -2333,17 +2333,17 @@ const MUNICIPALITIES = [
         type: "City",
         lat: 44.7631,
         lng: -85.6206,
-        planner_name: "Shawn Winter",
-        planner_title: "Planning Director",
+        planner_name: "Vacant",
+        planner_title: "Planning Director — vacant (Shawn Winter fired July 30, 2026)",
         firm: "In-House (City Staff)",
-        employment_type: "In-House (City Staff)",
+        employment_type: "Vacant",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
-        notes: "Confirmed: Shawn Winter (He/Him) serves as Planning Director at City of Traverse City per LinkedIn profile.",
-        work_history: "City of Traverse City (current)",
-        sources: ["LinkedIn — Shawn Winter (Planning Director, City of Traverse City) — linkedin.com/in/shawnjwinter/"]
+        notes: "⚠️ VACANCY: Shawn Winter (Planning Director since May 2021, ~6 years) was fired July 30, 2026. City Manager Ben Marentette confirmed the termination but gave no reason (\"no further comment on the decision\"). Leslie Sickterman (Sustainability Coordinator) is serving as acting planning director. No zoning dispute, data center, or specific controversial project has been reported as the cause as of this writing — worth watching for a fuller explanation. Winter's prior background: 2 yrs at Beckett & Raeder Inc.; Planning & Zoning Administrator, Acme Township (2015–2019).",
+        work_history: "City of Traverse City (Planning Director, May 2021 – fired July 30, 2026); Acme Township Planning & Zoning Administrator (2015–2019); Beckett & Raeder, Inc. (professional planner, ~2 yrs)",
+        sources: ["LinkedIn — Shawn Winter (Planning Director, City of Traverse City) — linkedin.com/in/shawnjwinter/", "9&10 News, July 30, 2026 — https://www.9and10news.com/2026/07/30/traverse-city-planning-director-shawn-winter-fired-after-nearly-6-years-with-the-city/"]
       },
       {
         id: 83,
@@ -2664,10 +2664,10 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "Deep Green proposed 24 MW data center — moratorium imposed by City Council. Active rezoning case Z-3-2026 for tech/data facility pending. Capital city actively grappling with data center land use regulations.",
-        notes: "State capital. In-house planning department. Data center moratorium (Z-3-2026) reflects growing pressure from tech facility proposals. GM/Stellantis automotive footprint shapes industrial land use. | Confirmed: Rawley Van Fossen oversees Planning Office including zoning and Comprehensive Plan. Sources: lansingmi.gov, LinkedIn.",
+        data_center_notes: "Deep Green (UK-based) proposed a 24 MW data center at Cedar & Larch Streets (2.5-acre rezoning, announced Nov 5, 2025; 8 MW from grid + 16 MW on-site fuel cell; ~500,000 gal/yr water use) — moratorium imposed by City Council. Active rezoning case Z-3-2026 for tech/data facility pending. Capital city actively grappling with data center land use regulations. ⚠️ Revolving-door lead: Josh Hovey, a Lansing Planning Commissioner for ~10 years (stepped down end of summer 2025, last attended March 2025), is now Deep Green's spokesman/consultant via Bellwether Public Relations (his PR firm), which began working with Deep Green Oct 2025 — discussions reportedly started ~9 months before that per BWL general manager Dick Peffley. Hovey says he wasn't on the commission while working with Deep Green and has followed the city's recusal policy; still worth tracking as a former-official-to-developer pipeline, same shape as the CWA/Auerbach pattern elsewhere in this dataset.",
+        notes: "State capital. In-house planning department. Data center moratorium (Z-3-2026) reflects growing pressure from tech facility proposals. GM/Stellantis automotive footprint shapes industrial land use. | Confirmed: Rawley Van Fossen oversees Planning Office including zoning and Comprehensive Plan. Sources: lansingmi.gov, LinkedIn. | NOTE: a second, older/stale 'Lansing' entry exists elsewhere in this dataset (Lynn Wilson / OHM Advisors, MAP directory contact only, data_center_case: false) — that one has not been independently confirmed against the city's actual planning office and looks superseded by this entry; flagged for cleanup rather than deleted outright.",
         work_history: null,
-        sources: ["City of Lansing planning department", "Z-3-2026 rezoning documents", "Deep Green data center moratorium 2026"]
+        sources: ["City of Lansing planning department", "Z-3-2026 rezoning documents", "Deep Green data center moratorium 2026", "Michigan Advance, March 6, 2026 — https://michiganadvance.com/2026/03/06/a-former-lansing-planning-commissioner-is-helping-a-data-center-developer-pitch-its-plan-to-the-city/"]
       },
       {
         id: 100,
@@ -2685,9 +2685,9 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "East Lansing planning team (Aleece Hodges + Landon Bartley) collaborated with CWA staff to review municipal development processes and draft Data Center Guidelines (CivicWeb doc 432821). Bartley also served alongside CWA planners at MAP roundtable events. Sources: cityofeastlansing.civicweb.net/document/432821, planningmi.org MAP roundtable doc.",
-        notes: "Home to Michigan State University. In-house planning. Data center moratorium passed 3/17/2026 — one of first Michigan municipalities to proactively pause data center approvals amid surge of proposals. | Confirmed: Aleece Hodges (Director), Landon Bartley (Principal Planner). Sources: cityofeastlansing.com, LinkedIn. | DATA CENTER: Active guidelines development in collaboration with CWA staff. Professional connection: Bartley + CWA planners at MAP roundtables.",
+        notes: "Home to Michigan State University. In-house planning. Data center moratorium passed 3/17/2026 — one of first Michigan municipalities to proactively pause data center approvals amid surge of proposals. | Confirmed: Aleece Hodges (Director), Landon Bartley (Principal Planner). Sources: cityofeastlansing.com, LinkedIn. | DATA CENTER: Active guidelines development in collaboration with CWA staff. Professional connection: Bartley + CWA planners at MAP roundtables. | ⚠️ City Manager turmoil (not Planning Dept — Hodges unaffected): City Manager Robert Belleman resigned June 16, 2026 after an independent Miller Canfield investigation into workplace-conduct allegations (yelling, berating, threatening job security, sexual innuendo per Grants Coordinator Erica Dziedzic-Hernandez's Sept 2025 complaint) found insufficient evidence to substantiate harassment but flagged a confrontational management style. Interim Fire Chief John Newman took over immediately; retired former East Lansing Planning Director Annette Irwin became interim City Manager after June 22 — worth noting since a past planning director is now running the city during the data center guidelines rollout.",
         work_history: null,
-        sources: ["East Lansing City Council minutes 3/17/2026", "East Lansing planning department"]
+        sources: ["East Lansing City Council minutes 3/17/2026", "East Lansing planning department", "WKAR, June 16, 2026 — https://www.wkar.org/wkar-news/2026-06-16/east-lansing-city-manager-robert-belleman-resigns-after-being-placed-on-leave"]
       },
       {
         id: 101,
@@ -9606,6 +9606,46 @@ const MUNICIPALITIES = [
         notes: "Site posted a 'New Zoning Ordinance!' announcement dated March 2, 2026, content not retrievable — worth a follow-up call given growth corridor near I-75/I-475. (Firm listed as: In-House (tentative — Mike Mantei, Building Official).)",
         work_history: null,
         sources: ["https://viennatwpgc.gov/government/building/index.php"]
+      },
+      {
+        id: 451,
+        municipality: "Peninsula Township",
+        county: "Grand Traverse",
+        type: "Township",
+        lat: 44.833,
+        lng: -85.516,
+        planner_name: "Unknown (vacant as of Jan 2025)",
+        planner_title: "Planner — successor to Jenn Cram not yet confirmed",
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "⚠️ STALE DATA — new entry, needs a current-status check: Jenn Cram served as Township Planner Nov 2021–Jan 14, 2025 (~30 yrs total public-sector planning career), then left for the private sector. Resignation was routine/amicable, not controversy-driven — article references the township's history with shoreline regulations and building height ordinances but no specific dispute tied to her departure. Successor not yet researched. Township covers the Old Mission Peninsula between East and West Grand Traverse Bay; Supervisor Maura Sanders, PC Chair Randy Hall as of Jan 2025.",
+        work_history: null,
+        sources: ["Old Mission Gazette, Jan 10, 2025 — https://www.oldmission.net/2025/01/township-planner-resigns/"]
+      },
+      {
+        id: 452,
+        municipality: "Sand Lake",
+        county: "Montcalm",
+        type: "Village",
+        lat: 43.2517,
+        lng: -85.5386,
+        planner_name: "Unknown",
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "⚠️ GOVERNANCE COLLAPSE — new entry: on March 16, 2026 a majority of Village Council (President Mollie Doerr, Cherrie Camilleri, Jack Christensen, Kim Latham, Kevin Wright) and three Planning Commission members (Zachary Doerr, Don Knotterus, Cathy VanderMeulen) resigned together, days after Finance Director-Treasurer Tyler Kaiser resigned (Mar 12). President Doerr cited a deteriorating political climate ('disagreements turn into personal attacks against individuals — their families, their businesses'). Tied to ongoing fire department contract disputes and a disincorporation vote planned for May 2026. Not a data center or CWA case — logged as a governance-accountability data point, not a planning-firm one. No planner/firm identified; village's planning function status post-collapse is unknown.",
+        work_history: null,
+        sources: ["The Daily News, March 16, 2026 — https://www.thedailynews.cc/articles/breaking-news-majority-of-sand-lake-village-council-resigns-along-with-finance-director-planning-commission-members/"]
       }
     ];
 
