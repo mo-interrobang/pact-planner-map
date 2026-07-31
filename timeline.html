@@ -268,10 +268,15 @@ body {
   box-shadow: 0 10px 32px rgba(0,0,0,0.5);
 }
 #tt.show { opacity: 1; }
+#tt.pinned { pointer-events: auto; }
 .tt-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
 .tt-label { font-size: 13.5px; font-weight: 600; color: #f1f5f9; line-height: 1.3; margin-bottom: 5px; }
 .tt-date { font-size: 11px; color: #94a3b8; margin-bottom: 7px; }
 .tt-detail { font-size: 12px; color: #cbd5e1; line-height: 1.55; }
+.tt-source { font-size: 11px; margin-top: 8px; padding-top: 7px; border-top: 1px solid #334155; }
+.tt-source a { color: #5eb1f0; text-decoration: none; }
+.tt-source a:hover { text-decoration: underline; }
+.tt-pin-hint { font-size: 9.5px; color: #64748b; margin-top: 6px; font-style: italic; }
 
 /* ── SEPARATORS ── */
 .section-break {
@@ -288,7 +293,7 @@ body {
 
 <div class="page-header">
   <h1>CWA Pattern — Michigan Communities vs. Data Center Developers <span class="cwa-badge">CARLISLE/WORTMAN ASSOCIATES</span></h1>
-  <p class="subtitle">When each community was approached, who CWA placed as planner, and how each case unfolded. Hover events for full detail.</p>
+  <p class="subtitle">When each community was approached, who CWA placed as planner, and how each case unfolded. Hover events for full detail — click a dot to pin the card open and follow its source link.</p>
   <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Updated 2026-07-25</div>
 </div>
 
@@ -614,9 +619,22 @@ const COMMUNITIES = [
         detail: 'Congresswoman Debbie Dingell sends formal inquiry to UM and LANL with resident questions on energy demand, water use, noise, and tax impacts. UM/LANL formally respond July 10. Township Attorney Winters separately sends letter regarding county commissioner pushback.'
       },
       {
+        date: '2026-07-10', type: 'cwa-action',
+        label: 'UM/LANL write back to Dingell — no permitting timeline given',
+        detail: 'UM President Domenico Grasso and LANL Director Thom Mason send a written response answering 21 of Rep. Dingell\'s FAQs. They frame the project as a "high-performance research computing facility" (not weapons production), pledge closed-loop cooling and dedicated electrical infrastructure funding, and promise expanded community engagement — but give no permitting timeline and no final site commitment. Ben Carlisle (CWA) remains the township\'s planning consultant throughout.',
+        source: 'https://debbiedingell.house.gov/uploadedfiles/7.10.26_um_response.pdf', sourceLabel: 'UM/LANL response letter to Rep. Dingell, July 10, 2026 (PDF)'
+      },
+      {
         date: '2026-07-15', type: 'community',
         label: '"Get the hell out of this township" — township declares done negotiating',
-        detail: 'Large community meeting at Civic Center (7200 S. Huron River Drive). Township Attorney Winters to the crowd: "Right now the only community benefit that we would want is for you to get the hell out of this township." Township declares it is "no longer interested in negotiations" with UM. Supervisor Stumbo cites other Michigan communities successfully blocking similar projects. Huron Valley Area Labor Federation calls for statewide moratorium on large-scale data centers. Ben Carlisle (CWA President) is township planner throughout this entire escalating fight.'
+        detail: 'Large community meeting at Civic Center (7200 S. Huron River Drive). Township Attorney Winters to the crowd: "Right now the only community benefit that we would want is for you to get the hell out of this township." Township declares it is "no longer interested in negotiations" with UM and has ceased talks outright. Supervisor Stumbo says the township is confident it can defeat the project and cites other Michigan communities successfully blocking similar projects. UM indicates a final site decision (Textile Road vs. the former GM/Willow Run site) could come "within days." Huron Valley Area Labor Federation calls for statewide moratorium on large-scale data centers. Ben Carlisle (CWA President) is township planner throughout this entire escalating fight.',
+        source: 'https://www.wemu.org/wemu-news/2026-07-16/ypsilanti-township-officials-vow-to-fight-to-stop-u-m-los-alamos-center-to-the-end', sourceLabel: 'WEMU, "Ypsilanti Township officials vow to fight," July 16, 2026'
+      },
+      {
+        date: '2026-07-24', type: 'community',
+        label: 'Fight continues — no site decision yet',
+        detail: 'Eastern Echo reports the fight is still unresolved more than a week after the "get the hell out" meeting: no lawsuit, no permit filing, and no board resolution has followed. UM has not announced the "within days" site decision it signaled on July 15. As of July 31, 2026, no further public action has been reported since this date.',
+        source: 'https://www.easternecho.com/article/2026/07/ypsilanti-data-center-fight-continues-after-township-meeting', sourceLabel: 'Eastern Echo, "Ypsilanti data center fight continues," July 24, 2026'
       },
       {
         date: '2026-04-22', type: 'future',
@@ -636,22 +654,49 @@ const COMMUNITIES = [
       {
         date: '2025-11-18', type: 'community',
         label: 'Council directs PC to review data center zoning',
-        detail: 'Councilmember Keenan Gottschall introduces motion directing the Planning Commission to review the city\'s zoning ordinance as it relates to large-scale data centers. Trigger: the former Ford Motor Co. property in Wixom has an underused DTE substation, making it highly attractive to data center developers. CWA is actively updating Wixom\'s Master Plan at the same time (draft recommended by PC March 23, 2026). Neighboring Saline Township\'s contentious Related Digital/Stargate proposal is already publicly known.'
+        detail: 'Councilmember Keenan Gottschall introduces motion directing the Planning Commission to review the city\'s zoning ordinance as it relates to large-scale data centers. Trigger: the former Ford Motor Co. property in Wixom has an underused DTE substation, making it highly attractive to data center developers. CWA is actively updating Wixom\'s Master Plan at the same time (draft recommended by PC March 23, 2026). Neighboring Saline Township\'s contentious Related Digital/Stargate proposal is already publicly known.',
+        source: 'https://www.wixomgov.org/departments/construction-development-services-building/data-center-moratorium-ordinance', sourceLabel: 'City of Wixom — Data Center Moratorium & Ordinance page'
+      },
+      {
+        date: '2025-12-15', type: 'cwa-action',
+        label: 'PC work sessions on draft ordinance begin (6 sessions over 4 months)',
+        detail: 'Planning Commission holds a series of work sessions on the draft data center ordinance: Dec 15 2025, Jan 21, Feb 18, Mar 16, Apr 6, and Apr 20 2026. This is the drafting process feeding the ordinance that eventually reaches a public hearing June 29, 2026. No individual consultant is credited by name in any city minutes reviewed — city staff and the Planning Commission are credited throughout, though CWA holds the Master Plan and general planning consultant contract concurrently.',
+        source: 'https://www.wixomgov.org/departments/construction-development-services-building/data-center-moratorium-ordinance', sourceLabel: 'City of Wixom — Data Center Moratorium & Ordinance page'
+      },
+      {
+        date: '2026-03-23', type: 'cwa-action',
+        label: 'PC recommends CWA-authored 2025 Master Plan Update to Council',
+        detail: 'Planning Commission recommends the draft 2025 Wixom Master Plan Update — prepared with Carlisle/Wortman Associates — to City Council. This is separate from the data center ordinance work but confirms CWA\'s general planning contract with Wixom is active and current through this period.',
+        source: 'https://www.wixomgov.org/departments/construction-development-services-building/wixom-master-plan', sourceLabel: 'City of Wixom — 2025 Master Plan Update page'
       },
       {
         date: '2026-03-24', type: 'protection',
         label: 'Council approves 6-month moratorium — full prohibition',
-        detail: 'City Council approves a temporary six-month moratorium prohibiting "establishing, permitting, consideration, approval, location, construction, and/or installation of any data centers." Moratorium set to expire approximately August/September 2026. CWA (Ben Carlisle) is the city\'s planning consultant and is guiding the ordinance development work. Dec 2025–Mar 2026 saw four consecutive PC meetings on data center ordinance language before the moratorium vote.'
+        detail: 'City Council approves a temporary six-month moratorium prohibiting "establishing, permitting, consideration, approval, location, construction, and/or installation of any data centers." Moratorium set to expire approximately August/September 2026. CWA (Ben Carlisle) is the city\'s planning consultant and is guiding the ordinance development work. Dec 2025–Mar 2026 saw four consecutive PC meetings on data center ordinance language before the moratorium vote.',
+        source: 'https://planetdetroit.org/2026/03/wixom-plans-data-center-rules/', sourceLabel: 'Planet Detroit, "Wixom weighs data center ordinance," March 2026'
+      },
+      {
+        date: '2026-06-01', type: 'cwa-action',
+        label: 'PC recommends scheduling a public hearing on the draft ordinance',
+        detail: 'Planning Commission recommends scheduling a formal public hearing on the draft data center ordinance, setting up the June 29 hearing.',
+        source: 'https://www.wixomgov.org/departments/construction-development-services-building/data-center-moratorium-ordinance', sourceLabel: 'City of Wixom — Data Center Moratorium & Ordinance page'
       },
       {
         date: '2026-06-29', type: 'cwa-action',
         label: 'PC public hearing; approves draft ordinance amendments → Council',
-        detail: 'Public hearing held at 7 PM in Wixom Council Chambers. Planning Commission approves amended motions and forwards proposed ordinance to City Council. Draft requirements include: noise/vibration impact studies; cooling method restrictions (air, hybrid, or closed-loop only — no open-air evaporative cooling); prohibition on data centers adjacent to residential properties; decommissioning plans; water usage controls; developer-funded infrastructure improvements. CWA (Ben Carlisle) is the presumptive drafter of these provisions.'
+        detail: 'Public hearing held at 7 PM in Wixom Council Chambers. Planning Commission approves amended motions and forwards proposed ordinance to City Council. Draft requirements include: noise/vibration impact studies; cooling method restrictions (air, hybrid, or closed-loop only — no open-air evaporative cooling); prohibition on data centers adjacent to residential properties; decommissioning plans; water usage controls; developer-funded infrastructure improvements. CWA (Ben Carlisle) is the presumptive drafter of these provisions — no press coverage found names a consultant directly.'
       },
       {
         date: '2026-07-14', type: 'community',
-        label: 'Council rejects moratorium waiver for 519,000 sq ft proposal',
-        detail: 'City Council unanimously rejects a moratorium waiver request from developer Dennis Griffin (Pleasant Ridge, MI) / Wixom Industrial One LLC / Sansone Group (Missouri-based CRE firm). Proposed site: 30625 S. Wixom Road (Midwinds Industrial Park), 54–55 acres of vacant M-1 light industrial land. Proposed: three buildings each exceeding 200,000 sq ft (519,000+ sq ft total). Council rationale: request "unreasonable as it relates to the potential health, safety, and welfare impacts in the city" — cited proximity to schools, daycare centers, and homes. Developer stated data centers were being treated "very, very unfairly." First reading of ordinance tentatively set for July 28, 2026.'
+        label: 'Council rejects moratorium waiver; also postpones its own ordinance vote',
+        detail: 'City Council unanimously rejects a moratorium waiver request from developer Dennis Griffin (Pleasant Ridge, MI) / Wixom Industrial One LLC / Sansone Group (Missouri-based CRE firm). Proposed site: 30625 S. Wixom Road (Midwinds Industrial Park), 54–55 acres of vacant M-1 light industrial land. Proposed: three buildings each exceeding 200,000 sq ft (519,000+ sq ft total). Council rationale: request "unreasonable as it relates to the potential health, safety, and welfare impacts in the city" — cited proximity to schools, daycare centers, and homes. Developer stated data centers were being treated "very, very unfairly." Same meeting: Council ALSO postpones its own vote on the new data center ordinance itself, citing requested revisions — the ordinance is not yet adopted as of this date.',
+        source: 'https://www.datacenterdynamics.com/en/news/city-officials-in-michigan-denied-request-to-lift-data-center-moratorium/', sourceLabel: 'Data Center Dynamics, "City officials in Michigan denied request to lift moratorium," July 2026'
+      },
+      {
+        date: '2026-07-20', type: 'future',
+        label: 'Press flags July 28 as tentative next hearing — outcome not yet public',
+        detail: 'GovTech and Michigan Advance report the rewritten ordinance\'s first reading is tentatively expected around July 28, 2026, "though this date may be delayed pending legal review of the language." As of July 31, 2026, no source confirms whether that meeting occurred or what was decided — this is very likely reporting lag given how recent the date is, not evidence nothing happened. Worth checking Wixom\'s council minutes directly for the outcome.',
+        source: 'https://www.govtech.com/products/michigan-city-rejects-data-center-waiver-request', sourceLabel: 'GovTech, "Michigan City Rejects Data Center Waiver Request," July 2026'
       },
       {
         date: '2026-09-01', type: 'future',
@@ -674,6 +719,12 @@ const COMMUNITIES = [
         detail: 'At the 2025 Planning Michigan Conference in Kalamazoo (Oct 22–24), CWA\'s Mike Auerbach presents on a panel titled "Demystifying Data Centers for Michigan Communities." Ben Carlisle introduces the luncheon keynote speaker. This occurs 4–6 weeks before Pittsfield Township enacts its data center moratorium. CWA simultaneously holds the township\'s 20+ year planning contract and is shaping the statewide framework for how Michigan planners approach data centers — including the regulatory model they will use for Pittsfield\'s own ordinance. Source: CWA blog Oct 27, 2025.'
       },
       {
+        date: '2025-11-17', type: 'community',
+        label: 'WEMU reports township set to vote on moratorium',
+        detail: 'WEMU reports Pittsfield Township is set to vote on a data center moratorium, previewing the Nov 20 board action below.',
+        source: 'https://www.wemu.org/wemu-news/2025-11-17/pittsfield-township-to-vote-on-data-center-moratorium', sourceLabel: 'WEMU, "Pittsfield Township to vote on data center moratorium," Nov 17, 2025'
+      },
+      {
         date: '2025-11-20', type: 'protection',
         label: 'Board enacts 180-day moratorium — proactive (no proposals pending)',
         detail: 'Pittsfield Township Board of Trustees enacts a 180-day data center moratorium at a special meeting. Critically, no data center proposals exist in the township — this is entirely proactive. Supervisor Trish Reilly cited former Sen. Slotkin warning "data centers are coming." The existing ordinance does not address data centers. PC, planners (CWA), engineers, and attorneys directed to study state law and draft zoning amendments. Property owners may petition for expedited hearings. Date approximate (Thursday ~Nov 20–21, 2025).'
@@ -686,17 +737,20 @@ const COMMUNITIES = [
       {
         date: '2026-05-29', type: 'cwa-action',
         label: 'Draft ordinance and public survey released',
-        detail: 'Township releases draft data center ordinance and public survey for community input. Draft provisions include: minimum 90% renewable energy sourcing; Power Usage Effectiveness (PUE) of 1.2 or lower; noise limits of 50 dB daytime / 40 dB at residential district boundaries at night; written confirmation from utilities that systems won\'t be overburdened; annual operational reporting (energy, water, cooling, emissions); good-faith local hiring plan and public-facing reporting dashboard; enhanced setbacks. These are materially stronger than Auerbach\'s Allen Park Section 52-913 draft. CWA is the drafter — comparing their Pittsfield standards to Allen Park standards reveals a two-tier approach.'
+        detail: 'Township releases draft data center ordinance and public survey for community input. Draft provisions include: minimum 90% renewable energy sourcing; Power Usage Effectiveness (PUE) of 1.2 or lower; noise limits of 50 dB daytime / 40 dB at residential district boundaries at night; written confirmation from utilities that systems won\'t be overburdened; annual operational reporting (energy, water, cooling, emissions); good-faith local hiring plan and public-facing reporting dashboard; enhanced setbacks. These are materially stronger than Auerbach\'s Allen Park Section 52-913 draft. CWA is the drafter — comparing their Pittsfield standards to Allen Park standards reveals a two-tier approach.',
+        source: 'https://www.wemu.org/wemu-news/2026-05-29/pittsfield-township-wants-to-hear-from-residents-about-proposed-data-center-regulations', sourceLabel: 'WEMU, "Pittsfield Township wants to hear from residents," May 29, 2026'
       },
       {
         date: '2026-06-18', type: 'community',
         label: 'First PC meeting vetting the draft ordinance',
-        detail: 'First Pittsfield Planning Commission meeting to begin vetting the CWA-drafted data center ordinance. Survey closes June 10. Community feedback incorporated. Process reflects a township with time (moratorium in place, no pending application) and political will to set strong standards — in contrast to Allen Park, which faced a live application and a planner (Auerbach) who drafted a regulatory framework without a ban option.'
+        detail: 'First Pittsfield Planning Commission meeting to begin vetting the CWA-drafted data center ordinance. Survey closes June 10. Community feedback incorporated. Process reflects a township with time (moratorium in place, no pending application) and political will to set strong standards — in contrast to Allen Park, which faced a live application and a planner (Auerbach) who drafted a regulatory framework without a ban option.',
+        source: 'https://thesuntimesnews.com/pittsfield-weighs-rules-for-data-centers-before-proposals-arrive/', sourceLabel: 'Sun Times News, "Pittsfield weighs rules for data centers before proposals arrive"'
       },
       {
         date: '2026-08-06', type: 'future',
         label: '⚠ PC public hearing on draft ordinance',
-        detail: 'Planning Commission public hearing on the data center / high-resource-demand facilities draft ordinance scheduled for August 6, 2026 at 6:30 PM. This is the key decision point before the November moratorium expiration. CWA (Ben Carlisle) has drafted both this ordinance (Pittsfield) and the Allen Park Section 52-913 framework (Auerbach). The comparison between the two documents reveals how CWA adjusts its approach based on client political direction — or developer pressure.'
+        detail: 'Planning Commission public hearing on the data center / high-resource-demand facilities draft ordinance scheduled for August 6, 2026 at 6:30 PM. This is the key decision point before the November moratorium expiration. CWA (Ben Carlisle) has drafted both this ordinance (Pittsfield) and the Allen Park Section 52-913 framework (Auerbach). The comparison between the two documents reveals how CWA adjusts its approach based on client political direction — or developer pressure. As of July 31, 2026 this hearing has not yet occurred and no outcome is available — check back after Aug 6.',
+        source: 'https://www.pittsfield-mi.gov/CivicAlerts.aspx?AID=3430', sourceLabel: 'Pittsfield Township — Planning Commission Public Hearing notice'
       },
       {
         date: '2026-11-01', type: 'future',
@@ -721,12 +775,25 @@ const COMMUNITIES = [
       {
         date: '2026-01-12', type: 'protection',
         label: 'Council unanimously passes 12-month moratorium',
-        detail: 'City Council unanimously passes a 12-month moratorium on data center construction within city limits. Data centers were not previously defined in the city\'s zoning ordinance. City Manager Dan Swallow directed to bring zoning ordinance amendment language forward within the 365-day window. Mayor Marl: goal is to "study the issue a little bit further and put into place the appropriate regulatory policies." CWA (Ben Carlisle) is city planning consultant and presumptive drafter of any ordinance amendments. Note: adjacent Saline Township (Mike Auerbach/CWA) already has the Related Digital/Stargate consent judgment in effect — the city moratorium is a direct response to that precedent.'
+        detail: 'City Council unanimously passes a 12-month moratorium on data center construction within city limits. Data centers were not previously defined in the city\'s zoning ordinance. City Manager Dan Swallow directed to bring zoning ordinance amendment language forward within the 365-day window. Mayor Marl: goal is to "study the issue a little bit further and put into place the appropriate regulatory policies." Councilmember Jim Dell\'Orco stated Saline Township\'s experience with data center development informed the city\'s decision to act, while floating alternatives including battery storage and industrial parks — but did not mention CWA or the Carlisle/Auerbach dynamic directly. CWA (Ben Carlisle) is city planning consultant and presumptive drafter of any ordinance amendments. Note: adjacent Saline Township (Mike Auerbach/CWA) already has the Related Digital/Stargate consent judgment in effect — the city moratorium is a direct response to that precedent.',
+        source: 'https://thesuntimesnews.com/city-of-saline-passes-temporary-data-center-moratorium/', sourceLabel: 'Sun Times News, "City of Saline passes temporary data center moratorium"'
+      },
+      {
+        date: '2026-02-27', type: 'community',
+        label: 'Statewide moratoria tracker confirms Saline City status',
+        detail: 'WKAR\'s statewide data center moratoria/legislation tracker lists Saline City\'s 12-month moratorium (enacted Jan 12, 2026) among Michigan\'s active local responses, with no ordinance-progress detail beyond the moratorium itself.',
+        source: 'https://www.wkar.org/wkar-news/2026-02-27/michigan-data-center-tracker-moratoria-legislation-and-grid-impact', sourceLabel: 'WKAR, "Michigan data center tracker," Feb 27, 2026'
+      },
+      {
+        date: '2026-04-01', type: 'community',
+        label: 'Mayor Marl distances city from Township\'s Stargate project',
+        detail: 'At his 2026 State of the City address, Mayor Brian Marl distances the City of Saline from Saline Township\'s OpenAI/Oracle "Stargate" project, noting it is "nearly seven miles from our City\'s border" and that the city has "no jurisdiction" over it, while pledging to "constructively engage with the developer...to ensure preservation of local infrastructure." No mention of the earlier Fortune 100 annexation inquiry from December 2025, and no confirmed developer follow-up since. Date approximate — exact address date not specified in source.',
+        source: 'https://thesalinepost.com/g/saline-mi/n/356640/saline-mayor-marl-gives-2026-state-city-address', sourceLabel: 'Saline Post, "Saline Mayor Marl gives 2026 State of the City address"'
       },
       {
         date: '2027-01-12', type: 'future',
         label: '⚠ 12-month moratorium expires',
-        detail: 'City of Saline\'s 12-month moratorium expires January 12, 2027. CWA-drafted ordinance amendments must be adopted before this date. No public record of draft ordinance language or PC study sessions found as of July 2026. The city is in the same position Allen Park was before Solstice applied — no ordinance, a CWA consultant, and developer interest already documented.'
+        detail: 'City of Saline\'s 12-month moratorium expires January 12, 2027. CWA-drafted ordinance amendments must be adopted before this date. As of July 31, 2026 — roughly 6.5 months into the moratorium — there is still no public record of draft ordinance language or PC study sessions on the topic; the city\'s Planning Commission/AgendaCenter pages are not crawlable to confirm non-public study sessions may exist. The city is in the same position Allen Park was before Solstice applied — no ordinance yet, a CWA consultant, and developer interest already documented.'
       }
     ]
   },
@@ -746,7 +813,94 @@ const COMMUNITIES = [
       {
         date: '2026-07-07', type: 'cwa-action',
         label: 'Full Zoning Ordinance Rewrite published — data centers as defined use type',
-        detail: 'Superior Township publishes Full Zoning Ordinance Rewrite Draft (Ordinance-Rewrite-Full-Draft-7-7-26.pdf). Data center use types appear in Article 10 (Section 10.05(JJ)): "DATA CENTERS AND DATA PROCESSING CENTERS (ACCESSORY, SMALL-SCALE, AND LARGE-SCALE)" as defined non-residential uses. First time all three scales appear as regulated categories in the township\'s code. No moratorium in Superior Township — CWA is embedding data center regulation into the broader rewrite rather than a separate moratorium process. Contrast with Pittsfield Township (same planner, separate moratorium + dedicated ordinance process).'
+        detail: 'Superior Township publishes Full Zoning Ordinance Rewrite Draft (Ordinance-Rewrite-Full-Draft-7-7-26.pdf). Data center use types appear in Article 10 (Section 10.05(JJ)): "DATA CENTERS AND DATA PROCESSING CENTERS (ACCESSORY, SMALL-SCALE, AND LARGE-SCALE)" as defined non-residential uses. First time all three scales appear as regulated categories in the township\'s code. No moratorium in Superior Township — CWA is embedding data center regulation into the broader rewrite rather than a separate moratorium process. Contrast with Pittsfield Township (same planner, separate moratorium + dedicated ordinance process). The draft\'s cover sheet lists four PC public hearing dates that preceded it (Feb 25, Apr 22, May 27, Jun 24, 2026) but leaves "Adopted by the Township Board" and "Effective [date]" blank — meaning it had not yet reached the Board for adoption when published.',
+        source: 'https://superiortownship.org/wp-content/uploads/2026/07/Ordinance-Rewrite-Full-Draft-7-7-26.pdf', sourceLabel: 'Superior Township — Full Zoning Ordinance Rewrite Draft, July 7, 2026 (PDF)'
+      },
+      {
+        date: '2026-08-26', type: 'future',
+        label: 'Next scheduled Planning Commission meeting',
+        detail: 'Superior Township\'s Planning Commission page shows its next regular meeting (fourth-Wednesday cadence) is August 26, 2026, with no agenda/packet posted yet as of July 31, 2026. No public hearing, PC vote, or Board adoption of the July 7 draft has been reported as of this date — the ordinance rewrite appears to still be in the post-draft, pre-Board-hearing stage. No data center, BESS, or edge-DC development proposal has surfaced for Superior Township itself, despite its border with Ypsilanti Township\'s UM/LANL fight — no source connects the two.',
+        source: 'https://superiortownship.org/boards-commissions/planning-commision/', sourceLabel: 'Superior Township — Planning Commission page'
+      }
+    ]
+  },
+  {
+    name: 'Troy',
+    county: 'Oakland County',
+    planner: 'Benjamin R. Carlisle',
+    title: 'President, AICP, LEED-AP',
+    cwaStatus: 'active',
+    statusLabel: 'ACTIVE — CWA PRESIDENT (no data center activity found)',
+    events: [
+      {
+        date: '2024-05-20', type: 'cwa-action',
+        label: '"Plan Troy 2040" Master Plan adopted (CWA-facilitated)',
+        detail: 'Troy adopts its "Plan Troy 2040" Master Plan after a 2-year process facilitated by CWA, covering Land Use, Economic Development, Transportation, Special Area Use, Infrastructure, and a new "Neighborhood Nodes" concept. No mention of data centers or battery energy storage anywhere in the plan.',
+        source: 'https://troymi.gov/departments/planning/city_master_plan.php', sourceLabel: 'City of Troy — Master Plan page'
+      },
+      {
+        date: '2025-01-14', type: 'cwa-action',
+        label: 'Carlisle presents Residence Inn and Oak Meadows site plan reviews',
+        detail: 'Ben Carlisle personally presents staff reviews to the Planning Commission on the Residence Inn Hotel special-use/site-plan application and the Oak Meadows Site Condominium (10 units), addressing wetlands, stormwater, tree mitigation, and traffic. Routine development review — no data center connection.',
+        source: 'https://apps.troymi.gov/Meetings/Meetings/DownloadPDF/6619661', sourceLabel: 'Troy Planning Commission draft minutes, Jan 14, 2025'
+      },
+      {
+        date: '2025-06-09', type: 'cwa-action',
+        label: 'Carlisle introduces Somerset West PUD concept',
+        detail: 'City Council minutes credit Ben Carlisle with introducing the Somerset West Planned Unit Development concept/preliminary development plan (3100 W. Big Beaver).',
+        source: 'https://apps.troymi.gov/Meetings/Meetings/DownloadPDF/6816779', sourceLabel: 'Troy City Council minutes, June 9, 2025'
+      },
+      {
+        date: '2025-10-28', type: 'cwa-action',
+        label: 'Carlisle drafts Neighborhood Node zoning text amendment',
+        detail: 'Carlisle is "extensively" involved in reviewing special-use applications and drafting zoning text-amendment language for Neighborhood Node building-entrance standards (File 258) — implementing the Master Plan\'s Neighborhood Nodes concept. Not data-center related.',
+        source: 'https://apps.troymi.gov/BoardsAndCommittees/DownloadPDF?documentId=6955683', sourceLabel: 'Troy Planning Commission agenda, Oct 28, 2025'
+      },
+      {
+        date: '2026-07-31', type: 'community',
+        label: 'No data center, BESS, or edge-DC activity found in Troy',
+        detail: 'Extensive research turned up no zoning ordinance changes, Master Plan provisions, development proposals, or news coverage connecting data centers, battery energy storage systems, or edge data centers to Troy, Michigan, 2024–present. Troy hosts only a pre-existing colocation facility (listed as "DTW02 – FSNI"), not a new proposal. Nearby Oakland County data center activity (Verrus/"Project Flex," Alphabet-backed, conditionally approved Sept 2025) is in Lyon Township, not Troy — easy to confuse. No controversy or criticism of Ben Carlisle or CWA specific to Troy was found in any search. This lane exists to document the absence, not to claim otherwise.',
+        source: 'https://www.oakgov.com/community/sustainability/data-centers', sourceLabel: 'Oakland County — Data Centers resource page (no Troy mention)'
+      }
+    ]
+  },
+  {
+    name: 'Berkley',
+    county: 'Oakland County',
+    planner: 'Benjamin R. Carlisle',
+    title: 'President, AICP, LEED-AP (nominal — see notes)',
+    cwaStatus: 'active',
+    statusLabel: 'ACTIVE — CWA FIRM (day-to-day by Megan Masson-Minock)',
+    events: [
+      {
+        date: '2024-05-28', type: 'cwa-action',
+        label: 'CWA reviews "The Columbia" PUD proposal',
+        detail: 'Planning Commission minutes: "The City\'s Planning Consultant, Carlisle Wortman Associates, provided a thorough review" of a PUD proposal (The Columbia). Note: Berkley\'s day-to-day CWA planner is principal Megan Masson-Minock, not Ben Carlisle personally — no instance was found of Carlisle himself presenting, attending, or being individually named in Berkley PC/Council minutes 2024–present, despite being listed as "President" on the firm\'s letterhead.',
+        source: 'https://berkleymi.gov/_default_upload_bucket/PC%20Minutes%205.28.2024%20APPROVED.pdf', sourceLabel: 'Berkley Planning Commission minutes, May 28, 2024'
+      },
+      {
+        date: '2024-09-16', type: 'cwa-hired',
+        label: 'Council authorizes CWA contract for Dorothea Road parklet design',
+        detail: 'City Council authorizes a contract with Carlisle Wortman Associates for a conceptual plan design for an urban plaza/parklet at the Dorothea Road street stub, funded by a SEMCOG grant.',
+        source: 'https://files.dennishennen.com/meeting-packets/cc/2024/2024-09-16-Berkley-City-Council-Packet.pdf', sourceLabel: 'Berkley City Council packet, Sept 16, 2024'
+      },
+      {
+        date: '2024-10-11', type: 'cwa-action',
+        label: 'Zoning-rewrite memo on CWA letterhead names Carlisle as President',
+        detail: 'A zoning ordinance rewrite memo on Carlisle/Wortman letterhead — listing "Benjamin R. Carlisle, President" — is issued as part of Berkley\'s 2024–2025 two-year, four-phase zoning ordinance rebuild. The memo itself was authored by CWA principal Megan Masson-Minock, illustrating the pattern seen across CWA\'s smaller/lower-controversy clients: Carlisle\'s name appears on firm letterhead as President while another CWA planner does the actual work.',
+        source: 'https://www.berkleymi.gov/_default_upload_bucket/Public%20packet%2010.22.24.pdf', sourceLabel: 'Berkley public packet, Oct 22, 2024 (includes Oct 11 memo)'
+      },
+      {
+        date: '2025-08-07', type: 'community',
+        label: 'Berkley wins MAP Planning Outreach Award for CWA-led zoning update',
+        detail: 'Berkley wins the Michigan Association of Planning\'s Planning Outreach Award for its recent zoning ordinance update process, crediting "Carlisle | Wortman, Associates, Inc." as the consulting firm (no individual planner named in the coverage).',
+        source: 'https://oaklandcounty115.com/2025/08/07/berkley-wins-planning-outreach-award-for-recent-zoning-ordinance-update-process/', sourceLabel: 'Oakland County Times, Aug 7, 2025'
+      },
+      {
+        date: '2026-07-31', type: 'community',
+        label: 'No data center, BESS, or edge-DC activity found in Berkley',
+        detail: 'Consistent with Berkley\'s small (~1.8 sq mi), fully built-out residential character, no zoning language, development proposal, or news coverage connecting data centers, battery storage, or edge data centers to Berkley was found, 2024–present. No controversy or criticism of Ben Carlisle or CWA specific to Berkley was found — the only unrelated 2023 land-use controversy found (a multi-family development dispute) predates this window and does not implicate CWA. This lane exists to document the absence, not to claim otherwise.',
+        source: 'https://www.oakgov.com/community/sustainability/data-centers', sourceLabel: 'Oakland County — Data Centers resource page (no Berkley mention)'
       }
     ]
   },
@@ -889,7 +1043,7 @@ function xPath(cx, cy, r) {
 // ─────────────────────────────────────────────
 const activeTypes = new Set(Object.keys(TYPES));
 const LANE_H = 148;
-const TODAY = '2026-07-25';
+const TODAY = '2026-07-31';
 
 // ─────────────────────────────────────────────
 //  LEGEND
@@ -1071,21 +1225,32 @@ function buildLaneSVG(community, svgWidth, communityIdx) {
 // ─────────────────────────────────────────────
 const ttEl = document.getElementById('tt');
 let ttVisible = false;
+let ttPinned = false;
+let ttPinnedKey = null;
 
 // Store reference: communityIdx → positioned[]
 const laneData = [];
 
-function showTT(e, ev) {
+function showTT(e, ev, pinned) {
   const meta = TYPES[ev.type];
+  const sourceHtml = ev.source
+    ? `<div class="tt-source">🔗 <a href="${ev.source}" target="_blank" rel="noopener">${ev.sourceLabel || 'Source'}</a></div>`
+    : '';
+  const pinHint = pinned
+    ? `<div class="tt-pin-hint">Pinned — click the dot again, or click elsewhere, to close.</div>`
+    : (ev.source ? `<div class="tt-pin-hint">Click the dot to pin this card and open the link.</div>` : '');
   ttEl.innerHTML = `
     <div class="tt-type" style="color:${meta.color}">${meta.label}</div>
     <div class="tt-label">${ev.label}</div>
     <div class="tt-date">${fmtDate(ev.date)}</div>
     <div class="tt-detail">${ev.detail}</div>
+    ${sourceHtml}
+    ${pinHint}
   `;
   ttEl.classList.add('show');
+  ttEl.classList.toggle('pinned', !!pinned);
   ttVisible = true;
-  placeTT(e);
+  if (!pinned) placeTT(e);
 }
 
 function placeTT(e) {
@@ -1098,23 +1263,49 @@ function placeTT(e) {
   ttEl.style.top  = t + 'px';
 }
 
-document.addEventListener('mousemove', e => { if (ttVisible) placeTT(e); });
+document.addEventListener('mousemove', e => { if (ttVisible && !ttPinned) placeTT(e); });
 
 // Event delegation on chart area
 document.getElementById('chart').addEventListener('mouseover', e => {
+  if (ttPinned) return;
   const hit = e.target.closest('.ev-hit');
   if (!hit) return;
   const ci = +hit.dataset.ci;
   const ei = +hit.dataset.ei;
   const positioned = laneData[ci];
-  if (positioned && positioned[ei]) showTT(e, positioned[ei].ev);
+  if (positioned && positioned[ei]) showTT(e, positioned[ei].ev, false);
 });
 
 document.getElementById('chart').addEventListener('mouseout', e => {
+  if (ttPinned) return;
   if (!e.target.closest('.ev-hit')) return;
   ttEl.classList.remove('show');
   ttVisible = false;
 });
+
+// Click a dot to pin its card open (so the source link becomes clickable)
+document.getElementById('chart').addEventListener('click', e => {
+  const hit = e.target.closest('.ev-hit');
+  if (!hit) {
+    if (ttPinned) { ttPinned = false; ttPinnedKey = null; ttEl.classList.remove('show', 'pinned'); ttVisible = false; }
+    return;
+  }
+  const ci = +hit.dataset.ci;
+  const ei = +hit.dataset.ei;
+  const key = ci + ':' + ei;
+  const positioned = laneData[ci];
+  if (!positioned || !positioned[ei]) return;
+  if (ttPinned && ttPinnedKey === key) {
+    ttPinned = false; ttPinnedKey = null; ttEl.classList.remove('show', 'pinned'); ttVisible = false;
+  } else {
+    ttPinned = true; ttPinnedKey = key;
+    showTT(e, positioned[ei].ev, true);
+  }
+  e.stopPropagation();
+});
+
+// Clicking the tooltip itself (e.g. selecting text) shouldn't close it
+ttEl.addEventListener('click', e => e.stopPropagation());
 
 // ─────────────────────────────────────────────
 //  RENDER
