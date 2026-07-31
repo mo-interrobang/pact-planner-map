@@ -125,7 +125,12 @@ body {
 }
 
 /* ── AXIS ── */
-.axis-spacer { /* left column placeholder */ }
+.axis-spacer {
+  position: sticky;
+  left: 0;
+  z-index: 4;
+  background: var(--surface-0);
+}
 .axis-svg-wrap { position: relative; }
 
 /* ── SWIMLANE ── */
@@ -133,6 +138,10 @@ body {
   display: contents;
 }
 .lane-header {
+  position: sticky;
+  left: 0;
+  z-index: 4;
+  box-shadow: 4px 0 8px -4px rgba(0,0,0,0.4);
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-right: none;
