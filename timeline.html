@@ -320,9 +320,9 @@ body {
       <div class="pattern-card-body">Auerbach co-reviewed the <strong>U of M Data Center Guidebook</strong> (Feb 6, 2026). The guidebook recommends 8 protections <em>Auerbach refused to require in Allen Park</em>. He then taught it statewide at the MAP February 2026 webinar — disseminating to planners like Kreps (Berlin) the same framework he failed to follow himself. CWA writes the standard → CWA ignores the standard → CWA promotes the standard as authoritative.</div>
     </div>
     <div class="pattern-card">
-      <div class="pattern-card-num">Pattern 3 — Template Gap</div>
-      <div class="pattern-card-title">Same noise ordinance hole in every community</div>
-      <div class="pattern-card-body">Both Auerbach (Allen Park) and Kreps (Berlin) shaped noise standards capping <strong>backup generator noise at 65 dBA</strong> while leaving <em>continuous operational equipment — chillers, cooling towers, HVAC — completely unregulated</em>. These are the 24/7 sources neighbors actually live with. This is not two independent planners making the same mistake. It is one template replicated with the same structural gap that favors the developer.</div>
+      <div class="pattern-card-num">Pattern 3 — Shared Numeric Template</div>
+      <div class="pattern-card-title">Corrected Aug 1, 2026: same numbers, not a noise loophole</div>
+      <div class="pattern-card-body">An earlier version of this card claimed Berlin Township's draft left cooling equipment unregulated at a 65 dBA generator-only cap. A direct read of the actual ordinance text disproves that: it caps <strong>"backup generators and cooling equipment"</strong> together at 65 dBA, with no loophole. What IS confirmed, across a full-text comparison of five CWA-linked sites (Allen Park, Pittsfield Twp, Superior Twp, Berkley, Berlin Twp): near-identical "Purpose and Intent" language and matching numeric standards — 60% max lot coverage, 8am–6pm generator testing hours, renewable-energy and PUE targets — reused and tuned per site, not independently reinvented each time. See the vault's CWA-Ordinance-Pattern-Comparison note for the full analysis.</div>
     </div>
     <div class="pattern-card">
       <div class="pattern-card-num">Pattern 4 — Developer Law Firm</div>
@@ -405,7 +405,7 @@ const COMMUNITIES = [
       {
         date: '2026-02-12', type: 'cwa-action',
         label: 'MAP webinar: Auerbach teaches data center planning to Michigan planners statewide',
-        detail: 'Michigan Association of Planning (MAP) hosts webinar promoting the U of M Data Center Guidebook. Auerbach (CWA) co-teaches Michigan planners — including planners from other communities facing data center proposals — how to use the same framework he applied in Saline Township and Allen Park. The framework includes the ordinance template with the generator-only noise cap that leaves operational equipment unregulated. This is the vehicle through which the CWA approach becomes the statewide default. Laura Kreps (CWA) is almost certainly in this audience, or applying the same guidance in Berlin Charter Township at the same time. Auerbach is disseminating standards he failed to follow in Saline Township as the authoritative approach for others.'
+        detail: 'Michigan Association of Planning (MAP) hosts webinar promoting the U of M Data Center Guidebook. Auerbach (CWA) co-teaches Michigan planners — including planners from other communities facing data center proposals — how to use the same framework he applied in Saline Township and Allen Park. A full-text comparison across five CWA-linked sites (updated Aug 1, 2026) confirms shared "Purpose and Intent" language and matching numeric standards for lot coverage, generator testing hours, renewable energy, and PUE — this is the likely vehicle through which that shared template becomes the statewide default. Laura Kreps (CWA) is almost certainly in this audience, or applying the same guidance in Berlin Charter Township at the same time. Auerbach is disseminating standards he failed to follow in Saline Township as the authoritative approach for others.'
       },
       {
         date: '2026-02-12', type: 'legal',
@@ -415,12 +415,48 @@ const COMMUNITIES = [
       {
         date: '2026-05-01', type: 'developer',
         label: 'Construction begins',
-        detail: 'Stargate data center construction starts despite the 5-2 PC denial and the pending legal challenge from Kathryn Haushalter. The consent judgment effectively handed the developer a go-ahead that the community never approved.'
+        detail: 'Stargate data center construction starts despite the 5-2 PC denial and the pending legal challenge from Kathryn Haushalter. The consent judgment effectively handed the developer a go-ahead that the community never approved.',
+      },
+      {
+        date: '2025-11-11', type: 'community',
+        label: 'Resident public comment: "Carlisle/Wortman needs to be replaced"',
+        detail: 'Planning Commission public comment, resident Tim Bruneau: "I think that Carlisle/Wortman needs to be replaced… major reason we were overrun by data center." First documented public call for CWA\'s removal — precedes the actual termination by about 7 months.',
+        source: 'https://salinetownship.org/uploads/minutes/1772816259_2026.2.03%20Saline%20PC%20Meeting%20Minutes%20Final.pdf', sourceLabel: 'Referenced in Feb 3, 2026 PC minutes'
+      },
+      {
+        date: '2026-02-03', type: 'cwa-action',
+        label: 'PC directs Auerbach to draft an industrial moratorium',
+        detail: 'Planner Auerbach gives an overview of moratoria; Planning Commission unanimously (Rothfuss/Kohler) directs him to draft an industrial zoning moratorium for review the following month — CWA writing its own client\'s response to the fallout from CWA\'s own flawed Related Digital review.',
+        source: 'https://salinetownship.org/uploads/minutes/1772816259_2026.2.03%20Saline%20PC%20Meeting%20Minutes%20Final.pdf', sourceLabel: 'Feb 3, 2026 PC minutes'
+      },
+      {
+        date: '2026-03-03', type: 'cwa-action',
+        label: 'Auerbach presents draft moratorium ordinance language',
+        detail: 'Auerbach presents two examples showing possible zoning ordinance amendment language for the industrial moratorium. Vote postponed to April; Board separately directed to hire outside counsel — a sign the township no longer trusted CWA\'s legal judgment alone after the Related Digital debacle.',
+        source: 'https://salinetownship.org/uploads/minutes/1776087731_2026.03.03%20ST%20PC%20Minutes-FINAL.pdf', sourceLabel: 'Mar 3, 2026 PC minutes'
+      },
+      {
+        date: '2026-05-13', type: 'cwa-action',
+        label: 'Board: "move forward" with CWA, but only with outside review',
+        detail: 'Township Board votes 5-0 to move forward with Carlisle Wortman on the zoning ordinance consolidation — but only "with the stipulation that final product is reviewed by an outside planner." Separately votes 5-0 to adopt a moratorium. CWA is being kept on a short leash, not fully trusted.',
+        source: 'https://salinetownship.org/uploads/minutes/1781527551_May%202026%20Minutes.pdf', sourceLabel: 'May 13, 2026 Board minutes'
+      },
+      {
+        date: '2026-06-02', type: 'cwa-terminated',
+        label: 'CWA presents HEID (data center) ordinance — and announces its own phase-out',
+        detail: 'Auerbach presents a CWA-drafted moratorium resolution and a "High Energy Intensive Development (HEID) Ordinance" draft modeled on Washington Township\'s ordinance, explicitly described as applying "to data centers and similar high-energy developments" — a proactive framework for the exact use category CWA\'s own flawed review let through months earlier. Same meeting: "Carlisle Wortman will no longer be representing the township as our planner but they will work with us over the next couple months while we find a replacement."',
+        source: 'https://salinetownship.org/uploads/minutes/1783519816_2026.06.02%20ST%20PC%20Minutes-FINAL.pdf', sourceLabel: 'Jun 2, 2026 PC minutes'
+      },
+      {
+        date: '2026-06-10', type: 'cwa-terminated',
+        label: 'Board formally adopts moratorium, confirms CWA phase-out',
+        detail: 'Board adopts the moratorium resolution 4-0 and confirms "Carlisle Wortman will be phasing out over the next 60 days." This is the primary-source confirmation of what LuAnne Kozma reported by email two days later (see next event) — no longer an unconfirmed secondhand claim.',
+        source: 'https://salinetownship.org/uploads/minutes/1783629289_June%202026%20Minutes.pdf', sourceLabel: 'Jun 10, 2026 Board minutes'
       },
       {
         date: '2026-06-12', type: 'cwa-terminated',
-        label: 'Township agrees to terminate CWA',
-        detail: 'Per LuAnne Kozma (email June 12, 2026, forwarded by Phoenix MacGregor): Saline Township agreed to retain CWA for only 60 more days. The written agreement was not yet confirmed in writing at time of report — Kozma planned to get it from "Tammie" at Saline Township. Status: UNCONFIRMED in writing.'
+        label: 'Kozma email reports the termination (now confirmed above)',
+        detail: 'Per LuAnne Kozma (email June 12, 2026, forwarded by Phoenix MacGregor): Saline Township agreed to retain CWA for only 60 more days. At the time this was UNCONFIRMED in writing — since corroborated directly by the June 2 and June 10, 2026 official meeting minutes above.'
       }
     ]
   },
@@ -729,7 +765,8 @@ const COMMUNITIES = [
       {
         date: '2026-06-29', type: 'cwa-action',
         label: 'PC public hearing; approves draft ordinance amendments → Council',
-        detail: 'Public hearing held at 7 PM in Wixom Council Chambers. Planning Commission approves amended motions and forwards proposed ordinance to City Council. Draft requirements include: noise/vibration impact studies; cooling method restrictions (air, hybrid, or closed-loop only — no open-air evaporative cooling); prohibition on data centers adjacent to residential properties; decommissioning plans; water usage controls; developer-funded infrastructure improvements. CWA (Ben Carlisle) is the presumptive drafter of these provisions — no press coverage found names a consultant directly.'
+        detail: 'Public hearing held at 7 PM in Wixom Council Chambers. Planning Commission approves amended motions and forwards proposed ordinance to City Council. Draft requirements include: noise/vibration impact studies; cooling method restrictions (air, hybrid, or closed-loop only — no open-air evaporative cooling); prohibition on data centers adjacent to residential properties; decommissioning plans; water usage controls; developer-funded infrastructure improvements. CONFIRMED (per the meeting minutes themselves): drafter/presenter is CWA staffer Matteo Passalacqua, "the City\'s planning consultant," who "presented the Ordinance verbatim" — not Ben Carlisle personally. Passalacqua also appears at the Nov 18, 2025 Council meeting on an unrelated housing item, establishing him as CWA\'s regular on-the-ground presence in Wixom.',
+        source: 'https://www.wixomgov.org/home/showpublisheddocument/12856/639195515755530000', sourceLabel: 'Jun 29, 2026 PC minutes'
       },
       {
         date: '2026-07-14', type: 'community',
@@ -1089,7 +1126,7 @@ function xPath(cx, cy, r) {
 // ─────────────────────────────────────────────
 const activeTypes = new Set(Object.keys(TYPES));
 const LANE_H = 148;
-const TODAY = '2026-07-31';
+const TODAY = '2026-08-01';
 
 // ─────────────────────────────────────────────
 //  LEGEND
