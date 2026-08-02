@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>The Auerbach Line — Saline Township ↔ Allen Park</title>
+<style>
+:root {
+  --surface-0:   #0f172a;
+  --surface-1:   #1e293b;
+  --surface-2:   #293548;
+  --surface-3:   #364560;
+  --border:      #334155;
+  --text-1:      #f1f5f9;
+  --text-2:      #94a3b8;
+  --text-3:      #64748b;
+
+  --c-saline:    #d95926;  /* orange — matches "developer action" slot */
+  --c-auerbach:  #e66767;  /* red — matches "CWA enables/aids developer" slot */
+  --c-ap:        #3987e5;  /* blue — matches "legal / consent judgment" slot */
+  --c-overlap:   #c98500;  /* amber — matches "community/public response" slot */
+  --c-corp:      #9085e9;  /* violet — matches "CWA contract begins" slot */
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--surface-0);
+  color: var(--text-1);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+.page-header {
+  padding: 20px 28px 16px;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border);
+}
+.page-nav { font-size: 11.5px; margin-bottom: 8px; }
+.page-nav a { color: #67e8f9; text-decoration: none; font-weight: 600; }
+.page-nav a:hover { text-decoration: underline; }
+.page-nav .sep { color: var(--text-3); margin: 0 8px; }
+.page-header h1 { font-size: 20px; font-weight: 700; color: var(--text-1); letter-spacing: -0.25px; }
+.page-header .subtitle { font-size: 12.5px; color: var(--text-2); margin-top: 4px; max-width: 820px; }
+.updated-line { font-size: 9px; color: var(--text-3); margin-top: 6px; letter-spacing: 0.04em; }
+
+.wrap { max-width: 1220px; margin: 0 auto; padding: 0 20px 60px; }
+
+section.panel {
+  background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px;
+  padding: 18px 22px; margin-top: 20px;
+}
+section.panel h2 { margin: 0 0 10px; font-size: 17px; color: var(--text-1); }
+section.panel p { margin: 8px 0; font-size: 14px; color: var(--text-1); }
+section.panel p.small { font-size: 12.5px; color: var(--text-2); }
+
+.overlaps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 12px; margin-top: 12px; }
+.overlap-card {
+  border: 1px solid var(--c-overlap); background: rgba(201,133,0,0.1); border-radius: 8px;
+  padding: 10px 12px; font-size: 12.5px; cursor: pointer; transition: transform .1s;
+}
+.overlap-card:hover { transform: translateY(-2px); }
+.overlap-card .d { font-weight: 700; color: var(--c-overlap); font-size: 11.5px; }
+.overlap-card .t { margin-top: 4px; color: var(--text-1); }
+.overlap-card b { color: var(--text-2); font-weight: 700; }
+
+.controls {
+  position: sticky; top: 0; z-index: 20; background: rgba(15,23,42,0.96); backdrop-filter: blur(4px);
+  border-bottom: 1px solid var(--border); padding: 12px 20px;
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+}
+.controls input[type=text] {
+  flex: 1; min-width: 180px; padding: 8px 12px; border-radius: 20px;
+  border: 1px solid var(--border); background: var(--surface-2); color: var(--text-1); font-size: 13px;
+}
+.controls input::placeholder { color: var(--text-3); }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px;
+  border-radius: 20px; font-size: 12px; cursor: pointer; user-select: none;
+  border: 1.5px solid; font-weight: 700;
+}
+.chip.saline { color: var(--c-saline); border-color: var(--c-saline); background: rgba(217,89,38,0.12); }
+.chip.ap { color: var(--c-ap); border-color: var(--c-ap); background: rgba(57,135,229,0.12); }
+.chip.auerbach { color: var(--c-auerbach); border-color: var(--c-auerbach); background: rgba(230,103,103,0.12); }
+.chip.off { opacity: 0.3; filter: grayscale(0.5); }
+.stats { font-size: 11.5px; color: var(--text-3); margin-left: auto; white-space: nowrap; }
+
+.timeline-head {
+  display: grid; grid-template-columns: 92px 1fr 1fr 1fr;
+  gap: 10px; padding: 16px 20px 4px; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3);
+}
+.timeline-head .col-saline { color: var(--c-saline); }
+.timeline-head .col-auerbach { color: var(--c-auerbach); text-align: center; }
+.timeline-head .col-ap { color: var(--c-ap); }
+
+.row { display: grid; grid-template-columns: 92px 1fr 1fr 1fr; gap: 10px; padding: 7px 20px; position: relative; }
+.row.overlap-row { background: linear-gradient(90deg, rgba(201,133,0,0.05), rgba(201,133,0,0.12), rgba(201,133,0,0.05)); border-top: 1px dashed var(--c-overlap); border-bottom: 1px dashed var(--c-overlap); }
+.row .date { font-size: 12px; font-weight: 700; color: var(--text-1); padding-top: 10px; display: flex; flex-direction: column; gap: 3px; }
+.row .date .yr { font-size: 10px; font-weight: 500; color: var(--text-3); }
+.row.overlap-row .date::before { content: "⚡ SAME DAY"; display:block; font-size: 9px; color: var(--c-overlap); font-weight: 800; letter-spacing: 0.05em; }
+
+.cell { min-height: 8px; }
+.card {
+  border-radius: 8px; padding: 9px 11px; font-size: 12.8px; cursor: pointer;
+  border: 1.5px solid; margin-bottom: 7px; transition: box-shadow .12s, transform .12s;
+}
+.card:hover { transform: translateY(-1px); }
+.card.saline { background: rgba(217,89,38,0.1); border-color: rgba(217,89,38,0.45); }
+.card.ap { background: rgba(57,135,229,0.1); border-color: rgba(57,135,229,0.45); }
+.card.auerbach { background: rgba(230,103,103,0.1); border-color: rgba(230,103,103,0.45); }
+.card .title { font-weight: 700; margin-bottom: 2px; color: var(--text-1); }
+.card .badge { display: inline-block; font-size: 9.5px; font-weight: 700; padding: 1px 7px; border-radius: 10px; margin-bottom: 5px; letter-spacing: 0.03em; }
+.badge.corp { background: var(--c-corp); color: #0f172a; }
+.badge.key { background: var(--c-overlap); color: #0f172a; }
+.badge.epilogue { background: var(--text-3); color: #0f172a; }
+.card .desc { display: none; font-size: 12.3px; color: var(--text-2); margin-top: 6px; line-height: 1.5; }
+.card .cite { display: none; margin-top: 8px; padding-top: 7px; border-top: 1px dashed var(--border); font-size: 11.3px; color: var(--text-2); }
+.card .cite a { color: #67e8f9; text-decoration: none; font-weight: 600; }
+.card .cite a:hover { text-decoration: underline; }
+.card .cite .unpub { color: var(--text-3); font-style: italic; }
+.card.expanded .desc, .card.expanded .cite { display: block; }
+.card.flash { animation: flash 1.1s ease; }
+@keyframes flash { 0%{box-shadow:0 0 0 4px rgba(201,133,0,0.55);} 100%{box-shadow:0 0 0 0 rgba(201,133,0,0);} }
+
+.hidden { display: none !important; }
+
+footer { text-align: center; color: var(--text-3); font-size: 11.5px; padding: 30px 20px 50px; }
+footer a { color: #67e8f9; }
+
+.conclusions p { font-size: 13.8px; margin: 10px 0; color: var(--text-1); }
+.conclusions h3 { font-size: 14px; color: var(--text-1); margin: 16px 0 6px; }
+.caveat { background: rgba(201,133,0,0.1); border: 1px solid var(--c-overlap); border-radius: 8px; padding: 10px 14px; font-size: 12.5px; margin-top: 12px; color: var(--text-1); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-nav">
+    <a href="index.html">← Planner Map</a><span class="sep">|</span><a href="timeline.html">CWA Pattern Timeline</a><span class="sep">|</span><span style="color:var(--text-3);">Auerbach Line (this page)</span>
+  </div>
+  <h1>The Auerbach Line — Saline Township ↔ Allen Park <span class="cwa-badge" style="display:inline-block;font-size:11px;font-weight:700;color:#e66767;background:rgba(230,103,103,0.15);border:1px solid rgba(230,103,103,0.3);border-radius:4px;padding:1px 6px;margin-left:8px;vertical-align:middle;letter-spacing:0.05em;">MIKE AUERBACH</span></h1>
+  <div class="subtitle">A day-aligned, source-linked comparison testing whether the Saline Township and Allen Park data-center fights are connected through one planning consultant — from Saline's first data-center conversation (July 2025) through his separation from Saline Township and Allen Park's Solstice ZBA appeal (June 2026).</div>
+  <div class="updated-line">Updated 2026-08-02</div>
+</div>
+
+<div class="wrap">
+
+  <section class="panel">
+    <h2>How to read this</h2>
+    <p>Three lanes, one shared date column: <b style="color:var(--c-saline)">Saline Township</b> on the left, <b style="color:var(--c-auerbach)">Auerbach's direct, personal contact points</b> in the center, <b style="color:var(--c-ap)">Allen Park / Solstice</b> on the right. Rows where both communities have an event on the <b>exact same calendar date</b> are highlighted in amber. Click any card to expand it and see its source. Use the filters to isolate a lane, search for a name or document, or jump straight to the four same-day overlaps below.</p>
+    <p class="small">Citations to publicly hosted sources (the ALEA Institute's FOIA production, Saline Township's own posted minutes) link out directly. Citations to documents that exist only in the P.A.C.T. research files — invoices, the executed consent judgment, court exhibits, City of Allen Park FOIA production — are shown as plain text, not links, since those aren't published here.</p>
+  </section>
+
+  <section class="panel">
+    <h2>⚡ The four same-day overlaps</h2>
+    <p class="small">Dates where something happened in Saline Township and something happened in Allen Park on the exact same calendar day. Click a card to jump to it below.</p>
+    <div class="overlaps-grid" id="overlapCards"></div>
+  </section>
+
+  <div class="controls">
+    <span class="chip saline" data-lane="saline">🏛️ Saline Township</span>
+    <span class="chip auerbach" data-lane="auerbach">🔗 Auerbach Direct Contact</span>
+    <span class="chip ap" data-lane="ap">🏙️ Allen Park / Solstice</span>
+    <input type="text" id="search" placeholder="Search events, people, documents…">
+    <span class="stats" id="stats"></span>
+  </div>
+
+  <div class="timeline-head">
+    <div></div>
+    <div class="col-saline">Saline Township</div>
+    <div class="col-auerbach">Auerbach — Direct Contact</div>
+    <div class="col-ap">Allen Park / Solstice</div>
+  </div>
+
+  <div id="timeline"></div>
+
+  <section class="panel conclusions">
+    <h2>What this timeline supports — and what it doesn't</h2>
+
+    <h3>1. Auerbach was Allen Park's named consultant before Saline's story even began</h3>
+    <p>The 2024 Carlisle/Wortman contract naming Auerbach specifically as Allen Park's Planning Consultant was signed roughly 14 months before Related Digital's first informal appearance in front of Saline Township's Planning Commission (July 8, 2025). He wasn't a planner who "learned the playbook" in Saline and then brought it to Allen Park — he was already Allen Park's guy the entire time Saline's fight was unfolding.</p>
+
+    <h3>2. The two cases weren't sequential — they overlapped in real time, repeatedly</h3>
+    <p>Four separate dates land an active Saline event and an active Allen Park event on the exact same calendar day: the day the Saline consent judgment was entered and Solstice's plans landed on Carlisle/Wortman's desk (Oct 15, 2025); the day Auerbach spoke with Saline's litigation counsel by phone and Allen Park held its first, most heavily attended postponement hearing (Jan 8, 2026); the day Saline's board tightened its oversight of Carlisle/Wortman and Allen Park's Planning Commission came within one vote of denying Solstice outright (May 13, 2026); and the day Auerbach presented Saline's moratorium/HEID ordinance in the same meeting Saline announced his firm's phase-out, while in Allen Park Fred Frank emailed him the proposal that became Allen Park's own moratorium ordinance (June 2, 2026).</p>
+
+    <h3>3. A recurring behavioral pattern, not just a recurring person</h3>
+    <p>In both places the same shape repeats: an early planning judgment favorable to the applicant, direct and largely undisclosed-to-the-public contact with the developer's side at the moments that mattered, and Auerbach personally naming or facilitating the developer's next procedural move rather than the city/township's own attorney doing so.</p>
+
+    <h3>4. The honest limits of the evidence</h3>
+    <p>The Oct. 1, 2025 Teams call is billed under a separate "Analysis/Strategy" category from the consent-judgment drafting itself — it's not proven the call's subject was the judgment. The executed 44-page consent judgment contains zero mentions of Auerbach or Carlisle/Wortman. And Auerbach's June 23, 2026 email to Solstice's own counsel — asserting the moratorium blocks their ZBA appeal — cuts the other way entirely: that's Auerbach helping Allen Park hold the line, not assist the developer. The fair reading isn't "Auerbach always helps the developer." It's that he's a single, largely invisible node sitting inside both communities' most consequential moments, on both sides of the table, more often than a neutral technical consultant's role would predict.</p>
+
+    <h3>5. What would turn correlation into something stronger</h3>
+    <p>Two Michigan LLC filings — RD Michigan (Saline's developer) and Solstice LLC (Allen Park's developer) — registering with the state one calendar day apart, Aug 25–26, 2025, is a striking coincidence but not, on its own, evidence the developers are connected. The single most useful next document would be Auerbach's own calendar or detailed timesheet covering July 2025–June 2026.</p>
+
+    <div class="caveat">This page is a research tool, not a legal filing. Read the underlying source before repeating any claim publicly — especially the ones marked "not proven" above.</div>
+  </section>
+
+</div>
+
+<footer>
+  Built from PACT-Vault source documents, the ALEA Institute's Saline Township FOIA production, Saline Township's own public minutes, and the City of Allen Park's 2026 FOIA production. Part of the <a href="index.html">P.A.C.T. Michigan Municipal Planner Network Map</a>.
+</footer>
+
+<script>
+// ---- DATA ----
+// public: true => url is a real, clickable public source. public: false => shown as plain text (path), no link.
+const events = [
+  { id:1, date:"2024-05-01", lane:"ap", badge:"corp", title:"Auerbach formally named Allen Park's Planning Consultant",
+    desc:"Allen Park signs its current \"Agreement for Consulting Services\" with Carlisle/Wortman Associates. Section 4.0 names Mike Auerbach specifically as \"the Planning Consultant\" for the city. Section 5.0 sets up a litigation-privilege shield. This predates Saline Township's data-center story by about 14 months.",
+    cite:{label:"City of Allen Park / CWA consulting contract, signed May 2024", public:false} },
+
+  { id:2, date:"2025-07-08", lane:"saline", title:"Related Digital's first (informal) appearance before Saline Twp",
+    desc:"Related Digital introduces itself to the Saline Township Planning Commission — not yet a filed application.",
+    cite:{label:"Saline Twp Planning Commission minutes, July 8, 2025", url:"https://www.salinetownship.org/", public:true} },
+
+  { id:3, date:"2025-07-09", lane:"saline", title:"Board notes: \"the Data Center has not filed anything\" yet",
+    desc:"Township Board minutes explicitly record that as of this date, the data center project had only introduced itself — no formal application.",
+    cite:{label:"Saline Twp Board minutes, July 9, 2025", url:"https://www.salinetownship.org/", public:true} },
+
+  { id:4, date:"2025-07-10", lane:"saline", title:"Formal rezoning application filed",
+    desc:"Related Digital / RD Michigan Property Owner I LLC formally files its rezoning application with Saline Township, per the later lawsuit's own account.",
+    cite:{label:"RD Michigan v. Saline Twp complaint", public:false} },
+
+  { id:5, date:"2025-08-04", lane:"auerbach", badge:"key", title:"Auerbach's phantom-ordinance rezoning review",
+    desc:"Auerbach signs a Conditional Rezoning Review citing \"Section 12.04(A)(2)\" — language matching a never-enacted 2013 draft ordinance word-for-word. The actual, enacted § 12.04(A) prohibits conditional rezoning outright. This planning error is the catalyst later cited in the lawsuit.",
+    cite:{label:"Kozma Affidavit, Exhibit 1 (Bates 094)", public:false} },
+
+  { id:6, date:"2025-08-05", lane:"saline", title:"PC public hearing — execs present, financial sweeteners offered",
+    desc:"Related Digital CEO Brent Behrman and EVP Greg Gushee personally present. Offers: ~28,000 gal/day water use, 65 dB noise ceiling claim, 75 ft setbacks, and direct cash: $2M to the fire department, $1M to the township \"for legal costs,\" $100K to the cemeteries. Vote: tabled 6-1 pending studies.",
+    cite:{label:"Saline Twp PC minutes, Aug 5, 2025", url:"https://www.salinetownship.org/", public:true} },
+
+  { id:7, date:"2025-08-12", lane:"saline", title:"PC votes 5-2 to recommend denial",
+    desc:"Moved by Commissioner Ronnie Kohler, supported by Commissioner Neil Bohnett — cites Master Plan inconsistency, loss of 250+ acres of prime farmland, available industrial land elsewhere, inadequate emergency response capacity.",
+    cite:{label:"Saline Twp PC minutes, Aug 12, 2025", url:"https://www.salinetownship.org/", public:true} },
+
+  { id:8, date:"2025-08-13", lane:"saline", title:"Board tables to Sept 10; Supervisor Marion abstains",
+    desc:"4-0 to table (Supervisor Marion abstained, no explanation given). Same meeting schedules a PA 116 farmland-preservation termination vote and an Industrial Development District public hearing for Sept 10.",
+    cite:{label:"Saline Twp Board minutes, Aug 13, 2025", url:"https://www.salinetownship.org/", public:true} },
+
+  { id:9, date:"2025-08-20", lane:"saline", title:"Informational joint Board/PC meeting",
+    desc:"Related Digital, the township attorney, the township planner, the fire department (SAFD), and DTE all present. Numerous questions raised; no vote taken.",
+    cite:{label:"Saline Twp joint minutes, Aug 20, 2025", url:"https://www.salinetownship.org/", public:true} },
+
+  { id:10, date:"2025-08-25", lane:"saline", badge:"corp", title:"RD Michigan Property Owner I LLC files for MI authority",
+    desc:"RD Michigan Property Owner I LLC (Saline's developer) obtains its Michigan Certificate of Authority — resident agent James Kraus. One calendar day before Solstice LLC's own Michigan filing (see Aug 26 card, Allen Park lane) — both during the exact window Auerbach was actively closing out Saline's litigation.",
+    cite:{label:"Kozma Affidavit ¶7 (cites the LARA filing)", public:false} },
+
+  { id:11, date:"2025-08-26", lane:"ap", badge:"corp", title:"Solstice LLC files for MI authority — as a \"Real Estate Investment Company\"",
+    desc:"Solstice LLC (Michigan Entity #900085060, Certificate of Authority C0537-9372) registers with LARA as a \"Real Estate Investment Company\" — no mention of data centers, AI, or computing anywhere in the filing. Resident agent Danyal Ati signed as \"Self.\" Filed three months before the Allen Park application, one day after RD Michigan's own Michigan filing.",
+    cite:{label:"Michigan Certificate of Authority C0537-9372", public:false} },
+
+  { id:12, date:"2025-09-10", lane:"saline", title:"Board votes 4-1 to DENY the rezoning",
+    desc:"\"A MOTION was made by Treasurer Zink and supported by Trustee Marion to deny the project. Ayes 4 Nays 1 Clerk Marion voted against the motion\" — meaning Clerk Marion was the lone vote in favor of the project.",
+    cite:{label:"Saline Twp Board minutes, Sept 10, 2025 (regular meeting)", url:"https://www.salinetownship.org/", public:true} },
+
+  { id:13, date:"2025-09-12", lane:"saline", title:"RD Michigan sues Saline Township",
+    desc:"Lawsuit filed in Washtenaw County Circuit Court, Case No. 2025-001577-CZ — exclusionary zoning, declaratory relief, due process — two days after the denial vote.",
+    cite:{label:"RD Michigan v. Saline Township complaint", public:false} },
+
+  { id:14, date:"2025-09-22", lane:"saline", title:"Landry's first billed activity on the case",
+    desc:"Township litigation counsel David Landry logs his first billable time — reviewing the plaintiff attorney's email regarding \"projected benefits to township of consent judgment.\"",
+    cite:{label:"Invoice, David Landry #31594", public:false} },
+
+  { id:15, date:"2025-09-24", lane:"saline", title:"Special joint meeting — three options presented",
+    desc:"Township attorneys Fred Lucas and David Landry present the Board and PC jointly with three options: settle/negotiate, consent judgment, or litigate. 30+ citizens present. Notably absent from the ALEA FOIA production despite being public on the township's own website.",
+    cite:{label:"Saline Twp special meeting minutes, Sept 24, 2025", url:"https://www.salinetownship.org/", public:true} },
+
+  { id:16, date:"2025-09-26", lane:"saline", title:"Landry: \"received a proposed Consent Judgment from the attorney for the Plaintiff\"",
+    desc:"Landry requests a closed session, confirming in writing that the developer's own attorney (Dykema/Alan Greene) drafted the consent judgment.",
+    cite:{label:"Letter, David Landry, Sept 26, 2025 (ALEA Institute production)", url:"https://aleainstitute.ai/saline-township-foia/", public:true} },
+
+  { id:17, date:"2025-10-01", lane:"auerbach", badge:"key", title:"THE Oct 1 Teams call — Auerbach, Cabage, and Saline's litigation counsel",
+    desc:"Board votes 4-1 to approve the consent judgment. Landry's own billed timesheet shows the sequence that day: review/redline the consent judgment (2.9 hrs) → a 1.0-hr \"Microsoft Teams conference with Twp Engineering Consultant Dan Cabage AND Twp Planning Consultant Mike Auerbach\" → prep for that night's board meeting. The Teams call is billed under a separate \"Analysis/Strategy\" category from the judgment-drafting entries — suggestive sequencing, not proof the call's subject was the judgment itself.",
+    cite:{label:"Invoice, David Landry #31594, line items for 10-01-2025", public:false} },
+
+  { id:18, date:"2025-10-06", lane:"auerbach", title:"A third, redacted Auerbach contact",
+    desc:"Landry's invoice records a further communication with Auerbach on this date; the subject line itself is redacted in the production.",
+    cite:{label:"Invoice, David Landry #31594", public:false} },
+
+  { id:19, date:"2025-10-15", lane:"saline", badge:"key", title:"Consent judgment ENTERED; IDD approved 4-0",
+    desc:"Judge Julia B. Owdziej signs the 44-page consent judgment. Same day, the Board votes 4-0 to approve Industrial Development District Resolution No. 25-001. The executed judgment contains zero mentions of Auerbach or Carlisle/Wortman anywhere in its text.",
+    cite:{label:"Executed Consent Judgment (44 pp.)", public:false} },
+  { id:19.5, date:"2025-10-15", lane:"ap", badge:"key", title:"Solstice's site plans physically delivered to Carlisle/Wortman",
+    desc:"Per Auerbach's own Nov 3, 2025 review letter, Solstice's plans for 7500 Enterprise Drive were \"physically delivered\" to CWA on this exact date — the same day the Saline consent judgment was entered and the Saline IDD was approved.",
+    cite:{label:"Allen Park Planning Commission packet, Nov 6, 2025", public:false} },
+
+  { id:20, date:"2025-11-06", lane:"ap", title:"First Allen Park PC packet with the Solstice proposal",
+    desc:"Auerbach's site plan review (dated Nov 3, 2025) concludes the site plan \"does not include enough required information,\" listing 24 numbered deficiencies — the ancestor of the later \"21 outstanding items.\"",
+    cite:{label:"Allen Park Planning Commission packet, Nov 6, 2025", public:false} },
+
+  { id:21, date:"2025-12-13", lane:"saline", title:"Haushalter files Motion to Intervene",
+    desc:"Saline resident Kathryn Haushalter moves to intervene, seeking to invalidate the consent judgment.",
+    cite:{label:"ALEA Institute FOIA production (narrative reference)", url:"https://aleainstitute.ai/saline-township-foia/", public:true} },
+
+  { id:22, date:"2026-01-08", lane:"saline", badge:"key", title:"Second documented Auerbach–Landry contact",
+    desc:"\"Telephone conference with Mike Auerbach of Carlisle Wortman\" — billed, no hours listed, no subject stated — during the Haushalter intervention litigation.",
+    cite:{label:"Invoice, David Landry #31801", public:false} },
+  { id:22.5, date:"2026-01-08", lane:"ap", badge:"key", title:"Allen Park's 1st postponement — 125+ residents protest",
+    desc:"Solstice's site plan review is postponed for the first time. 125+ residents protest outside City Hall; 40 speakers, almost all opposed. Commissioner Fred Frank casts the sole \"no\" vote against the delay.",
+    cite:{label:"Allen Park Planning Commission minutes, Jan 8, 2026", public:false} },
+
+  { id:23, date:"2026-01-26", lane:"auerbach", title:"Auerbach & Solstice coordinate on managing citizen opposition",
+    desc:"David Gibson (Solstice) emails Auerbach and Matt Baker floating an informal \"listening session,\" explicitly asking whether the city had heard from citizen organizers Chris Dardzinski and Nicole Hopkins.",
+    cite:{label:"City of Allen Park FOIA production (general staff mailboxes)", public:false} },
+
+  { id:24, date:"2026-01-28", lane:"saline", title:"Haushalter mandamus complaint; well promise confirmed broken",
+    desc:"Kathryn Haushalter and other residents file a mandamus complaint alleging the ZBA failed to hold a required hearing. Separately, per Ashley Haushalter's sworn affidavit, Township Engineer Dan Cabage admits the monitoring wells Landry publicly promised on Oct 1, 2025 still had not been installed.",
+    cite:{label:"Ashley Haushalter Affidavit, Exhibit 2 to RD Reply", public:false} },
+
+  { id:25, date:"2026-02-03", lane:"saline", title:"Saline PC directs Auerbach to draft an industrial moratorium",
+    desc:"The first documented step in what becomes CWA's phase-out as Saline Township's planner.",
+    cite:{label:"Saline Twp PC minutes, Feb 3, 2026", url:"https://www.salinetownship.org/", public:true} },
+
+  { id:26, date:"2026-02-06", lane:"saline", title:"Insurer denies coverage — 5 months after the settlement",
+    desc:"Tokio Marine HCC denies the duty to defend/indemnify, on the theory the lawsuit sought only equitable relief. Offers a capped $250,000 defense-cost reimbursement instead.",
+    cite:{label:"Coverage letter, Feb 6, 2026 (ALEA Institute production)", url:"https://aleainstitute.ai/saline-township-foia/", public:true} },
+
+  { id:27, date:"2026-02-12", lane:"saline", title:"Kozma affidavit filed",
+    desc:"LuAnne Kozma's sworn affidavit is filed in Washtenaw County Circuit Court, establishing the phantom-ordinance finding on the record.",
+    cite:{label:"Kozma Affidavit, filed Feb 12, 2026", public:false} },
+
+  { id:28, date:"2026-02-20", lane:"saline", title:"Court denies intervention; confirms open-session vote",
+    desc:"Judge Owdziej denies Haushalter's motion to intervene, citing a $40M nonrefundable DTE deposit and $2B in already-ordered equipment as a \"fait accompli.\" Also finds the Oct 1 settlement vote occurred in open session despite the minutes' own deficiencies.",
+    cite:{label:"Washtenaw Co. Circuit Court order, Case No. 2025-001577-CZ", public:false} },
+
+  { id:29, date:"2026-03-03", lane:"saline", title:"Auerbach presents draft ordinance examples",
+    desc:"Continuing the moratorium/ordinance-drafting process the Feb 3 meeting initiated.",
+    cite:{label:"Saline Twp PC minutes, Mar 3, 2026", url:"https://www.salinetownship.org/", public:true} },
+
+  { id:30, date:"2026-03-05", lane:"ap", title:"Allen Park's 2nd postponement",
+    desc:"Commissioner Loyd motions to postpone; concerns raised about water. Commissioner Tom Beals raises the shell-company concern publicly (\"Don't let this become Hollywood number two\") — never answered.",
+    cite:{label:"Allen Park Planning Commission packet, Mar 5, 2026", public:false} },
+
+  { id:31, date:"2026-05-13", lane:"saline", badge:"key", title:"Saline Board tightens CWA oversight",
+    desc:"Board votes to continue with Carlisle/Wortman only with mandatory outside-planner review of its work — a direct consequence of the phantom-ordinance finding.",
+    cite:{label:"Saline Twp Board minutes, May 13, 2026", url:"https://www.salinetownship.org/", public:true} },
+  { id:31.5, date:"2026-05-13", lane:"ap", badge:"key", title:"Allen Park's 3rd postponement — denial motion fails 2-3",
+    desc:"That morning, Mo emails the Planning Commission a detailed corporate-identity/track-record letter. That evening, Dan Loyd motions to DENY the application; it fails 2-3. 21 items still outstanding.",
+    cite:{label:"Allen Park Planning Commission packet, May 13, 2026", public:false} },
+
+  { id:32, date:"2026-06-01", lane:"auerbach", title:"Fred Frank asks Auerbach how to revive the denial motion",
+    desc:"Commissioner Frank emails Auerbach directly asking about a motion for reconsideration or rescission. Auerbach's reply is noncommittal.",
+    cite:{label:"City of Allen Park FOIA production", public:false} },
+
+  { id:33, date:"2026-06-02", lane:"saline", badge:"key", title:"Auerbach presents HEID ordinance — same meeting CWA's phase-out is announced",
+    desc:"Auerbach presents a CWA-drafted moratorium resolution and a \"High Energy Intensive Development (HEID) Ordinance.\" This is the same meeting where it's announced Carlisle/Wortman \"will no longer be representing the township as our planner.\"",
+    cite:{label:"Saline Twp PC minutes, June 2, 2026", url:"https://www.salinetownship.org/", public:true} },
+  { id:33.5, date:"2026-06-02", lane:"ap", badge:"key", title:"Frank's moratorium proposal to Auerbach becomes Ordinance #04-2026 E",
+    desc:"Fred Frank emails Auerbach, City Attorney Joseph Couvreur, and Dan Loyd proposing ordinances addressing \"high impact resource users such as data centers,\" plus a moratorium while they're drafted — the direct origin of Allen Park's June 9 emergency moratorium ordinance.",
+    cite:{label:"City of Allen Park FOIA production", public:false} },
+
+  { id:34, date:"2026-06-03", lane:"ap", title:"Loyd defends Auerbach authoring PC minutes",
+    desc:"The night before the denial vote, Mo emails Loyd a detailed corporate-identity letter. Loyd replies defending Auerbach's dual role: \"our paid consultant Mr. Auerbach has a fiduciary responsibility to the city... His work preparing site plans... well places him to take the commission's minutes.\"",
+    cite:{label:"Email, Mo Chiaramonti to Dan Loyd, June 3, 2026", public:false} },
+
+  { id:35, date:"2026-06-04", lane:"auerbach", badge:"key", title:"7:25 AM — Auerbach tips off Solstice's team; PC denies 7-2 that night",
+    desc:"Auerbach personally emails Solstice's team (\"Commissioner Proposal to Renew Denial\") warning them a commissioner plans to renew the denial motion, and arranges a Teams link for virtual attendance. That evening the PC votes 7-2 to DENY — and Auerbach publicly tells the commission Solstice could appeal to the ZBA, before Solstice had said anything about appealing.",
+    cite:{label:"City of Allen Park FOIA production; PC packet, June 4, 2026", public:false} },
+
+  { id:36, date:"2026-06-09", lane:"ap", title:"Allen Park adopts emergency 6-month moratorium",
+    desc:"City Council adopts Ordinance #04-2026 E, a 6-month ban on data center activity. Solstice does not qualify for the exemption.",
+    cite:{label:"Allen Park City Council packet, June 9, 2026", public:false} },
+
+  { id:37, date:"2026-06-10", lane:"saline", badge:"key", title:"Saline formally ends its relationship with Carlisle/Wortman",
+    desc:"Board formally adopts the moratorium and confirms the 60-day phase-out of CWA as township planner — Auerbach's Saline Township engagement is now formally over, a little over 2 years after Allen Park had named him its own consultant.",
+    cite:{label:"Saline Twp Board minutes, June 10, 2026", url:"https://www.salinetownship.org/", public:true} },
+
+  { id:38, date:"2026-06-17", lane:"ap", badge:"key", title:"Solstice files its ZBA appeal",
+    desc:"Andrew Reside of Warner Norcross + Judd LLP files a Zoning Board of Appeals appeal of the June 4 denial, $300 fee. This is the requested end-point of this comparison.",
+    cite:{label:"City of Allen Park FOIA production", public:false} },
+
+  { id:39, date:"2026-06-23", lane:"auerbach", badge:"epilogue", title:"Epilogue — Auerbach tells Solstice's counsel the appeal is stalled",
+    desc:"Auerbach emails Solstice's counsel directly: \"it is the city's position that Solstice Data's appeal of their site plan denial cannot be processed while the city's data center moratorium is in effect.\" Unlike the June 4 tip-off, this instance is NOT developer-favorable — Auerbach is here helping the city hold the line.",
+    cite:{label:"City of Allen Park FOIA production", public:false} },
+];
+
+const byDate = {};
+events.forEach(e => { (byDate[e.date] ||= []).push(e); });
+const dates = Object.keys(byDate).sort();
+
+function fmtDate(d){ const dt = new Date(d + "T12:00:00"); return dt.toLocaleDateString("en-US", { month:"short", day:"numeric" }); }
+function fmtYear(d){ return d.slice(0,4); }
+
+function cardHtml(e){
+  let badgeHtml = "";
+  if (e.badge === "corp") badgeHtml = '<span class="badge corp">CORPORATE FILING</span><br>';
+  if (e.badge === "key") badgeHtml = '<span class="badge key">KEY EVENT</span><br>';
+  if (e.badge === "epilogue") badgeHtml = '<span class="badge epilogue">EPILOGUE</span><br>';
+  const citeHtml = e.cite.public
+    ? `Source: <a href="${e.cite.url}" target="_blank" rel="noopener">${e.cite.label}</a>`
+    : `Source: <span class="unpub">${e.cite.label} — on file with P.A.C.T. research, not published</span>`;
+  return `<div class="card ${e.lane}" data-id="${e.id}" data-lane="${e.lane}" data-text="${(e.title+' '+e.desc).replace(/"/g,'&quot;').toLowerCase()}">
+    ${badgeHtml}
+    <div class="title">${e.title}</div>
+    <div class="desc">${e.desc}</div>
+    <div class="cite">${citeHtml}</div>
+  </div>`;
+}
+
+let html = "";
+dates.forEach(d => {
+  const evs = byDate[d];
+  const lanes = { saline:[], auerbach:[], ap:[] };
+  evs.forEach(e => lanes[e.lane].push(e));
+  const isOverlap = lanes.saline.length && lanes.ap.length;
+  html += `<div class="row ${isOverlap ? 'overlap-row' : ''}" data-date="${d}">
+    <div class="date">${fmtDate(d)}<span class="yr">${fmtYear(d)}</span></div>
+    <div class="cell">${lanes.saline.map(cardHtml).join("")}</div>
+    <div class="cell">${lanes.auerbach.map(cardHtml).join("")}</div>
+    <div class="cell">${lanes.ap.map(cardHtml).join("")}</div>
+  </div>`;
+});
+document.getElementById("timeline").innerHTML = html;
+
+const overlapDates = dates.filter(d => byDate[d].some(e=>e.lane==='saline') && byDate[d].some(e=>e.lane==='ap'));
+document.getElementById("overlapCards").innerHTML = overlapDates.map(d => {
+  const titles = byDate[d].map(e => `<b>${e.lane==='saline'?'Saline':e.lane==='ap'?'Allen Park':'Auerbach'}:</b> ${e.title}`).join("<br>");
+  return `<div class="overlap-card" data-jump="${d}"><div class="d">${fmtDate(d)}, ${fmtYear(d)}</div><div class="t">${titles}</div></div>`;
+}).join("");
+
+document.querySelectorAll(".card").forEach(c => { c.addEventListener("click", () => c.classList.toggle("expanded")); });
+document.querySelectorAll(".overlap-card").forEach(c => {
+  c.addEventListener("click", () => {
+    const d = c.getAttribute("data-jump");
+    const row = document.querySelector(`.row[data-date="${d}"]`);
+    if (row) {
+      row.scrollIntoView({ behavior:"smooth", block:"center" });
+      row.querySelectorAll(".card").forEach(card => card.classList.add("expanded","flash"));
+      setTimeout(()=>row.querySelectorAll(".card").forEach(card=>card.classList.remove("flash")), 1200);
+    }
+  });
+});
+
+const activeLanes = new Set(["saline","auerbach","ap"]);
+document.querySelectorAll(".chip[data-lane]").forEach(chip => {
+  chip.addEventListener("click", () => {
+    const lane = chip.getAttribute("data-lane");
+    if (activeLanes.has(lane)) { activeLanes.delete(lane); chip.classList.add("off"); }
+    else { activeLanes.add(lane); chip.classList.remove("off"); }
+    applyFilters();
+  });
+});
+
+const searchBox = document.getElementById("search");
+searchBox.addEventListener("input", applyFilters);
+
+function applyFilters(){
+  const q = searchBox.value.trim().toLowerCase();
+  let visibleCount = 0;
+  document.querySelectorAll(".row").forEach(row => {
+    let rowHasVisible = false;
+    row.querySelectorAll(".card").forEach(card => {
+      const lane = card.getAttribute("data-lane");
+      const text = card.getAttribute("data-text");
+      const show = activeLanes.has(lane) && (!q || text.includes(q));
+      card.classList.toggle("hidden", !show);
+      if (show) { rowHasVisible = true; visibleCount++; }
+    });
+    row.classList.toggle("hidden", !rowHasVisible);
+  });
+  document.getElementById("stats").textContent = visibleCount + " of " + events.length + " events shown";
+}
+applyFilters();
+</script>
+
+</body>
+</html>

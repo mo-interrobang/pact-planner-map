@@ -169,13 +169,13 @@
     #sidebar-footer {
       padding: 10px 12px;
       border-top: 1px solid #334155;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 6px;
       flex-shrink: 0;
       margin-top: auto;
     }
     .btn {
-      flex: 1;
       padding: 7px;
       border-radius: 5px;
       font-size: 11px;
@@ -190,6 +190,8 @@
     .btn-danger:hover { background: #991b1b; }
     .btn-timeline { background: #164e63; color: #67e8f9; border: 1px solid #0e7490; text-decoration: none; display: flex; align-items: center; justify-content: center; }
     .btn-timeline:hover { background: #0e7490; }
+    .btn-auerbach { background: #4c1d1d; color: #fca5a5; border: 1px solid #7f1d1d; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+    .btn-auerbach:hover { background: #7f1d1d; }
 
     /* ─── Map container ────────────────────────────────────────── */
     #map-container {
@@ -668,6 +670,7 @@
     <button class="btn btn-primary" onclick="downloadCSV()">⬇ Export CSV</button>
     <button class="btn btn-danger" onclick="showCWAOnly()">⚠ CWA Only</button>
     <a href="timeline.html" target="_blank" class="btn btn-timeline">📋 Timeline</a>
+    <a href="auerbach-line.html" target="_blank" class="btn btn-auerbach">🔗 Auerbach Line</a>
   </div>
 </div>
 
