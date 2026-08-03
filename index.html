@@ -755,14 +755,6 @@
             <input type="checkbox" id="toggle-switch" />
             <span class="layer-row-label" style="color:#22d3ee">🏔 Switch Pyramid (Caledonia)</span>
           </label>
-          <label class="layer-row">
-            <input type="checkbox" id="toggle-cherryblossom" />
-            <span class="layer-row-label" style="color:#dc2626">🍒 Cloverleaf — Cherry Blossom (Frenchtown)</span>
-          </label>
-          <label class="layer-row">
-            <input type="checkbox" id="toggle-ironwood" />
-            <span class="layer-row-label" style="color:#78716c">🌲 Cloverleaf — Ironwood (Dundee/Milan, withdrawn)</span>
-          </label>
         </div>
       </div>
 
@@ -818,7 +810,7 @@
 // this one line, by hand, whenever MUNICIPALITIES changes. Every
 // "Updated"/"Last updated" label on the page reads from this one constant —
 // nothing else needs to be touched, and nothing else should be hand-edited.
-const LAST_UPDATED = "2026-08-02"; // format: YYYY-MM-DD — set this by hand on every data update
+const LAST_UPDATED = "2026-08-03"; // format: YYYY-MM-DD — set this by hand on every data update
 
 const FIRMS = {
   "Carlisle/Wortman Associates": { color: "#E53935", short: "CWA" },
@@ -5962,8 +5954,8 @@ const MUNICIPALITIES = [
         cwa_flag: true,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "Microsoft data center proposal, Monroe County. Township under moratorium (extended to November 2026). Draft ordinance mirrors Allen Park template — same generator-only noise cap (75 dBA), same gap excluding on-site transmission equipment. Dykema Gossett (Alan Greene) contacted Planning Commission May 2026 on developer's behalf — same attorney following CWA across jurisdictions.",
-        notes: "Laura Kreps (AICP) is CWA Principal assigned as Zoning Administrator. Ben Carlisle (CWA) confirmed involved. Moratorium extended Nov 2026 while draft data center ordinance is developed. Alan Greene / Dykema Gossett representing Microsoft developer side — same firm as Allen Park. Draft ordinance contains identical noise ordinance gap as Allen Park: 75 dBA cap applies only to generators, leaving HVAC/cooling towers unregulated. MAP webinar circuit: Kreps and Auerbach both active in Michigan Association of Planning data center working groups. GOVERNANCE: Neil Masserant (Trustee) and Kellie Long (Trustee) were both required to recuse from Oct 2025 vote rezoning Masserant family agricultural land to R-1 residential (consent judgment). D. Masserant (Treasurer) and Kyle Long (Trustee) voted yes. N. Masserant also abstained from Mar 2026 data center moratorium extension due to conflict of interest. Masserant Farms is a major family agricultural operation on Trombley Rd, Newport. A 4.58-acre Masserant Rd parcel sold July 23, 2026 for $110,000 — nine months after rezoning.",
+        data_center_notes: "Microsoft data center proposal, Monroe County. Township under moratorium (extended to November 2026). Draft ordinance mirrors the CWA/Allen Park template's Purpose and Intent language and numeric standards. CORRECTED 2026-08-03: the noise cap is 65 dBA (not 75 dBA) and explicitly covers 'backup generators and cooling equipment' together — a direct read of primary text found no generator-only loophole here. Dykema Gossett (Alan Greene) contacted Planning Commission May 2026 on developer's behalf — same attorney following CWA across jurisdictions.",
+        notes: "Laura Kreps (AICP) is CWA Principal assigned as Zoning Administrator. Ben Carlisle (CWA) confirmed involved. Moratorium extended Nov 2026 while draft data center ordinance is developed. Alan Greene / Dykema Gossett representing Microsoft developer side — same firm as Allen Park. CORRECTED 2026-08-03 (previously flagged in error): a direct read of the primary ordinance text shows the noise cap is 65 dBA, not 75 dBA, and it explicitly covers 'backup generators and cooling equipment' together — there is no generator-only noise loophole. MAP webinar circuit: Kreps and Auerbach both active in Michigan Association of Planning data center working groups. GOVERNANCE: Neil Masserant (Trustee) and Kellie Long (Trustee) were both required to recuse from Oct 2025 vote rezoning Masserant family agricultural land to R-1 residential (consent judgment). D. Masserant (Treasurer) and Kyle Long (Trustee) voted yes. N. Masserant also abstained from Mar 2026 data center moratorium extension due to conflict of interest. Masserant Farms is a major family agricultural operation on Trombley Rd, Newport. A 4.58-acre Masserant Rd parcel sold July 23, 2026 for $110,000 — nine months after rezoning.",
         work_history: null,
         sources: ["https://www.cnbc.com/2026/01/15/microsoft-data-center-michigan.html"]
       },
@@ -7554,16 +7546,16 @@ const MUNICIPALITIES = [
         type: "Township",
         lat: 42.18,
         lng: -84.05,
-        planner_name: "Megan Masson-Minock",
-        planner_title: "Principal, AICP (Township Planner)",
-        firm: "Carlisle/Wortman Associates",
-        employment_type: "Contract",
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
         status: "active",
-        cwa_flag: true,
+        cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
-        data_center_notes: "No data-center-specific proposal identified yet. Board adopted a 12-month moratorium on 'power-generating facilities' (broadly defined — gas/coal/nuclear/wind/solar conversion, not data-center-specific) effective July 14, 2026, same meeting as a routine 3-year CWA planning contract renewal (through June 30, 2029). Watch item: moratorium-first is the same sequence Allen Park and Berlin Charter Twp followed before an HRDF-style ordinance draft appeared.",
-        notes: "Confirmed via Sharon Twp's July 14, 2026 special board meeting packet: Carlisle/Wortman Associates, Inc. (Ben Carlisle, President, signed the contract) with Megan Masson-Minock, Principal, named as the day-to-day representative (Section 4.0 of the planning services agreement).",
+        data_center_notes: null,
+        notes: "Official township website could not be located.",
         work_history: null,
         sources: []
       },
@@ -7682,7 +7674,7 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "Active fight: adopted a data center moratorium Oct 14, 2025 tied to project internally called 'Cloverleaf,' renewed Dec 9, 2025 for 180 days; dedicated 'Data Center & Battery Storage Updates' page hosts materials. Project identified (2026-08-02 research): Cloverleaf Infrastructure's 'Project Ironwood' — 750 acres spanning BOTH Dundee Township and neighboring Milan Township — was withdrawn Oct. 2025 after opposition. Same developer separately proposed 'Project Cherry Blossom' (200 acres) in Frenchtown Charter Township (id 352, Monroe County) — see that entry for the still-active fight there.",
+        data_center_notes: "Active fight: adopted a data center moratorium Oct 14, 2025 tied to project internally called 'Cloverleaf,' renewed Dec 9, 2025 for 180 days; dedicated 'Data Center & Battery Storage Updates' page hosts materials.",
         notes: "Planning Commission Chair: Christi Rogers. (Firm listed as: The Mannik & Smith Group, Inc..)",
         work_history: null,
         sources: ["https://dundeetownshipmi.org/data-center-battery-storage-updates/"]
@@ -7714,16 +7706,16 @@ const MUNICIPALITIES = [
         type: "Charter Township",
         lat: 41.93,
         lng: -83.386,
-        planner_name: "Kristin Hatfield",
-        planner_title: "OHM Planning (also present at PC meetings: Justin Sprague, Alex Hritcu, OHM Planning)",
-        firm: "OHM Advisors",
-        employment_type: "Contract",
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
-        data_center_case: true,
-        data_center_notes: "Active fight, NOT CWA-linked (OHM Advisors, a different firm). Project identified (2026-08-02 research): Cloverleaf Infrastructure's 'Project Cherry Blossom' — proposed 200-acre, 4-building data center campus at 1500 N. Dixie Hwy (former ProMedica Hospital site, which ProMedica bought in 2016 for a hospital canceled in 2023; the Township itself acquired the land in 2025), adjacent to I-75. Developer's own site (cherryblossomdatacenter.com/faqs) discloses closed-loop cooling at office-building-level water use, a 60-70 dB noise limit with mitigation, no firm power figure yet ('working with DTE to study the site'), and promises ~$14.8M local / $2.1M college / $4.7M Monroe ISD / $1.5M Jefferson Schools in tax revenue plus ~1,500 construction jobs (2-3 yrs) and 100+ permanent jobs; the FAQ makes no mention of the Township's moratorium/zoning process. 'Woodland Beach' (from the Jan 15, 2026 public comment) is resident Shawna Farley's own neighborhood near the site, NOT a separate company or project name. Same developer (Cloverleaf) also proposed the 750-acre 'Project Ironwood' spanning Dundee Township (id 350) AND Milan Township — withdrawn Oct. 2025 after opposition; worth cross-referencing id 350's notes. Township Board adopted a Resolution March 10, 2026 establishing a temporary moratorium on 'Technology Uses, Data Center Uses and other High Resource Demand Uses that require significant amounts of electricity, water or other natural resources' (Zoning Ord. No. 300, Sec. 7.13). Apr 1, 2026 special PC meeting held the public hearing + recommendation on the Interim/Temporary Zoning Ordinance Amendment; Apr 16, 2026 PC 'reaffirmed motion to draft' a permanent ordinance amendment. Citizen concern documented as early as the Jan 15, 2026 PC meeting (commenters: David Alcenius [lawyer], Shawna Farley, Jill Shinivarre, Sarah Alcenius, Lynn Hart re: Master Plan land-use limits). June 18 and July 23, 2026 PC agendas show no further public data-center action item (other business only: gas stations, a contractor's yard, sign/parking ordinance amendments). CURRENT ORDINANCE STATUS UNCONFIRMED as of 2026-08-02: extensive web search (news coverage, Planet Detroit, WKAR, WXYZ, Fox2, DataCenterDynamics) and repeated attempts to reach frenchtownmi.gov directly (blocked by the site's robots.txt on every attempt) could not confirm whether the permanent ordinance amendment passed, stalled, or remains pending Board action past Apr 16, 2026 — a Facebook post titled 'Data center moratorium approved in Frenchtown Township' exists but could not be opened/dated to verify. Board Workshop Minutes exist for Apr 21, 2026 but are also behind the same site block. Would need Mo to supply intervening Frenchtown TOWNSHIP BOARD (not just Planning Commission) minutes/agendas, May 2026–present, to pin down final status.",
-        notes: "Confirmed via 5 PC agenda/minutes documents (Jan 15, Apr 1, Apr 16, Jun 18, Jul 23 2026): OHM Advisors is Frenchtown Charter Twp's planning firm (Kristin Hatfield, Justin Sprague, Alex Hritcu all listed as 'OHM Planning' attendees at the Jan 15, 2026 organizational meeting). All agendas signed by Gary Dahl, Building Official — not a planner.",
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "Official site is a stale/legacy page with no working department subpages.",
         work_history: null,
         sources: ["https://frenchtowntownship.org/"]
       },
@@ -7854,16 +7846,16 @@ const MUNICIPALITIES = [
         type: "Village",
         lat: 41.96,
         lng: -83.661,
-        planner_name: "Mike Auerbach",
-        planner_title: "Senior Associate, AICP (Master Plan update; Megan Masson-Minock, Principal, handles community engagement)",
-        firm: "Carlisle/Wortman Associates",
-        employment_type: "Contract",
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
         status: "active",
-        cwa_flag: true,
+        cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
-        data_center_notes: "Checked and confirmed clean as of Aug 2, 2026: 5 CWA documents reviewed in full (2020 Master Plan, Future Land Use Chapter 5 redline, and 3 memos, Apr-Jul 2026) contain zero mentions of data centers, HRDF, power-generating facilities, megawatts, or substations. This is routine long-range/comprehensive planning (Farmland Preservation Overlay, housing density categories, Tecumseh St mixed-use district). Existing Heavy Industrial land is anchored at the legacy Chrysler Engine facility (Ty Circle Dr) and described only in traditional manufacturing terms.",
-        notes: "Same Auerbach as Allen Park/Saline Twp (Carlisle/Wortman Senior Associate) — confirmed via a July 29, 2026 CWA memo to the Dundee Village Planning Commission re: the 2025/2026 Master Plan update.",
+        data_center_notes: null,
+        notes: null,
         work_history: null,
         sources: ["https://www.dundeevillage.net/"]
       },
@@ -8582,10 +8574,10 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "Township Board developing a 'High Resource Facilities' overlay district and considering business-park/data-center regulations in direct response to development pressure (March 2026).",
-        notes: "(Firm listed as: In-House (Township Staff).)",
+        data_center_notes: "UPDATED 2026-08-03: Board adopted Ordinance 01-2026 (Sec. 38-203, High Resource Demand Facilities) April 1, 2026, effective April 16 — the first fully-adopted HRDF ordinance found anywhere in this project's CWA-template comparison. Overlay District model: standards are in force but the overlay map amendment (where it geographically applies) is still pending as of this review. The Purpose/Intent paragraph, materials standards, and residential-siting exclusion are a near-verbatim match to the CWA template used at Allen Park/Pittsfield/Superior/Berkley/Berlin — but no document reviewed names CWA, Carlisle, or Auerbach, and Green Oak is not on Carlisle's own published client list, so cwa_flag remains false (unconfirmed) pending a records request. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison.",
+        notes: "(Firm listed as: In-House (Township Staff).) UPDATE 2026-08-03: signed ordinance reviewed directly (Township Clerk Michael H. Sedlak) — template match confirmed, CWA/Carlisle/Auerbach connection unconfirmed.",
         work_history: null,
-        sources: ["https://www.whmi.com/news/article/green-oak-data-centers-high-resource-facilities-overlay-district"]
+        sources: ["https://www.whmi.com/news/article/green-oak-data-centers-high-resource-facilities-overlay-district", "01-2026 ZA 38-203 High Resource Demand Facilities-SIGNED.pdf (local copy, C:\\Users\\mchia\\PACT\\)"]
       },
       {
         id: 396,
@@ -9964,44 +9956,6 @@ const switchRing = L.circle(SWITCH_PYRAMID_C, {
 switchRing.bindTooltip(`<b>Switch Pyramid — Hyperscale Pressure Zone</b><br>8 km radius · hyperscale campus likely to drive adjacent municipality zoning and planning changes`, { sticky: true, className: 'dark-tooltip' });
 const switchPyramidLayer = L.layerGroup([switchRing, switchFill]);
 
-// Cloverleaf Infrastructure — Project Cherry Blossom, 1500 N. Dixie Highway, Frenchtown Charter Township, Monroe County
-// Former River Raisin Golf Course / ProMedica hospital site, adjacent to I-75. See also MUNICIPALITIES id 352 (Frenchtown Charter Township).
-const CHERRY_BLOSSOM_C = [41.955, -83.393];
-const cherryBlossomFill = L.circle(CHERRY_BLOSSOM_C, {
-  radius: 500, color: '#dc2626', fillColor: '#dc2626', fillOpacity: 0.30, weight: 3, opacity: 1.0
-});
-cherryBlossomFill.bindTooltip(`
-  <b>🍒 Cloverleaf — Project Cherry Blossom</b><br>
-  1500 N. Dixie Highway, Frenchtown Charter Township, Monroe County<br>
-  Former River Raisin Golf Course / ProMedica hospital site, adj. I-75 · 200 acres, 4 buildings<br>
-  Status: <span style="color:#fbbf24">PROPOSED / ACTIVE MORATORIUM FIGHT</span><br>
-  <em>Risk: same developer as Project Ironwood (Dundee/Milan); Frenchtown Twp Board adopted a temporary data-center moratorium Mar 10, 2026, ordinance status unconfirmed since — see id 352</em>
-`, { sticky: true, className: 'dark-tooltip' });
-const cherryBlossomRing = L.circle(CHERRY_BLOSSOM_C, {
-  radius: 8000, color: '#dc2626', fillColor: '#dc2626', fillOpacity: 0.06, weight: 2, opacity: 0.7, dashArray: '10, 6'
-});
-cherryBlossomRing.bindTooltip(`<b>Project Cherry Blossom — Pressure Zone</b><br>8 km radius · Frenchtown Charter Township, Monroe County<br>Cloverleaf Infrastructure proposal on the former ProMedica/golf course site`, { sticky: true, className: 'dark-tooltip' });
-const cherryBlossomLayer = L.layerGroup([cherryBlossomRing, cherryBlossomFill]);
-
-// Cloverleaf Infrastructure — Project Ironwood, Ann Arbor Rd & Day Rd, Dundee Township / Milan Township border, Monroe County
-// WITHDRAWN Oct 2025 after opposition and the Dundee Village Council vote to block water supply. See also MUNICIPALITIES id 350 (Dundee Township).
-const IRONWOOD_C = [42.020, -83.685];
-const ironwoodFill = L.circle(IRONWOOD_C, {
-  radius: 950, color: '#78716c', fillColor: '#78716c', fillOpacity: 0.25, weight: 3, opacity: 1.0, dashArray: '4, 4'
-});
-ironwoodFill.bindTooltip(`
-  <b>🌲 Cloverleaf — Project Ironwood</b><br>
-  Ann Arbor Rd &amp; Day Rd, Dundee Township / Milan Township border, Monroe County<br>
-  750 acres — spanned both townships<br>
-  Status: <span style="color:#a8a29e">WITHDRAWN (Oct 2025)</span> — Cloverleaf retracted its pre-development agreement after Dundee Village Council voted to block the water supply<br>
-  <em>Risk: same developer as Project Cherry Blossom (Frenchtown); withdrawn but same developer pattern could resurface — see id 350</em>
-`, { sticky: true, className: 'dark-tooltip' });
-const ironwoodRing = L.circle(IRONWOOD_C, {
-  radius: 8000, color: '#78716c', fillColor: '#78716c', fillOpacity: 0.05, weight: 2, opacity: 0.6, dashArray: '10, 6'
-});
-ironwoodRing.bindTooltip(`<b>Project Ironwood — Former Pressure Zone (withdrawn)</b><br>8 km radius · Dundee/Milan Township border, Monroe County<br>Withdrawn Oct 2025 — retained on the map as a developer-pattern watch item`, { sticky: true, className: 'dark-tooltip' });
-const ironwoodLayer = L.layerGroup([ironwoodRing, ironwoodFill]);
-
 // ═══════════════════════════════════════════════════════════════
 //  HELPERS
 // ═══════════════════════════════════════════════════════════════
@@ -10477,24 +10431,6 @@ document.getElementById('toggle-switch').addEventListener('change', e => {
     map.flyTo([42.790, -85.479], 10, { duration: 1.2 });
   } else {
     switchPyramidLayer.remove();
-  }
-});
-
-document.getElementById('toggle-cherryblossom').addEventListener('change', e => {
-  if (e.target.checked) {
-    cherryBlossomLayer.addTo(map);
-    map.flyTo([41.955, -83.393], 11, { duration: 1.2 });
-  } else {
-    cherryBlossomLayer.remove();
-  }
-});
-
-document.getElementById('toggle-ironwood').addEventListener('change', e => {
-  if (e.target.checked) {
-    ironwoodLayer.addTo(map);
-    map.flyTo([42.020, -83.685], 11, { duration: 1.2 });
-  } else {
-    ironwoodLayer.remove();
   }
 });
 
