@@ -144,7 +144,7 @@ footer a { color: #67e8f9; }
   </div>
   <h1>The Auerbach Line — Saline Township ↔ Allen Park <span class="cwa-badge" style="display:inline-block;font-size:11px;font-weight:700;color:#e66767;background:rgba(230,103,103,0.15);border:1px solid rgba(230,103,103,0.3);border-radius:4px;padding:1px 6px;margin-left:8px;vertical-align:middle;letter-spacing:0.05em;">MIKE AUERBACH</span></h1>
   <div class="subtitle">A day-aligned, source-linked comparison testing whether the Saline Township and Allen Park data-center fights are connected through one planning consultant — from Saline's first data-center conversation (July 2025) through his separation from Saline Township and Allen Park's Solstice ZBA appeal (June 2026).</div>
-  <div class="updated-line">Updated 2026-08-02</div>
+  <div class="updated-line">Updated 2026-08-03</div>
 </div>
 
 <div class="wrap">
@@ -343,18 +343,18 @@ const events = [
     cite:{label:"Allen Park Planning Commission packet, May 13, 2026", public:false} },
 
   { id:32, date:"2026-06-01", lane:"auerbach", title:"Fred Frank asks Auerbach how to revive the denial motion",
-    desc:"Commissioner Frank emails Auerbach directly asking about a motion for reconsideration or rescission. Auerbach's reply is noncommittal.",
+    desc:"Commissioner Frank emails Auerbach (cc Loyd) that morning asking whether the defeated denial motion can be reconsidered or remade; that afternoon, in a second message, he proposes the rescission route instead — a 2/3 vote per MML/Robert's Rules — to revive the motion.",
     cite:{label:"City of Allen Park FOIA production", public:false} },
 
   { id:33, date:"2026-06-02", lane:"saline", badge:"key", title:"Auerbach presents HEID ordinance — same meeting CWA's phase-out is announced",
     desc:"Auerbach presents a CWA-drafted moratorium resolution and a \"High Energy Intensive Development (HEID) Ordinance.\" This is the same meeting where it's announced Carlisle/Wortman \"will no longer be representing the township as our planner.\"",
     cite:{label:"Saline Twp PC minutes, June 2, 2026", url:"https://www.salinetownship.org/", public:true} },
   { id:33.5, date:"2026-06-02", lane:"ap", badge:"key", title:"Frank's moratorium proposal to Auerbach becomes Ordinance #04-2026 E",
-    desc:"Fred Frank emails Auerbach, City Attorney Joseph Couvreur, and Dan Loyd proposing ordinances addressing \"high impact resource users such as data centers,\" plus a moratorium while they're drafted — the direct origin of Allen Park's June 9 emergency moratorium ordinance.",
+    desc:"Fred Frank emails Auerbach, City Attorney Joseph Couvreur, and Dan Loyd proposing ordinances addressing \"high impact resource users such as data centers,\" plus a moratorium while they're drafted — the direct origin of Allen Park's June 9 emergency moratorium ordinance. The same evening email is a detailed vote-strategy memo: it disputes the May 13 minutes' recorded vote tally, lays out the rescind/renew/deny motion sequence for reviving the failed denial vote, and floats the ordinance-drafting-plus-moratorium idea directly to Couvreur for the first time.",
     cite:{label:"City of Allen Park FOIA production", public:false} },
 
   { id:34, date:"2026-06-03", lane:"ap", title:"Loyd defends Auerbach authoring PC minutes",
-    desc:"The night before the denial vote, Mo emails Loyd a detailed corporate-identity letter. Loyd replies defending Auerbach's dual role: \"our paid consultant Mr. Auerbach has a fiduciary responsibility to the city... His work preparing site plans... well places him to take the commission's minutes.\"",
+    desc:"The night before the denial vote, Mo emails Loyd a detailed corporate-identity letter. Loyd replies defending Auerbach's dual role: \"our paid consultant Mr. Auerbach has a fiduciary responsibility to the city... His work preparing site plans... well places him to take the commission's minutes.\" In a separate reply the same day, Loyd also confirms the May 13 draft minutes' vote-tally error \"will be corrected at the opening of the meeting this Thursday.\"",
     cite:{label:"Email, Mo Chiaramonti to Dan Loyd, June 3, 2026", public:false} },
 
   { id:35, date:"2026-06-04", lane:"auerbach", badge:"key", title:"7:25 AM — Auerbach tips off Solstice's team; PC denies 7-2 that night",
@@ -374,8 +374,93 @@ const events = [
     cite:{label:"City of Allen Park FOIA production", public:false} },
 
   { id:39, date:"2026-06-23", lane:"auerbach", badge:"epilogue", title:"Epilogue — Auerbach tells Solstice's counsel the appeal is stalled",
-    desc:"Auerbach emails Solstice's counsel directly: \"it is the city's position that Solstice Data's appeal of their site plan denial cannot be processed while the city's data center moratorium is in effect.\" Unlike the June 4 tip-off, this instance is NOT developer-favorable — Auerbach is here helping the city hold the line.",
+    desc:"Auerbach emails Solstice's counsel Andrew Reside directly (cc Baker, Tom Murray, and City Attorney Couvreur by name): \"it is the city's position that Solstice Data's appeal of their site plan denial cannot be processed while the city's data center moratorium is in effect\" — a position he states is \"based on discussions with the city attorney and staff.\" Unlike the June 4 tip-off, this instance is NOT developer-favorable — Auerbach is here helping the city hold the line.",
     cite:{label:"City of Allen Park FOIA production", public:false} },
+
+  // ---- Added from Allen Park FOIA lawyer-contact / commissioner-communication review (Aug 2026) ----
+  { id:40, date:"2025-11-18", lane:"ap", title:"Mayor Pro Tem's private data-center inquiry loops in Murray for the first time",
+    desc:"Mayor Pro Tem Nancy Knick privately asks Auerbach for background on Solstice after being \"slammed with questions\" from residents (Nov 14). Auerbach forwards it to Building/Econ-Dev Director Matt Baker (Nov 17); Baker's detailed reply explaining the project, tax-break eligibility, and PC process cc's Tom Murray (Nov 18) — the earliest documented instance of Murray being looped into Solstice-related staff communication.",
+    cite:{label:"City of Allen Park FOIA production (tmurray mailbox, FW_ Edge Processing Center)", public:false} },
+
+  { id:41, date:"2026-01-08", lane:"auerbach", title:"Commissioners privately question Auerbach ahead of the first postponement vote",
+    desc:"Same day as the first postponement hearing, Commissioner Joseph Palmisano privately asks Auerbach to call him before the meeting with questions about the site plan and review standards; Commissioner Fred Frank separately asks Auerbach privately whether the project could really be denied given it otherwise meets the master plan.",
+    cite:{label:"City of Allen Park FOIA production (Joseph Palmisano inbox, Fred Frank inbox)", public:false} },
+
+  { id:42, date:"2026-01-11", lane:"auerbach", badge:"key", title:"LaPalm privately floats a moratorium — 5 months before Frank's proposal",
+    desc:"Commissioner Madison LaPalm privately asks Auerbach (not reply-all) whether a data-center moratorium is possible, citing other townships; Auerbach says it's a Council decision and suggests she raise it with the Mayor. In the same exchange, Auerbach discloses that Matt Baker has separately asked City Attorney Couvreur to review the legally-binding status of an old handshake development agreement for the Enterprise Dr. area. The next day, LaPalm tells Auerbach she has emailed Mayor Gail McLeod about pursuing the moratorium — the first documented push for a moratorium, about five months before Fred Frank's June 2 proposal became Ordinance #04-2026E.",
+    cite:{label:"City of Allen Park FOIA production (Madison LaPalm inbox)", public:false} },
+
+  { id:43, date:"2026-01-20", lane:"ap", badge:"key", title:"Resident's request for a meeting with \"the Administrator and City Attorney\" is declined",
+    desc:"Resident activist Chris Dardzinski formally emails the full council/commission distribution requesting a meeting with \"your city Administrator and City Attorney\" ahead of the Planning Commission meeting. Tom Murray — identified here as most likely Allen Park's City Administrator — responds declining a private meeting, on the grounds that private meetings between city officials and project opponents \"creates the appearance the proposal is not being provided fair consideration as required by law,\" offering instead to route questions to the Building Department Director and City Planner. On Jan 23, Dardzinski pushes back directly to Murray, pointing out that Commissioner Dan Loyd had that same day agreed to a private phone call with him, and that Councilmember Gary Schlack had privately taken his call the prior Sunday about scheduling a Town Hall.",
+    cite:{label:"City of Allen Park FOIA production (tmurray mailbox, Re_ Meeting request with administrator and attorney)", public:false} },
+
+  { id:44, date:"2026-01-21", lane:"ap", title:"Council debates legal exposure of a moratorium, City Attorney cc'd",
+    desc:"Councilmember Matthew Valerius circulates his own legal analysis to the full Council, Matt Baker, Tom Murray, and Mayor McLeod — cc'ing City Attorney Joseph Couvreur — arguing that a moratorium or zoning change now, with Solstice's application otherwise meeting current C6C rules, \"would open the city up to legal action.\" Councilmember Gerald Barr replies on the same thread agreeing the project \"is not necessarily warranted\" but conceding \"legally we may not have that option.\"",
+    cite:{label:"City of Allen Park FOIA production (mbaker mailbox, Re_ Data Center)", public:false} },
+
+  { id:45, date:"2026-01-22", lane:"auerbach", title:"Auerbach discloses privately coaching commissioners between meetings",
+    desc:"Auerbach tells all commissioners that he and Matt Baker \"have been discussing ways to share more information with you to help you prepare for the next meeting\" — staff and the city's consultant privately strategizing about commissioner preparation outside the public meeting record.",
+    cite:{label:"City of Allen Park FOIA production (Joseph Palmisano inbox)", public:false} },
+
+  { id:46, date:"2026-01-26", lane:"ap", title:"\"I assume we will bounce this off of Joe\" — Mayor loops in Couvreur before responding to a listening-session idea",
+    desc:"The same day Solstice's David Gibson floats a \"listening session\" idea to Auerbach and Baker (asking directly whether the city had heard from citizen organizers Chris Dardzinski and Nicole Hopkins — see adjacent card), Baker forwards the idea to Mayor Gail McLeod and Tom Murray. McLeod replies it \"may be a good idea\" but adds she assumes \"we will bounce this off of Joe\" — City Attorney Couvreur — before acting.",
+    cite:{label:"City of Allen Park FOIA production (mbaker mailbox, RE_ Allen Park Data Center - Listening Session Idea & Citizen Communications)", public:false} },
+
+  { id:47, date:"2026-03-02", lane:"auerbach", title:"Frank privately schedules a call with Auerbach, references contact with the City Attorney",
+    desc:"Commissioner Frank discusses a proposed public-comment sequencing rule change with Auerbach (cc Baker, Benjamin Hughes), noting \"I also mentioned it to AP City Attorney\" — and schedules a private call for March 4. That call is confirmed by calendar invite: \"Data Center Call,\" 1:00–1:30pm, Auerbach to call Frank's cell directly.",
+    cite:{label:"City of Allen Park FOIA production (Fred Frank inbox/sent)", public:false} },
+
+  { id:48, date:"2026-03-07", lane:"auerbach", badge:"key", title:"Couvreur directly engages Auerbach on a resident's health/safety letter",
+    desc:"City Attorney Joseph Couvreur forwards a resident's letter on Solstice's legal/health-safeguard exposure to Auerbach (cc Baker, Souheil Sabak) and writes, \"Let's discuss these considerations in the near future\" — direct, substantive attorney-to-consultant engagement on the city's legal risk.",
+    cite:{label:"City of Allen Park FOIA production (mbaker mailbox, FW_ Enforceable Health and Environmental Safeguards for Proposed Solstice Data Center)", public:false} },
+
+  { id:49, date:"2026-03-16", lane:"auerbach", badge:"key", title:"Loyd forwards a resident's letter to Couvreur, then privately meets Auerbach on \"Data Center Regulations\"",
+    desc:"Commissioner Dan Loyd forwards resident Bill Provenzano's letter — originally addressed to City Attorney Couvreur — to Auerbach, asking to discuss further regulating the data center. A scheduling exchange (Mar 13–16) culminates in a private Teams meeting, \"Discussion: Data Center Regulations,\" Mon 3/16 4:00–5:00pm, required attendees Loyd, Baker, and Auerbach.",
+    cite:{label:"City of Allen Park FOIA production (Dan Loyd inbox/sent)", public:false} },
+
+  { id:50, date:"2026-03-18", lane:"ap", title:"Mayor privately awaits Couvreur's advice before replying to a resident",
+    desc:"Mayor Gail McLeod privately tells Baker and Murray she's \"waiting to hear back from Joe\" (Couvreur) about how to respond to resident Dardzinski's questions, and discusses redirecting him since the matter falls under Planning Commission authority, not Council's. The next day, Baker privately vents that one of the resident's questions \"makes me not want to respond at all.\"",
+    cite:{label:"City of Allen Park FOIA production (tmurray mailbox, RE_ E-mail 2_ 19 remaining questions)", public:false} },
+
+  { id:51, date:"2026-04-11", lane:"auerbach", badge:"key", title:"Frank reveals a City Attorney letter tied to the January PC meeting",
+    desc:"Commissioner Frank tells Auerbach (cc Mike Mizzi) he needs the Jan. 8 PC minutes by April 13 because he \"need[s] to respond to a letter from the City Attorney relating to that January meeting\" — the first indication Couvreur sent a commissioner a legal letter concerning a specific Planning Commission meeting. The same email surfaces a minutes-posting gap: the Jan. 8 minutes were approved in March but never posted publicly.",
+    cite:{label:"City of Allen Park FOIA production (Fred Frank inbox/sent)", public:false} },
+
+  { id:52, date:"2026-05-25", lane:"ap", title:"Citizen opposition emails routed directly to specific commissioners",
+    desc:"Mayor Pro Tem Nancy Knick forwards a resident's \"NO DATA CENTER\" opposition email directly to Commissioners Fred Frank and Dan Loyd by name, rather than to the full Planning Commission — one of the clearest examples in the production of citizen pressure being privately routed to specific commissioners rather than the public record.",
+    cite:{label:"City of Allen Park FOIA production (mbaker mailbox, Fw_ NO DATA CENTER)", public:false} },
+
+  { id:53, date:"2026-06-02", lane:"auerbach", badge:"key", title:"Couvreur, staff, and Auerbach privately meet on reviving the denial motion",
+    desc:"Referenced identically across at least six commissioners' mailboxes the next day as something \"the City Attorney, staff, and I discussed... yesterday\" — City Attorney Couvreur, city staff, and Auerbach privately determine the applicable procedure for reviving the failed May 13 denial motion, a day before any commissioner outside that group is told a new vote is coming.",
+    cite:{label:"City of Allen Park FOIA production (multiple custodian mailboxes, referenced June 3)", public:false} },
+
+  { id:54, date:"2026-06-03", lane:"auerbach", badge:"key", title:"Frank and Auerbach finalize the denial-revival procedure; Couvreur cc'd throughout",
+    desc:"8:58am: Frank sends Auerbach and Baker (cc Loyd, Couvreur) his final procedural recommendation for that evening's agenda item and asks staff to send him commissioners' contact info. 10:53am: Auerbach replies confirming the May 13 minutes' vote tally was a typo and lays out the rescind/renew motion steps — Couvreur cc'd on both messages.",
+    cite:{label:"City of Allen Park FOIA production (Fred Frank sent)", public:false} },
+
+  { id:55, date:"2026-06-03", lane:"auerbach", badge:"key", title:"5:09pm mass email: Couvreur will personally attend that night's emergency vote",
+    desc:"Auerbach emails all commissioners announcing the revised agenda and procedural steps for reviving the denial motion, and confirms City Attorney Couvreur will attend the meeting in person — found identically across all eight commissioners' mailboxes.",
+    cite:{label:"City of Allen Park FOIA production (all 8 custodian inboxes)", public:false} },
+
+  { id:56, date:"2026-06-03", lane:"auerbach", badge:"key", title:"Four commissioners privately object to the rushed vote; Auerbach offers private pre-vote calls",
+    desc:"Within two hours of the 5:09pm mass email, four commissioners react privately to Auerbach rather than on the record: Nick Darin (5:15pm) — \"You have got to be kidding me... Who suggested this\" — is offered Auerbach's personal cell for a private call; Jasmine Sheffield (5:58pm) asks whether the public will be notified the vote is happening; Dennis Randt sends four separate messages (6:14–7:04pm) objecting to the rushed process and asking procedural questions; Mike Muszynski (10:18pm) objects to excluding public comment and offers to be called privately the next day. The following morning (10:50–10:52am), Auerbach offers Randt and Muszynski private call windows before that evening's vote.",
+    cite:{label:"City of Allen Park FOIA production (Nick Darin, Jasmine Sheffield, Dennis Randt, Mike Muszynski inboxes/sent)", public:false} },
+
+  { id:57, date:"2026-06-05", lane:"ap", title:"Denial notice and appeal form sent jointly to Murray and Couvreur",
+    desc:"The afternoon of the 7-2 denial, Auerbach forwards the formal Notice of PC Determination and the Variance Appeal Application to Tom Murray and City Attorney Couvreur together, cc Baker — the first instance in the production of Auerbach addressing Murray and Couvreur jointly by name as a pair.",
+    cite:{label:"City of Allen Park FOIA production (FW_ Allen Park Planning Meeting)", public:false} },
+
+  { id:58, date:"2026-06-09", lane:"ap", title:"Baker routes Solstice's moratorium follow-up questions to Couvreur, then loops in Murray",
+    desc:"The day Council adopts the emergency moratorium ordinance, Baker tells Murray he had separately forwarded Solstice's moratorium follow-up questions to \"Joe\" (Couvreur) and had forgotten to cc Murray on it.",
+    cite:{label:"City of Allen Park FOIA production (FW_ Allen Park Data Center Moratorium - Solstice Data Follow Up)", public:false} },
+
+  { id:59, date:"2026-06-12", lane:"ap", title:"Auerbach forwards moratorium-vote detail to Couvreur",
+    desc:"Auerbach forwards Solstice's moratorium follow-up thread to Couvreur \"FYI,\" quoting Commissioner Frank's exact recorded motion language and noting the vote passed with Commissioners Palmisano and Randt abstaining.",
+    cite:{label:"City of Allen Park FOIA production (FW_ Allen Park Data Center Moratorium - Solstice Data Follow Up)", public:false} },
+
+  { id:60, date:"2026-06-18", lane:"ap", title:"ZBA appeal package forwarded to Couvreur for review, Murray cc'd",
+    desc:"The day after Solstice files its ZBA appeal, Baker forwards the appeal package from Solstice's outside counsel (Warner Norcross + Judd) to Couvreur for review, cc Murray, and confirms receipt of the $300 fee.",
+    cite:{label:"City of Allen Park FOIA production (FW_ Solstice Data - ZBA Appeal Documents)", public:false} },
 ];
 
 const byDate = {};
