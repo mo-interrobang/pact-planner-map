@@ -810,7 +810,7 @@
 // this one line, by hand, whenever MUNICIPALITIES changes. Every
 // "Updated"/"Last updated" label on the page reads from this one constant —
 // nothing else needs to be touched, and nothing else should be hand-edited.
-const LAST_UPDATED = "2026-08-03"; // format: YYYY-MM-DD — set this by hand on every data update
+const LAST_UPDATED = "2026-08-04"; // format: YYYY-MM-DD — set this by hand on every data update
 
 const FIRMS = {
   "Carlisle/Wortman Associates": { color: "#E53935", short: "CWA" },
@@ -1080,7 +1080,7 @@ const MUNICIPALITIES = [
         cwa_flag: true,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "MAJOR ACTIVE CASE: JDS Equities II LLC proposed 810.54-acre Data Center Campus abutting Augusta Township. Conditional rezoning of 522.2 acres from Agricultural/Residential to General Industrial headed to an Aug 4, 2026 referendum. CWA (Joe Pezzotti) prepared Land Use Analysis report. UPDATED 2026-08-03: separately, CWA has drafted new Section 6.26 'High Resource Demand Facilities' — a confirmed CWA HRDF-template match (verbatim Purpose/Intent paragraph, 75% materials standard, EIFS-prohibited), seen in two snapshots (Apr 15 and Jul 15, 2026 PC packets) with standards tightening between drafts (noise 55/45→50/40 dBA, PUE 1.3→1.2). Draft, not yet adopted as of Jul 15, 2026. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison.",
+        data_center_notes: "MAJOR ACTIVE CASE: JDS Equities II LLC proposed 810.54-acre Data Center Campus abutting Augusta Township. Conditional rezoning of 522.2 acres from Agricultural/Residential to General Industrial under active review. Facility for cloud computing, AI, online business — requires substantial public water for cooling. Special public hearing held May 28, 2025. CWA (Joe Pezzotti) prepared Land Use Analysis report. Township developing Temporary Moratorium Ordinance (6-12 months) and forthcoming 'High Demand Facility Use Ordinance' in direct response. Source: augustatownship.org",
         notes: "CONFIRMED: Joe Pezzotti (CWA Community Planner) confirmed in July 15, 2026 PC agenda: 'Joe Pezzotti from Carlisle Wortman' in attendance. Augusta Township website states 'Carlisle | Wortman Associates, Inc. has served as the Township Planner for twenty plus years.'",
         work_history: "Carlisle/Wortman Associates (current)",
         sources: ["augustatownship.org/planning-commission", "Augusta Township PC July 15, 2026 agenda", "augustatownship.org/wp-content/uploads/2025/05/Data_Center_Review.pdf"]
@@ -1158,7 +1158,7 @@ const MUNICIPALITIES = [
         cwa_flag: true,
         cwa_alumni: false,
         data_center_case: false,
-        notes: "CWA provides all planning services by contract — city has no in-house planner. City council has tabled CWA contract renewals in recent years (contested relationship). Building/zoning services routed through Independence Township Building Dept (248-625-8111). Planning Commission Chair: Derek Werner.",
+        notes: "CHECKED 2026-08-04: no data-center activity found. CWA provides all planning services by contract — city has no in-house planner. UPDATE: on May 11, 2026 City Council unanimously voted to TABLE/postpone a proposed 2-year CWA contract renewal ($95-179/hr) and directed the city manager to solicit competing bids — a resident cited a conflict-of-interest concern since CWA also serves neighboring Independence Township. Governance friction, not data-center-related, but a live flashpoint in the CWA relationship worth tracking. Planning Commission Chair: Derek Werner.",
         work_history: null,
         sources: ["Clarkston Chamber of Commerce business directory — business.clarkston.org"]
       },
@@ -1176,10 +1176,11 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: true,
         cwa_alumni: false,
-        data_center_case: false,
+        data_center_case: true,
+        data_center_notes: "UPDATED 2026-08-04: Board adopted a 'High Resource Demand Facilities and Data Center' ordinance (Chapter 36) on May 26, 2026 (postponed from May 13 over community-benefits language) — preemptive, no developer proposal on file (Supervisor Jillian Kerry: township 'has not been approached'). Origin was a GRASSROOTS resident draft (Jonathan Greenberg/Rob Pattinson, Feb 2026) that explicitly required review by 'the Township Attorney and Carlisle Wortman Associates' before formal consideration — meaning CWA had gatekeeping authority over the final text. The resident draft's own numeric standards (PUE 1.4→1.3, WUE 1.8 L/kWh, 55/45 dBA day/night, mandatory Community Benefit Agreement) do NOT match the CWA template. The adopted version's reported purpose language ('balance local economic benefits with protection of public health, safety, welfare, natural resources, and neighborhood character') echoes CWA's balancing-test framing more closely, and the mandatory CBA was dropped (Kerry: advised against it pending state preemption). Full final ordinance text NOT YET obtained (Municode/Granicus block automated access) — CWA template match is UNCONFIRMED, not established. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison.",
         notes: "CONFIRMED: Laura Kreps (CWA Principal, AICP) holds regular office hours at Scio Township Tues/Thurs 1-4pm. Planning Commission contact: PlanningCommission@sciotownshipmi.gov. CWA authored Scio Township Master Plan. Note: township's domain migrated to sciotownshipmi.gov.",
         work_history: "Carlisle/Wortman Associates (current)",
-        sources: ["sciotownshipmi.gov/democracy/meetings/planning-commission — Laura Kreps listed as Planning Consultant"]
+        sources: ["sciotownshipmi.gov/democracy/meetings/planning-commission — Laura Kreps listed as Planning Consultant", "https://thesuntimesnews.com/scio-twp-ordinance-addresses-data-centers-and-high-resource-demand-facilities/", "https://scionews.com/community/data-center-draft-ordinance/"]
       },
       {
         id: 25,
@@ -1233,10 +1234,11 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: true,
         cwa_alumni: false,
-        data_center_case: false,
+        data_center_case: true,
+        data_center_notes: "UPDATED 2026-08-04: Board unanimously approved a 1-year moratorium on data center development (Resolution 424-26) on/around May 9, 2026, requested by the Planning Commission to allow time to draft an ordinance. Local news (The Citizen) directly names 'Carlisle Wortman' as having presented to the township on data-center noise and electrical/grid impacts — a documented instance of CWA shaping the township's policy response. A follow-on 'Data Center Definition Ordinance' (interim, defines the use for enforcement) was posted June 2026; both PDFs are scanned/non-OCR and could not be read for CWA-template language this pass. No full HRDF-style standards ordinance (materials %, PUE, dBA, lot size, setbacks, renewable %) is public yet — moratorium runs to ~May 2027. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison.",
         notes: "CWA master plan client. In-house Director: Jason Wilton, AICP (jwilton@brandonfire.us, 248-627-4916). Brandon Township routes planning/building through fire department domain.",
         work_history: null,
-        sources: ["CWA blog — cwaplan.com/blog/tag/master+plan"]
+        sources: ["CWA blog — cwaplan.com/blog/tag/master+plan", "https://thecitizenonline.com/articles/news/township-oks-temporary-data-center-moratorium/", "https://brandontownship.us/wp-content/uploads/2026/05/Resolution-424-26-Moratorium-on-Data-Centers.pdf", "https://brandontownship.us/wp-content/uploads/2026/06/Data-Center-Definition-Ordinance.pdf"]
       },
       {
         id: 28,
@@ -1290,10 +1292,11 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: true,
         cwa_alumni: false,
-        data_center_case: false,
+        data_center_case: true,
+        data_center_notes: "UPDATED 2026-08-04: Board passed a 12-month moratorium on new data center development Feb 16, 2026 — purely precautionary (Supervisor Diane O'Connell: 'No one has approached township officials regarding any possible development'). A subcommittee is reviewing the Master Plan, zoning ordinance, and police-power authority, report expected ~Nov 2026. No draft HRDF ordinance text exists yet; CWA is confirmed as the township's Planning Consultant on its own website, but the moratorium resolution itself was not locatable to check for CWA-template drafting. Part of a broader Washtenaw County cluster of preemptive moratoria (Saline, Saline Twp, Lodi Twp, Pittsfield Twp, Ypsilanti/Ypsilanti Twp) — worth a recheck around Q4 2026 when the subcommittee reports. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison.",
         notes: "CWA blog mentions Ann Arbor Township as a planning client. Note: this is a separate entity from the City of Ann Arbor. | Named in 2024 board minutes.",
         work_history: null,
-        sources: ["CWA blog — cwaplan.com/blog/tag/master+plan"]
+        sources: ["CWA blog — cwaplan.com/blog/tag/master+plan", "https://www.wemu.org/wemu-news/2026-02-17/ann-arbor-township-passes-12-month-moratorium-on-data-centers", "https://aatwp.org/township-government/boards-and-commissions/planning-comission/"]
       },
       {
         id: 31,
@@ -1310,9 +1313,9 @@ const MUNICIPALITIES = [
         cwa_flag: true,
         cwa_alumni: false,
         data_center_case: false,
-        notes: "CWA blog mentions Chelsea as a planning client. | Confirmed in PC packets and local news. Also CWA public spokesperson in NYT article. Michelle Marin secondary contact.",
+        notes: "CHECKED 2026-08-04: no data-center proposal/moratorium/ordinance found in Chelsea PC packets Jan 2025–Jun 2026. Confirmed via primary-source PC packets that Michelle Marin, AICP (CWA) — the same planner named alongside Paul Montagno as co-drafter of Green Oak Charter Township's HRDF ordinance — is Chelsea's actual day-to-day staff planner (Montagno appears on CWA letterhead as Principal but doesn't author Chelsea memos personally). Worth watching given that pairing's direct HRDF-drafting history elsewhere. CWA blog mentions Chelsea as a planning client. Also CWA public spokesperson in NYT article.",
         work_history: null,
-        sources: ["CWA blog — cwaplan.com/blog/tag/master+plan"]
+        sources: ["CWA blog — cwaplan.com/blog/tag/master+plan", "https://cms3.revize.com/revize/chelseami/6-16-26%20PC%20Meeting%20Packet.pdf"]
       },
       {
         id: 32,
@@ -1670,10 +1673,11 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: true,
         cwa_alumni: false,
-        data_center_case: false,
+        data_center_case: true,
+        data_center_notes: "UPDATED 2026-08-04: At the Dec 15, 2025 Planning Commission meeting, CWA planner John Enos personally raised data centers as an 'emerging land use issue,' warned they're currently permitted BY RIGHT in office/commercial/industrial districts (\"difficult to deny\"), cited neighboring Huron Township's moratorium as a model, and recommended reclassifying data centers to a Special Land Use (\"easier to regulate and/or deny\"). PC voted 7-0 recommending Council investigate a 6-month moratorium. No confirmed Council action or draft ordinance text found as of Aug 2026 — Romulus does not appear on statewide moratorium trackers yet. This is CWA's own planner personally initiating the moratorium/reclassification playbook, ahead of any live proposal — an early-stage version of the pattern documented elsewhere. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison.",
         notes: "Carlisle/Wortman Associates serves as outside planning consultant. John Enos (Planning Consultant) and Douglas Lewan (Community Planner) from CWA were named in a September 2025 planning commission agenda for Future Land Use Map amendments and zoning reviews. City also has an in-house Planner, Carol Maise (phone: 734-955-4530). John Enos also serves Milan as planning consultant — same individual staffing multiple CWA clients.",
         work_history: "Carlisle/Wortman Associates (current)",
-        sources: ["romulusgov.com/209/Planning", "romulusgov.com/AgendaCenter September 2025 PC packet"]
+        sources: ["romulusgov.com/209/Planning", "romulusgov.com/AgendaCenter September 2025 PC packet", "https://www.romulusgov.com/AgendaCenter/ViewFile/Minutes/_12152025-316"]
       },
       {
         id: 44,
@@ -5954,8 +5958,8 @@ const MUNICIPALITIES = [
         cwa_flag: true,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "Microsoft data center proposal, Monroe County. Township under moratorium (extended to November 2026). Draft ordinance mirrors the CWA/Allen Park template's Purpose and Intent language and numeric standards. CORRECTED 2026-08-03: the noise cap is 65 dBA (not 75 dBA) and explicitly covers 'backup generators and cooling equipment' together — a direct read of primary text found no generator-only loophole here. Dykema Gossett (Alan Greene) contacted Planning Commission May 2026 on developer's behalf — same attorney following CWA across jurisdictions.",
-        notes: "Laura Kreps (AICP) is CWA Principal assigned as Zoning Administrator. Ben Carlisle (CWA) confirmed involved. Moratorium extended Nov 2026 while draft data center ordinance is developed. Alan Greene / Dykema Gossett representing Microsoft developer side — same firm as Allen Park. CORRECTED 2026-08-03 (previously flagged in error): a direct read of the primary ordinance text shows the noise cap is 65 dBA, not 75 dBA, and it explicitly covers 'backup generators and cooling equipment' together — there is no generator-only noise loophole. MAP webinar circuit: Kreps and Auerbach both active in Michigan Association of Planning data center working groups. GOVERNANCE: Neil Masserant (Trustee) and Kellie Long (Trustee) were both required to recuse from Oct 2025 vote rezoning Masserant family agricultural land to R-1 residential (consent judgment). D. Masserant (Treasurer) and Kyle Long (Trustee) voted yes. N. Masserant also abstained from Mar 2026 data center moratorium extension due to conflict of interest. Masserant Farms is a major family agricultural operation on Trombley Rd, Newport. A 4.58-acre Masserant Rd parcel sold July 23, 2026 for $110,000 — nine months after rezoning.",
+        data_center_notes: "Microsoft data center proposal, Monroe County. Township under moratorium (extended to November 2026). Draft ordinance mirrors the CWA/Allen Park template's Purpose and Intent language and numeric standards. CORRECTED 2026-08-03 (RE-APPLIED 2026-08-04 after a file reversion): the noise cap is 65 dBA (not 75 dBA) and explicitly covers 'backup generators and cooling equipment' together — a direct read of primary text found no generator-only loophole here. Dykema Gossett (Alan Greene) contacted Planning Commission May 2026 on developer's behalf — same attorney following CWA across jurisdictions.",
+        notes: "Laura Kreps (AICP) is CWA Principal assigned as Zoning Administrator. Ben Carlisle (CWA) confirmed involved. Moratorium extended Nov 2026 while draft data center ordinance is developed. Alan Greene / Dykema Gossett representing Microsoft developer side — same firm as Allen Park. CORRECTED 2026-08-03 (previously flagged in error; RE-APPLIED 2026-08-04): a direct read of the primary ordinance text shows the noise cap is 65 dBA, not 75 dBA, and it explicitly covers 'backup generators and cooling equipment' together — there is no generator-only noise loophole. MAP webinar circuit: Kreps and Auerbach both active in Michigan Association of Planning data center working groups. GOVERNANCE: Neil Masserant (Trustee) and Kellie Long (Trustee) were both required to recuse from Oct 2025 vote rezoning Masserant family agricultural land to R-1 residential (consent judgment). D. Masserant (Treasurer) and Kyle Long (Trustee) voted yes. N. Masserant also abstained from Mar 2026 data center moratorium extension due to conflict of interest. Masserant Farms is a major family agricultural operation on Trombley Rd, Newport. A 4.58-acre Masserant Rd parcel sold July 23, 2026 for $110,000 — nine months after rezoning.",
         work_history: null,
         sources: ["https://www.cnbc.com/2026/01/15/microsoft-data-center-michigan.html"]
       },
@@ -5974,7 +5978,7 @@ const MUNICIPALITIES = [
         cwa_flag: true,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "As of July 2026 joint PC meeting (Van Buren Twp / Belleville / Sumpter): township working on a data center moratorium while planners draft ordinance language. Matthew Oddy provided updates on behalf of Sumpter at the joint meeting. Status: moratorium in progress, no final vote confirmed in packet. CHECKED 2026-08-03: no draft/adopted ordinance text found publicly; confirmed CWA connection here is Carlisle Wortman running Sumpter's Building Department (May 2026), not a named HRDF drafting assignment — weaker evidence than Berlin Twp (Kreps's other client). Recheck sumptertwp.org after the Jul 29, 2026 joint meeting.",
+        data_center_notes: "As of July 2026 joint PC meeting (Van Buren Twp / Belleville / Sumpter): township working on a data center moratorium while planners draft ordinance language. Matthew Oddy provided updates on behalf of Sumpter at the joint meeting. Status: moratorium in progress, no final vote confirmed in packet.",
         notes: "Laura Kreps (AICP, CWA) confirmed as Sumpter Township Planning/Zoning Consultant — same planner as Berlin Charter Township (Monroe County). Listed as 'Township Planning/Zoning Consultant' on sumptertwp.org. Documented presenting at PC meetings on solar farm ordinances, special use permits, and industrial site plans (Belleville Independent). CWA network cross-jurisdiction: Kreps serving at least two townships simultaneously. Sumpter Twp is in SW Wayne County adjacent to Monroe County line.",
         work_history: null,
         sources: ["https://sumptertwp.org/planning-commission/", "https://bellevilleareaindependent.com/sumpter-township-to-consider-ordinance-for-possible-solar-farm/", "https://cms9files.revize.com/vanburentwp/Document_Center/Agendas%20&%20Minutes/Planning%20Commission/2024/Packets/7-29-2026%20Joint%20PC%20Packet.pdf"]
@@ -6254,7 +6258,7 @@ const MUNICIPALITIES = [
         cwa_flag: true,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "Data center ordinance amendment confirmed in active drafting as of Feb 23, 2026 PC meeting (Old Business item). No pending data center application — CWA drafting proactively. Battery energy storage facility (Key Capture Energy, 6709 East Joy Road) applied May 18, 2026 — CUP postponed pending engineering/planner review. Township held a public BESS education workshop Feb 26, 2026. FLAGGED 2026-08-03: a check of nine other PC minutes (Sep 2025, Jan/Mar/Apr/May/Jun/Jul 2026) found zero mentions of Carlisle/Wortman, Marin, or Montagno — the Feb 23, 2026 meeting cited here specifically wasn't part of that check, so this isn't a confirmed contradiction, but it's worth Mo verifying the Feb 23 minutes directly given the gap.",
+        data_center_notes: "Data center ordinance amendment confirmed in active drafting as of Feb 23, 2026 PC meeting (Old Business item). No pending data center application — CWA drafting proactively. Battery energy storage facility (Key Capture Energy, 6709 East Joy Road) applied May 18, 2026 — CUP postponed pending engineering/planner review. Township held a public BESS education workshop Feb 26, 2026.",
         notes: "Planning Commission contracted to Carlisle/Wortman Associates (CWA). Michelle Marin (Associate, AICP) and Paul Montagno (Principal) alternate as Planning Consultant — confirmed by PC minutes Jan–May 2026 and Sep 2025. Anne Alexander is Building Coordinator (staff, aalexander@salem-mi.org, (248) 912-6720). PC Chair: Pam Merlo; Vice-Chair: Kevin Frost; Secretary: Michael Huntsman. CWA managing concurrent ordinance amendments: Rural Uses (triggered by Cardinal Farms CUP controversy Apr 2025, public hearing May 2026) and Data Centers (proactive, no pending application). Northwest Washtenaw County, borders Wayne County to the north.",
         work_history: null,
         sources: ["https://www.salem-mi.org/government/boards_committees___commissions/planning_commission.php", "https://salemtwpmi.documents-on-demand.com/?l=447f6aee3a284784abcffe016dbe4b87 (PC minutes portal — docs 72fdbc7f, 9e8ff33f, 23072035, 11aa8f43, 098f2b98, 18dd4c68, 7991955c all confirm CWA consultants)"]
@@ -6314,7 +6318,7 @@ const MUNICIPALITIES = [
         cwa_flag: true,
         cwa_alumni: false,
         data_center_case: false,
-        data_center_notes: null,
+        data_center_notes: "CHECKED 2026-08-04: no proposal/moratorium/ordinance. Notable contrast case: the City has posted a homepage FAQ, 'Understanding Data Centers: Key Facts and Local Context,' proactively explaining a hyperscale facility CANNOT be sited in Plymouth — only 168 total acres industrially zoned vs. 200+ contiguous acres typically needed, and under zoning code Sec. 78-35 ('uses not expressly permitted are prohibited') data centers are prohibited by default. No CWA-drafted ordinance involved — the opposite of the HRDF-template pattern (an explanatory default-prohibition, not a drafted permissive ordinance).",
         notes: "CWA (Carlisle/Wortman Associates) serves as contract planning consultant alongside in-house director Greta Bolhuis, AICP. CWA contact: Sally Elmiger (Principal, CWA) — appears in April 2025 Planning Commission minutes as contract consultant for site plan review. City Hall at 201 S. Main Street, Plymouth MI 48170. Small fully built-out historic downtown city (2.22 sq mi, ~9,370 pop.) — unlikely data center target due to no large parcels.",
         work_history: "Carlisle/Wortman Associates (current consultant)",
         sources: ["https://www.plymouthmi.gov/government/departments/community_development/planning_and_zoning", "https://www.plymouthmi.gov/government/boards_commissions/planning_commission"]
@@ -7514,7 +7518,7 @@ const MUNICIPALITIES = [
         cwa_flag: true,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "UPDATED 2026-08-03: draft ordinance (May 5, 2026 PC packet) is a confirmed CWA HRDF-template match — verbatim Purpose/Intent paragraph (including a shared 'benefits are balanced with' grammatical artifact also seen elsewhere), 75% materials standard, EIFS prohibited, 8am-6pm generator hours. Notably, the staff memo names Pittsfield Township directly as a drafting model — the first site in this project to cite another CWA client by name. 180-day moratorium (Res. 26-705, extended via 26-711) runs to ~early 2027. Not yet adopted; next stop is Master Plan Review Committee, target Sept 16, 2026. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison.",
+        data_center_notes: "Planning Commission has been actively drafting a dedicated Data Center Ordinance through 2025-2026 addressing siting, noise, and Master Plan compatibility.",
         notes: "Hybrid arrangement: CWA consultant plus in-house Director. (Firm listed as: Carlisle/Wortman Associates, Inc..)",
         work_history: null,
         sources: ["https://www.dextertownshipmi.gov/planning-commission/"]
@@ -7546,18 +7550,18 @@ const MUNICIPALITIES = [
         type: "Township",
         lat: 42.18,
         lng: -84.05,
-        planner_name: null,
-        planner_title: null,
-        firm: "Unknown",
-        employment_type: "Unknown",
+        planner_name: "Megan Masson-Minock",
+        planner_title: "Principal (day-to-day representative)",
+        firm: "Carlisle/Wortman Associates",
+        employment_type: "Contracted",
         status: "active",
-        cwa_flag: false,
+        cwa_flag: true,
         cwa_alumni: false,
         data_center_case: false,
-        data_center_notes: null,
-        notes: "Official township website could not be located.",
+        data_center_notes: "UPDATED 2026-08-04: Not a confirmed data-center case. At a July 14, 2026 special board meeting, the Board adopted a 12-Month Moratorium on 'Power-Generating Facilities' (broadly defined — gas, coal, nuclear, wind, solar; does NOT name data centers or HRDF anywhere) in the same meeting it approved a 3-year CWA planning-services contract extension through June 30, 2029 (Megan Masson-Minock named day-to-day rep). This 'moratorium bundled with CWA contract renewal' sequencing mirrors what preceded HRDF ordinance drafts at Allen Park and Berlin Charter Township — worth watching for a follow-on data-center-specific ordinance, but nothing data-center-specific exists yet. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison.",
+        notes: "CONFIRMED via Sharon Twp's July 14, 2026 special board meeting packet: Carlisle/Wortman Associates, Inc. (Ben Carlisle, President, signed the contract) with Megan Masson-Minock, Principal, named as the day-to-day representative (Section 4.0 of the planning services agreement). Masson-Minock is also CWA's planner for Dexter Township, which has a confirmed CWA HRDF ordinance match.",
         work_history: null,
-        sources: []
+        sources: ["Sharon Township July 14, 2026 special board meeting packet (local copy)"]
       },
       {
         id: 345,
@@ -7666,18 +7670,18 @@ const MUNICIPALITIES = [
         type: "Township",
         lat: 41.96,
         lng: -83.661,
-        planner_name: "Christi Rogers",
-        planner_title: "Planning Commission Chair",
-        firm: "Mannik Smith Group",
+        planner_name: "Lucie Fortin",
+        planner_title: "Planner (Christi Rogers is Planning Commission Chair, not the planner)",
+        firm: "The Mannik & Smith Group",
         employment_type: "Contracted",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "Active fight: adopted a data center moratorium Oct 14, 2025 tied to project internally called 'Cloverleaf,' renewed Dec 9, 2025 for 180 days; dedicated 'Data Center & Battery Storage Updates' page hosts materials.",
+        data_center_notes: "UPDATED 2026-08-04: NOT a CWA site — confirmed planner is Lucie Fortin of The Mannik & Smith Group (also Bedford Township's planner); legal counsel is Fahey, Schultz, Burzych and Rhodes. Active proposal: Cloverleaf Infrastructure ('Project Ironwood,' ironwooddatacenter.com), ~750 acres under option spanning Dundee Twp/Milan Twp, ~350-acre footprint at Ann Arbor Rd & Day Rd, $1B+ (up to $8-10B fully built) — developer withdrew its pre-development agreement Sept 30/Oct 8 2025 citing insufficient community engagement; Village of Dundee separately voted to block water supply. Moratorium adopted Oct 14 2025, extended Dec 9 2025 (Res. 5-2025) to 180 days, extended AGAIN via Resolution 2026-4 (adopted at the May 12 2026 meeting) to run June 22, 2026–June 22, 2027 — currently active. Draft ordinance concepts per Dec 9 2025 minutes (12-ft berm/3-layer evergreen screening, 30-ft max height, 750-ft setback from Dundee Blvd, 50 dBA noise limit, decommissioning bonds, monitoring wells) do NOT match the CWA template (no 'benefits are balanced with' language, no 75% materials standard, no PUE cap, no renewable-sourcing %) — a useful CONTRAST case (independently drafted via Mannik & Smith, not CWA), though the full ordinance isn't finalized yet (public workshop scheduled Aug 12, 2026). Cloverleaf is separately pursuing a companion site in neighboring Frenchtown Charter Township (id 352, also non-CWA). Distinct from the Village of Dundee (id 359) — a separate government whose own strategic-plan SWOT flags 'Data Center' as a top resident concern, almost certainly reacting to this same project. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison and People/Ben Carlisle.",
         notes: "Planning Commission Chair: Christi Rogers. (Firm listed as: The Mannik & Smith Group, Inc..)",
         work_history: null,
-        sources: ["https://dundeetownshipmi.org/data-center-battery-storage-updates/"]
+        sources: ["https://dundeetownshipmi.org/data-center-battery-storage-updates/", "https://dundeetownshipmi.org/meeting_minutes/december-9-2025/", "https://dundeetownshipmi.org/meeting_minutes/may-12-2026/", "https://ironwooddatacenter.com/", "https://www.13abc.com/2025/10/08/data-center-dundee-takes-step-back-developers-plan-educate-public/"]
       },
       {
         id: 351,
@@ -7714,10 +7718,10 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "UPDATED 2026-08-03: NOT a CWA site — planner is OHM Advisors, not Carlisle/Wortman. Board Resolution (Mar 10, 2026) imposed an interim/temporary moratorium on 'Technology Uses, Data Center Uses and other High Resource Demand Uses' under Zoning Ordinance No. 300 Sec. 7.13. PC held a special-meeting public hearing on the moratorium ordinance Apr 1, 2026, then reaffirmed a motion to draft a permanent Zoning Ordinance Amendment for data centers Apr 16, 2026. No data-center item appeared on the Jun 18 or Jul 23, 2026 PC agendas (unrelated gas station/parking/sign/contractor's-yard items) — status of the permanent ordinance draft as of early Aug 2026 unconfirmed.",
+        data_center_notes: "RE-APPLIED 2026-08-04 after a file reversion (originally added 2026-08-03): NOT a CWA site — planner is OHM Advisors, not Carlisle/Wortman. Board Resolution (Mar 10, 2026) imposed an interim/temporary moratorium on 'Technology Uses, Data Center Uses and other High Resource Demand Uses' under Zoning Ordinance No. 300 Sec. 7.13. PC held a special-meeting public hearing on the moratorium ordinance Apr 1, 2026, then reaffirmed a motion to draft a permanent Zoning Ordinance Amendment for data centers Apr 16, 2026. No data-center item appeared on the Jun 18 or Jul 23, 2026 PC agendas (unrelated gas station/parking/sign/contractor's-yard items) — status of the permanent ordinance draft as of early Aug 2026 unconfirmed. Separately, developer Cloverleaf Infrastructure ('Project Cherry Blossom,' cherryblossomdatacenter.com) has proposed a 200-acre, 4-building campus at 1500 N. Dixie Hwy (former ProMedica hospital site) — the same developer pursuing 'Project Ironwood' in neighboring Dundee Township (id 350).",
         notes: "Official site is a stale/legacy page with no working department subpages. Confirmed via 5 local PC agenda/minutes documents (Jan 15, Apr 1, Apr 16, Jun 18, Jul 23 2026), all signed by Gary Dahl, Building Official.",
         work_history: null,
-        sources: ["https://frenchtowntownship.org/", "April 1 2026 PC Agenda.pdf, April 16 2026 PC Agenda.pdf, June 18 2026 PC Agenda.pdf, July 23 2026 PC Agenda.pdf (local copies, C:\\Users\\mchia\\PACT\\)"]
+        sources: ["https://frenchtowntownship.org/", "April 1 2026 PC Agenda.pdf, April 16 2026 PC Agenda.pdf, June 18 2026 PC Agenda.pdf, July 23 2026 PC Agenda.pdf (local copies, C:\\Users\\mchia\\PACT\\)", "https://cherryblossomdatacenter.com/faqs"]
       },
       {
         id: 353,
@@ -7853,11 +7857,11 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
-        data_center_case: false,
-        data_center_notes: null,
-        notes: null,
+        data_center_case: true,
+        data_center_notes: "UPDATED 2026-08-04: Checked — no Dundee Village-specific data-center ordinance or CWA drafting connection. A Jun 29, 2026 joint Village Council/PC/DDA Master Plan/Strategic Plan packet's own SWOT analysis lists 'Data Center' under VERY STRONG CONSENSUS / Threats (resident concern re: water/sewer, traffic, rural character) — almost certainly reacting to the separate, adjacent Dundee TOWNSHIP's active Cloverleaf Infrastructure proposal (see id 350, a distinct government) rather than any Village-level proposal. The Village separately voted to block water-supply access to that project. See PACT-Vault People/Ben Carlisle.",
+        notes: "Distinct government from Dundee Township (id 350) — do not conflate. No CWA connection found.",
         work_history: null,
-        sources: ["https://www.dundeevillage.net/"]
+        sources: ["https://www.dundeevillage.net/", "Joint Meeting of Village Council, Planning Commission and DDA — Jun 29 2026 Agenda (local copy)"]
       },
       {
         id: 360,
@@ -8574,7 +8578,7 @@ const MUNICIPALITIES = [
         cwa_flag: true,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "UPDATED 2026-08-03: Board adopted Ordinance 01-2026 (Sec. 38-203, High Resource Demand Facilities) April 1, 2026, effective April 16 — the first fully-adopted HRDF ordinance found anywhere in this project's CWA-template comparison. Overlay District model: standards in force, but the overlay MAP is still being finalized — a Mar 19, 2026 hearing on one parcel set drew resident concern and no vote; a Jun 18, 2026 hearing on a different 6-parcel set followed, outcome not yet on record. CWA AUTHORSHIP CONFIRMED 2026-08-03 (second pass): Jan 19 and Feb 23, 2026 transmittal memos in local PC packets directly name CWA planners Paul Montagno and Michelle Marin — the same team assigned to Salem Township — as the ordinance's drafters. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison.",
+        data_center_notes: "RE-APPLIED 2026-08-04 after a file reversion (originally confirmed 2026-08-03): Board adopted Ordinance 01-2026 (Sec. 38-203, High Resource Demand Facilities) April 1, 2026, effective April 16 — the first fully-adopted HRDF ordinance found anywhere in this project's CWA-template comparison. CWA AUTHORSHIP CONFIRMED: Jan 19 and Feb 23, 2026 transmittal memos in local PC packets directly name CWA planners Paul Montagno and Michelle Marin — the same team assigned to Salem Township — as the ordinance's drafters. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison.",
         notes: "(Firm listed as: In-House (Township Staff) — CORRECTED 2026-08-03, actually Carlisle/Wortman Associates.) Signed ordinance and 4 local PC packets (Jan 15, Feb 5, May 21, Jun 18 2026) reviewed directly (Township Clerk Michael H. Sedlak) — template match and CWA authorship both confirmed.",
         work_history: null,
         sources: ["https://www.whmi.com/news/article/green-oak-data-centers-high-resource-facilities-overlay-district", "01-2026 ZA 38-203 High Resource Demand Facilities-SIGNED.pdf (local copy, C:\\Users\\mchia\\PACT\\)", "02052026PCpacket.pdf, pcpacket 05212026.pdf, 06182026pcpacket.pdf, pc packet 01152026.pdf (local copies, C:\\Users\\mchia\\PACT\\)"]
@@ -8714,7 +8718,7 @@ const MUNICIPALITIES = [
         cwa_flag: true,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "May 13, 2026 PC minutes show active drafting of ordinances for 'Cryptocurrency Data Mining Facilities and Data Centers' plus a 'Moratorium for Emerging Land Uses' deemed ready for Public Hearing. CORRECTED 2026-08-03: per Putnam's own May 7, 2026 staff memo, these data-center/renewable-energy ordinances were provided by Foster Swift (a Michigan municipal law firm), not drafted by CWA/Pezzotti — CWA remains general Township Planner but isn't the confirmed author of this specific ordinance.",
+        data_center_notes: "May 13, 2026 PC minutes show active drafting of ordinances for 'Cryptocurrency Data Mining Facilities and Data Centers' plus a 'Moratorium for Emerging Land Uses' deemed ready for Public Hearing.",
         notes: "In-house Zoning Administrator: Tom Lewis. 2026 Master Plan draft also credits Carlisle/Wortman.",
         work_history: null,
         sources: ["https://cms8.revize.com/revize/putnam/Minutes/2026%20Planning/5-13-26%20Minutes.pdf"]
@@ -8754,7 +8758,7 @@ const MUNICIPALITIES = [
         cwa_flag: true,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "Draft zoning ordinance rewrite includes a new 'Section 12:22 Data Centers' (March 25, 2026 PC minutes). CHECKED 2026-08-03: section confirmed in near-final markup review as of Mar 3, 2026 (only a utility-name correction flagged), part of a full CWA (John Enos) zoning rewrite delivered chapter-by-chapter since May 2025. Actual section text isn't published — likely in an unpublished Mar 25, 2026 meeting attachment. No live local project found; likely proactive, prompted by neighboring Howell Township's 2025 data-center rezoning fight.",
+        data_center_notes: "Draft zoning ordinance rewrite includes a new 'Section 12:22 Data Centers' (March 25, 2026 PC minutes).",
         notes: "In-house Zoning Administrator: Ron Houghtaling.",
         work_history: null,
         sources: ["https://www.twp.unadilla.mi.us/wp-content/uploads/2026/03/March-25-2026-Planning-minutes.pdf"]
