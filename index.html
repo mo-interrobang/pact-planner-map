@@ -341,6 +341,26 @@
       padding-top: 8px;
       border-top: 1px solid #334155;
     }
+    .popup-meeting-docs {
+      background: #0c1e14;
+      border: 1px solid #1e3a2a;
+      border-left: 3px solid #22c55e;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 11px;
+      color: #86efac;
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+    .popup-meeting-docs a {
+      color: #86efac;
+      text-decoration: underline;
+    }
+    .popup-meeting-monitor {
+      margin-top: 4px;
+      color: #4ade80;
+      font-size: 10px;
+    }
     .unknown-banner {
       background: #1c1917;
       border: 1px dashed #57534e;
@@ -876,7 +896,15 @@ const MUNICIPALITIES = [
         data_center_notes: "Solstice Data Center — 26 MW, 45,000 sq ft edge data center at 7500 Enterprise Drive. After 4 postponements and 21 unresolved outstanding items, Allen Park City Council passed a 6-month moratorium (Ord. #04-2026 E) on June 9, 2026.",
         notes: "Auerbach allowed Solstice Data application to advance through 4 postponements with 21 outstanding items. Authored May 13, 2026 minutes with possible vote tally error (2-3 recorded vs. actual outcome). Accepted noise study modeling only 4 of 20 chillers. Never required water capacity study, sewer discharge review, generator emissions aggregate analysis, decommissioning agreement, or written generator testing commitments — all baseline items in the U of M guidebook he co-reviewed.",
         work_history: "Carlisle/Wortman Associates (current)",
-        sources: ["P.A.C.T. research", "Allen Park Planning Commission minutes 2026", "CWA website"]
+        sources: ["P.A.C.T. research", "Allen Park Planning Commission minutes 2026", "CWA website"],
+        meeting_docs: {
+          links: [
+            { label: "Planning Commission agendas/packets", url: "https://www.cityofallenpark.org/government/agenda_and_minutes/planning_commission.php" },
+            { label: "City Council agendas/packets", url: "https://cityofallenpark.org/government/agenda_and_minutes/allen_park_michigan_city_council.php" },
+            { label: "Development Projects & Public Hearings", url: "https://cityofallenpark.org/departments/building_and_engineering/development_projects___public_hearings.php" }
+          ],
+          monitor_status: "Auto-monitor active — flags new agendas/packets, packets swapped in place, and special meetings outside the normal PC/Council schedule (checks 2x daily)."
+        }
       },
       {
         id: 2,
@@ -11601,6 +11629,14 @@ function buildPopup(m) {
     ? `<div class="popup-notes"><div class="popup-notes-label">Research Notes</div>${m.notes}</div>`
     : '';
 
+  const meetingDocsBox = (m.meeting_docs && (m.meeting_docs.links || m.meeting_docs.monitor_status))
+    ? `<div class="popup-meeting-docs">
+         <div class="popup-notes-label" style="color:#4ade80">📋 Meeting Documents</div>
+         ${(m.meeting_docs.links || []).map(l => `<a href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join(' · ')}
+         ${m.meeting_docs.monitor_status ? `<div class="popup-meeting-monitor">🔔 ${m.meeting_docs.monitor_status}${m.meeting_docs.monitor_checked ? ` <span style="color:#3f6b4f">(last checked ${m.meeting_docs.monitor_checked})</span>` : ''}</div>` : ''}
+       </div>`
+    : '';
+
   const unknownBanner = !m.planner_name
     ? `<div class="unknown-banner">📋 Planner info missing — check municipal website or submit FOIA</div>`
     : '';
@@ -11647,6 +11683,7 @@ function buildPopup(m) {
         </div>
         ${dcBox}
         ${notesBox}
+        ${meetingDocsBox}
         ${unknownBanner}
         ${srcHtml}
       </div>
