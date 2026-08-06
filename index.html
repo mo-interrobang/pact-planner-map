@@ -11728,10 +11728,13 @@ function drawMarkers(data) {
 function drawPlannerLines(data) {
   plannerLinesLayer.clearLayers();
 
-  // Group by planner name
+  // Group by planner name — exclude placeholder values ("Unknown" and any
+  // value starting with "Unknown ") since those aren't a real shared planner,
+  // just an absence of data; connecting them creates meaningless clutter.
   const byPlanner = {};
   data.forEach(m => {
     if (!m.planner_name) return;
+    if (m.planner_name === 'Unknown' || m.planner_name.startsWith('Unknown ') || m.planner_name.startsWith('Unknown(')) return;
     if (!byPlanner[m.planner_name]) byPlanner[m.planner_name] = [];
     byPlanner[m.planner_name].push(m);
   });
@@ -11764,9 +11767,15 @@ function drawPlannerLines(data) {
 function drawFirmLines(data) {
   firmLinesLayer.clearLayers();
 
+  // Exclude placeholder/generic firm buckets — "Unknown" (no firm identified)
+  // and "In-House (City Staff)" (each township's own independent staff, not
+  // an actual shared consulting relationship) aren't real cross-municipality
+  // connections; chaining them together across the state is just noise.
+  const FIRM_LINE_EXCLUDE = new Set(['Unknown', 'In-House (City Staff)', 'In-House']);
   const byFirm = {};
   data.forEach(m => {
     const firmKey = m.firm;
+    if (FIRM_LINE_EXCLUDE.has(firmKey)) return;
     if (!byFirm[firmKey]) byFirm[firmKey] = [];
     byFirm[firmKey].push(m);
   });
