@@ -1,0 +1,502 @@
+# -*- coding: utf-8 -*-
+# Full PCI (Professional Code Inspections of Michigan) Dorr-office roster sweep, 2026-08-05.
+# Adds 21 new municipalities + corrects 2 existing entries (Gun Plain "Mike" misattribution,
+# Wayland Township's actual ordinance-drafting firm).
+import io
+
+path = "index.html"
+with io.open(path, "r", encoding="utf-8") as f:
+    src = f.read()
+
+# ------------------------------------------------------------------
+# 1. Correct Gun Plain Charter Township (id 453) — "Mike" is Supervisor Mike VanDenBerg,
+#    an elected official, NOT PCI staff. Remove the misattribution.
+# ------------------------------------------------------------------
+old_gunplain_planner = '        planner_name: "Lori Castello / \\"Mike\\" (staff, unconfirmed surname)",'
+new_gunplain_planner = '        planner_name: "Lori Castello",'
+assert old_gunplain_planner in src, "Gun Plain planner_name anchor not found"
+src = src.replace(old_gunplain_planner, new_gunplain_planner, 1)
+
+old_gunplain_notes_tail = '''\'Mike\' referenced alongside Lori in PC minutes is likely additional PCI staff (possibly Mike Burns, PCI's Plumbing/Mechanical Inspector, per PCI's Dorr staff roster) — surname not directly confirmed in Gun Plain's own minutes.",'''
+new_gunplain_notes_tail = '''CORRECTED 2026-08-05: \'Mike\' referenced alongside Lori in PC minutes is Mike VanDenBerg, Gun Plain\'s elected Township Supervisor — an official, NOT PCI staff (confirmed via ballotpedia.org and gunplain.org/elected-officials/). Also corrected: the widely-reported \'Plainwell battery storage\' project is developer Copenhagen Infrastructure Partners (CIP) at the Riverview Dr site — Supervisor VandenBerg has publicly noted resident confusion between this BESS project and an unrelated data center; whether \'Heron Energy Storage LLC\' is CIP\'s project-specific entity name for the same site is unconfirmed. PCI\'s own website has no published model/template data-center ordinance and no staff bios for Castello, Jason Derry, Kirk Scharphorn Jr., or Heather Mitchell — unlike CWA, no evidence found that PCI is circulating shared ordinance language across its client townships (Gun Plain's own draft ordinances 187/192/193/196 are scanned/non-OCR and could not be read to confirm or rule this out further).",'''
+assert old_gunplain_notes_tail in src, "Gun Plain notes tail anchor not found"
+assert src.count(old_gunplain_notes_tail) == 1, "Gun Plain notes tail not unique"
+src = src.replace(old_gunplain_notes_tail, new_gunplain_notes_tail)
+
+# ------------------------------------------------------------------
+# 2. Correct Wayland Township (id 457) — actual ordinance-drafting planner is
+#    Becky (Rebecca) Harvey, AICP of McKenna Associates, NOT PCI. PCI's role is
+#    the separate building department only.
+# ------------------------------------------------------------------
+old_wayland_planner = '        planner_name: "Rebecca Harvey (PC consultant, firm unconfirmed) / Kirk Scharphorn Jr. (PCI, Zoning Administrator)",'
+new_wayland_planner = '        planner_name: "Becky (Rebecca) Harvey, AICP (McKenna Associates, ordinance drafting) / Kirk Scharphorn Jr. (PCI, building dept.)",'
+assert old_wayland_planner in src, "Wayland planner_name anchor not found"
+src = src.replace(old_wayland_planner, new_wayland_planner, 1)
+
+old_wayland_firm = '''        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "NEW 2026-08-05: Very active 2026 docket.'''
+new_wayland_firm = '''        firm: "McKenna Associates",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "CORRECTED 2026-08-05: firm changed from PCImi to McKenna Associates — PC minutes (Jun 11, 2025) directly credit \\"Rebecca Harvey, the Township Planner\\" with drafting the BESS ordinance starting from a University of Michigan sample ordinance; Harvey is confirmed as Becky Harvey, AICP, Senior Principal Planning Consultant at McKenna Associates (mcka.com), NOT PCI. PCI's relationship with Wayland (a testimonial on pcimi.com from Supervisor Roger VanVolkinburg) is tied to building-department services, separate from ordinance drafting. Very active 2026 docket.'''
+assert old_wayland_firm in src, "Wayland firm block anchor not found"
+assert src.count(old_wayland_firm) == 1, "Wayland firm block not unique"
+src = src.replace(old_wayland_firm, new_wayland_firm)
+
+# ------------------------------------------------------------------
+# 3. Insert 21 new municipality entries before the closing "];"
+# ------------------------------------------------------------------
+anchor = '''        planner_name: "Brad Ade (PC Chair) — planning/zoning administered by PCI",
+        planner_title: "Planning Commission Chair / Contracted Zoning Administration (PCI)",
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: No pending data-center or BESS application, moratorium, or ordinance yet — but explicitly queued up as next work: the Feb 9, 2026 Township Board minutes record PC Chair Brad Ade telling the board that once the 2026 Master Plan update is complete, the PC intends to work on 'updating/realigning Ordinances for renewable energy/battery storage, gravel mining, renewable energy, and data centers' — a direct, proactive signal almost certainly responding to next-door Gun Plain's Heron Energy Storage BESS fight and Dorr Township's Microsoft data-center fight. Current zoning ordinance on file is still the 2019 book with no BESS/data-center category. Master Plan public workshop held Feb 11, 2026.",
+        notes: "Otsego Township's own site confirms Professional Code Inspections of Michigan, Inc. (PCI, pcimi.com) as its contracted building/planning/zoning provider — PCI's Dorr office explicitly lists Otsego Township among its 23+ served municipalities, alongside Gun Plain and Dorr Townships in this same cluster (plus Wayland). No CWA connection found. Local officials: PC Chair Brad Ade (pcchair@otsegotownship.org), Secretary Jeff Polonowski; Supervisor Michael Gudith, Clerk Jen Colin.",
+        work_history: null,
+        sources: ["Otsego Twp Building, Planning & Zoning — https://www.otsegotownship.org/building-planning-and-zoning/", "Otsego Twp Board Minutes, Feb 9 2026 — https://www.otsegotownship.org/wp-content/uploads/2026/03/Twp-Board-Meeting-Minutes-February-2026.docx.pdf", "PCI Dorr office service list — https://www.pcimi.com/dorr/"]
+      }
+    ];'''
+assert anchor in src, "insertion anchor (end of MUNICIPALITIES array) not found"
+assert src.count(anchor) == 1, "insertion anchor not unique"
+
+new_entries = anchor[:-3] + ''',
+      {
+        id: 459,
+        municipality: "Monterey Township",
+        county: "Allegan",
+        type: "Township",
+        lat: 42.6167,
+        lng: -85.7333,
+        planner_name: "Lori Castello",
+        planner_title: "Zoning Administrator (PCI)",
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "NEW 2026-08-05, HIGH PRIORITY: NorthStar Clean Energy (operating as Allegan Solar LLC) filed a Special Use Permit for a 101-105.6 MW AC solar array with a 50 MW BESS (88 battery containers, all sited in Monterey), spanning Monterey and neighboring Hopkins Township. Mar 9, 2026 hearing: PCI's Lori Castello flagged multiple ordinance gaps (parcels under 20-acre minimum, fence height violations, and critically NO provision for BESS as a principal use, only accessory-to-solar) — hearing continued to May 11. Resident Anita Kerber presented a 28-signature moratorium petition; PC said it lacks moratorium authority (rests with the Township Board). May 11, 2026: NorthStar/Allegan Solar WITHDREW its local Special Use Permit application and announced it would instead pursue approval at the STATE level under PA 233 (Michigan's siting-preemption law) — a documented instance of a developer bypassing local review entirely after hitting ordinance gaps, the same PA 233 end-run tracked elsewhere in this dataset (Ypsilanti Township water ban, etc.). Jul 13, 2026: PC still has NOT adopted a BESS ordinance; Castello cautioned commissioners to \\"research it very good before getting into it.\\" NorthStar's Senior Manager Colin Daining publicly denied any connection to the Dorr Microsoft data center despite social-media rumors linking the two.",
+        notes: "PCI (pcimi.com/dorr) confirmed directly on Monterey's township site and by name in PC minutes — Lori Castello is the active reviewing Zoning Administrator. This is the strongest evidence in the whole PCI cluster of a real, live special-use fight with a clear ordinance gap and a developer pivoting to state preemption.",
+        work_history: null,
+        sources: ["Wilcox Newspapers/Allegan County News — https://wilcoxnewspapers.com/full-house-at-monterey-meeting-to-contest-solar-project/", "Monterey Twp Mar 2026 PC minutes — http://www.montereytownship.org/minutes/P3-26.pdf", "Monterey Twp May 2026 PC minutes — http://www.montereytownship.org/minutes/P5-26.pdf", "Monterey Twp Jul 2026 PC minutes — http://www.montereytownship.org/minutes/P7-26.pdf", "NorthStar PA 233 site plan (May 2026) — https://northstarcleanenergy.com/wp-content/uploads/2026/05/Allegan-Solar-Site-Plan-PA233.pdf"]
+      },
+      {
+        id: 460,
+        municipality: "Hopkins Township",
+        county: "Allegan",
+        type: "Township",
+        lat: 42.6186,
+        lng: -85.7719,
+        planner_name: "Lori Castello",
+        planner_title: "Zoning Administrator (PCI)",
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "NEW 2026-08-05, HIGH PRIORITY: same NorthStar Clean Energy/Allegan Solar LLC 101+ MW solar + 50 MW BESS project as Monterey Township (id 459) spans into Hopkins — a ZBA variance fight is on file here (see Hopkins ZBA review memo/findings-of-fact worksheets, Feb 2026). SEPARATELY, Hopkins Township has BOTH an active data-center moratorium (Ordinance 2026-16/17, public hearing Jun 23, 2026) AND an already-ADOPTED solar/BESS ordinance (Sec. 157.056, adopted Sept 2025) — making Hopkins the most regulation-ready of the whole PCI cluster on this issue, ahead of Gun Plain, Dorr, or Wayland.",
+        notes: "PCI (pcimi.com/dorr) confirmed on the township's own site; Lori Castello named present at the Sept 23, 2025 PC meeting specifically for the BESS/solar zoning ordinance amendment — the earliest confirmed PCI-attributed renewable-energy ordinance work in this whole cluster.",
+        work_history: null,
+        sources: ["Hopkins Twp ZBA Allegan Solar review memo — https://www.hopkinstownship.org/wp-content/uploads/2026/02/allegan-solar-review-memo-FOF-decision-worksheets-and-notice-info.pdf", "Hopkins Twp PC minutes 9/23/25 — https://www.hopkinstownship.org/wp-content/uploads/2026/01/9-23-25-Hopkins-Township-Planning-Commission-minutes.pdf"]
+      },
+      {
+        id: 461,
+        municipality: "Overisel Township",
+        county: "Allegan",
+        type: "Township",
+        lat: 42.6117,
+        lng: -85.9186,
+        planner_name: "Unknown (PCI building dept.; ordinance rewrite planner unconfirmed)",
+        planner_title: null,
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "NEW 2026-08-05: Had solar/battery-storage moratoriums in place into early 2026; REPEALED them at the Apr 14, 2026 board meeting in favor of a newly-approved \\"Revised Zoning Ordinance Book,\\" and the Board voted the SAME meeting to retain Foster & Swift as legal counsel specifically for renewable energy and data center issues. No developer/applicant named — preemptive. Exact original moratorium adoption date not locatable online (township's minutes archive has a gap); a records request to the clerk would nail it down. The revised zoning ordinance's BESS/solar chapter is not yet posted publicly as a standalone document.",
+        notes: "PCI (pcimi.com) confirmed as the township's contracted building/electrical/mechanical permitting provider. No individual PCI planner is named on Overisel's own materials for the ordinance rewrite specifically — Lori Castello (PCI's confirmed renewable-energy specialist at neighboring Hopkins Twp, id 460) is a plausible but UNCONFIRMED candidate.",
+        work_history: null,
+        sources: ["Overisel Twp Apr 14, 2026 board minutes — https://overiseltownship.org/wp-content/uploads/2026/04/Minutes-April-14-2026.pdf", "Overisel Twp Building page — https://overiseltownship.org/building/"]
+      },
+      {
+        id: 462,
+        municipality: "Jamestown Township",
+        county: "Ottawa",
+        type: "Township",
+        lat: 42.8386,
+        lng: -85.725,
+        planner_name: "Gregory Ransford (Fresh Coast Planning) / Kirk Scharphorn Jr. (PCI, building & zoning inspection)",
+        planner_title: "Planning Consultant / Building & Zoning Inspector",
+        firm: "Fresh Coast Planning",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "NEW 2026-08-05: ADOPTED a Data Center Moratorium — Zoning Text Amendment Ordinance No. 26-005, first reading Mar 30, 2026 (special board mtg), second reading/adoption Apr 20, 2026. A follow-on Ordinance 26-007 (adding Sec. 17.1N — Expiration) had its second reading Jul 20, 2026, adjusting the moratorium's expiration terms. No developer/applicant named — reads as preemptive, alongside neighboring Allendale Township's own separate data-center moratorium around the same period. Also passed Ordinance 25-007 (Jul 2025) regulating solar energy systems; no standalone BESS-specific ordinance found.",
+        notes: "IMPORTANT NUANCE: PCI (Kirk Scharphorn Jr., kscharphornjr@pcimi.com) handles Jamestown's building & zoning INSPECTION only. The township's actual land-use/Planning Commission consultant is Gregory Ransford of Fresh Coast Planning (freshcoastplanning.com) — a DIFFERENT firm, not PCI. This is the clearest example in the whole PCI-cluster sweep of PCI's role being administrative/inspection-only rather than ordinance-drafting.",
+        work_history: null,
+        sources: ["Jamestown Twp Ordinances — https://twp.jamestown.mi.us/government/ordinances/", "Jamestown Twp Building, Planning and Zoning — https://twp.jamestown.mi.us/departments/building-planning-and-zoning/", "Bridge Michigan — 19 towns pause data centers — https://bridgemi.com/michigan-environment-watch/at-least-19-michigan-towns-pause-data-centers-no-one-knows-if-itll-work/"]
+      },
+      {
+        id: 463,
+        municipality: "Gaines Township",
+        county: "Kent",
+        type: "Township",
+        lat: 42.8214,
+        lng: -85.6222,
+        planner_name: "Mark Sisson, AICP / Matt McKernan",
+        planner_title: "Township Planner / Assistant Planner",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "MAJOR ACTIVE CASE, NEW 2026-08-05: Microsoft's proposed \\"South Campus\\" — rezoning request (PUD to Light Industrial) covering 5 parcels (~104 acres) along Patterson Ave SE/76th St SE, adjacent to ~320 acres Microsoft already owns/has under contract (former Steelcase wood-plant property, $45.3M land contract). Package included: 65 dB noise cap at residential lines, 150-ft building setbacks, 8-ft landscaped berms, closed-loop cooling (no groundwater use), Consumers Energy coordination on electrical capacity, and a 9.5-acre public open-space/trail donation. Apr 16, 2026: packed public hearing at South Christian High School, heavy opposition (some building-trades-union support) — Planning Commission TABLED the rezoning decision, no confirmed final vote as of this research (Aug 5, 2026).",
+        notes: "CORRECTED 2026-08-05: this is Kent County's Gaines CHARTER Township (Byron Center/Kentwood area) — distinct from the unrelated Genesee County \\"Gaines Township\\" already tracked elsewhere in this dataset (id 445), and NOT a PCI client despite being geographically close to PCI's Dorr-office cluster. Gaines runs its own in-house planning department (Mark Sisson AICP, Matt McKernan) — initially assumed to be a PCI site given proximity to Dorr/Byron Township, but directly disconfirmed via the township's own planning/zoning page.",
+        work_history: null,
+        sources: ["Gaines Twp Planning & Zoning — https://www.gainestownship.org/departments/planning_zoning.php", "Crain's Grand Rapids Business — https://www.crainsgrandrapids.com/real-estate/commercial/cgr-gaines-township-data-center-explainer-20260403/", "WGVU News — https://www.wgvunews.org/news/2026-04-13/microsoft-details-45m-gaines-township-data-center-plan-public-meeting-set", "WOOD TV8 — https://www.woodtv.com/news/kent-county/gaines-township-tables-rezoning-decision-for-data-center/", "Fox17 — https://www.fox17online.com/news/local-news/wyoming-kentwood-byron-center/hundreds-of-neighbors-protest-microsoft-data-center-rezoning-proposal-at-gaines-township-public-hearing"]
+      },
+      {
+        id: 464,
+        municipality: "Byron Township",
+        county: "Kent",
+        type: "Township",
+        lat: 42.7864,
+        lng: -85.713,
+        planner_name: "Unknown (planning dept. contact not confirmed)",
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: No data-center/BESS docket activity found despite direct proximity to the Gaines Township Microsoft site (id 463).",
+        notes: "CORRECTED 2026-08-05: PCI's relationship with Byron Township is NARROWER than assumed — the township's own Inspection Services page states PCI is contracted for ELECTRICAL INSPECTIONS ONLY. Building inspection/permitting is in-house (Randy Zomerlei, Building Official; Heidi Baartman, Building Coordinator; Marv Schierbeek, Plumbing/Mechanical). The township's separate Planning page names no administrator and makes no PCI reference at all — planning/zoning consultant of record is unconfirmed; worth a direct call (616-878-9066).",
+        work_history: null,
+        sources: ["Byron Twp Inspection Services — https://www.byrontownship.org/government/township_departments/inspection_services/index.php", "Byron Twp Planning — https://www.byrontownship.org/government/township_departments/planning/index.php"]
+      },
+      {
+        id: 465,
+        municipality: "City of Allegan",
+        county: "Allegan",
+        type: "City",
+        lat: 42.5322,
+        lng: -85.8556,
+        planner_name: "Joel Dye (City Manager, staff liaison)",
+        planner_title: "City Manager",
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: No BESS/data-center docket activity found. The widely-shared \\"Plainwell battery storage\\" headline is actually Gun Plain Charter Township (id 453), not the City itself.",
+        notes: "PCI (pcimi.com/Dorr office) confirmed as building department contractor via the city's own site. Zoning ordinance has NO BESS or data-center provisions at all — only a generic commercial-solar-panel special-use listing tied to cell/wind tower standards. If a proposal ever landed here the city would be drafting from scratch — a real gap, not currently a live fight.",
+        work_history: null,
+        sources: ["City of Allegan — https://www.cityofallegan.org/", "Zoning Ordinance — https://cms7files.revize.com/alleganmi/Zoning%20Ordinance.pdf"]
+      },
+      {
+        id: 466,
+        municipality: "Allegan Township",
+        county: "Allegan",
+        type: "Township",
+        lat: 42.5333,
+        lng: -85.9,
+        planner_name: "Unknown (PCI building dept.; no individual named)",
+        planner_title: null,
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: No BESS/data-center docket activity found in available PC materials.",
+        notes: "PCI confirmed on the township's own site — became the township's building inspector Sept 8, 2015. No individual PCI planner named.",
+        work_history: null,
+        sources: ["Allegan Twp Building Department — https://allegantownship.org/building-department/"]
+      },
+      {
+        id: 467,
+        municipality: "City of Plainwell",
+        county: "Allegan",
+        type: "City",
+        lat: 42.447,
+        lng: -85.6386,
+        planner_name: "Unknown (PCI handles building only; zoning is City-run)",
+        planner_title: null,
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: No independent City of Plainwell BESS/data-center docket item — the \\"Plainwell battery storage\\" project (Copenhagen Infrastructure Partners, Riverview Dr) is jurisdictionally in neighboring Gun Plain Charter Township (id 453), though the site borders the City directly, so spillover concerns (traffic, grid interconnection, visual impact) are plausible even without a City docket item.",
+        notes: "PCI confirmed for building/plumbing/electrical/mechanical permits only — zoning permits are obtained from the City directly before PCI issues building permits, meaning zoning/planning authority sits with the City, not PCI.",
+        work_history: null,
+        sources: ["City of Plainwell Building Department — https://www.plainwell.org/Government/City-Departments/Building-Department.aspx", "PCI Plainwell contact — https://www.pcimi.com/contact/city-of-plainwell/"]
+      },
+      {
+        id: 468,
+        municipality: "Cheshire Township",
+        county: "Allegan",
+        type: "Township",
+        lat: 42.6392,
+        lng: -85.9525,
+        planner_name: "Frank Tooker",
+        planner_title: "Zoning Administrator (in-house)",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: No BESS/data-center docket activity — the only recent special land use item (Sept 2025) is an unrelated 260-ft wireless tower (Atlas Tower 1 LLC).",
+        notes: "PCI (pcimi.com) confirmed for building/electrical/mechanical/plumbing inspections ONLY — zoning is handled separately, IN-HOUSE, by Zoning Administrator Frank Tooker, not PCI. One of the clearer examples in this cluster of PCI's role being inspection-only.",
+        work_history: null,
+        sources: ["Cheshire Twp — https://cheshiretownshipmi.gov/", "Board/Staff page — https://www.cheshiretownshipmi.gov/board.html"]
+      },
+      {
+        id: 469,
+        municipality: "Fillmore Township",
+        county: "Allegan",
+        type: "Township",
+        lat: 42.6739,
+        lng: -85.9578,
+        planner_name: "Unknown — conflicting info between township site and PCI",
+        planner_title: null,
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: No BESS/data-center docket activity found in available PC/ZBA minutes or the in-progress Master Plan update chapters.",
+        notes: "FLAGGED DISCREPANCY: Fillmore's own permits page explicitly instructs applicants \\"Building permits are to be turned into the township office for zoning and approval. DO NOT send them to P.C.I.\\" — yet PCI's own site claims Fillmore's zoning-approval inquiries route through PCI. Named township inspectors (Dennis Kroeze/electrical, Bob Modreske/mechanical-plumbing) — unclear if independent contractors or PCI staff. Worth a direct call to resolve.",
+        work_history: null,
+        sources: ["Fillmore Twp Planning/Zoning — https://fillmoretownship.org/planning-zoning/", "Fillmore Twp Permits — https://fillmoretownship.org/permits/"]
+      },
+      {
+        id: 470,
+        municipality: "Heath Township",
+        county: "Allegan",
+        type: "Township",
+        lat: 42.6469,
+        lng: -85.8964,
+        planner_name: "Unknown (PCI building dept.; no individual named)",
+        planner_title: null,
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: No BESS/data-center docket activity found. CAUTION: unrelated national headlines about a Microsoft data center near \\"Heath\\" refer to Heath, OHIO (Licking County) — do not conflate with this Michigan township.",
+        notes: "PCI confirmed on the township's own site for building/plumbing/electrical/mechanical permits. No individual PCI staffer named for Heath specifically.",
+        work_history: null,
+        sources: ["Heath Twp — https://heathtownship.net/", "Planning, Building & Zoning — https://heathtownship.net/planning-building-zoning/"]
+      },
+      {
+        id: 471,
+        municipality: "Village of Hopkins",
+        county: "Allegan",
+        type: "Village",
+        lat: 42.6186,
+        lng: -85.7719,
+        planner_name: "Unknown (shares 2024 Master Plan with Hopkins Township)",
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "NEW 2026-08-05: shares a joint 2024 Master Plan with neighboring Hopkins Township (id 460, the active NorthStar/Allegan Solar BESS site) but has no independently confirmed PCI relationship on its own website and no active PC meeting schedule found. Distinct entity from Hopkins Township.",
+        work_history: null,
+        sources: ["PCI Dorr office service list — https://www.pcimi.com/dorr/"]
+      },
+      {
+        id: 472,
+        municipality: "Leighton Township",
+        county: "Allegan",
+        type: "Township",
+        lat: 42.7186,
+        lng: -85.6161,
+        planner_name: "Unknown (PCI confirmed; no individual named)",
+        planner_title: null,
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: No data-center/BESS activity in any 2025-2026 PC meeting reviewed — a clean 'nothing to report' case in this cluster.",
+        notes: "PCI role confirmed on the township's own site.",
+        work_history: null,
+        sources: ["PCI Dorr office service list — https://www.pcimi.com/dorr/"]
+      },
+      {
+        id: 473,
+        municipality: "Village of Martin",
+        county: "Allegan",
+        type: "Village",
+        lat: 42.5372,
+        lng: -85.6394,
+        planner_name: "Unknown (minimal web presence)",
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "NEW 2026-08-05: almost no independent web presence found; PCI relationship could not be confirmed for the Village specifically (only for neighboring Martin Township, id 474, per PCI's own client list).",
+        work_history: null,
+        sources: ["PCI Dorr office service list — https://www.pcimi.com/dorr/"]
+      },
+      {
+        id: 474,
+        municipality: "Martin Township",
+        county: "Allegan",
+        type: "Township",
+        lat: 42.5372,
+        lng: -85.6394,
+        planner_name: "Unknown (PCI confirmed; no individual named)",
+        planner_title: null,
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: Gun Plain Charter Township's own Jan 21, 2026 PC minutes flagged \\"Martin Township and Cooper Township are working on their Master Plans\\" (Cooper Twp's own moratorium is tracked at id 454). No public record yet confirms or rules out a data-center/BESS nexus in Martin's Master Plan update — thin public documentation (no PC minutes posted for 2025-2026, quarterly meetings only). Flagged as the HIGHEST-PRIORITY FOIA/records-request target in this new batch.",
+        notes: "PCI role confirmed on the township's own site.",
+        work_history: null,
+        sources: ["Gun Plain Twp PC Minutes, Jan 21 2026 (Mo's direct download)", "PCI Dorr office service list — https://www.pcimi.com/dorr/"]
+      },
+      {
+        id: 475,
+        municipality: "City of Otsego",
+        county: "Allegan",
+        type: "City",
+        lat: 42.4548,
+        lng: -85.702,
+        planner_name: "Bret Rietkerk (PCI, Building Inspector)",
+        planner_title: "Building Inspector",
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: No BESS/data-center docket activity found. Distinct from the already-mapped Otsego TOWNSHIP (id 458) — don't conflate.",
+        notes: "PCI confirmed on the city's own site (Bret Rietkerk named as Building Inspector). No dedicated PCI planner/zoning administrator named — a \\"Zoning Administrator\\" label on the city's Development page appears to actually be City Manager Aaron Mitchell, not a PCI or planning role (likely a site labeling error).",
+        work_history: null,
+        sources: ["City of Otsego Development — https://www.cityofotsego.org/development/"]
+      },
+      {
+        id: 476,
+        municipality: "Salem Township (Allegan Co.)",
+        county: "Allegan",
+        type: "Township",
+        lat: 42.5511,
+        lng: -85.7186,
+        planner_name: "Unknown (PCI confirmed; no individual named)",
+        planner_title: null,
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: No BESS/data-center docket activity found.",
+        notes: "Distinct from the already-mapped Salem Township, Washtenaw County (id 279, a CWA site) — this is Allegan County's Salem Township, an unrelated jurisdiction with the same name; don't conflate. PCI role confirmed on the township's own site.",
+        work_history: null,
+        sources: ["Salem Twp (Allegan) — https://salemtownship.org/"]
+      },
+      {
+        id: 477,
+        municipality: "Trowbridge Township",
+        county: "Allegan",
+        type: "Township",
+        lat: 42.4844,
+        lng: -85.7889,
+        planner_name: "Larry Ladenburger",
+        planner_title: "Zoning Administrator (PCI affiliation unconfirmed)",
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: No BESS/data-center activity found; the township's minutes archive was rate-limited during research, so this is not a fully confirmed negative — a manual recheck is warranted.",
+        notes: "PCI's own Dorr-office client list names Trowbridge Township as served, but PCI is not directly named on the township's own accessible pages. Zoning Administrator Larry Ladenburger is named on the township site — unclear if PCI-affiliated or a separate township appointee. NOTE: the township's contracted Assessor, also named \\"Heather Mitchell\\" (of Appraisals Plus Group Inc.), is a DIFFERENT person from PCI's own Zoning Administrator staffer of the same name — do not conflate the two Heather Mitchells.",
+        work_history: null,
+        sources: ["Trowbridge Twp — https://trowbridgetownship.org/", "Board/Departments — https://trowbridgetownship.org/board-departments"]
+      },
+      {
+        id: 478,
+        municipality: "Watson Township",
+        county: "Allegan",
+        type: "Township",
+        lat: 42.5511,
+        lng: -85.7889,
+        planner_name: "Unknown (PCI listed as Dorr-office client; not confirmed on township site)",
+        planner_title: null,
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: No BESS/data-center docket activity found.",
+        notes: "PCI's own Dorr-office client list names Watson Township as served, but PCI branding wasn't found directly on the township's own accessible pages. Planning Commission is citizen-staffed (Chair Brady Cole and others) — no PCI staff named.",
+        work_history: null,
+        sources: ["Watson Twp — https://watsontownshipmi.gov/", "PCI Dorr office service list — https://www.pcimi.com/dorr/"]
+      },
+      {
+        id: 479,
+        municipality: "City of Wayland",
+        county: "Allegan",
+        type: "City",
+        lat: 42.6764,
+        lng: -85.6386,
+        planner_name: "Lori Castello",
+        planner_title: "Zoning Administrator (PCI)",
+        firm: "PCImi",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "NEW 2026-08-05: No BESS/data-center docket activity found — a small municipality with no active large-scale industrial/utility proposals identified. Distinct from the already-mapped Wayland TOWNSHIP (id 457, a McKenna Associates site with an active moratorium + BESS ordinance) — don't conflate; the City itself has no such activity.",
+        notes: "PCI confirmed directly on the City's own site — contracted \\"for all planning, zoning, and development needs.\\" Lori Castello (lcastello@pcimi.com) is named as Zoning Administrator and conceptual-plan-review contact — the clearest confirmed instance in this whole sweep of PCI holding actual PLANNING authority (not just building/inspection) for a municipality.",
+        work_history: null,
+        sources: ["City of Wayland Business/Planning & Zoning — https://www.cityofwayland.org/business/planning-zoning/", "City of Wayland Current Projects — https://www.cityofwayland.org/current-projects/"]
+      }
+    ];'''
+
+src = src.replace(anchor, new_entries)
+
+with io.open(path, "w", encoding="utf-8") as f:
+    f.write(src)
+
+print("patched OK, new size", len(src))
