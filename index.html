@@ -830,7 +830,7 @@
 // this one line, by hand, whenever MUNICIPALITIES changes. Every
 // "Updated"/"Last updated" label on the page reads from this one constant —
 // nothing else needs to be touched, and nothing else should be hand-edited.
-const LAST_UPDATED = "2026-08-06"; // format: YYYY-MM-DD — set this by hand on every data update
+const LAST_UPDATED = "2026-08-07"; // format: YYYY-MM-DD — set this by hand on every data update
 
 const FIRMS = {
   "Carlisle/Wortman Associates": { color: "#E53935", short: "CWA" },
@@ -877,6 +877,7 @@ const FIRMS = {
   "North of 45 LLC":             { color: "#00695C", short: "N45" },
   "SP Urban Planning Service":   { color: "#009688", short: "SP Urban" },
   "Greg Elliott P.L.C.":        { color: "#8D6E63", short: "Elliott" },
+  "Construction Code Authority": { color: "#78716c", short: "CCA" },
   "Unknown":                     { color: "#757575", short: "?" }
 };
 
@@ -924,10 +925,10 @@ const MUNICIPALITIES = [
         cwa_flag: true,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "RD Michigan Property Owner I LLC / 'Related Digital' — 30 Hudson Yards, NY (likely Related Companies vehicle). Developer attorney: Alan Greene, Dykema Gossett PLLC. Case No. 25-001577-CZ, Washtenaw County Circuit Court, Judge Julia B. Owdzziej. Consent judgment entered Oct 1, 2025, overriding Planning Commission's 5-2 denial of Aug 12, 2025. Resident Kathryn Haushalter (atty. Ellis Boal) is challenging the consent judgment. ✅ CONFIRMED (Jun 2026 minutes): after the fallout, CWA/Auerbach ran a Feb–Jun 2026 ordinance-drafting process culminating in a 'High Energy Intensive Development (HEID)' ordinance explicitly covering data centers (presented Jun 2, 2026) — then CWA announced its own phase-out the same meeting.",
+        data_center_notes: "RD Michigan Property Owner I LLC / 'Related Digital' — 30 Hudson Yards, NY (likely Related Companies vehicle). Developer attorney: Alan Greene, Dykema Gossett PLLC. Case No. 25-001577-CZ, Washtenaw County Circuit Court, Judge Julia B. Owdzziej. Consent judgment entered Oct 1, 2025, overriding Planning Commission's 5-2 denial of Aug 12, 2025. Resident Kathryn Haushalter (atty. Ellis Boal) is challenging the consent judgment. ✅ CONFIRMED (Jun 2026 minutes): after the fallout, CWA/Auerbach ran a Feb–Jun 2026 ordinance-drafting process culminating in a 'High Energy Intensive Development (HEID)' ordinance explicitly covering data centers (presented Jun 2, 2026) — then CWA announced its own phase-out the same meeting. | UPDATE 2026-08-07: the DTE Electric special contracts for this project's power supply (MPSC Case No. U-21990, serving Green Chile Ventures LLC, an Oracle subsidiary) are under active legal challenge — this is a separate, UTILITY-REGULATORY track from the township zoning/consent-judgment litigation above, not a duplicate of it. MPSC approved the contracts Dec 18, 2025 via ex parte (non-contested-case) review rather than a full contested hearing. Michigan AG Dana Nessel, joined by Sierra Club, NRDC, Michigan Environmental Council, and the Citizens Utility Board of Michigan, appealed to the Michigan Court of Appeals Apr 17, 2026, arguing the contracts should have gone through a contested-case process with discovery and testimony, and that MPSC misapplied the narrow ex parte exemption (meant only for rate changes with no cost impact on other customers) to approve them in ~7 weeks versus the ~10 months typical for major cases, based on confidential contracts/financial analyses never entered into the record. Sierra Club/NRDC/MEC filed their opening brief Aug 7, 2026. If the appeal succeeds, the case could be remanded for a full contested proceeding, potentially forcing public disclosure of the redacted commercial terms. Construction is proceeding regardless — Blackstone/PIMCO-backed financing was secured by Apr 24, 2026, with a targeted Q4 2027 completion — so this is a collateral risk to the project's power-supply terms, not (yet) to construction itself. Full writeup in the P.A.C.T. vault: Documents/DTE-MPSC-Oracle-Contracts-Appeal.",
         notes: "Auerbach cited §12.04(A)(2) — language from a 2013 draft ordinance NEVER ENACTED. Actual §12.04(A) prohibits conditional rezoning outright. Saline Township Clerk Kelly Marion confirmed via FOIA that no amendment was ever adopted. ✅ CWA termination now CONFIRMED (was unconfirmed): Jun 2, 2026 PC minutes and Jun 10, 2026 Board minutes both state CWA is being phased out over 60 days, matching Kozma's June 12 email exactly. Auerbach was also consulted by Saline's litigation attorneys (Landry billing records) during the period the consent judgment was structured — despite his planning error being the catalyst for the lawsuit. NOTE: a July 2026 secondhand claim (Ypsilanti Twp resident Courtney Brady, citing 'the affidavit from LuAnne') describes a same-day Oct 1, 2025 Landry–Auerbach conferral on the consent judgment specifically — this wasn't independently found in the Kozma affidavit's text when searched directly, but may corroborate or be the same underlying fact as the 'Landry billing records' already cited here. Worth reconciling: locate the actual billing-records document.",
         work_history: "Carlisle/Wortman Associates (contract terminated June 2026, confirmed phase-out completing ~Aug 2026)",
-        sources: ["Kozma affidavit 02/12/2026, Civil Action No. 25-001577-CZ", "Landry billing records", "P.A.C.T. research", "Saline Township PC/Board minutes, Feb 3 – Jun 10, 2026 — https://salinetownship.org/uploads/minutes/"]
+        sources: ["Kozma affidavit 02/12/2026, Civil Action No. 25-001577-CZ", "Landry billing records", "P.A.C.T. research", "Saline Township PC/Board minutes, Feb 3 – Jun 10, 2026 — https://salinetownship.org/uploads/minutes/", "MPSC news release, Dec 18, 2025 (Case No. U-21990) — https://www.michigan.gov/mpsc/commission/news-releases/2025/12/18/mpsc-approves-dte-electric-energy-contracts-for-data-center", "Detroit News, Jan 9, 2026 — https://eu.detroitnews.com/story/business/2026/01/09/dte-energy-saline-township-oracle-openai-data-center-michigan-attorney-general-dana-nessel/88099102007/", "ENR, Apr 29, 2026 — https://www.enr.com/articles/62911-oracles-16b-michigan-data-center-secures-financing-as-power-contracts-face-appeals", "Sierra Club press release, Aug 7, 2026 — https://www.sierraclub.org/press-releases/2026/08/sierra-club-nrdc-and-mec-ask-court-overturn-rushed-approval-dte-s-oracle"]
       },
       {
         id: 3,
@@ -3173,17 +3174,17 @@ const MUNICIPALITIES = [
         type: "City",
         lat: 43.2939,
         lng: -84.6077,
-        planner_name: null,
-        planner_title: "City Manager / Planning",
+        planner_name: "Jamey Conn",
+        planner_title: "City Manager (also covers Planning & Zoning, Economic Development)",
         firm: "In-House (City Staff)",
-        employment_type: "In-House (City Staff)",
+        employment_type: "In-House",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
-        notes: "Gratiot County seat. Self-managed planning via City Council. ROWE Professional Services Company provides engineering reviews and physical planning support — not primary planner. PLB Planning Group listed previously but not confirmed. ithacami.com.",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): confirmed on the city's own staff directory table.",
         work_history: null,
-        sources: ["City of Ithaca website"]
+        sources: ["https://www.ithacami.com/home/staff-directory/"]
       },
       {
         id: 121,
@@ -4727,18 +4728,18 @@ const MUNICIPALITIES = [
         type: "Village",
         lat: 44.654,
         lng: -84.1388,
-        planner_name: null,
-        planner_title: "Zoning Administrator",
-        firm: "In-House (City Staff)",
-        employment_type: "In-House (City Staff)",
+        planner_name: "N/A — not an incorporated village",
+        planner_title: "See notes — land-use authority is split between two townships",
+        firm: "Unknown",
+        employment_type: "Unknown",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "NOTE: Mio is an unincorporated community — planning and land use fall under Big Creek Township zoning administrators and Oscoda County parameters, not a separate Village of Mio entity. AuSable River community. County Building Dept: 989-826-1164, 311 S. Morenci Ave, Mio MI 48647.",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): CORRECTED — Mio is an unincorporated community/census-designated place, NOT a separately incorporated village government (confirmed via Wikipedia: \\\"as an unincorporated community, Mio has no legal autonomy as an incorporated municipality\\\"). It straddles three townships — Mentor Township (east half), Big Creek Township (west half), and Elmer Township (northwest) — any of which could be the actual land-use authority depending on the specific parcel. Mio is the Oscoda County seat, so county government is physically present, but that's separate from local zoning authority. This entry is being left in place as a placeholder/redirect note rather than deleted, since \\\"Mio\\\" is a commonly-used place name in this area — but its planner/zoning data should NOT be filled in under this label; a future pass should add Big Creek Township and Mentor Township as their own proper entries instead and research each directly.",
         work_history: null,
-        sources: ["Mio Village Oscoda County records — research needed"]
+        sources: ["https://en.wikipedia.org/wiki/Mio,_Michigan", "https://www.bigcreektownship.com/", "https://en.wikipedia.org/wiki/Mentor_Township,_Oscoda_County,_Michigan"]
       },
       {
         id: 200,
@@ -6116,7 +6117,7 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "Township uses a 'contracted Zoning Professional' per MML job posting for Community Development/DDA Director (which reports to and coordinates with the contracted planner). Giffels Webster submitted an RFP proposal to Grosse Ile Township — likely their current planning consultant, but engagement not confirmed. MML job posting for Community Development/DDA Director suggests possible staff vacancy. Island community in Detroit River, Wayne County. No CWA connection identified.",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): RE-CHECKED, still genuinely unresolved — the \\\"Giffels Webster RFP.pdf\\\" circulating as a lead is literally Giffels Webster's own submitted proposal/response, not proof of an awarded or current contract; no award notice, signed agreement, or news confirms them as the active planning firm. The township is separately, currently recruiting an in-house Community Development & DDA Director (per an MML job posting), suggesting the in-house/contracted arrangement may be in flux right now. Leaving planner info Unknown rather than guessing. NOTE FOR MAP MAINTAINER: there appear to be two separate \\\"Grosse Ile Township\\\" entries on this map (this one, id 270, and id 50 which already has a confirmed planner, Derek Thiel) — worth checking whether that's a genuine duplicate needing a merge, in a future data-cleanup pass.",
         work_history: null,
         sources: ["https://classifieds.mml.org/job/community-development-downtown-development-authority-director/85121888/", "https://grosseile.civicweb.net/document/182336/Giffels%20Webster%20RFP.pdf"]
       },
@@ -6507,18 +6508,18 @@ const MUNICIPALITIES = [
         type: "City",
         lat: 42.1523,
         lng: -83.4869,
-        planner_name: null,
-        planner_title: null,
-        firm: "Unknown",
-        employment_type: "Unknown",
+        planner_name: "Brady Peck",
+        planner_title: "City Manager (serves in professional staff capacity for the Planning Commission)",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "No named planning official found on the city's site (bellevilleonthelake.com); Building & Zoning dept exists. City Hall (734) 697-9323, 330 Charles St.",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): the spreadsheet's claimed name (\\\"Kristin Faull\\\") does NOT appear anywhere on the city's own City Manager page — REJECTED, that name appears to be confused with an unrelated Belleville Farmer's Market police-chief listing. The city's own page instead directly names Brady Peck as the current City Manager, confirming the role-description (professional staff to the Planning Commission) applies to him.",
         work_history: null,
-        sources: ["https://bellevilleonthelake.com/"]
+        sources: ["https://bellevilleonthelake.com/departments/city-manager/"]
       },
       {
         id: 291,
@@ -6547,18 +6548,18 @@ const MUNICIPALITIES = [
         type: "Charter Township",
         lat: 42.3084,
         lng: -83.4818,
-        planner_name: null,
-        planner_title: null,
-        firm: "Unknown",
-        employment_type: "Unknown",
+        planner_name: "Patrick Sloan, AICP",
+        planner_title: "Community Planner (exact current title uncertain — see notes)",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "canton-mi.org repeatedly inaccessible to automated research this session — priority re-check given Canton's size and location.",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): CAVEAT — canton-mi.org/cantonmi.gov and mirrors were unreachable this pass (repeated connection errors), so this rests on independent secondary corroboration only: Wiza.co lists Sloan as \\\"Community Planner\\\" (spreadsheet claimed \\\"Community Planning Manager\\\" — title discrepancy, not resolved), ZoomInfo confirms Zachary Michels, AICP as Associate Planner, and a search-indexed township directory page title matches Erin Schlutow (Senior Planner, unverified beyond the title match). Recommend re-checking directly against cantonmi.gov when it's reachable.",
         work_history: null,
-        sources: ["https://www.canton-mi.org"]
+        sources: ["https://www.zoominfo.com/p/Zachary-Michels/2330176169", "https://wiza.co/d/charter-township-of-canton/2327/patrick-sloan", "https://www.cantonmi.gov/DocumentCenter/View/15678/2025-Planning-Commission-Annual-Report-and-2026-Work-Plan"]
       },
       {
         id: 293,
@@ -6587,18 +6588,18 @@ const MUNICIPALITIES = [
         type: "Township",
         lat: 42.4162,
         lng: -83.4838,
-        planner_name: null,
-        planner_title: null,
-        firm: "Unknown",
-        employment_type: "Unknown",
+        planner_name: "Jennifer Frey",
+        planner_title: "Planner",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "Distinct from Northville City (already mapped as Wayne/Oakland id18). Active Planning Commission per twp.northville.mi.us, no staff/consultant name confirmed.",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): confirmed on the exact cited URL, the township's own staff directory (Public Services division). Distinct from the separate City of Northville.",
         work_history: null,
-        sources: ["https://twp.northville.mi.us"]
+        sources: ["https://www.twp.northville.mi.us/your-government/advanced-components/staff-directory-list"]
       },
       {
         id: 295,
@@ -6756,7 +6757,7 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "ci.rochester.mi.us largely inaccessible to automated research this session.",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): REJECTED a ChatGPT-sourced claim (\\\"Jeremy Peckens, Planning and Zoning Administrator,\\\" sourced to a broken/generic MEDA directory link) — that name appears only on third-party aggregator sites (TheOrg, ContactOut, LinkedIn), never on the city's own domain. Independent research instead surfaced Nik Banda as Deputy City Manager / Economic & Community Development Director per the city's own directory and local news (\\\"Banda named new Rochester city manager\\\") — a different name AND a different title than the claim, so not confirmed as \\\"the planner\\\" either without a more direct check. Leaving planner_name Unknown; Nik Banda is a lead worth checking directly, not yet confirmed as a planning-specific role. Distinct from Rochester Hills (id 65, already on this map with its own confirmed planner Sara Roediger, AICP) — a separate city.",
         work_history: null,
         sources: ["https://www.ci.rochester.mi.us/"]
       },
@@ -7307,18 +7308,18 @@ const MUNICIPALITIES = [
         type: "City",
         lat: 42.8137,
         lng: -82.7754,
-        planner_name: null,
-        planner_title: null,
-        firm: "Unknown",
-        employment_type: "Unknown",
+        planner_name: "Troy S. Jeschke",
+        planner_title: "Planning and Economic Development Director",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "Straddles Macomb/St. Clair county line; only governance found, no planning staff.",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): the spreadsheet's original citation (a MEDA member-directory URL) was confirmed broken — it renders an unfiltered 501-member list, not a Jeschke-specific result. Found and confirmed instead via the city's own site, which states his name/title verbatim.",
         work_history: null,
-        sources: ["https://en.wikipedia.org/wiki/Richmond,_Michigan"]
+        sources: ["https://www.cityofrichmond.net/174/Planning-Economic-Development"]
       },
       {
         id: 331,
@@ -7427,18 +7428,18 @@ const MUNICIPALITIES = [
         type: "Charter Township",
         lat: 42.6875,
         lng: -82.8288,
-        planner_name: null,
-        planner_title: null,
-        firm: "Unknown",
-        employment_type: "Unknown",
+        planner_name: "Jonathon Palin",
+        planner_title: "Planning Director",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "Planning, Building, and Code Enforcement housed together at Municipal Building (47275 Sugarbush); staff subpage unreachable.",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): CAVEAT — the township's Planning-Zoning page loaded but didn't name him; the township's own separate staff-directory page (chesterfieldtwp.org/directory.aspx?EID=20) is indexed under his name but couldn't be directly rendered this pass (repeated connection blocks), so this rests on the indexed page title plus independent ZoomInfo corroboration (\\\"Jonathon Palin ... Director, Planning & Zoning at Chesterfield Township\\\"), not a direct primary-source read. No contradicting evidence found.",
         work_history: null,
-        sources: ["https://www.chesterfieldtwp.org"]
+        sources: ["https://www.chesterfieldtwp.org/directory.aspx?EID=20", "https://www.chesterfieldtwp.org/208/Planning-Zoning"]
       },
       {
         id: 337,
@@ -7607,18 +7608,18 @@ const MUNICIPALITIES = [
         type: "City",
         lat: 42.2411,
         lng: -83.613,
-        planner_name: null,
-        planner_title: null,
-        firm: "Unknown",
-        employment_type: "Unknown",
+        planner_name: "Josh Burns",
+        planner_title: "City Planner",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "No planner found for the City proper (distinct from Ypsilanti Township, already in map).",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): confirmed on the city's own staff directory (Community Development dept). This is the City of Ypsilanti — distinct from Ypsilanti Charter Township (id 8), a separate government already on this map with its own planner (Benjamin R. Carlisle).",
         work_history: null,
-        sources: ["https://www.cityofypsilanti.com"]
+        sources: ["https://cityofypsilanti.com/518/Meet-the-Staff"]
       },
       {
         id: 346,
@@ -7987,8 +7988,8 @@ const MUNICIPALITIES = [
         type: "City",
         lat: 42.6217,
         lng: -82.5336,
-        planner_name: null,
-        planner_title: null,
+        planner_name: "Lisa Borgacz",
+        planner_title: "City Clerk",
         firm: "In-House (City Staff)",
         employment_type: "In-House",
         status: "active",
@@ -7996,9 +7997,9 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "Community Development Dept handles Building/Code Enforcement/Planning/ZBA as one office; no individual confirmed. (Firm listed as: In-House (City Staff) — tentative.)",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): Borgacz confirmed as City Clerk on the city's own Departments page — NOT applying the spreadsheet's \\\"Planning Commission staff contact\\\" framing, since neither cited page states that explicitly (the Planning Department section names no individual contact). Pat Pokorny, Code Compliance Officer, is separately confirmed on the city's Planning Department page (code@cityofalgonac.org) — a distinct, code-enforcement-specific role, not planning/zoning policy.",
         work_history: null,
-        sources: ["https://www.cityofalgonac.org/departments/"]
+        sources: ["https://www.cityofalgonac.org/departments/", "https://www.cityofalgonac.org/PlanningDepartment"]
       },
       {
         id: 365,
@@ -8507,18 +8508,18 @@ const MUNICIPALITIES = [
         type: "Charter Township",
         lat: 42.5423,
         lng: -83.8137,
-        planner_name: null,
-        planner_title: null,
-        firm: "Unknown",
-        employment_type: "Unknown",
+        planner_name: "Kelly Mathews",
+        planner_title: "Planner",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "Directly adjacent to Genoa Township (active data center moratorium) — priority to verify manually; site content largely stale (2022).",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): CAVEAT — the township homepage doesn't mention her and the Planning-Zoning subpage was blocked from direct fetch this pass; applying based on the township's own indexed staff-directory record (brightontwp.com/directory.aspx?eid=3) rather than a direct read. Distinct from Brighton CITY (id 389, already on this map with its own planner Mike Caruso) — this is Brighton Charter TOWNSHIP, a separate government.",
         work_history: null,
-        sources: ["http://www.brightontwp.com/"]
+        sources: ["https://www.brightontwp.com/directory.aspx?eid=3", "https://brightontwp.com/151/Planning-Zoning"]
       },
       {
         id: 391,
@@ -8887,18 +8888,18 @@ const MUNICIPALITIES = [
         type: "Village",
         lat: 43.154,
         lng: -83.4063,
-        planner_name: null,
-        planner_title: null,
-        firm: "Unknown",
-        employment_type: "Unknown",
+        planner_name: "Denise Baker",
+        planner_title: "Village Clerk/Administrator",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: null,
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): name/title confirmed verbatim on the village's own Village Offices page. NOT applying the spreadsheet's \\\"published zoning contact\\\" framing — neither cited page explicitly labels her as a zoning contact, that was an inference; leaving it as her actual confirmed title only.",
         work_history: null,
-        sources: ["http://columbiaville.org/government"]
+        sources: ["https://columbiaville.org/government/village-offices/"]
       },
       {
         id: 410,
@@ -8996,7 +8997,7 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "Most subpages 403'd; regional data-center moratorium wave active nearby (Holly, Tyrone, Fenton, Groveland townships) but not confirmed for Almont itself.",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): REJECTED a ChatGPT-sourced claim (\\\"Caitlyn L. Habben, AICP / Wade Trim as Township Planner; Ida Lloyd as Zoning Administrator\\\") — the township's own cited planning-zoning page returned repeated access errors and could not be directly read. Habben's Wade Trim affiliation has weak third-party corroboration (LinkedIn/ZoomInfo, plus her name appearing in indexed PC minutes-PDF titles) but her exact title on the township's own site is unconfirmed. Worse, Ida Lloyd's title per ZoomInfo is actually \\\"Inspector,\\\" not \\\"Zoning Administrator\\\" as claimed — a direct contradiction. Not applying either name; leaving planner_name Unknown pending a direct (non-automated) check of almonttownship.org.",
         work_history: null,
         sources: ["http://almonttownship.org/"]
       },
@@ -9036,7 +9037,7 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: null,
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): REJECTED a ChatGPT-sourced claim (\\\"Jerry Fackler, Zoning Administrator\\\") — the cited township page could not be read (repeated access errors), and targeted searches for this name found zero corroboration anywhere (no minutes, news, or directories). Leaving planner_name Unknown.",
         work_history: null,
         sources: ["https://en.wikipedia.org/wiki/Attica_Township,_Michigan"]
       },
@@ -9047,18 +9048,18 @@ const MUNICIPALITIES = [
         type: "Township",
         lat: 43.3,
         lng: -83.18,
-        planner_name: null,
-        planner_title: null,
-        firm: "Unknown",
+        planner_name: "N/A — not a zoned community",
+        planner_title: "No zoning ordinance / no zoning administrator role exists",
+        firm: "N/A",
         employment_type: "N/A",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "Burlington Township is explicitly stated to be 'not a zoned community' — no planning commission/zoning administrator gatekeeping land use. Worth verifying directly given regional data-center interest. (Firm listed as: None — no zoning ordinance.)",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): township's own Forms & Permits page states verbatim \\\"Burlington Township is not a zoned community\\\" — no zoning ordinance, zoning administrator, zoning permits, or Planning Commission found anywhere. Could not independently confirm whether Lapeer County zoning fills the gap by default (MI law allows this in unzoned townships) — county's own site has no zoning/planning department page. This closes the gap as genuinely not-applicable rather than unconfirmed; if a data-center/BESS proposal ever targeted this township, county-level zoning (if any) would be the relevant authority, not the township.",
         work_history: null,
-        sources: ["https://burlingtontownshiplapeer.com/forms-permits/"]
+        sources: ["https://burlingtontownshiplapeer.com/forms-permits/", "https://www.lapeercountyweb.org/"]
       },
       {
         id: 418,
@@ -9289,16 +9290,16 @@ const MUNICIPALITIES = [
         lng: -83.4,
         planner_name: null,
         planner_title: null,
-        firm: "Unknown",
-        employment_type: "Unknown",
+        firm: "Construction Code Authority",
+        employment_type: "Contracted",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: null,
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): township's own site confirms building/zoning permits go through the Construction Code Authority (Sec. 3.02 of the Zoning Ordinance) — CONFIRMED, applied as firm. planner_name left Unknown: the spreadsheet also claimed \\\"Steve Seres, Planning Commission Chair\\\" but the township's own 2020 Master Plan lists Emily Barber as Chair and Seres only as a regular PC member — contradicts the claim, NOT applying it (leadership could have changed since 2020, but no source confirms that, so not asserting it either way).",
         work_history: null,
-        sources: []
+        sources: ["https://oregontwpmi.gov/?page_id=97"]
       },
       {
         id: 430,
@@ -9316,7 +9317,7 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: null,
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): REJECTED a ChatGPT-sourced claim (\\\"David Scheuer, Zoning Administrator\\\") — the cited township page could not be read, and the only \\\"David Scheuer\\\" findable online is based in Ortonville (Oakland County, not Lapeer), with no confirmation it's even the same person or role. Leaving planner_name Unknown.",
         work_history: null,
         sources: []
       },
@@ -9447,18 +9448,18 @@ const MUNICIPALITIES = [
         type: "Village",
         lat: 42.9186,
         lng: -83.5219,
-        planner_name: null,
-        planner_title: null,
-        firm: "Unknown",
-        employment_type: "Unknown",
+        planner_name: "Sheri L. Wilkerson, CMC",
+        planner_title: "Administrator/Clerk & Zoning Administrator",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "Has a Planning Commission and ZBA but no roster/consultant/zoning administrator name retrievable.",
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): village's own Personnel page states verbatim she holds Administrator/Clerk, FOIA Coordinator, Notary Public, Parks Administrator, AND Zoning Administrator roles.",
         work_history: null,
-        sources: ["https://villageofgoodrich.com/planning-commission/"]
+        sources: ["https://villageofgoodrich.com/village-personnel/", "https://villageofgoodrich.com/planning-commission/"]
       },
       {
         id: 438,
@@ -12163,6 +12164,7 @@ barnFill.bindTooltip(`
   US-12 &amp; Braun Rd · 575 acres · 1 GW<br>
   Developer: Related Digital (Oracle / OpenAI)<br>
   Status: <span style="color:#4ade80">UNDER CONSTRUCTION</span> · $16B campus<br>
+  <span style="color:#fbbf24">⚠ Power contracts (MPSC U-21990) under Court of Appeals challenge — AG Nessel/Sierra Club/NRDC/MEC, opening brief filed Aug 7, 2026</span><br>
   <em>Prediction: CWA planner capture risk HIGH — Saline Township is already CWA-served; this is the site of the Auerbach consent judgment controversy</em>
 `, { sticky: true, className: 'dark-tooltip' });
 
