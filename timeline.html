@@ -287,6 +287,27 @@ body {
 .tt-source a:hover { text-decoration: underline; }
 .tt-pin-hint { font-size: 9.5px; color: #64748b; margin-top: 6px; font-style: italic; }
 
+/* ── NEW-ENTRY MARKER ── */
+.new-ring {
+  animation: newPulse 1.6s ease-in-out infinite;
+}
+@keyframes newPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.25; }
+}
+.tt-new-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #1a1500;
+  background: #fbbf24;
+  border-radius: 3px;
+  padding: 1px 5px;
+  margin-right: 7px;
+  vertical-align: middle;
+}
+
 /* ── SEPARATORS ── */
 .section-break {
   font-size: 10px;
@@ -304,7 +325,7 @@ body {
   <div style="font-size:11.5px;margin-bottom:8px;"><a href="index.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">← Planner Map</a><span style="color:var(--text-3);margin:0 8px;">|</span><span style="color:var(--text-3);">CWA Pattern Timeline (this page)</span><span style="color:var(--text-3);margin:0 8px;">|</span><a href="auerbach-line.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">Auerbach Line: Saline ↔ Allen Park</a></div>
   <h1>CWA Pattern — Michigan Communities vs. Data Center Developers <span class="cwa-badge">CARLISLE/WORTMAN ASSOCIATES</span></h1>
   <p class="subtitle">When each community was approached, who CWA placed as planner, and how each case unfolded. Hover events for full detail — click a dot to pin the card open and follow its source link.</p>
-  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Updated 2026-07-25</div>
+  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Updated 2026-08-14 — entries added in this update (Wixom's setback fight, Saline's Oracle tax-break objection, Allen Park's stalled ZBA appeal and ordinance, Ypsilanti's UM site decision, and more) are marked <span class="tt-new-badge" style="margin:0 4px;">NEW</span></div>
 </div>
 
 <div class="pattern-strip">
@@ -458,6 +479,41 @@ const COMMUNITIES = [
         date: '2026-06-12', type: 'cwa-terminated',
         label: 'Kozma email reports the termination (now confirmed above)',
         detail: 'Per LuAnne Kozma (email June 12, 2026, forwarded by Phoenix MacGregor): Saline Township agreed to retain CWA for only 60 more days. At the time this was UNCONFIRMED in writing — since corroborated directly by the June 2 and June 10, 2026 official meeting minutes above.'
+      },
+      {
+        date: '2026-07-15', type: 'developer', isNew: true,
+        label: 'Board approves reduced tax break for Oracle — based on original $4.8B valuation',
+        detail: 'Township Board approves a 12-year, 50% Industrial Facilities Exemption (tax abatement) calculated against the project\'s original $4.8B valuation rather than its current ~$43B valuation — cutting the estimated annual subsidy from roughly $147M to under $20M, with a clawback provision added. Residents gave nearly two hours of public comment opposing the abatement. This tax-break process is the same one an August 12 legal objection (below) argues was procedurally defective from the start.',
+        source: 'https://www.michiganpublic.org/environment-climate-change/2026-07-15/saline-township-approves-smaller-than-planned-tax-breaks-for-open-ai-data-center', sourceLabel: 'Michigan Public, "Saline Township approves smaller-than-planned tax breaks," Jul 15, 2026'
+      },
+      {
+        date: '2026-07-20', type: 'developer', isNew: true,
+        label: 'Board reverses itself 5-0, drops the $4.8B valuation cap',
+        detail: 'Days after approving the reduced abatement, the Board votes 5-0 to remove the $4.8B valuation cap after Township Attorney David Landry warns it would violate the October 2025 consent judgment and expose the township to litigation and damages exceeding $1M. Some residents who had just watched the Board hold the line felt betrayed by the reversal. The same consent judgment that overrode the original 5-2 Planning Commission denial is now also constraining the township\'s tax-abatement leverage.',
+        source: 'https://planetdetroit.org/2026/07/data-center-news-saline-township/', sourceLabel: 'Planet Detroit, "Data center news: Saline Township," Jul 21, 2026'
+      },
+      {
+        date: '2026-08-07', type: 'legal', isNew: true,
+        label: 'AG Nessel + environmental groups file opening brief challenging DTE\'s power contracts',
+        detail: 'Separate from the zoning/consent-judgment fight: Sierra Club, NRDC, and the Michigan Environmental Council (joined by AG Dana Nessel\'s office) file their opening brief with the Michigan Court of Appeals challenging the MPSC\'s Dec 18, 2025 ex parte (non-contested-case) approval of DTE\'s power-supply contracts for the site. The brief argues the ~7-week approval — versus roughly 10 months for most major cases — relied on confidential contracts never entered into the public record. Construction continues regardless; this challenges the power-contract approval process, not (currently) the project itself.',
+        source: 'https://www.sierraclub.org/press-releases/2026/08/sierra-club-nrdc-and-mec-ask-court-overturn-rushed-approval-dte-s-oracle', sourceLabel: 'Sierra Club press release, "Ask Court to Overturn Rushed Approval of DTE\'s Oracle Contracts," Aug 7, 2026'
+      },
+      {
+        date: '2026-08-12', type: 'legal', isNew: true,
+        label: 'Objection filed: Township never held the public hearing it certified for Oracle\'s tax break',
+        detail: 'Attorney Ellis Boal, for landowner Kathryn Haushalter, writes the Michigan State Tax Commission objecting to Oracle America Cloud Services\' pending Industrial Facilities Exemption Certificate (IFEC) application — a 12-year, 50% tax abatement on $43,097,900,000 in stated costs. The objection argues the Township\'s Oct 15, 2025 resolution falsely certifies that a public hearing establishing the Industrial Development District was held Sept 10, 2025, when video of that meeting shows the Township Attorney announcing "this is not a public hearing" and, after the data-center vote, telling the Board the hearing was no longer needed because "you\'ve already denied it." State law (MCL 207.554(9), Public Act 198 of 1974) requires the Commission to deny any IFEC application that pre-dates a validly-created Industrial Development District. 29 exhibits accompany the letter, including video/transcript from the Sept 10, Sept 24, Oct 1, Oct 15, and Nov 12, 2025 Board meetings and two conflicting sets of Sept 10 meeting minutes. The developer\'s attorney (Alan Greene, Dykema — same firm as the RD Michigan/Related Digital litigation) was present at the Sept 10 meeting and raised no objection about the missing hearing at the time.',
+        source: 'https://www.youtube.com/@NoMichiganDataCenters', sourceLabel: 'No Michigan Data Centers — video evidence cited in the Aug 12, 2026 objection letter to the MI State Tax Commission'
+      },
+      {
+        date: '2026-08-13', type: 'community', isNew: true,
+        label: 'Press conference: "No Tax Break for Oracle"',
+        detail: 'Attorney Ellis Boal holds a press conference publicizing the objection letter, framed around the Aug 18 State Tax Commission decision. Ties the tax-abatement objection to the same underlying record (the Sept 10, 2025 meeting video) as the consent-judgment fight — the same evidentiary thread P.A.C.T. is tracking for the parallel Allen Park effort.'
+      },
+      {
+        date: '2026-08-18', type: 'future', isNew: true,
+        label: '⚠ State Tax Commission decides on Oracle\'s tax exemption',
+        detail: 'The Michigan State Tax Commission meets in Okemos to act on Oracle America Cloud Services\' Industrial Facilities Exemption Certificate application. If it grants the certificate despite the Aug 12 objection, that becomes a reviewable decision in its own right; if it denies or tables the application, it would be the first setback to the project\'s financial terms since the October 2025 consent judgment.',
+        source: 'https://www.michigan.gov/treasury/local/stc/state-tax-commission-meetings', sourceLabel: 'Michigan State Tax Commission — meeting schedule'
       }
     ]
   },
@@ -530,6 +586,12 @@ const COMMUNITIES = [
         detail: 'A 4.58-acre parcel on Masserant Road in Newport MI (48166) sells for $110,000 on July 23, 2026 — nine months after the October 2025 consent judgment rezoned Masserant family agricultural land to R-1 Single Family Residential. This is the first documented property transfer consistent with the family monetizing the rezoning. Masserant Road is a named road in the Newport area, reflecting the family\'s long-standing land ownership in the community. The timing follows the pattern: consent judgment forces rezoning → land appreciates → parcel sold. Represents the financial outcome the conflict-of-interest recusals were meant to prevent from tainting the board vote.'
       },
       {
+        date: '2026-07-20', type: 'community', isNew: true,
+        label: 'Neil Masserant resigns from Planning Commission',
+        detail: 'The July 20, 2026 Planning Commission agenda lists a resignation letter from PC member Neil Masserant — the same trustee required to recuse from the October 2025 Masserant land-rezoning vote and who abstained again from the March 2026 moratorium extension over a declared (unexplained) conflict. He remains a sitting Township Trustee per the township\'s own Trustees page — this resignation appears specific to his Planning Commission seat only. Comes amid a string of board departures: Treasurer Debbie Masserant\'s resignation letter appeared on the May 26, 2026 Board agenda, and Trustee John Sorovetz\'s resignation prompted a June 8, 2026 special meeting to appoint a replacement. No agenda, minutes, or news coverage found explicitly ties these resignations to the land-sale/governance-conflict pattern — noting the timing without asserting a confirmed cause.',
+        source: 'http://berlinchartertwp.com/wp-content/uploads/2026/07/PC-AGENDA-7-20-26b.pdf', sourceLabel: 'Berlin Charter Twp — Planning Commission agenda, July 20, 2026'
+      },
+      {
         date: '2026-11-01', type: 'future',
         label: '⚠ Moratorium expires — decision point',
         detail: 'The moratorium expires November 2026. CWA\'s Laura Kreps will have authored the ordinance that governs any Microsoft application at that point. Key question: does the CWA-drafted ordinance provide real protection, or does it create the appearance of protection while leaving gaps the developer can exploit — the same question Mo is raising about the Allen Park approach?'
@@ -583,6 +645,39 @@ const COMMUNITIES = [
         date: '2026-06-09', type: 'protection',
         label: '✓ Emergency moratorium adopted',
         detail: 'City Council passes Ordinance #04-2026: 6-month ban on all data center activity in Allen Park. Solstice does NOT qualify for the exemption (no final site plan approval, no substantial construction). Also 1st/2nd reading of Noise Control Ordinance #03-2026. Community victory after 7 months of organizing by P.A.C.T. and neighbors.'
+      },
+      {
+        date: '2026-06-17', type: 'developer', isNew: true,
+        label: 'Solstice files ZBA appeal of the June 4 denial',
+        detail: 'Andrew Reside (Warner Norcross + Judd LLP) files Solstice\'s Zoning Board of Appeals application challenging the Planning Commission\'s 7-2 denial, delivering a $300 fee by courier the same day (cc Gaetan Gerville-Reache, David Eberhard). This is the route Auerbach himself had publicly told the Planning Commission was available to Solstice at the June 4 meeting — the city\'s own planner pointing the developer toward its next move before Solstice had said anything about appealing.'
+      },
+      {
+        date: '2026-06-23', type: 'cwa-action', isNew: true,
+        label: 'City tells Solstice its own appeal can\'t be processed — moratorium blocks it',
+        detail: 'Auerbach emails Reside (cc Gerville-Reache, Eberhard, Matt Baker, Tom Murray, and City Attorney Joe Couvreur): "it is the city\'s position that Solstice Data\'s appeal of their site plan denial cannot be processed while the city\'s data center moratorium is in effect." Notably, this is one instance where Auerbach\'s position works against the developer rather than for it. No reply from Warner Norcross + Judd has surfaced in FOIA production reviewed to date — the appeal appears frozen, neither withdrawn nor advancing, and would only become live again if the moratorium lapses or isn\'t renewed.'
+      },
+      {
+        date: '2026-07-15', type: 'cwa-action', isNew: true,
+        label: 'Auerbach\'s HRDF draft (Sec. 52-913) gets first Planning Commission look — discussion only',
+        detail: 'The July 15, 2026 Planning Commission agenda lists "High Resource Demand Facility/Data Center Zoning Ordinance Amendment — Review and discuss first draft." No vote is indicated. As of the Aug 11 council meeting below, this permanent ordinance has had zero readings and zero public hearings — a striking contrast to the Short-Term Rental ordinance adopted that same Aug 11 night after three readings and a hearing.',
+        source: 'https://cms3.revize.com/revize/allenparkmi/Documents/Agenda%20&%20Minutes/Planning%20Commission/2026/Agenda/2026.07.15%20AP%20PC%20Agenda.pdf', sourceLabel: 'Allen Park Planning Commission agenda, July 15, 2026'
+      },
+      {
+        date: '2026-08-06', type: 'community', isNew: true,
+        label: 'Aug 6 PC meeting cancelled — HRDF ordinance still hasn\'t had a reading',
+        detail: 'The city cancels its Aug 6, 2026 Planning Commission meeting after the only other scheduled applicant (an unrelated urgent-care building addition) requests more time and no other business remained. The HRDF ordinance process, already stalled since the July 15 discussion-only session, loses another meeting cycle with the moratorium clock running.',
+        source: 'https://cms3.revize.com/revize/allenparkmi/Documents/Agenda%20&%20Minutes/Planning%20Commission/2026/Agenda/2026.08.06%20AP%20PC%20Cancelled.pdf', sourceLabel: 'Allen Park Planning Commission — Aug 6, 2026 cancellation notice'
+      },
+      {
+        date: '2026-08-11', type: 'community', isNew: true,
+        label: 'City Council meets — no Solstice or data center item on the agenda',
+        detail: 'The Aug 11, 2026 regular Council meeting packet contains no HRDF ordinance, moratorium, or Solstice item — only a swearing-in, routine consent items, and the 3rd reading/public hearing/adoption of the unrelated Short-Term Rental Ordinance #05-2026. The meeting also opens with an unposted 5:30 PM study session with no agenda topic listed. P.A.C.T. prepared a public-meeting watch sheet flagging the study session, the moratorium\'s ~Dec 9, 2026 expiration, and the still-unscheduled ZBA appeal as items to track.',
+        source: 'https://cms3.revize.com/revize/allenparkmi/Documents/Agenda%20&%20Minutes/City%20Council/2026/Packet/Council%20Packet%20081126.pdf', sourceLabel: 'Allen Park City Council packet, Aug 11, 2026'
+      },
+      {
+        date: '2026-12-09', type: 'future', isNew: true,
+        label: '⚠ Emergency moratorium (Ordinance #04-2026E) expires',
+        detail: 'The 6-month emergency moratorium adopted June 9, 2026 runs to approximately Dec 9, 2026 absent extension. The permanent HRDF ordinance (Sec. 52-913) needs to be adopted before this date, or the regulatory gap reopens — and Solstice\'s frozen ZBA appeal could become live again once the moratorium that\'s blocking it lapses.'
       }
     ]
   },
@@ -719,6 +814,30 @@ const COMMUNITIES = [
         source: 'https://www.easternecho.com/article/2026/07/ypsilanti-data-center-fight-continues-after-township-meeting', sourceLabel: 'Eastern Echo, "Ypsilanti data center fight continues," July 24, 2026'
       },
       {
+        date: '2026-06-26', type: 'legal', isNew: true,
+        label: 'State legislators introduce bill to end UM\'s local-zoning exemption',
+        detail: 'Three Michigan House Democrats (Jimmie Wilson Jr.-Ypsilanti, Jason Morgan-Ann Arbor, Morgan Foreman-Ann Arbor) introduce House Joint Resolution + House Bills 6120/6121 to amend the Michigan Constitution so the UM Board of Regents would have to comply with local zoning for land acquired after 2027. Assigned to the House Government Operations Committee; a constitutional amendment would ultimately require voter approval — a long-odds but symbolically significant response to UM\'s zoning exemption (MCL Art. VIII §5), the same exemption that lets the Textile Road project bypass this township\'s zoning entirely.',
+        source: 'https://michiganadvance.com/2026/06/26/democrats-seek-to-end-university-of-michigans-exemption-from-local-zoning-laws/', sourceLabel: 'Michigan Advance, "Democrats seek to end University of Michigan\'s exemption from local zoning laws," June 26, 2026'
+      },
+      {
+        date: '2026-08-11', type: 'developer', isNew: true,
+        label: 'UM confirms Textile Road as the selected site',
+        detail: 'University of Michigan publicly confirms the 144-acre Textile Road/Bridge Road site — not the alternative American Center for Mobility/Willow Run site the township had pushed for — as its selected location for the $1.2–1.25B UM/Los Alamos National Laboratory research computing center. This ends the "site decision within days" suspense from the July 15, 2026 meeting. No lawsuit has been filed by either side as of this date; UM had earlier threatened legal action over the YCUA water/sewer moratorium but that remains a threat, not a filing.',
+        source: 'https://record.umich.edu/articles/university-of-michigan-selects-textile-road-as-preferred-site-for-landmark-research-computing-center/', sourceLabel: 'The University Record, "University of Michigan selects Textile Road as preferred site," Aug 11, 2026'
+      },
+      {
+        date: '2026-08-12', type: 'community', isNew: true,
+        label: '"We don\'t matter to them" — township vows to fight the site decision',
+        detail: 'Township Supervisor Brenda Stumbo and Attorney Doug Winters say the township learned of UM\'s Textile Road decision through media coverage, not direct communication from UM. Stumbo: "They take virgin, environmentally sensitive land on the banks of the Huron River and closest to any resident they could possibly go, and it is because Ypsilanti Township folks don\'t matter to the University of Michigan. We will fight this and fight it to the end." Winters: "This has been their story from the very beginning. They\'ve built on lies." Ben Carlisle (CWA President) remains the township\'s nominal planning consultant throughout — though, per the July 31, 2026 finding above, it is CWA associate Sally Elmiger, not Carlisle, who has actually appeared at this township\'s Planning Commission meetings.',
+        source: 'https://www.michiganpublic.org/education/2026-08-12/university-of-michigan-chooses-site-for-controversial-computing-center-near-ypsilanti', sourceLabel: 'Michigan Public, "University of Michigan chooses site for controversial computing center," Aug 12, 2026'
+      },
+      {
+        date: '2026-09-09', type: 'future', isNew: true,
+        label: '⚠ UM community town hall scheduled',
+        detail: 'UM has scheduled a community town hall for September 9, 2026 at the Ann Arbor Marriott Ypsilanti at Eagle Crest — the next confirmed public event following the Aug 11 site confirmation. Whether this is genuine engagement or a formality after a site decision the township says was made without them is the open question.',
+        source: 'https://bridgemi.com/business-watch/u-m-affirms-ypsilanti-1-2b-computing-center-site-township-officials-vow-fight/', sourceLabel: 'Bridge Michigan, "U-M affirms Ypsilanti site, township officials vow fight," Aug 2026'
+      },
+      {
         date: '2026-04-22', type: 'future',
         label: '⚠ YCUA moratorium expires April 2027',
         detail: 'The YCUA 12-month water/sewer moratorium expires approximately April 2027. UM is almost certainly planning to file for service at that point. The legal challenge to the moratorium (Barnes & Thornburg/UM) may resolve before expiration. The township\'s zoning ordinance amendment (Dec 2025) applies to private developers but not to UM. Township\'s strongest remaining lever: legislation requiring UM zoning compliance (Constitutional amendment pathway — long odds).'
@@ -778,13 +897,37 @@ const COMMUNITIES = [
       {
         date: '2026-07-20', type: 'future',
         label: 'Press flags July 28 as tentative next hearing — outcome not yet public',
-        detail: 'GovTech and Michigan Advance report the rewritten ordinance\'s first reading is tentatively expected around July 28, 2026, "though this date may be delayed pending legal review of the language." As of July 31, 2026, no source confirms whether that meeting occurred or what was decided — this is very likely reporting lag given how recent the date is, not evidence nothing happened. Worth checking Wixom\'s council minutes directly for the outcome.',
+        detail: 'GovTech and Michigan Advance report the rewritten ordinance\'s first reading is tentatively expected around July 28, 2026, "though this date may be delayed pending legal review of the language." No source — including the city\'s own posted agendas — confirms a July 28 council meeting occurred; the next confirmed council action on the ordinance is the Aug 11 meeting below.',
         source: 'https://www.govtech.com/products/michigan-city-rejects-data-center-waiver-request', sourceLabel: 'GovTech, "Michigan City Rejects Data Center Waiver Request," July 2026'
       },
       {
-        date: '2026-09-01', type: 'future',
-        label: '⚠ Moratorium expires — ordinance must be in place',
-        detail: 'Six-month moratorium set to expire approximately August–September 2026. New data center zoning ordinance (drafted by CWA/Carlisle) expected to be adopted before expiration. Key question: does the CWA-drafted ordinance provide real protection (90% renewable energy, strict noise limits, closed-loop cooling only) or does it create a regulatory pathway that a well-resourced developer like Sansone Group can navigate? Same question P.A.C.T. is asking about Allen Park.'
+        date: '2026-08-03', type: 'cwa-action', isNew: true,
+        label: 'Legal-review revision: setback raised to 2,640 ft — but enforcement teeth struck',
+        detail: 'Following Council\'s July 14 refusal to approve first reading and Deputy Mayor Keenan Gottschall reading roughly 22 amendments into the record, City Attorney Tom Schultz\'s office produces an Aug 3, 2026 clean/redline revision. The residential/school/park/place-of-worship setback — which had moved from CWA\'s original 500 ft to 1,500 ft after the June 29 public hearing — is raised again to 2,640 ft (a full half-mile), applying to the principal structure and all mechanical equipment including generators, plus a flat prohibition on siting adjacent to residential property. But the same revision quietly strikes several provisions Council had asked for on July 14: a decommissioning/reclamation bond, a community benefits agreement, a rate pass-through protection, mandatory ongoing monitoring, and shutdown triggers — the staff memo says only that struck items were "unenforceable... or preempted by State or Federal statute," without listing which ones or why. Every provision that would have cost the operator money after approval is gone; every provision shaping where and how loud survived and got stronger.',
+        source: 'https://www.wixomgov.org/departments/construction-development-services-building/data-center-moratorium-ordinance', sourceLabel: 'City of Wixom — Data Center Moratorium & Ordinance page (Aug 3, 2026 revision)'
+      },
+      {
+        date: '2026-08-07', type: 'legal', isNew: true,
+        label: 'Developer sues City of Wixom in federal court',
+        detail: 'Wixom Industrial One LLC (Dennis Griffin / Sansone Group — the developer whose moratorium-waiver request Council rejected July 14) files suit against the City of Wixom in the U.S. District Court for the Eastern District of Michigan, alleging the moratorium and ordinance process violate the Michigan Zoning Enabling Act and block a use permitted by existing zoning on their 54-acre South Wixom Road site. The complaint reportedly accuses the council of being "more concerned with the sway of public opinion than following the law." This is the first lawsuit filed against Wixom over its data center response — a direct test of whether the half-mile setback and other standards can survive a legal challenge, the same question hanging over every community on this timeline.',
+        source: 'https://www.whmi.com/news/article/developer-sues-city-of-wixom-over-data-center-moratorium', sourceLabel: 'WHMI 93.5, "Developer Sues City of Wixom Over Data Center Moratorium," Aug 12, 2026'
+      },
+      {
+        date: '2026-08-10', type: 'community', isNew: true,
+        label: 'P.A.C.T. flags four arithmetic errors in the noise standards',
+        detail: 'Allen Park resident and P.A.C.T. member Melissa Chiaramonti writes Wixom\'s Mayor and Council ahead of the Aug 11 reading, identifying four drafting problems in the Section 18.09.040.N noise standards: the ordinance never specifies whether limits measure total sound or the facility\'s own contribution; the tonal-sound penalty combined with Table 2\'s "ambient +1 dBA" standard is arithmetically impossible to comply with (works out to ambient minus 9); the rule for choosing between the two noise tables is inverted, giving noisier locations the harder-to-meet standard; and "ambient +1" as drafted would actually let sound increase by ~3.5 dB, not 1 dB, due to how decibels add logarithmically. Framed as help holding the line, not criticism — Wixom\'s noise standards are, arithmetic aside, the most carefully built P.A.C.T. has reviewed in Michigan, and the letter asks Council to have the City Attorney and Soundscape Engineering reconcile the four items before second reading.'
+      },
+      {
+        date: '2026-08-11', type: 'protection', isNew: true,
+        label: 'Second Introduction & First Reading — Council moves the amended draft to second reading',
+        detail: 'City Council holds a second introduction and first reading of the data center ordinance with Council\'s requested revisions, including the 2,640 ft setback, and votes to proceed to a second reading and adoption vote. Same meeting: Council approves up to $30,000 for Soundscape Consulting, LLC (Ann Arbor/Plymouth; Nathan Sevener, INCE Bd. Cert.) for ongoing ordinance consultation, and $28,500 for a city-wide ambient noise study — needed because Council wrote an ambient-based standard into the ordinance and the city has no baseline data to enforce it against. Notably, Wixom retained its own acoustical consultant to advise the Planning Commission and testify at the June 29 hearing — Allen Park, by contrast, relied entirely on the applicant\'s own noise study. CWA\'s Matteo Passalacqua remains listed as "City Planner" in the June and July PC minutes, but the ordinance itself scores zero on the HRDF template used at five other CWA sites: no "High Resource Demand Facility" term, no Purpose-and-Intent boilerplate, no lot-coverage cap or PUE target — the strengthening came from elected officials writing amendments into the record over the consultant\'s draft, not from CWA.',
+        source: 'https://www.wixomgov.org/home/showpublisheddocument/12923/639221486671883649', sourceLabel: 'City of Wixom — City Council Presentation Slides, Aug 11, 2026'
+      },
+      {
+        date: '2026-08-25', type: 'future', isNew: true,
+        label: '⚠ Second reading & adoption vote — moratorium expires Sept 24, 2026',
+        detail: 'Second reading and the adoption vote are proposed for Aug 25, 2026 — the moratorium itself now expires Sept 24, 2026 (a more precise date than the earlier Aug/Sept estimate). Key open question: do the struck enforcement provisions (bond, CBA, rate pass-through, monitoring, shutdown triggers) stay struck? If so, the story is that Council wrote real enforcement teeth into the ordinance and legal review removed them — worth a FOIA request for the City Attorney\'s written "unenforceable or preempted" analysis, which would also be directly useful in Allen Park and Berlin Township.',
+        source: 'https://www.wxyz.com/news/data-centers/wixom-city-council-takes-steps-to-regulate-data-centers-as-6-month-moratorium-nears-end', sourceLabel: 'WXYZ, "Wixom city council takes steps to regulate data centers," Aug 12, 2026'
       }
     ]
   },
@@ -830,10 +973,10 @@ const COMMUNITIES = [
         source: 'https://thesuntimesnews.com/pittsfield-weighs-rules-for-data-centers-before-proposals-arrive/', sourceLabel: 'Sun Times News, "Pittsfield weighs rules for data centers before proposals arrive"'
       },
       {
-        date: '2026-08-06', type: 'future',
-        label: '⚠ PC public hearing on draft ordinance',
-        detail: 'Planning Commission public hearing on the data center / high-resource-demand facilities draft ordinance scheduled for August 6, 2026 at 6:30 PM. This is the key decision point before the November moratorium expiration. CWA (Ben Carlisle) has drafted both this ordinance (Pittsfield) and the Allen Park Section 52-913 framework (Auerbach). The comparison between the two documents reveals how CWA adjusts its approach based on client political direction — or developer pressure. As of July 31, 2026 this hearing has not yet occurred and no outcome is available — check back after Aug 6.',
-        source: 'https://www.pittsfield-mi.gov/CivicAlerts.aspx?AID=3430', sourceLabel: 'Pittsfield Township — Planning Commission Public Hearing notice'
+        date: '2026-08-06', type: 'community', isNew: true,
+        label: 'PC public hearing held — outcome not yet publicly posted',
+        detail: 'The Planning Commission holds its public hearing on the data center / high-resource-demand facilities draft ordinance at 6:30 PM. Supervisor Trish Reilly: "This ordinance is designed to prioritize the protection of public safety, health, infrastructure, natural resources, our neighborhood character to the greatest extent possible by the law." CWA (Ben Carlisle) drafted both this ordinance and the Allen Park Section 52-913 framework (Auerbach) — the comparison between the two documents shows how CWA adjusts its approach by client. As of Aug 14, 2026, no minutes, vote result, or news coverage confirms whether the Commission approved, amended, or tabled the draft — flag as hearing-held-outcome-pending, not as adopted.',
+        source: 'https://www.wemu.org/wemu-news/2026-08-06/pittsfield-township-considering-zoning-amendments-to-address-data-centers', sourceLabel: 'WEMU, "Pittsfield Township considering zoning amendments to address data centers," Aug 6, 2026'
       },
       {
         date: '2026-11-01', type: 'future',
@@ -1039,6 +1182,12 @@ const COMMUNITIES = [
         date: '2026-05-18', type: 'developer',
         label: 'Key Capture Energy (KCE): battery storage CUP application — postponed',
         detail: 'Key Capture Energy (KCE) applies for a conditional use permit and site plan approval for a battery energy storage storage facility (BESS) at 6709 East Joy Road — 10-acre portion of a larger parcel. Plan meets dimensional requirements including setback and density. Engineering consultant gives BESS overview. Public comments (4 letters + 3 speakers) raise concerns: water runoff during disaster/fire, wildlife impact, noise. Motion to postpone (Frost/Levandowski) until applicant addresses planner\'s report (dated 4/20/2026) and engineer\'s report (dated 5/08/2026). Township had already held a public BESS education workshop in February, anticipating this application.'
+      },
+      {
+        date: '2026-07-27', type: 'community', isNew: true,
+        label: 'Township posts an updated Zoning Ordinance — outcome of Rural Uses vote unconfirmed',
+        detail: 'The township\'s officially linked Zoning Ordinance document is replaced with a version dated July 27, 2026 — after the May 18, 2026 Rural Uses Text Amendment public hearing. This is consistent with, but not direct proof of, formal Township Board adoption of the Rural Uses amendment; the document itself could not be accessed to confirm. Also unresolved as of Aug 14, 2026: the outcome of Key Capture Energy\'s battery-storage CUP after its May 18 postponement, and the status of the separate data-center ordinance CWA has been drafting since February 2026 — no hearing, vote, or news coverage found on either since May.',
+        source: 'https://salemtwpmi.documents-on-demand.com/Document/06c54aab-4016-4b7b-9eb5-ac1860aaa3b6/Salem%20Twp%20Zoning%20Ordinance%20FULLHYPER%2007-27-26.pdf', sourceLabel: 'Salem Township — Zoning Ordinance PDF, dated July 27, 2026'
       }
     ]
   }
@@ -1050,7 +1199,7 @@ const COMMUNITIES = [
 const T_START = new Date('2024-04-01');
 const T_END   = new Date('2027-02-01');
 const T_RANGE = T_END - T_START;
-const PX_PER_MONTH = 55; // controls how wide the scrollable chart is — higher = more room per event, more horizontal scrolling
+const PX_PER_MONTH = 95; // controls how wide the scrollable chart is — higher = more room per event, more horizontal scrolling (raised Aug 14, 2026: several communities now have many events packed into a single recent month)
 
 function parseDate(str) {
   // Handle YYYY-MM or YYYY-MM-DD
@@ -1127,7 +1276,7 @@ function xPath(cx, cy, r) {
 // ─────────────────────────────────────────────
 const activeTypes = new Set(Object.keys(TYPES));
 const LANE_H = 148;
-const TODAY = '2026-08-01';
+const TODAY = '2026-08-14';
 
 // ─────────────────────────────────────────────
 //  LEGEND
@@ -1264,6 +1413,11 @@ function buildLaneSVG(community, svgWidth, communityIdx) {
     // Hit target (invisible, larger area)
     s.push(`<circle cx="${x}" cy="${dotY}" r="${R+7}" fill="transparent" class="ev-hit" data-ci="${communityIdx}" data-ei="${i}" style="cursor:pointer"/>`);
 
+    // NEW-entry ring (pulsing gold outline behind the marker)
+    if (ev.isNew) {
+      s.push(`<circle cx="${x}" cy="${dotY}" r="${R+5.5}" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="3,2.5" class="new-ring"/>`);
+    }
+
     // Shape marker
     const isX = ev.type === 'cwa-terminated';
     const isFuture = ev.type === 'future';
@@ -1276,7 +1430,8 @@ function buildLaneSVG(community, svgWidth, communityIdx) {
     }
 
     // Label (short, two lines max)
-    const words = ev.label.replace(/[✓⚠]/g,'').trim().split(' ');
+    const labelPrefix = ev.isNew ? '🆕 ' : '';
+    const words = (labelPrefix + ev.label).replace(/[✓⚠]/g,'').trim().split(' ');
     const LINE_MAX = 22;
     let lines = [], cur = '';
     words.forEach(w => {
@@ -1323,8 +1478,9 @@ function showTT(e, ev, pinned) {
   const pinHint = pinned
     ? `<div class="tt-pin-hint">Pinned — click the dot again, or click elsewhere, to close.</div>`
     : (ev.source ? `<div class="tt-pin-hint">Click the dot to pin this card and open the link.</div>` : '');
+  const newBadge = ev.isNew ? `<span class="tt-new-badge">NEW</span>` : '';
   ttEl.innerHTML = `
-    <div class="tt-type" style="color:${meta.color}">${meta.label}</div>
+    <div class="tt-type" style="color:${meta.color}">${newBadge}${meta.label}</div>
     <div class="tt-label">${ev.label}</div>
     <div class="tt-date">${fmtDate(ev.date)}</div>
     <div class="tt-detail">${ev.detail}</div>
