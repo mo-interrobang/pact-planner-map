@@ -73,6 +73,33 @@
     #search-input:focus { border-color: #60a5fa; }
     #search-input::placeholder { color: #64748b; }
 
+    /* Sort */
+    #sort-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-bottom: 1px solid #334155;
+    }
+    #sort-box label {
+      font-size: 11px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+    #sort-select {
+      flex: 1;
+      background: #0f172a;
+      border: 1px solid #475569;
+      border-radius: 6px;
+      color: #e2e8f0;
+      padding: 5px 8px;
+      font-size: 12px;
+      outline: none;
+    }
+    #sort-select:focus { border-color: #60a5fa; }
+
     /* Stats bar */
     #stats-bar {
       display: grid;
@@ -682,6 +709,15 @@
 
   <!-- Layer toggles moved to floating panel on map -->
 
+  <div id="sort-box">
+    <label for="sort-select">Sort</label>
+    <select id="sort-select">
+      <option value="name">Name (A–Z)</option>
+      <option value="dc">⚡ Data Center Cases first</option>
+      <option value="cwa">⚠ CWA Active first</option>
+    </select>
+  </div>
+
   <div id="muni-list-container">
     <div id="muni-list"></div>
   </div>
@@ -830,7 +866,7 @@
 // this one line, by hand, whenever MUNICIPALITIES changes. Every
 // "Updated"/"Last updated" label on the page reads from this one constant —
 // nothing else needs to be touched, and nothing else should be hand-edited.
-const LAST_UPDATED = "2026-08-08"; // format: YYYY-MM-DD — set this by hand on every data update
+const LAST_UPDATED = "2026-08-19"; // format: YYYY-MM-DD — set this by hand on every data update
 
 const FIRMS = {
   "Carlisle/Wortman Associates": { color: "#E53935", short: "CWA" },
@@ -34190,6 +34226,22 @@ function drawMarkers(data) {
       }).addTo(markersLayer);
     }
 
+    // On-map badge for data center cases — offset to the bottom-right corner
+    // of the marker (anchor pushed negative) so it doesn't collide with the
+    // CWA "!"/"✕" badge, which is centered, when a municipality has both flags.
+    if (hasDC && !isUnzoned) {
+      const dcBadge = L.marker([m.lat, m.lng], {
+        icon: L.divIcon({
+          html: `<div style="font-size:9px;color:#1a1a1a;background:#fbbf24;border-radius:50%;width:14px;height:14px;display:flex;align-items:center;justify-content:center;font-weight:900;border:1px solid rgba(0,0,0,0.35);box-shadow:0 0 2px rgba(0,0,0,0.5)" title="Data Center Case">⚡</div>`,
+          className: '',
+          iconSize: [14, 14],
+          iconAnchor: [-9, -9]
+        }),
+        zIndexOffset: 110,
+        interactive: false
+      }).addTo(markersLayer);
+    }
+
     marker.addTo(markersLayer);
     markerRefs[m.id] = marker;
   });
@@ -34285,6 +34337,7 @@ function drawFirmLines(data) {
 let activeFirms = new Set(Object.keys(FIRMS));
 let showDCOnly = false;
 let currentSearch = '';
+let currentSort = 'name';
 
 function setAllFirms(state) {
   document.querySelectorAll('#firm-filters input[type="checkbox"]').forEach(cb => {
@@ -34420,7 +34473,7 @@ function updateStats(data) {
 
 function getFilteredData() {
   const search = currentSearch.toLowerCase();
-  return MUNICIPALITIES.filter(m => {
+  const filtered = MUNICIPALITIES.filter(m => {
     // Firm filter
     const firmKey = m.cwa_alumni ? "CWA Alumni / In-House" : (m.firm || "Unknown");
     if (!activeFirms.has(firmKey)) return false;
@@ -34437,6 +34490,19 @@ function getFilteredData() {
 
     return true;
   });
+
+  // Sort — alphabetical is always the tiebreaker, so "X first" sorts just
+  // promote flagged entries to the top without scrambling the rest of the list.
+  const byName = (a, b) => a.municipality.localeCompare(b.municipality);
+  if (currentSort === 'dc') {
+    filtered.sort((a, b) => (b.data_center_case - a.data_center_case) || byName(a, b));
+  } else if (currentSort === 'cwa') {
+    filtered.sort((a, b) => (b.cwa_flag - a.cwa_flag) || byName(a, b));
+  } else {
+    filtered.sort(byName);
+  }
+
+  return filtered;
 }
 
 function refreshMap() {
@@ -34455,6 +34521,11 @@ function refreshMap() {
 
 document.getElementById('search-input').addEventListener('input', e => {
   currentSearch = e.target.value;
+  refreshMap();
+});
+
+document.getElementById('sort-select').addEventListener('change', e => {
+  currentSort = e.target.value;
   refreshMap();
 });
 
