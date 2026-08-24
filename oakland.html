@@ -1,0 +1,2348 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Oakland County — Data Center Watch</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<style>
+/* ── Validated dark palette (reference palette dark column) ── */
+:root {
+  --surface-0:   #0f172a;
+  --surface-1:   #1e293b;
+  --surface-2:   #293548;
+  --surface-3:   #364560;
+  --border:      #334155;
+  --text-1:      #f1f5f9;
+  --text-2:      #94a3b8;
+  --text-3:      #64748b;
+
+  /* Event type colors — reference palette dark slots */
+  --c-cwa-hired:      #9085e9;  /* slot 7 violet  — CWA contract begins */
+  --c-developer:      #d95926;  /* slot 2 orange  — developer action    */
+  --c-cwa-action:     #e66767;  /* slot 8 red     — CWA enables or aids developer */
+  --c-community:      #c98500;  /* slot 4 amber   — community/public response */
+  --c-protection:     #199e70;  /* slot 3 aqua    — moratorium / denial / resolution */
+  --c-legal:          #3987e5;  /* slot 1 blue    — lawsuits / affidavits / consent judgments */
+  --c-cwa-terminated: #d55181;  /* slot 5 magenta — CWA fired */
+  --c-future:         #5b7ca0;  /* muted blue     — upcoming deadline */
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--surface-0);
+  color: var(--text-1);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ── PAGE HEADER ── */
+.page-header {
+  padding: 22px 28px 18px;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border);
+}
+.page-header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.25px;
+}
+.page-header .subtitle {
+  font-size: 12.5px;
+  color: var(--text-2);
+  margin-top: 4px;
+  max-width: 700px;
+}
+.cwa-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #e66767;
+  background: rgba(230,103,103,0.15);
+  border: 1px solid rgba(230,103,103,0.3);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-left: 8px;
+  vertical-align: middle;
+  letter-spacing: 0.05em;
+}
+
+/* ── LEGEND ── */
+.legend-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  padding: 11px 28px;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+.legend-heading {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-right: 4px;
+}
+.leg-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 3px 8px 3px 5px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  transition: border-color 0.15s, opacity 0.15s;
+  user-select: none;
+}
+.leg-item:hover { border-color: var(--border); }
+.leg-item.off { opacity: 0.3; }
+.leg-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.leg-label { font-size: 11.5px; color: var(--text-2); white-space: nowrap; }
+
+/* ── MAIN LAYOUT ── */
+.scroll-wrap {
+  overflow-x: auto;
+  padding: 20px 28px 32px;
+}
+.chart-area {
+  min-width: 960px;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 0;
+}
+
+/* ── AXIS ── */
+.axis-spacer {
+  position: sticky;
+  left: 0;
+  z-index: 4;
+  background: var(--surface-0);
+}
+.axis-svg-wrap { position: relative; }
+
+/* ── SWIMLANE ── */
+.lane {
+  display: contents;
+}
+.lane-header {
+  position: sticky;
+  left: 0;
+  z-index: 4;
+  box-shadow: 4px 0 8px -4px rgba(0,0,0,0.4);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  padding: 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+}
+.lane-body {
+  border: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  border-radius: 0 8px 8px 0;
+  background: var(--surface-1);
+  position: relative;
+  margin-top: 8px;
+  overflow: hidden;
+}
+.lh-county {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+.lh-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-top: 1px;
+}
+.lh-planner {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-top: 6px;
+}
+.lh-title {
+  font-size: 10.5px;
+  color: var(--text-3);
+}
+.lh-status {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-top: 6px;
+  width: fit-content;
+}
+.lh-status.active {
+  color: #e66767;
+  background: rgba(230,103,103,0.18);
+}
+.lh-status.terminated {
+  color: #d55181;
+  background: rgba(213,81,129,0.18);
+}
+
+/* ── PATTERN CALLOUT STRIP ── */
+.pattern-strip {
+  padding: 16px 28px;
+  background: rgba(230,103,103,0.06);
+  border-bottom: 1px solid rgba(230,103,103,0.22);
+}
+.pattern-strip-heading {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e66767;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pattern-strip-heading::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(230,103,103,0.25);
+}
+.pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+.pattern-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-left: 3px solid #e66767;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+.pattern-card-num {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e66767;
+  margin-bottom: 3px;
+}
+.pattern-card-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.pattern-card-body {
+  font-size: 11px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.pattern-card-body strong { color: var(--text-1); font-weight: 600; }
+.pattern-card-body em { color: #e66767; font-style: normal; font-weight: 600; }
+
+/* ── TOOLTIP ── */
+#tt {
+  position: fixed;
+  background: #1e293b;
+  border: 1px solid #475569;
+  border-radius: 10px;
+  padding: 13px 16px;
+  max-width: 330px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.1s;
+  box-shadow: 0 10px 32px rgba(0,0,0,0.5);
+}
+#tt.show { opacity: 1; }
+#tt.pinned { pointer-events: auto; }
+.tt-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.tt-label { font-size: 13.5px; font-weight: 600; color: #f1f5f9; line-height: 1.3; margin-bottom: 5px; }
+.tt-date { font-size: 11px; color: #94a3b8; margin-bottom: 7px; }
+.tt-detail { font-size: 12px; color: #cbd5e1; line-height: 1.55; }
+.tt-source { font-size: 11px; margin-top: 8px; padding-top: 7px; border-top: 1px solid #334155; }
+.tt-source a { color: #5eb1f0; text-decoration: none; }
+.tt-source a:hover { text-decoration: underline; }
+.tt-pin-hint { font-size: 9.5px; color: #64748b; margin-top: 6px; font-style: italic; }
+
+/* ── NEW-ENTRY MARKER ── */
+.new-ring {
+  animation: newPulse 1.6s ease-in-out infinite;
+}
+@keyframes newPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.25; }
+}
+.tt-new-badge {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #1a1500;
+  background: #fbbf24;
+  border-radius: 3px;
+  padding: 1px 5px;
+  margin-right: 7px;
+  vertical-align: middle;
+}
+
+/* ── SEPARATORS ── */
+.section-break {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+  padding: 16px 28px 4px;
+}
+
+/* ── OAKLAND PAGE ADDITIONS ── */
+.pv-green { border-left: 3px solid #34d399; }
+.pv-green .pattern-card-num { color: #34d399; }
+.pv-red { border-left: 3px solid #f87171; }
+.pv-red .pattern-card-num { color: #f87171; }
+.pattern-card-body a { color: #67e8f9; text-decoration: none; }
+.pattern-card-body a:hover { text-decoration: underline; }
+.docs-strip { margin: 20px 0 4px; padding: 14px 18px 10px; background: rgba(148,163,184,0.05); border: 1px solid #334155; border-radius: 10px; }
+.docs-strip-heading { font-weight: 700; font-size: 13px; margin-bottom: 8px; color: #e2e8f0; }
+.docs-strip ul { margin: 0; padding-left: 18px; }
+.docs-strip li { font-size: 11.5px; color: #94a3b8; line-height: 1.55; margin-bottom: 6px; }
+.docs-strip a { color: #67e8f9; text-decoration: none; }
+.docs-strip a:hover { text-decoration: underline; }
+.lh-status.none { background: rgba(100,116,139,0.15); color: #94a3b8; border: 1px solid #475569; }
+.map-wrap { padding: 8px 28px 34px; }
+#oakmap { height: 480px; border-radius: 12px; border: 1px solid #334155; background: #0b1220; }
+.map-legend { font-size: 11px; color: #94a3b8; padding: 10px 28px 6px; }
+.map-legend .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin: 0 5px 0 14px; vertical-align: middle; }
+.leaflet-tile-pane { opacity: 0.82; filter: brightness(0.72) saturate(0.6); }
+.leaflet-popup-content-wrapper { background: #1e293b; color: #cbd5e1; border-radius: 8px; }
+.leaflet-popup-tip { background: #1e293b; }
+.leaflet-popup-content { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; line-height: 1.45; }
+.oak-tt { background: rgba(15,23,42,0.85); border: 1px solid #475569; color: #e2e8f0; font-size: 10px; font-weight: 700; border-radius: 4px; padding: 1px 5px; box-shadow: none; }
+.oak-tt::before { display: none; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div style="font-size:11.5px;margin-bottom:8px;"><a href="index.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">← Planner Map</a><span style="color:var(--text-3);margin:0 8px;">|</span><a href="timeline.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">CWA Pattern Timeline</a><span style="color:var(--text-3);margin:0 8px;">|</span><span style="color:var(--text-3);">Oakland County Watch (this page)</span></div>
+  <h1>Oakland County — Data Center Watch <span class="cwa-badge" style="background:#34d399;">PROVEN vs UNPROVEN</span></h1>
+  <p class="subtitle">A county-focused companion to the statewide map: what is documented (green), what is circulating unverified (red), when each fight moved, and where every municipality sits. Hover timeline events for detail — click a dot to pin the card and follow its source link.</p>
+  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24 by P.A.C.T. from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
+</div>
+</div>
+
+<div class="pattern-strip">
+  <div class="pattern-strip-heading" style="color:#34d399;">✅ Proven — documented and sourced</div>
+  <div class="pattern-grid">
+    <div class="pattern-card pv-green">
+      <div class="pattern-card-num">Proven 1 — Woodward's Sheetz Consulting</div>
+      <div class="pattern-card-title">The county board chair is a paid consultant for a company with business before local governments</div>
+      <div class="pattern-card-body">Dave Woodward works as a paid Sheetz consultant through Woodward &amp; Associates LLC while chairing the Board of Commissioners — appearing for Sheetz at <em>Farmington Hills</em> (voted down; Sheetz sued the city) and <em>Royal Oak</em> (approved) — and refuses to disclose his compensation. <a href="https://www.crainsdetroit.com/politics-policy/dave-woodward-sheetz-oakland-county" target="_blank">Crain's</a> · <a href="https://www.axios.com/local/detroit/2025/08/07/oakland-county-chair-sheetz-consulting-conflict" target="_blank">Axios</a> · Detroit News 7/31/25</div>
+    </div>
+    <div class="pattern-card pv-green">
+      <div class="pattern-card-num">Proven 2 — The County-Land Lever</div>
+      <div class="pattern-card-title">"I have been overruled" — the airport easement episode</div>
+      <div class="pattern-card-body">WXYZ documented Woodward pushing a Sheetz project adjacent to county-owned airport land in Waterford: airport manager Cheryl Bush's internal email says she was <strong>"overruled"</strong> on an easement she opposed on safety grounds, names Woodward as "a strong proponent," and says he "made introductions to the Sheetz folks." The county declined the easement only after reporters asked. This is the one <em>proven</em> instance of the pattern the golf-course theory imagines — and the template for what to watch on any county-owned land. <a href="https://www.wxyz.com/news/local-news/investigations/did-oakland-county-commission-head-use-position-to-help-along-possible-sheetz-in-waterford" target="_blank">WXYZ investigation</a></div>
+    </div>
+    <div class="pattern-card pv-green">
+      <div class="pattern-card-num">Proven 3 — Springfield's Planner Flip</div>
+      <div class="pattern-card-title">CWA hired mid-moratorium, mid-mine-fight — Ben Carlisle pitched it personally</div>
+      <div class="pattern-card-body">Two steps: Jan 12, 2026 — CWA takes over Building Department functions. Mar 12, 2026 — the board votes <strong>7-0</strong> to fire Giffels Webster and hire Carlisle/Wortman as planner, with Ben Carlisle presenting (citing CWA experience with <em>"gravel mining and data centers"</em>) and Megan Masson-Minock as primary consultant, championed by Supervisor Ric Davis. This happened with a data center moratorium, documented developer interest, and the Levy mine application all pending — the placement pattern P.A.C.T. tracks statewide, arriving in Oakland County. <a href="https://cms1files.revize.com/springfieldtwp/Minutes_TB_3-12-2026-FINAL.pdf" target="_blank">Mar 12 minutes</a> · <a href="https://cms1files.revize.com/springfieldtwp/Special%20Meeting%201-12-26%20-%20FINAL.pdf" target="_blank">Jan 12 minutes</a></div>
+    </div>
+    <div class="pattern-card pv-green">
+      <div class="pattern-card-num">Proven 4 — Springfield's Moratorium Status</div>
+      <div class="pattern-card-title">Extended through Dec 10, 2026 (Resolution 2026-09) — it did not lapse</div>
+      <div class="pattern-card-body">The 180-day moratorium adopted in early January 2026 was amended and extended <strong>through December 10, 2026</strong> at the July 9 board meeting, with a revised draft ordinance headed to the Planning Commission. Developer interest is real but pre-application: an ~80-84 acre site off Andersonville Rd, and the township's own Q&amp;A concedes "a general inquiry, not a formal application." The township has no municipal water or sewer. <a href="https://cms1files.revize.com/springfieldtwp/July%202026%20-%20FINAL.pdf" target="_blank">Jul 9 minutes</a> · <a href="https://www.springfield-twp.us/departments/supervisor/resident_questions.php" target="_blank">township Q&amp;A</a></div>
+    </div>
+    <div class="pattern-card pv-green">
+      <div class="pattern-card-num">Proven 5 — Wixom: Sue, Then Watch It Shrink</div>
+      <div class="pattern-card-title">Federal suit Aug 7 → setback cut 2,640 → 1,000 ft and noise Table 2 deleted Aug 17</div>
+      <div class="pattern-card-body">One developer team — Wixom Industrial One LLC (Dennis Griffin of Pleasant Ridge, MI) partnered with Sansone Group — sued the city in federal court Aug 7. Ten days later the second-reading draft cut the half-mile setback to 1,000 ft and deleted the ambient +1 noise standard, on staff and legal-counsel recommendation. The provisions residents fought hardest for were removed while the city was being sued for having them. Adoption vote: <strong>Aug 25</strong>. <a href="https://www.whmi.com/news/article/developer-sues-city-of-wixom-over-data-center-moratorium" target="_blank">WHMI</a> · <a href="https://www.wixomgov.org/departments/construction-development-services-building/data-center-moratorium-ordinance" target="_blank">City ordinance page</a></div>
+    </div>
+    <div class="pattern-card pv-green">
+      <div class="pattern-card-num">Proven 6 — Project Flex Beat the Moratorium</div>
+      <div class="pattern-card-title">Approved before Lyon Township paused anything — with its own DTE substation coming</div>
+      <div class="pattern-card-body">Verrus (Sidewalk Infrastructure Partners — Alphabet, StepStone, Ontario Teachers) won Planning Commission site-plan approval in September 2025 for ~180 acres / ~1.8M sq ft on Walbridge land on Milford Rd. The township's March 2026 moratorium covers only NEW projects and does not touch it. DTE is "planning a substation to accommodate all energy requirements." A recall targets all seven trustees. <a href="https://cms2.revize.com/revize/lyontownship/Temporary/2025-12-18%20Data%20Center%20FAQs.pdf" target="_blank">Township FAQ</a> · <a href="https://www.detroitnews.com/story/news/local/oakland-county/2026/03/03/as-project-flex-proceeds-lyon-township-hits-pause-on-new-data-centers/88960710007/" target="_blank">Detroit News</a></div>
+    </div>
+    <div class="pattern-card pv-green">
+      <div class="pattern-card-num">Proven 7 — The Real Connector Is the Grid</div>
+      <div class="pattern-card-title">Wixom and Project Flex sit ~3 miles apart on DTE substation capacity — not a corporate conspiracy</div>
+      <div class="pattern-card-body">Wixom's council named the former Ford plant's underused DTE substation as what attracts developers; Project Flex gets a new DTE substation. The two sites are roughly 3 miles apart with <em>no corporate link between their developers</em> (Sansone is a Missouri spec-industrial firm; Verrus is Alphabet-backed infrastructure). Data centers cluster where interconnection is cheap and fast. That is testable: DTE's load-interconnection activity runs through the MPSC — the same venue where the AG and Sierra Club are already challenging DTE's Oracle contracts. Follow the substations, not the LLCs.</div>
+    </div>
+    <div class="pattern-card pv-green">
+      <div class="pattern-card-num">Proven 8 — August 25 Convergence</div>
+      <div class="pattern-card-title">Two decisive meetings, same night</div>
+      <div class="pattern-card-body">Monday Aug 25, 2026: <em>Wixom City Council</em> holds the second reading and adoption vote on its weakened ordinance, while the <em>Springfield Township Planning Commission</em> takes up its Draft Data Center Zoning Ordinance Amendments, the Sheetz Final Site Plan (8500 Dixie Hwy), and Levy mine updates — all on one agenda, all now under CWA's planning review. Bodies in both rooms matter. <a href="https://cms1files.revize.com/springfieldtwp/PC_Agenda_August_2026.pdf" target="_blank">Springfield PC agenda</a></div>
+    </div>
+  </div>
+
+  <div class="pattern-strip-heading" style="color:#f87171;margin-top:22px;">🚩 Unproven allegations — verify before repeating</div>
+  <div class="pattern-grid">
+    <div class="pattern-card pv-red">
+      <div class="pattern-card-num">Unproven 1 — Golf-Course Data Center</div>
+      <div class="pattern-card-title">"A perfect spot for a DC behind Lyon Oaks"</div>
+      <div class="pattern-card-body">Lyon Oaks IS a county-owned park/golf course near the Wixom site — that part is true. But no application, proposal, appraisal, or record of any data center there exists, and the claimed mechanism is false: a county commissioner cannot rezone anything (zoning belongs to Wixom and Lyon Township), and parkland disposal requires a public BOC vote. <strong>What would prove it:</strong> FOIA Oakland County Parks and Economic Development for any Lyon Oaks appraisal, disposal study, or developer inquiry.</div>
+    </div>
+    <div class="pattern-card pv-red">
+      <div class="pattern-card-num">Unproven 2 — The Golf-Course Sighting</div>
+      <div class="pattern-card-title">"We saw Woodward, Kolo, and Verrus at the golf course"</div>
+      <div class="pattern-card-body">Currently an undocumented eyewitness claim ("Kolo" unidentified). Given Proven 1-2, it is worth taking seriously — but only documented: <strong>what would prove it:</strong> the date, who was present, what was observed, written down now; then FOIA county emails and calendars for Verrus, Sidewalk Infrastructure, or Project Flex contacts. Undocumented, it is a rumor that discredits the documented material next to it.</div>
+    </div>
+    <div class="pattern-card pv-red">
+      <div class="pattern-card-num">Checked — False 3 — "Nuclear Available"</div>
+      <div class="pattern-card-title">No nuclear power to tap near Lyon/Wixom</div>
+      <div class="pattern-card-body">The nearest nuclear plant is DTE's Fermi 2 in Monroe County, roughly 60 miles away. Natural gas transmission in the corridor is plausible; "nuclear available to be tapped" is not a real feature of these sites and should be dropped from the story entirely.</div>
+    </div>
+    <div class="pattern-card pv-red">
+      <div class="pattern-card-num">Unproven 4 — "Three Developers in the Minutes"</div>
+      <div class="pattern-card-title">Claim: the clerk's own minutes confirm three separate interested data center developers</div>
+      <div class="pattern-card-body">Not found yet: the Jan 8, Feb 12, Mar 12, and Jul 9, 2026 board minutes were checked and contain no three-developer statement. Still unchecked: <strong>December 2025 board and PC minutes</strong> (also where the original moratorium resolution number lives), April-June 2026 minutes, PC minutes, and the meeting videos. If the statement exists, screenshot the exact page immediately — minutes can be "clarified."</div>
+    </div>
+    <div class="pattern-card pv-red">
+      <div class="pattern-card-num">Unproven 5 — The "$6 Billion" Remark</div>
+      <div class="pattern-card-title">Independence Twp official quoting a Springfield offer</div>
+      <div class="pattern-card-body">Secondhand hearsay as it stands. <strong>What would prove it:</strong> the person who heard it on record (name, date, setting), or the statement appearing in Independence Township minutes or a recording. Until then, do not repeat the number.</div>
+    </div>
+    <div class="pattern-card pv-red">
+      <div class="pattern-card-num">Unproven 6 — "Sansone Kicked Out of York Twp"</div>
+      <div class="pattern-card-title">No record found</div>
+      <div class="pattern-card-body">Searches found no coverage or record of Sansone Group being rejected in York Township (Washtenaw Co.). <strong>What would prove it:</strong> York Township PC/board minutes or a local news item naming Sansone. Also note the corrected developer structure: Wixom Industrial One LLC is the entity, Dennis Griffin the developer, "Pleasant Ridge" his home city (not a company), Sansone the partner — one team, not three.</div>
+    </div>
+    <div class="pattern-card pv-red">
+      <div class="pattern-card-num">Unproven 7 — Mine ↔ Data Center Link</div>
+      <div class="pattern-card-title">"The gravel mine is for the data centers"</div>
+      <div class="pattern-card-body">The Levy/Burroughs mine is real (304 acres — 244 Springfield + 60 Rose Twp — at 6651 Ormond Rd, not 422 acres as circulated), and gravel generically feeds construction. But no document links this mine to any data center project. Keep them as two fights sharing a township and a planner — welding them together without evidence hands opponents an easy debunk. <a href="https://www.sierraclub.org/michigan/southeast-michigan/blog/2025/09/springfield-twp-opposition-proposed-levy-burroughs-gravel" target="_blank">Sierra Club</a></div>
+    </div>
+    <div class="pattern-card pv-red">
+      <div class="pattern-card-num">Unproven 8 — The Lyon "Aug 5 Debrief"</div>
+      <div class="pattern-card-title">Extension vote, ethics-policy push, golf-outing conflict callout</div>
+      <div class="pattern-card-body">A forwarded debrief claimed a unanimous Aug 5 moratorium-extension vote, a resident ethics-policy push, and two trustees called out over a sponsored golf outing with project beneficiaries. None of the three could be corroborated in minutes, agendas, or press. <strong>What would prove it:</strong> Lyon Township's own posted minutes for early August (site blocks automated review — pull manually or call (248) 437-2240).</div>
+    </div>
+  </div>
+
+  <div class="docs-strip">
+    <div class="docs-strip-heading">📥 Documents to get next — each one settles a card above</div>
+    <ul>
+      <li><strong>Springfield Dec 2025 board + PC minutes</strong> — original moratorium resolution number and date, earliest developer-contact records, and the likeliest home of any "three developers" statement. Archive: <a href="https://www.springfield-twp.us/departments/clerk/minutes.php" target="_blank">springfield-twp.us minutes page</a> (all 2026 minutes are posted there).</li>
+      <li><strong>Springfield Aug 25 PC packet</strong> (30MB+) — contains the draft data center ordinance, now a CWA product: <a href="https://cms1files.revize.com/springfieldtwp/PC_Packet_August_2026.pdf" target="_blank">direct link</a>. Check it against the CWA template fingerprints.</li>
+      <li><strong>Springfield clerk records request</strong> — all data-center developer communications and meeting records, Dec 2025-present (tests the "1 meeting vs 3 developers" discrepancy from the clerk's own file).</li>
+      <li><strong>Independence Township minutes/recordings</strong> — any reference to Springfield data center offers (the "$6B" remark).</li>
+      <li><strong>York Township (Washtenaw) minutes</strong> — any Sansone Group application and its outcome.</li>
+      <li><strong>Lyon Township post-Aug-1 minutes</strong> — moratorium extension status and the debrief claims (manual pull; site blocks crawlers).</li>
+      <li><strong>Oakland County FOIA</strong> — Parks &amp; Rec and Economic Development records on Lyon Oaks (appraisals, disposal studies, developer inquiries) and BOC emails mentioning Verrus, Sidewalk Infrastructure, Project Flex, or Sheetz.</li>
+      <li><strong>Rochester Hills item 2026-0070</strong> — whether the moratorium extension needed and received a second reading.</li>
+      <li><strong>Wixom final adopted ordinance text</strong> (after Aug 25) — what survived: setback figure, noise standards, and whether any struck enforcement provisions returned.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section-break" style="font-size:12px;padding-top:26px;">📅 Timeline — six Oakland County lanes</div>
+
+<div class="legend-bar" id="legend"></div>
+
+<div class="scroll-wrap">
+  <div class="chart-area" id="chart"></div>
+</div>
+
+<div id="tt"></div>
+
+<div class="section-break" style="font-size:12px;padding-top:26px;">🗺 Map — all 58 Oakland County municipalities (subset of the statewide planner map)</div>
+<div class="map-legend"><span class="dot" style="background:#d95926;"></span>Active data center case&nbsp;<span class="dot" style="background:#9085e9;"></span>CWA-planned community&nbsp;<span class="dot" style="background:#64748b;"></span>Other municipality — larger markers = live fights; purple rings = CWA contract</div>
+<div class="map-wrap"><div id="oakmap"></div></div>
+<div style="text-align:center;font-size:10px;color:#64748b;padding:0 28px 40px;">Data subset generated from the statewide <a href="index.html" style="color:#67e8f9;text-decoration:none;">P.A.C.T. planner map</a> (county == Oakland), 2026-08-24.</div>
+
+
+<script>
+// ─────────────────────────────────────────────
+//  EVENT TYPES
+// ─────────────────────────────────────────────
+const TYPES = {
+  'cwa-hired':      { label: 'CWA Hired',           color: '#9085e9' },
+  'developer':      { label: 'Developer Action',     color: '#d95926' },
+  'cwa-action':     { label: 'CWA Planner Action',   color: '#e66767' },
+  'community':      { label: 'Community Response',   color: '#c98500' },
+  'protection':     { label: 'Protective Action',    color: '#199e70' },
+  'legal':          { label: 'Legal / Formal',       color: '#3987e5' },
+  'cwa-terminated': { label: 'CWA Terminated',       color: '#d55181' },
+  'future':         { label: 'Upcoming Deadline',    color: '#5b7ca0' },
+};
+
+// ─────────────────────────────────────────────
+//  COMMUNITIES & EVENTS
+// ─────────────────────────────────────────────
+const COMMUNITIES = [
+  {
+    name: "Wixom",
+    county: "Oakland County",
+    planner: "Matteo Passalacqua",
+    title: "CWA — City Planning Consultant",
+    cwaStatus: "active",
+    statusLabel: "CWA — ACTIVE",
+    events: [
+      {
+        date: "2025-11-18", type: "community",
+        label: "Council directs PC to review data center zoning",
+        detail: "Councilmember Keenan Gottschall introduces the motion. Trigger: the former Ford Motor Co. property has an underused DTE substation, making Wixom highly attractive to data center developers — the city names the grid asset itself as the draw. CWA is concurrently updating the Master Plan.",
+        source: "https://www.wixomgov.org/departments/construction-development-services-building/data-center-moratorium-ordinance", sourceLabel: "City of Wixom — Data Center Moratorium & Ordinance page"
+      },
+      {
+        date: "2026-03-24", type: "protection",
+        label: "6-month full-prohibition moratorium",
+        detail: "Council approves a temporary moratorium prohibiting establishing, permitting, consideration, approval, location, construction, and/or installation of any data centers. Now set to expire Sept 24, 2026.",
+        source: "https://planetdetroit.org/2026/03/wixom-plans-data-center-rules/", sourceLabel: "Planet Detroit, March 2026"
+      },
+      {
+        date: "2026-06-29", type: "cwa-action",
+        label: "PC public hearing on CWA-drafted ordinance",
+        detail: "CWA staffer Matteo Passalacqua — the City's planning consultant per the minutes — presents the draft ordinance verbatim. PC forwards it to Council. Original CWA draft setback: 500 ft.",
+        source: "https://www.wixomgov.org/home/showpublisheddocument/12856/639195515755530000", sourceLabel: "Jun 29, 2026 PC minutes"
+      },
+      {
+        date: "2026-07-14", type: "community",
+        label: "Council rejects Sansone waiver 4-3",
+        detail: "Council rejects a moratorium-waiver request from Wixom Industrial One LLC (Dennis Griffin of Pleasant Ridge, MI / Sansone Group, a Missouri CRE firm) for 30625 S. Wixom Rd — 54 acres, three buildings, 600,000+ sq ft in Midwinds Industrial Park — citing proximity to schools, daycares, and homes. Same meeting: Council postpones its own ordinance vote and Deputy Mayor Gottschall reads roughly 22 strengthening amendments into the record.",
+        source: "https://www.datacenterdynamics.com/en/news/city-officials-in-michigan-denied-request-to-lift-data-center-moratorium/", sourceLabel: "Data Center Dynamics, July 2026"
+      },
+      {
+        date: "2026-08-03", type: "cwa-action",
+        label: "Legal review: setback 2,640 ft, teeth struck",
+        detail: "City Attorney revision raises the residential/school/park setback to 2,640 ft (a half mile) — but strikes the decommissioning bond, community benefits agreement, rate pass-through protection, mandatory monitoring, and shutdown triggers as unenforceable or preempted, with no itemized analysis released. Every provision that would cost the operator money after approval is gone.",
+        source: "https://www.wixomgov.org/departments/construction-development-services-building/data-center-moratorium-ordinance", sourceLabel: "City of Wixom — Aug 3, 2026 revision"
+      },
+      {
+        date: "2026-08-07", type: "legal",
+        label: "Developer sues the city in federal court",
+        detail: "Wixom Industrial One LLC files suit in the U.S. District Court, E.D. Michigan, alleging the moratorium and ordinance process violate the Michigan Zoning Enabling Act and block a use permitted by right on its M-1 site. First of two Michigan data-center-moratorium suits filed within ten days (Gibraltar follows Aug 17).",
+        source: "https://www.whmi.com/news/article/developer-sues-city-of-wixom-over-data-center-moratorium", sourceLabel: "WHMI, Aug 12, 2026"
+      },
+      {
+        date: "2026-08-11", type: "protection",
+        label: "First reading advances 4-3; city hires own acousticians",
+        detail: "Second Introduction & First Reading advances despite the pending suit. Council approves up to $30,000 for Soundscape Consulting and $28,500 for a city-wide ambient noise study — Wixom retains its own acoustical experts rather than relying on the applicant's study.",
+        source: "https://www.wixomgov.org/home/showpublisheddocument/12923/639221486671883649", sourceLabel: "Wixom Council presentation slides, Aug 11, 2026"
+      },
+      {
+        date: "2026-08-17", type: "legal", isNew: true,
+        label: "ROLLBACK: setback cut to 1,000 ft; Table 2 deleted",
+        detail: "The second-reading draft of Ordinance No. 2026-01 cuts the setback from 2,640 ft to 1,000 ft and deletes Table 2 (the ambient +1 dBA noise standard) — both on staff and legal-counsel recommendation, four days after the developer's federal suit. The two strongest provisions residents won are removed while the city is being sued for having them.",
+        source: "https://www.wixomgov.org/departments/construction-development-services-building/data-center-moratorium-ordinance", sourceLabel: "City of Wixom — second-reading draft (Aug 17, 2026)"
+      },
+      {
+        date: "2026-08-25", type: "future", isNew: true,
+        label: "⚠ Second reading & adoption vote",
+        detail: "Adoption vote on the weakened draft. If adopted, effective ~Sept 6, 2026; the moratorium expires Sept 24, 2026 regardless. Key question: do the 1,000-ft setback and deleted noise table stand, or does Council restore what its own residents fought for?",
+        source: "https://www.wixomgov.org/departments/city-clerk/agendas-and-minutes/city-council", sourceLabel: "Wixom Council agendas"
+      }
+    ]
+  },
+  {
+    name: "Lyon Township",
+    county: "Oakland County",
+    planner: "(not publicly confirmed)",
+    title: "lyontwp.org blocks automated review",
+    cwaStatus: "none",
+    statusLabel: "NON-CWA / UNKNOWN",
+    events: [
+      {
+        date: "2025-09-15", type: "developer",
+        label: "PC approves Project Flex site plan",
+        detail: "Planning Commission approves the site plan (month approximate — September 2025 per the township FAQ) for Project Flex: a ~180-acre, ~1.8M sq ft data center by Verrus — a Sidewalk Infrastructure Partners company backed by Alphabet, StepStone, and Ontario Teachers — on Walbridge-owned land on the east side of Milford Rd south of New Hudson Drive W. DTE is planning a dedicated substation for the site. Approval comes BEFORE any moratorium exists.",
+        source: "https://cms2.revize.com/revize/lyontownship/Temporary/2025-12-18%20Data%20Center%20FAQs.pdf", sourceLabel: "Lyon Township — official Project Flex FAQ, Dec 18, 2025"
+      },
+      {
+        date: "2025-12-18", type: "community",
+        label: "Township publishes Project Flex FAQ",
+        detail: "Official FAQ confirms developer identity, site location, DTE substation plan, closed-loop cooling claimed at under 1.5M gallons/year, battery storage as primary backup with diesel generators on the plans, and a Jan 22, 2026 community information meeting. Final agency permits still pending, including a New Hudson Drain cleanout.",
+        source: "https://cms2.revize.com/revize/lyontownship/Temporary/2025-12-18%20Data%20Center%20FAQs.pdf", sourceLabel: "Lyon Township — Project Flex FAQ"
+      },
+      {
+        date: "2026-03-02", type: "protection",
+        label: "Moratorium — but only on NEW projects",
+        detail: "Township Board enacts a 6-month moratorium on NEW data center projects. It does not appear to affect Project Flex, which was already approved. Expiry falls around early September 2026.",
+        source: "https://www.detroitnews.com/story/news/local/oakland-county/2026/03/03/as-project-flex-proceeds-lyon-township-hits-pause-on-new-data-centers/88960710007/", sourceLabel: "Detroit News, Mar 3, 2026"
+      },
+      {
+        date: "2026-05-06", type: "community",
+        label: "Recall targets all seven trustees",
+        detail: "An active recall petition targets every township trustee — officially tied to a wage-adjustment vote, though clearly entangled with resident anger over Project Flex. Trustees frame it as unrelated to the data center.",
+        source: "https://www.detroitnews.com/story/news/local/oakland-county/2026/05/06/group-looks-to-recall-lyon-trustees-over-data-center-with-unrelated-language/89929672007/", sourceLabel: "Detroit News, May 6, 2026"
+      },
+      {
+        date: "2026-08-05", type: "community",
+        label: "Unverified debrief circulates — treat with care",
+        detail: "A forwarded activist debrief claimed a unanimous Aug 5 moratorium-extension vote, a resident ethics-policy push, and a conflict-of-interest callout of two trustees over a sponsored golf outing. NONE of the three could be corroborated in official minutes, agendas, or any news coverage. Do not repeat without direct confirmation — see the red cards above.",
+        source: "https://www.lyontwp.org", sourceLabel: "Lyon Township (minutes archive — direct check needed)"
+      },
+      {
+        date: "2026-09-02", type: "future",
+        label: "⚠ New-project moratorium expires (~early Sept)",
+        detail: "The 6-month moratorium on new data center projects lapses around early September 2026 unless extended — extension status unconfirmed (the township site blocks automated review; needs a direct minutes check or phone call to (248) 437-2240)."
+      }
+    ]
+  },
+  {
+    name: "Springfield Township",
+    county: "Oakland County",
+    planner: "Megan Masson-Minock",
+    title: "Principal, AICP — CWA (since Mar 12, 2026; prev. Giffels Webster)",
+    cwaStatus: "active",
+    statusLabel: "CWA — HIRED MID-FIGHT",
+    events: [
+      {
+        date: "2025-05-19", type: "developer",
+        label: "Levy/Burroughs 304-acre gravel mine review",
+        detail: "Then-planner Giffels Webster issues the preliminary site plan / special land use review for Burroughs Materials Co. (Edw. C. Levy-affiliated): a 304-acre sand and gravel mine (244 acres in Springfield + 60 in Rose Township) at 6651 Ormond Rd — wet-process mining, five phases, ~20 years, 60,000-665,000 cubic yards annually. Residents have opposed it since mid-2025; FOIA'd emails show a Levy representative thanking Supervisor Ric Davis for sharing a deadline.",
+        source: "https://cms1files.revize.com/springfieldtwp/Site%20Plan%20-%20Special%20Land%20Use%20Review%202025%2005%2019%20Ormond%20Rd%206651_Levy%20Mining%20final2.pdf", sourceLabel: "Giffels Webster review, May 19, 2025"
+      },
+      {
+        date: "2025-12-16", type: "community",
+        label: "PC discusses data centers",
+        detail: "Per the township's own resident Q&A page, the Planning Commission discusses data centers Dec 16, 2025. Developer interest centers on an ~80-84 acre site off Andersonville Road. The township has NO municipal water or sewer — a hard physical constraint on any large facility.",
+        source: "https://www.springfield-twp.us/departments/supervisor/resident_questions.php", sourceLabel: "Springfield Twp — resident questions page"
+      },
+      {
+        date: "2026-01-06", type: "protection",
+        label: "180-day data center moratorium adopted",
+        detail: "Adopted in early January 2026 (Detroit News reports it Jan 7), days before scheduled meetings with developers interested in the Andersonville Road site. Date approximate — the adopting meeting and original resolution number still need to be pulled from the December 2025 minutes (see the documents-to-get list below).",
+        source: "https://planetdetroit.org/2026/01/data-center-moratorium-northville/", sourceLabel: "Planet Detroit, Jan 2026"
+      },
+      {
+        date: "2026-01-12", type: "cwa-hired",
+        label: "CWA takes over Building Department",
+        detail: "Special board meeting approves a Carlisle/Wortman consulting agreement to run Building Department functions after the Building Official departs. Step one of a two-step entry.",
+        source: "https://cms1files.revize.com/springfieldtwp/Special%20Meeting%201-12-26%20-%20FINAL.pdf", sourceLabel: "Special meeting minutes, Jan 12, 2026"
+      },
+      {
+        date: "2026-03-12", type: "cwa-hired", isNew: true,
+        label: "Board fires Giffels Webster, hires CWA 7-0",
+        detail: "Mid-moratorium, mid-mine-fight, with data center interest documented, the board votes 7-0 to terminate Giffels Webster and hire Carlisle/Wortman as planning consultant. Ben Carlisle presents personally — citing CWA experience with gravel mining and data centers — with Megan Masson-Minock (also CWA's planner in Berkley) as proposed primary consultant. Supervisor Ric Davis championed the switch on rural-character and retainer-cost grounds. This is the firm's textbook placement pattern arriving in Oakland County: positioned before the application lands.",
+        source: "https://cms1files.revize.com/springfieldtwp/Minutes_TB_3-12-2026-FINAL.pdf", sourceLabel: "Board minutes, Mar 12, 2026 (Planning Contract item)"
+      },
+      {
+        date: "2026-07-09", type: "protection", isNew: true,
+        label: "Res 2026-09 extends moratorium to Dec 10, 2026",
+        detail: "Resolution 2026-09 amends the original resolution and extends the moratorium through December 10, 2026 — so the moratorium did NOT quietly lapse in July. A revised draft ordinance heads to the Planning Commission, with a public hearing possibly in August. A resident geologist (Angie Peltier) separately critiques the mine market study: there is no way that haul roads are not going to impact the communities.",
+        source: "https://cms1files.revize.com/springfieldtwp/July%202026%20-%20FINAL.pdf", sourceLabel: "Board minutes, Jul 9, 2026"
+      },
+      {
+        date: "2026-08-25", type: "future", isNew: true,
+        label: "⚠ PC: DC ordinance + Sheetz + Levy, same night",
+        detail: "The Aug 25 Planning Commission agenda stacks all three fights: Draft Data Center Zoning Ordinance Amendments (old business), the Sheetz Final Site Plan at 8500 Dixie Hwy, and Levy mine updates. The 30MB+ packet contains the draft ordinance — now CWA's product. Check it against the CWA template fingerprints (HRDF terminology, Purpose-and-Intent boilerplate, 60% lot coverage, generator testing hours, PUE targets).",
+        source: "https://cms1files.revize.com/springfieldtwp/PC_Agenda_August_2026.pdf", sourceLabel: "PC agenda, Aug 25, 2026"
+      },
+      {
+        date: "2026-12-10", type: "future",
+        label: "⚠ Extended moratorium expires",
+        detail: "The extended moratorium runs out December 10, 2026. Whatever ordinance CWA has drafted by then governs any application for the Andersonville Road site — the same is-it-protection-or-the-appearance-of-protection question P.A.C.T. tracks at every CWA site."
+      }
+    ]
+  },
+  {
+    name: "Oakland County (gov)",
+    county: "County government",
+    planner: "Dave Woodward",
+    title: "BOC Chair — recall active; paid Sheetz consultant",
+    cwaStatus: "none",
+    statusLabel: "WATCH",
+    events: [
+      {
+        date: "2025-07-31", type: "community",
+        label: "Revealed: Woodward is a paid Sheetz consultant",
+        detail: "Detroit News reveals the county board chair works as a paid consultant for Sheetz through Woodward & Associates LLC while chairing the Board of Commissioners. He appeared for Sheetz at a Farmington Hills council meeting (plan voted down; Sheetz later sued the city) and a Royal Oak hearing (approved), and refuses to disclose his compensation: I'm not going to discuss my private business affairs.",
+        source: "https://www.crainsdetroit.com/politics-policy/dave-woodward-sheetz-oakland-county", sourceLabel: "Crain's Detroit; Detroit News, Jul 31, 2025"
+      },
+      {
+        date: "2025-08-07", type: "legal",
+        label: "The county-land lever: airport easement episode",
+        detail: "WXYZ investigation: Woodward pushed a Sheetz project adjacent to county-owned Oakland County International Airport land in Waterford. Airport manager Cheryl Bush's internal email — I have been overruled — on an easement she had opposed on safety grounds; she named Woodward as a strong proponent who made introductions to the Sheetz folks. The county declined the easement only after investigators started asking. This is the one PROVEN instance of Woodward monetizing a private client around county-owned assets — the pattern to watch on any county land, including parks.",
+        source: "https://www.wxyz.com/news/local-news/investigations/did-oakland-county-commission-head-use-position-to-help-along-possible-sheetz-in-waterford", sourceLabel: "WXYZ investigation (date approximate)"
+      },
+      {
+        date: "2026-04-08", type: "community",
+        label: "Flock drone vote; public comment moved after it",
+        detail: "The board approves a Flock Safety drone contract for the Sheriff's Office after Woodward moves public comment to the end of the meeting — 200+ opposed residents speak only after the vote. This becomes the recall's stated ground; ICE-cooperation anger feeds it.",
+        source: "https://oaklandcounty115.com/2026/04/27/petition-language-for-recall-of-county-commission-chair-dave-woodward-approved/", sourceLabel: "Oakland County Times, Apr 27, 2026"
+      },
+      {
+        date: "2026-04-27", type: "legal",
+        label: "Recall petition language approved",
+        detail: "Election Commission approves recall petition language filed by I Am Oakland County (Justine Galbraith, Mike Flores). Woodward appeals; a judge misses the 40-day ruling deadline. Later recall coverage cites the secret Sheetz consulting work alongside the drone vote.",
+        source: "https://oaklandcounty115.com/2026/04/27/petition-language-for-recall-of-county-commission-chair-dave-woodward-approved/", sourceLabel: "Oakland County Times, Apr 27, 2026"
+      },
+      {
+        date: "2026-07-25", type: "community",
+        label: "Signature collection begins",
+        detail: "Organizers begin collecting ~9,000 signatures from District 1 (parts of Troy, Royal Oak, Birmingham, Clawson), targeting a November 2026 recall election.",
+        source: "https://www.wxyz.com/news/region/oakland-county/recall-organizers-targeting-oakland-countys-dave-woodward-to-start-collecting-signatures-july-25", sourceLabel: "WXYZ, Jul 2026"
+      },
+      {
+        date: "2026-11-03", type: "future",
+        label: "⚠ Potential recall election",
+        detail: "If signatures qualify, the recall goes to District 1 voters in November 2026. Structural reality either way: a county commissioner has NO zoning authority over Wixom, Lyon, or Springfield — county-land disposal (parks, airport parcels) is where county-level influence actually operates."
+      }
+    ]
+  },
+  {
+    name: "Rochester Hills",
+    county: "Oakland County",
+    planner: "(in-house planning staff)",
+    title: "No CWA relationship found",
+    cwaStatus: "none",
+    statusLabel: "NON-CWA",
+    events: [
+      {
+        date: "2026-03-01", type: "protection",
+        label: "Data center moratorium enacted (precautionary)",
+        detail: "Enacted ~Feb-early Mar 2026 targeting facilities of 2 MW or more — precautionary and regional-trend-driven; no named proposal inside city limits (Oakland University's AI data center is in Auburn Hills and exempt as a state university project). Date approximate.",
+        source: "https://hoodline.com/2026/04/rochester-hills-198m-wish-list-meets-data-center-showdown/", sourceLabel: "Hoodline, Apr 2026"
+      },
+      {
+        date: "2026-08-10", type: "protection",
+        label: "Extension to ~March 2027 passes first reading",
+        detail: "Council item 2026-0070 extends the moratorium through mid-March 2027. Councilwoman Theresa Mungioli proposes half-mile-plus residential setbacks, drawing applause. Open item: confirm whether a second reading/final vote was needed and occurred.",
+        source: "https://www.detroitnews.com/story/news/local/oakland-county/2026/08/11/rochester-hills-extends-data-center-moratorium/91256551007/", sourceLabel: "Detroit News, Aug 11, 2026"
+      }
+    ]
+  },
+  {
+    name: "Commerce Township",
+    county: "Oakland County",
+    planner: "(consultant unconfirmed)",
+    title: "Standards drafting underway",
+    cwaStatus: "none",
+    statusLabel: "NON-CWA (unconfirmed)",
+    events: [
+      {
+        date: "2026-02-15", type: "protection",
+        label: "6-month moratorium (precautionary)",
+        detail: "Township Board adopts a 6-month data center moratorium in February 2026 with no developer proposal on file. Per the July 2026 staff report, the board is expected to extend it ~4 months (to ~December 2026) to finish standards. Date approximate.",
+        source: "https://commercetwp.com/media/xh4nuv4s/plng-dept-monthly-report_july-2026.pdf", sourceLabel: "Commerce Twp Planning Dept report, Jul 2026"
+      },
+      {
+        date: "2026-08-10", type: "community",
+        label: "PC discusses prospective data-center standards",
+        detail: "Agenda item I2: Prospective Zoning Ordinance Amendments Relative to Data Centers — targeting the I-Industrial and TLM (Technology & Light Manufacturing) districts. Discussion-only; the full packet (30MB+) holds the draft numbers and needs a manual read.",
+        source: "https://commercetwp.com/media/ffxhssfy/2026-8-10-pln-agenda.pdf", sourceLabel: "Commerce Twp PC agenda, Aug 10, 2026"
+      },
+      {
+        date: "2026-12-15", type: "future",
+        label: "⚠ Moratorium expected to run to ~Dec 2026",
+        detail: "Extension to ~December 2026 anticipated per the staff report; standards must be adopted before expiry or the gap reopens. Date approximate."
+      }
+    ]
+  }
+];
+
+// ─────────────────────────────────────────────
+//  TIME SCALE
+// ─────────────────────────────────────────────
+const T_START = new Date('2025-04-01');
+const T_END   = new Date('2027-04-01');
+const T_RANGE = T_END - T_START;
+const PX_PER_MONTH = 95; // controls how wide the scrollable chart is — higher = more room per event, more horizontal scrolling (raised Aug 14, 2026: several communities now have many events packed into a single recent month)
+
+function parseDate(str) {
+  // Handle YYYY-MM or YYYY-MM-DD
+  if (str.length === 7) return new Date(str + '-15');
+  return new Date(str);
+}
+
+function toX(dateStr, width) {
+  const t = parseDate(dateStr);
+  return Math.round(((t - T_START) / T_RANGE) * width);
+}
+
+function fmtDate(str) {
+  const d = parseDate(str);
+  if (str.length === 7) return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+// ─────────────────────────────────────────────
+//  SHAPE HELPERS
+// ─────────────────────────────────────────────
+function shape(type, cx, cy, r) {
+  switch(type) {
+    case 'cwa-hired':      // star
+      return starPath(cx, cy, r);
+    case 'developer':      // circle
+      return `<circle cx="${cx}" cy="${cy}" r="${r}"/>`;
+    case 'cwa-action':     // diamond
+      return `<polygon points="${cx},${cy-r*1.25} ${cx+r*1.25},${cy} ${cx},${cy+r*1.25} ${cx-r*1.25},${cy}"/>`;
+    case 'community':      // rounded square
+      return `<rect x="${cx-r*.9}" y="${cy-r*.9}" width="${r*1.8}" height="${r*1.8}" rx="2.5"/>`;
+    case 'protection':     // triangle (shield)
+      return `<polygon points="${cx},${cy-r*1.3} ${cx+r*1.3},${cy+r*.9} ${cx-r*1.3},${cy+r*.9}"/>`;
+    case 'legal':          // hexagon
+      return hexPath(cx, cy, r);
+    case 'cwa-terminated': // X
+      return xPath(cx, cy, r);
+    case 'future':         // dashed circle
+      return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke-width="2" stroke-dasharray="4,3"/>`;
+    default:
+      return `<circle cx="${cx}" cy="${cy}" r="${r}"/>`;
+  }
+}
+
+function starPath(cx, cy, r) {
+  const pts = [];
+  for (let i = 0; i < 10; i++) {
+    const a = (i * 36 - 90) * Math.PI / 180;
+    const rr = i % 2 === 0 ? r * 1.15 : r * 0.48;
+    pts.push(`${(cx + rr * Math.cos(a)).toFixed(1)},${(cy + rr * Math.sin(a)).toFixed(1)}`);
+  }
+  return `<polygon points="${pts.join(' ')}"/>`;
+}
+
+function hexPath(cx, cy, r) {
+  const pts = [];
+  for (let i = 0; i < 6; i++) {
+    const a = (i * 60 - 30) * Math.PI / 180;
+    pts.push(`${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`);
+  }
+  return `<polygon points="${pts.join(' ')}"/>`;
+}
+
+function xPath(cx, cy, r) {
+  const s = r * 0.78, sw = r * 0.4;
+  return `
+    <line x1="${cx-s}" y1="${cy-s}" x2="${cx+s}" y2="${cy+s}" stroke-width="${sw}" stroke-linecap="round"/>
+    <line x1="${cx+s}" y1="${cy-s}" x2="${cx-s}" y2="${cy+s}" stroke-width="${sw}" stroke-linecap="round"/>
+  `;
+}
+
+// ─────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────
+const activeTypes = new Set(Object.keys(TYPES));
+const LANE_H = 148;
+const TODAY = '2026-08-24';
+
+// ─────────────────────────────────────────────
+//  LEGEND
+// ─────────────────────────────────────────────
+function buildLegend() {
+  const el = document.getElementById('legend');
+  el.innerHTML = '<span class="legend-heading">Filter by:</span>';
+  Object.entries(TYPES).forEach(([key, meta]) => {
+    const item = document.createElement('div');
+    item.className = 'leg-item';
+    item.dataset.key = key;
+    item.innerHTML = `<div class="leg-dot" style="background:${meta.color}"></div><span class="leg-label">${meta.label}</span>`;
+    item.addEventListener('click', () => {
+      if (activeTypes.has(key)) { activeTypes.delete(key); item.classList.add('off'); }
+      else                       { activeTypes.add(key);    item.classList.remove('off'); }
+      renderChart();
+    });
+    el.appendChild(item);
+  });
+}
+
+// ─────────────────────────────────────────────
+//  SMART STAGGER — avoid label collisions
+// ─────────────────────────────────────────────
+function stagger(events, svgWidth) {
+  // Returns array of { event, x, dotY, labelAnchor, labelSide }
+  // dotY: above or below midline; labelSide: 'above' or 'below'
+  const MID = LANE_H / 2;
+  const DOT_OFFSET = 20;   // px from midline to dot center
+  const MIN_GAP    = 72;   // min px between events on same side before forcing flip
+
+  // Sort by date
+  const sorted = events
+    .filter(e => activeTypes.has(e.type))
+    .sort((a, b) => parseDate(a.date) - parseDate(b.date));
+
+  const lastX = { above: -Infinity, below: -Infinity };
+
+  return sorted.map((ev, i) => {
+    const x = toX(ev.date, svgWidth);
+    // Try preferred side first (alternate)
+    const preferred = i % 2 === 0 ? 'above' : 'below';
+    const alt = preferred === 'above' ? 'below' : 'above';
+
+    let side;
+    if (x - lastX[preferred] >= MIN_GAP) {
+      side = preferred;
+    } else if (x - lastX[alt] >= MIN_GAP) {
+      side = alt;
+    } else {
+      // Both sides crowded — pick the one with more room
+      side = (x - lastX[preferred] >= x - lastX[alt]) ? preferred : alt;
+    }
+
+    lastX[side] = x;
+    const dotY = side === 'above' ? MID - DOT_OFFSET : MID + DOT_OFFSET;
+    return { ev, x, dotY, side };
+  });
+}
+
+// ─────────────────────────────────────────────
+//  SVG AXIS
+// ─────────────────────────────────────────────
+function buildAxisSVG(svgWidth) {
+  const H = 36;
+  let s = [`<svg width="${svgWidth}" height="${H}" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;display:block">`];
+
+  let d = new Date(T_START);
+  while (d <= T_END) {
+    const x = toX(d.toISOString().slice(0,7), svgWidth);
+    const m = d.getMonth();
+
+    if (m === 0) {
+      s.push(`<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="#475569" stroke-width="1.5"/>`);
+      s.push(`<text x="${x+4}" y="13" fill="#94a3b8" font-size="12" font-weight="700" font-family="-apple-system,sans-serif">${d.getFullYear()}</text>`);
+    } else if (m % 3 === 0) {
+      s.push(`<line x1="${x}" y1="18" x2="${x}" y2="${H}" stroke="#334155" stroke-width="1"/>`);
+      const qLabel = ['','Q2','Q3','Q4'][Math.floor(m/3)];
+      s.push(`<text x="${x+4}" y="${H-2}" fill="#64748b" font-size="10" font-family="-apple-system,sans-serif">${qLabel}</text>`);
+    }
+
+    d.setMonth(d.getMonth() + 1);
+  }
+
+  // Today marker
+  const tx = toX(TODAY, svgWidth);
+  s.push(`<line x1="${tx}" y1="0" x2="${tx}" y2="${H}" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>`);
+
+  s.push('</svg>');
+  return s.join('');
+}
+
+// ─────────────────────────────────────────────
+//  LANE SVG
+// ─────────────────────────────────────────────
+function buildLaneSVG(community, svgWidth, communityIdx) {
+  const MID = LANE_H / 2;
+  const R   = 8;    // marker radius
+  const FONT = '-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif';
+
+  const positioned = stagger(community.events, svgWidth);
+
+  let s = [`<svg width="${svgWidth}" height="${LANE_H}" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;display:block">`];
+
+  // Quarterly gridlines
+  let d = new Date(T_START);
+  while (d <= T_END) {
+    if (d.getMonth() % 3 === 0) {
+      const gx = toX(d.toISOString().slice(0,7), svgWidth);
+      const isYear = d.getMonth() === 0;
+      s.push(`<line x1="${gx}" y1="0" x2="${gx}" y2="${LANE_H}" stroke="${isYear ? '#475569' : '#293548'}" stroke-width="${isYear ? 1.5 : 1}"/>`);
+    }
+    d.setMonth(d.getMonth() + 1);
+  }
+
+  // Today line
+  const tx = toX(TODAY, svgWidth);
+  s.push(`<line x1="${tx}" y1="0" x2="${tx}" y2="${LANE_H}" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>`);
+
+  // Central axis
+  s.push(`<line x1="0" y1="${MID}" x2="${svgWidth}" y2="${MID}" stroke="#475569" stroke-width="1.5"/>`);
+
+  // Events
+  positioned.forEach(({ ev, x, dotY, side }, i) => {
+    const meta = TYPES[ev.type];
+    const col  = meta.color;
+    const above = side === 'above';
+    const labelY = above ? dotY - R - 6 : dotY + R + 16;
+    const stemY1 = above ? MID - 2 : MID + 2;
+
+    // Connector stem
+    s.push(`<line x1="${x}" y1="${stemY1}" x2="${x}" y2="${dotY + (above ? R+1 : -(R+1))}" stroke="${col}" stroke-width="1.5" opacity="0.55"/>`);
+
+    // Hit target (invisible, larger area)
+    s.push(`<circle cx="${x}" cy="${dotY}" r="${R+7}" fill="transparent" class="ev-hit" data-ci="${communityIdx}" data-ei="${i}" style="cursor:pointer"/>`);
+
+    // NEW-entry ring (pulsing gold outline behind the marker)
+    if (ev.isNew) {
+      s.push(`<circle cx="${x}" cy="${dotY}" r="${R+5.5}" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="3,2.5" class="new-ring"/>`);
+    }
+
+    // Shape marker
+    const isX = ev.type === 'cwa-terminated';
+    const isFuture = ev.type === 'future';
+    if (isX) {
+      s.push(`<g fill="none" stroke="${col}">${shape(ev.type, x, dotY, R)}</g>`);
+    } else if (isFuture) {
+      s.push(`<g fill="none" stroke="${col}">${shape(ev.type, x, dotY, R)}</g>`);
+    } else {
+      s.push(`<g fill="${col}" stroke="${col}" stroke-width="1">${shape(ev.type, x, dotY, R)}</g>`);
+    }
+
+    // Label (short, two lines max)
+    const labelPrefix = ev.isNew ? '🆕 ' : '';
+    const words = (labelPrefix + ev.label).replace(/[✓⚠]/g,'').trim().split(' ');
+    const LINE_MAX = 22;
+    let lines = [], cur = '';
+    words.forEach(w => {
+      if ((cur + ' ' + w).trim().length <= LINE_MAX) cur = (cur + ' ' + w).trim();
+      else { if (cur) lines.push(cur); cur = w; }
+    });
+    if (cur) lines.push(cur);
+    lines = lines.slice(0, 2); // max 2 lines
+
+    if (above) {
+      // labels go up, so first line is higher
+      lines.reverse().forEach((line, li) => {
+        const ly = dotY - R - 7 - li * 12;
+        s.push(`<text x="${x}" y="${ly}" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="${FONT}">${line}</text>`);
+      });
+    } else {
+      lines.forEach((line, li) => {
+        const ly = dotY + R + 13 + li * 12;
+        s.push(`<text x="${x}" y="${ly}" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="${FONT}">${line}</text>`);
+      });
+    }
+  });
+
+  s.push('</svg>');
+  return { svg: s.join(''), positioned };
+}
+
+// ─────────────────────────────────────────────
+//  TOOLTIP
+// ─────────────────────────────────────────────
+const ttEl = document.getElementById('tt');
+let ttVisible = false;
+let ttPinned = false;
+let ttPinnedKey = null;
+
+// Store reference: communityIdx → positioned[]
+const laneData = [];
+
+function showTT(e, ev, pinned) {
+  const meta = TYPES[ev.type];
+  const sourceHtml = ev.source
+    ? `<div class="tt-source">🔗 <a href="${ev.source}" target="_blank" rel="noopener">${ev.sourceLabel || 'Source'}</a></div>`
+    : '';
+  const pinHint = pinned
+    ? `<div class="tt-pin-hint">Pinned — click the dot again, or click elsewhere, to close.</div>`
+    : (ev.source ? `<div class="tt-pin-hint">Click the dot to pin this card and open the link.</div>` : '');
+  const newBadge = ev.isNew ? `<span class="tt-new-badge">NEW</span>` : '';
+  ttEl.innerHTML = `
+    <div class="tt-type" style="color:${meta.color}">${newBadge}${meta.label}</div>
+    <div class="tt-label">${ev.label}</div>
+    <div class="tt-date">${fmtDate(ev.date)}</div>
+    <div class="tt-detail">${ev.detail}</div>
+    ${sourceHtml}
+    ${pinHint}
+  `;
+  ttEl.classList.add('show');
+  ttEl.classList.toggle('pinned', !!pinned);
+  ttVisible = true;
+  if (!pinned) placeTT(e);
+}
+
+function placeTT(e) {
+  const W = 330, H = 200;
+  const vw = window.innerWidth, vh = window.innerHeight;
+  let l = e.clientX + 16, t = e.clientY + 16;
+  if (l + W > vw - 8) l = e.clientX - W - 16;
+  if (t + H > vh - 8) t = e.clientY - H - 16;
+  ttEl.style.left = l + 'px';
+  ttEl.style.top  = t + 'px';
+}
+
+document.addEventListener('mousemove', e => { if (ttVisible && !ttPinned) placeTT(e); });
+
+// Event delegation on chart area
+document.getElementById('chart').addEventListener('mouseover', e => {
+  if (ttPinned) return;
+  const hit = e.target.closest('.ev-hit');
+  if (!hit) return;
+  const ci = +hit.dataset.ci;
+  const ei = +hit.dataset.ei;
+  const positioned = laneData[ci];
+  if (positioned && positioned[ei]) showTT(e, positioned[ei].ev, false);
+});
+
+document.getElementById('chart').addEventListener('mouseout', e => {
+  if (ttPinned) return;
+  if (!e.target.closest('.ev-hit')) return;
+  ttEl.classList.remove('show');
+  ttVisible = false;
+});
+
+// Click a dot to pin its card open (so the source link becomes clickable)
+document.getElementById('chart').addEventListener('click', e => {
+  const hit = e.target.closest('.ev-hit');
+  if (!hit) {
+    if (ttPinned) { ttPinned = false; ttPinnedKey = null; ttEl.classList.remove('show', 'pinned'); ttVisible = false; }
+    return;
+  }
+  const ci = +hit.dataset.ci;
+  const ei = +hit.dataset.ei;
+  const key = ci + ':' + ei;
+  const positioned = laneData[ci];
+  if (!positioned || !positioned[ei]) return;
+  if (ttPinned && ttPinnedKey === key) {
+    ttPinned = false; ttPinnedKey = null; ttEl.classList.remove('show', 'pinned'); ttVisible = false;
+  } else {
+    ttPinned = true; ttPinnedKey = key;
+    showTT(e, positioned[ei].ev, true);
+  }
+  e.stopPropagation();
+});
+
+// Clicking the tooltip itself (e.g. selecting text) shouldn't close it
+ttEl.addEventListener('click', e => e.stopPropagation());
+
+// ─────────────────────────────────────────────
+//  RENDER
+// ─────────────────────────────────────────────
+function renderChart() {
+  const chart = document.getElementById('chart');
+  chart.innerHTML = '';
+  laneData.length = 0;
+
+  // Width is driven by the actual date range (not the viewport) so the chart can be
+  // genuinely wider than the screen and scroll horizontally via .scroll-wrap, instead of
+  // being squeezed to fit — which was clipping/hiding events near the left and right edges.
+  const totalMonths = (T_END.getFullYear() - T_START.getFullYear()) * 12 + (T_END.getMonth() - T_START.getMonth());
+  const svgWidth = Math.max(960, totalMonths * PX_PER_MONTH);
+
+  // Axis row
+  const axisSpacerDiv = document.createElement('div');
+  axisSpacerDiv.className = 'axis-spacer';
+
+  const axisWrap = document.createElement('div');
+  axisWrap.className = 'axis-svg-wrap';
+  axisWrap.style.paddingLeft = '12px';
+  axisWrap.innerHTML = buildAxisSVG(svgWidth);
+
+  chart.appendChild(axisSpacerDiv);
+  chart.appendChild(axisWrap);
+
+  // Swimlanes
+  COMMUNITIES.forEach((com, ci) => {
+    const { svg, positioned } = buildLaneSVG(com, svgWidth, ci);
+    laneData.push(positioned);
+
+    const header = document.createElement('div');
+    header.className = 'lane-header';
+    header.innerHTML = `
+      <div class="lh-county">${com.county}</div>
+      <div class="lh-name">${com.name}</div>
+      <div class="lh-planner">${com.planner}</div>
+      <div class="lh-title">${com.title}</div>
+      <div class="lh-status ${com.cwaStatus}">${com.statusLabel}</div>
+    `;
+
+    const body = document.createElement('div');
+    body.className = 'lane-body';
+    body.style.paddingLeft = '12px';
+    body.innerHTML = svg;
+
+    chart.appendChild(header);
+    chart.appendChild(body);
+  });
+}
+
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
+buildLegend();
+renderChart();
+
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(renderChart, 200);
+});
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const OAKLAND = [
+{
+        id: 3,
+        municipality: "Troy",
+        county: "Oakland",
+        type: "City",
+        lat: 42.6064,
+        lng: -83.1498,
+        planner_name: "Benjamin R. Carlisle",
+        planner_title: "President, AICP, LEED-AP (Planning Consultant)",
+        firm: "Carlisle/Wortman Associates",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: true,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "CONFIRMED: Ben Carlisle (CWA President) listed as Troy planner on CWA About page. Troy also has in-house Community Development Director R. Brent Savidant, AICP. CWA likely serves as primary planning consultant alongside city staff. Also notable: Mark F. Miller (CWA Community Planner, AICP, former Troy City Manager for 5 years) is on CWA staff. | Thoroughly checked (Jul 2026): all 18 Planning Commission meetings Aug 2025–Jul 2026 reviewed and full-text searched for data center/BESS terms — none found. Carlisle's actual work in this window (Neighborhood Node design standards, North Troy Zoning District form-based code) is unrelated urban design, not infrastructure-use zoning.",
+        work_history: "Carlisle/Wortman Associates (current)",
+        sources: ["CWA website — cwaplan.com/about — Ben Carlisle profile lists Troy as client", "troymi.gov — R. Brent Savidant listed as Community Development Director"]
+      },
+{
+        id: 4,
+        municipality: "Wixom",
+        county: "Oakland",
+        type: "City",
+        lat: 42.5248,
+        lng: -83.5366,
+        planner_name: "Benjamin R. Carlisle",
+        planner_title: "Principal, AICP, LEED-AP (Planning Consultant)",
+        firm: "Carlisle/Wortman Associates",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: true,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "⚠️ CORRECTED (was flagged false): active, extensive data center fight since Nov 2025 — 6-month full-prohibition moratorium (Mar 24, 2026), Planning Commission draft ordinance approved Jun 29 2026, Council unanimously rejected a moratorium waiver for a 519,000+ sq ft proposal (Wixom Industrial One LLC/Sansone Group) Jul 14 2026 while also postponing its own ordinance vote, ~22 Council amendments Jul 14. CONFIRMED (Jun 29, 2026 PC minutes): the ordinance was drafted/presented by CWA staffer Matteo Passalacqua ('the City's planning consultant,' presented the ordinance 'verbatim') — not Benjamin Carlisle personally, despite Carlisle being the listed lead planner of record. UPDATE 2026-08-14: Aug 3, 2026 legal review finalized the setback at 2,640 ft (half mile) — up from an original 500 ft draft, staged through 1,500 ft — and struck every provision that would have cost an operator money after approval (performance bond, community benefit agreement, rate pass-through protection, ongoing monitoring, shutdown triggers). Four days later, Aug 7, 2026, Wixom Industrial One LLC (Sansone Group) — the same developer whose moratorium waiver Council rejected in July — filed a federal lawsuit against the City. Council held the Second Introduction & First Reading of the ordinance Aug 11, 2026 despite the pending litigation; a Second Reading/adoption vote is proposed for Aug 25, 2026. The original moratorium expires Sept 24, 2026. NEW (2026-08-16): the specific project at issue is confirmed as 30625 S. Wixom Road — 54 acres, 3 buildings, 600,000+ sq ft, developer Wixom Industrial One/Sansone Group. Council's Jul 14 vote to reject the moratorium waiver broke 4-3: For — Mayor Patrick Beagle, Peter Behrmann, Tia Gronlund Fox, Nicole O'Dea; Against — Deputy Mayor Keenan Gottschall, Veronica Simmons, John Kennedy. Full timeline: see the map's Timeline view, Wixom lane; full write-up in the P.A.C.T. vault: Documents/Wixom-Data-Center-Ordinance-Control-Case.",
+        notes: "Confirmed planning consultant. Official city listing: Consultant Firm: Carlisle/Wortman Associates · Lead Planner: Benjamin R. Carlisle (Principal) · Location: Wixom Construction & Development Services Dept, 49045 Pontiac Trail. 2025 Master Plan Update underway (PC recommended Mar 23, 2026).",
+        work_history: "Carlisle/Wortman Associates (current)",
+        sources: ["City of Wixom — Construction & Development Services", "CWA website — cwaplan.com/about", "City of Wixom — Data Center Moratorium & Ordinance page — https://www.wixomgov.org/departments/construction-development-services-building/data-center-moratorium-ordinance", "Jun 29, 2026 PC minutes — https://www.wixomgov.org/home/showpublisheddocument/12856/639195515755530000", "https://www.thecooldown.com/ (Aug 16, 2026 — 4-3 vote breakdown, project specifics)"]
+      },
+{
+        id: 14,
+        municipality: "White Lake Township",
+        county: "Oakland",
+        type: "Township",
+        lat: 42.6528,
+        lng: -83.4869,
+        planner_name: "Matteo Passalacqua",
+        planner_title: "Planning Consultant, MUP",
+        firm: "Carlisle/Wortman Associates",
+        employment_type: "Contract",
+        status: "active",
+        cwa_flag: true,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "CWA mentioned in White Lake Township Community Development inter-office memoranda. | Named in 2024-2026 staff report memos.",
+        work_history: null,
+        sources: ["White Lake Township planning documents (state cloud storage)"]
+      },
+{
+        id: 22,
+        municipality: "Berkley",
+        county: "Oakland",
+        type: "City",
+        lat: 42.4986,
+        lng: -83.1855,
+        planner_name: "Benjamin R. Carlisle",
+        planner_title: "President, AICP, LEED-AP (Planning Consultant)",
+        firm: "Carlisle/Wortman Associates",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: true,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: "⚠️ UNRESOLVED LEAD: Feb 24, 2026 Planning Commission packet contains a bare agenda item — 'Discussion of potential Zoning Ordinance amendment to regulate data centers' — with no staff memo, background report, or presenter named anywhere in the 70-page packet. Minutes for that meeting, and all subsequent 2026 packets, are not yet posted, so who raised it and what happened is unknown. Berkley's Oct 2025 CWA-authored comprehensive zoning rewrite has no data center/BESS provisions. Not on any statewide moratorium tracker. Worth re-checking once Berkley posts more recent minutes. Source: https://www.berkleymi.gov/_default_upload_bucket/Public%20Packet%2002.24.26.pdf",
+        notes: "Confirmed CWA client — Ben Carlisle (CWA President) serves Berkley per his CV and CWA About page. Day-to-day planning is actually done by CWA principal Megan Masson-Minock.",
+        work_history: null,
+        sources: ["Ben Carlisle CV — cwaplan.com (2023)"]
+      },
+{
+        id: 23,
+        municipality: "Clarkston",
+        county: "Oakland",
+        type: "City",
+        lat: 42.7365,
+        lng: -83.2469,
+        planner_name: "Derek Werner",
+        planner_title: "Planning Commission Chair (CWA contracted for all planning services)",
+        firm: "Carlisle/Wortman Associates",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: true,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "CHECKED 2026-08-04: no data-center activity found. CWA provides all planning services by contract — city has no in-house planner. UPDATE: on May 11, 2026 City Council unanimously voted to TABLE/postpone a proposed 2-year CWA contract renewal ($95-179/hr) and directed the city manager to solicit competing bids — a resident cited a conflict-of-interest concern since CWA also serves neighboring Independence Township. Governance friction, not data-center-related, but a live flashpoint in the CWA relationship worth tracking. Planning Commission Chair: Derek Werner.",
+        work_history: null,
+        sources: ["Clarkston Chamber of Commerce business directory — business.clarkston.org"]
+      },
+{
+        id: 26,
+        municipality: "Highland Township",
+        county: "Oakland",
+        type: "Township",
+        lat: 42.6273,
+        lng: -83.5906,
+        planner_name: "Elizabeth 'Beth' Corwin, P.E., AICP",
+        planner_title: "Planning and Development Director",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "IN-HOUSE planning staff confirmed. Beth Corwin is Planning & Development Director. Additional staff: Tim McLean (Zoning Administrator), Samantha George (Asst. Zoning Administrator), Steven C. Tino (Building Official). No CWA involvement found. CWA blog reference was likely historical or project-based.",
+        work_history: null,
+        sources: ["highlandtwp.net — Planning & Development Department staff page"]
+      },
+{
+        id: 27,
+        municipality: "Brandon Township",
+        county: "Oakland",
+        type: "Township",
+        lat: 42.7517,
+        lng: -83.3861,
+        planner_name: "Jason Wilton",
+        planner_title: "Director of Planning & Building",
+        firm: "Carlisle/Wortman Associates",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: true,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "UPDATED 2026-08-04: Board unanimously approved a 1-year moratorium on data center development (Resolution 424-26) on/around May 9, 2026, requested by the Planning Commission to allow time to draft an ordinance. Local news (The Citizen) directly names 'Carlisle Wortman' as having presented to the township on data-center noise and electrical/grid impacts — a documented instance of CWA shaping the township's policy response. A follow-on 'Data Center Definition Ordinance' (interim, defines the use for enforcement) was posted June 2026; both PDFs are scanned/non-OCR and could not be read for CWA-template language this pass. No full HRDF-style standards ordinance (materials %, PUE, dBA, lot size, setbacks, renewable %) is public yet — moratorium runs to ~May 2027. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison.",
+        notes: "CWA master plan client. In-house Director: Jason Wilton, AICP (jwilton@brandonfire.us, 248-627-4916). Brandon Township routes planning/building through fire department domain.",
+        work_history: null,
+        sources: ["CWA blog — cwaplan.com/blog/tag/master+plan", "https://thecitizenonline.com/articles/news/township-oks-temporary-data-center-moratorium/", "https://brandontownship.us/wp-content/uploads/2026/05/Resolution-424-26-Moratorium-on-Data-Centers.pdf", "https://brandontownship.us/wp-content/uploads/2026/06/Data-Center-Definition-Ordinance.pdf"]
+      },
+{
+        id: 15,
+        municipality: "Madison Heights",
+        county: "Oakland",
+        type: "City",
+        lat: 42.4859,
+        lng: -83.1047,
+        planner_name: "Matt Lonnerstater",
+        planner_title: "City Planner, AICP",
+        firm: "CWA Alumni / In-House",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: true,
+        data_center_case: false,
+        notes: "Lonnerstater previously worked for Carlisle/Wortman Associates before joining Madison Heights as in-house City Planner. He was the sole author of all staff memos in the June 15, 2026 Planning Commission packet. If a data center developer approaches Madison Heights, his prior CWA experience and remaining professional relationships with Auerbach/Montagno are worth monitoring.",
+        work_history: "Carlisle/Wortman Associates → City of Madison Heights (current, in-house)",
+        sources: ["P.A.C.T. research", "Madison Heights PC packet, June 15, 2026"]
+      },
+{
+        id: 17,
+        municipality: "Lake Angelus",
+        county: "Oakland",
+        type: "City",
+        lat: 42.7339,
+        lng: -83.3327,
+        planner_name: "Aaron Schwartz",
+        planner_title: "Building Services Coordinator (McKenna)",
+        firm: "McKenna Associates",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "McKenna fully operates building/zoning function for this very small city (~300 residents). Aaron Schwartz is McKenna staff embedded as Building Services Coordinator. Department email: building@lakeangelus.org, 248-596-0920.",
+        work_history: null,
+        sources: ["McKenna website — mcka.com/community"]
+      },
+{
+        id: 18,
+        municipality: "Northville",
+        county: "Wayne/Oakland",
+        type: "City",
+        lat: 42.4311,
+        lng: -83.4833,
+        planner_name: "Justin Quagliata",
+        planner_title: "Community Development Director, AICP",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "Justin Quagliata, AICP is in-house Community Development Director (also serves as City Planner and Zoning Administrator). City ended its consulting contract with Carlisle/Wortman in May 2024 — now fully in-house. McKenna is headquartered in Northville but does not hold the current planning contract.",
+        work_history: null,
+        sources: ["McKenna HQ location", "Northville DDA member directory"]
+      },
+{
+        id: 57,
+        municipality: "Royal Oak",
+        county: "Oakland",
+        type: "City",
+        lat: 42.4895,
+        lng: -83.1446,
+        planner_name: "Joseph Murphy",
+        planner_title: "Director of Planning",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "Confirmed from Royal Oak city staff directory.",
+        work_history: null,
+        sources: ["Royal Oak city directory"]
+      },
+{
+        id: 58,
+        municipality: "Pontiac",
+        county: "Oakland",
+        type: "City",
+        lat: 42.6389,
+        lng: -83.291,
+        planner_name: "Amy Bavin",
+        planner_title: "Planning and Zoning Division Manager",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "Confirmed in-house Planning and Zoning Division Manager.",
+        work_history: null,
+        sources: ["City of Pontiac staff records"]
+      },
+{
+        id: 59,
+        municipality: "Southfield",
+        county: "Oakland",
+        type: "City",
+        lat: 42.4734,
+        lng: -83.2219,
+        planner_name: "Terry Croad, AICP, ASLA",
+        planner_title: "Director of Planning",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "NEW (2026-08-19, cross-referenced from MLive's statewide data center tracking map): developer Metrobloks proposed a 100-megawatt data center on a vacant parcel near I-696. Status: Pending — Southfield city leaders voted to approve plans on Dec. 15, 2025. Source: MLive, Dec 2025 — https://www.mlive.com/news/2025/12/100k-square-foot-data-center-proposed-for-vacant-southfield-parcel-near-i-696.html",
+        notes: "Terry Croad has served as Southfield's Director of Planning since 2010. AICP and ASLA credentials. In-house position.",
+        work_history: null,
+        sources: ["City of Southfield"]
+      },
+{
+        id: 60,
+        municipality: "Farmington Hills",
+        county: "Oakland",
+        type: "City",
+        lat: 42.4989,
+        lng: -83.3677,
+        planner_name: "Charmaine Ketter-Schmult",
+        planner_title: "Director of Planning and Community Development",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "In-house Director. Additionally, Giffels Webster provides supplemental planning consultant services including master plan updates and attendance at Planning Commission meetings. Both in-house staff and Giffels Webster active.",
+        work_history: null,
+        sources: ["City of Farmington Hills; Giffels Webster project records"]
+      },
+{
+        id: 61,
+        municipality: "Farmington",
+        county: "Oakland",
+        type: "City",
+        lat: 42.4653,
+        lng: -83.3763,
+        planner_name: "Kristen Hatfield, AICP",
+        planner_title: "Planning Consultant",
+        firm: "OHM Advisors",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "OHM Advisors won 2024 RFQ for master plan, parks & rec plan, and downtown plan. Kristen Hatfield AICP and Jennifer Morris are named OHM leads for Farmington. Contracted planning relationship.",
+        work_history: "OHM Advisors (current)",
+        sources: ["City of Farmington 2024 RFQ award", "OHM Advisors project records"]
+      },
+{
+        id: 62,
+        municipality: "Birmingham",
+        county: "Oakland",
+        type: "City",
+        lat: 42.5467,
+        lng: -83.2113,
+        planner_name: "Nicholas Dupuis",
+        planner_title: "Planning Director",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "Nicholas Dupuis promoted to Planning Director in 2021. In-house position.",
+        work_history: null,
+        sources: ["City of Birmingham"]
+      },
+{
+        id: 63,
+        municipality: "Bloomfield Township",
+        county: "Oakland",
+        type: "Charter Township",
+        lat: 42.5734,
+        lng: -83.2452,
+        planner_name: "Andrea Szajnecki",
+        planner_title: "Director of Planning, Building and Ordinance",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "Confirmed in-house Director of Planning, Building and Ordinance for Bloomfield Township.",
+        work_history: null,
+        sources: ["Bloomfield Township staff records"]
+      },
+{
+        id: 64,
+        municipality: "Auburn Hills",
+        county: "Oakland",
+        type: "City",
+        lat: 42.6867,
+        lng: -83.2341,
+        planner_name: "Steven J. Cohen, AICP",
+        planner_title: "Director of Community Development",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "In-house Director of Community Development. OHM Advisors performs engineering/site plan review services — not primary planning consultant role.",
+        work_history: null,
+        sources: ["City of Auburn Hills"]
+      },
+{
+        id: 65,
+        municipality: "Rochester Hills",
+        county: "Oakland",
+        type: "City",
+        lat: 42.6584,
+        lng: -83.1499,
+        planner_name: "Sara Roediger, AICP",
+        planner_title: "Planning and Economic Development Director",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "NEW 2026-08-20: Rochester Hills enacted a precautionary data-center moratorium (~Feb/early Mar 2026, ~180 days, no single named developer/project inside city limits identified — the nearby Oakland University AI Institute/data center proposal is actually sited in Auburn Hills and is exempt as a state-university project) to study noise, vibration, light pollution, and water/electricity demand ahead of drafting standards for facilities ≥ 2 MW. Aug 10, 2026 City Council (item 2026-0070, first reading) voted to EXTEND the moratorium, pushing it through roughly mid-March 2027. Public comment: Councilwoman Theresa Mungioli proposed half-mile-plus residential setbacks (drew applause); residents split on moratorium-only vs. real regulation. Source: Detroit News, Aug 11 2026 — https://www.detroitnews.com/story/news/local/oakland-county/2026/08/11/rochester-hills-extends-data-center-moratorium/91256551007/ ; Legistar agenda — https://roch.legistar.com/View.ashx?M=A&ID=1366718&GUID=D820CF15-2283-454E-AC4F-3DC3231A4A22",
+        notes: "In-house Planning and Economic Development Director. Giffels Webster (Jill Bahm, Ian Hogg) provided the Master Plan (Phase 1 Jan 2024 – Phase 5 Jul 2025) and won an APA award in 2019 for prior planning work. Both in-house staff and Giffels Webster active.",
+        work_history: null,
+        sources: ["City of Rochester Hills; Giffels Webster project records"]
+      },
+{
+        id: 66,
+        municipality: "Novi",
+        county: "Oakland",
+        type: "City",
+        lat: 42.48,
+        lng: -83.4754,
+        planner_name: "Lindsay Bell, AICP",
+        planner_title: "Director of Planning",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "Lindsay Bell AICP serves as Director of Planning. Charles Boulard is Community Development Director above her. In-house position.",
+        work_history: null,
+        sources: ["City of Novi"]
+      },
+{
+        id: 67,
+        municipality: "Waterford Township",
+        county: "Oakland",
+        type: "Charter Township",
+        lat: 42.6928,
+        lng: -83.3874,
+        planner_name: "Jeffrey Polkowski, AICP",
+        planner_title: "Director of Development Services",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "Confirmed in-house Director of Development Services for Waterford Township.",
+        work_history: null,
+        sources: ["Waterford Township"]
+      },
+{
+        id: 68,
+        municipality: "West Bloomfield Township",
+        county: "Oakland",
+        type: "Charter Township",
+        lat: 42.5539,
+        lng: -83.3888,
+        planner_name: "Wade Burkholder",
+        planner_title: "Deputy Director of Planning and Development Services",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "DUAL ROLE: Wade Burkholder, AICP simultaneously holds two positions — (1) Deputy Director of Planning and Development Services for West Bloomfield Township (this in-house public employee role) and (2) Senior Planner at ROWE Professional Services, contracted to the City of Lapeer. Both roles are active concurrently. McKenna Associates also awarded a $112K contract plus $50K MSHDA grant specifically for a new Master Plan — project consultant, not primary planning administrator.",
+        work_history: null,
+        sources: ["West Bloomfield Township; McKenna Associates contract records", "LinkedIn — Wade Burkholder AICP profile", "Michigan Association of Planning news; County Press; Citizen Portal AI"]
+      },
+{
+        id: 69,
+        municipality: "Ferndale",
+        county: "Oakland",
+        type: "City",
+        lat: 42.4606,
+        lng: -83.1349,
+        planner_name: "Melissa Kalnasy",
+        planner_title: "City Planner",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: true,
+        data_center_case: false,
+        notes: "CONFIRMED CWA ALUMNI: Melissa Kalnasy is City Planner at Ferndale and former Carlisle/Wortman Associates employee per LinkedIn profile. She/Her.",
+        work_history: "Carlisle/Wortman Associates (former) → City of Ferndale (current)",
+        sources: ["LinkedIn — Melissa Kalnasy (City Planner, Ferndale; former CWA)"]
+      },
+{
+        id: 70,
+        municipality: "Hazel Park",
+        county: "Oakland",
+        type: "City",
+        lat: 42.462,
+        lng: -83.1041,
+        planner_name: "James Finkley",
+        planner_title: "Planning & Community Development Director",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "Confirmed in-house Planning & Community Development Director.",
+        work_history: null,
+        sources: ["City of Hazel Park"]
+      },
+{
+        id: 71,
+        municipality: "Oak Park",
+        county: "Oakland",
+        type: "City",
+        lat: 42.4598,
+        lng: -83.1825,
+        planner_name: "Kimberly Marrone",
+        planner_title: "Municipal Services Director",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        notes: "Kimberly Marrone serves as Municipal Services Director, which encompasses planning functions for Oak Park.",
+        work_history: null,
+        sources: ["City of Oak Park"]
+      },
+{
+        id: 295,
+        municipality: "Bloomfield Hills",
+        county: "Oakland",
+        type: "City",
+        lat: 42.5834,
+        lng: -83.2452,
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "Site (bloomfieldhillsmi.net) was unreachable to automated research this session.",
+        work_history: null,
+        sources: []
+      },
+{
+        id: 296,
+        municipality: "Clawson",
+        county: "Oakland",
+        type: "City",
+        lat: 42.5334,
+        lng: -83.1499,
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "Planning function sits under Community & Economic Development dept; staff directory not accessible. 425 N. Main St, (248) 435-4500.",
+        work_history: null,
+        sources: ["https://www.cityofclawson.com"]
+      },
+{
+        id: 297,
+        municipality: "Huntington Woods",
+        county: "Oakland",
+        type: "City",
+        lat: 42.4779,
+        lng: -83.166,
+        planner_name: "Hank Berry",
+        planner_title: "Planning Official, Zoning Administrator & Code Enforcement Officer",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "Francesco Ferrara is Deputy Planning Official.",
+        work_history: null,
+        sources: ["https://www.ci.huntington-woods.mi.us/departments/planning_department.php"]
+      },
+{
+        id: 298,
+        municipality: "Keego Harbor",
+        county: "Oakland",
+        type: "City",
+        lat: 42.5989,
+        lng: -83.343,
+        planner_name: "Emily Huhman",
+        planner_title: "City Planner & Zoning Administrator",
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "Site does not disclose whether she is a direct city employee or contracted.",
+        work_history: null,
+        sources: ["https://www.keegoharbor.org/departments/planning_zoning/city_planner_zoning_administrator.php"]
+      },
+{
+        id: 299,
+        municipality: "Lathrup Village",
+        county: "Oakland",
+        type: "City",
+        lat: 42.4841,
+        lng: -83.2603,
+        planner_name: "Janet Bloom / Austin Colson (conflicting)",
+        planner_title: "Community & Economic Development Director",
+        firm: "Giffels Webster",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "City is mid-update on its 2026 Comprehensive Plan via Giffels Webster; staff directory names Austin Colson under the same title — possible recent staffing change, flagged not resolved.",
+        work_history: null,
+        sources: ["https://engage.giffelswebster.com/lathrup-village-comprehensive-plan-2026"]
+      },
+{
+        id: 300,
+        municipality: "Orchard Lake Village",
+        county: "Oakland",
+        type: "City",
+        lat: 42.5817,
+        lng: -83.3555,
+        planner_name: "Gerry McCallum",
+        planner_title: "City Manager (zoning contact)",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House (City Staff)",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "Planning Commission is all-volunteer with no listed staff planner; Building/Zoning handled by in-house Building Dept (Gerry McCallum, City Manager).",
+        work_history: null,
+        sources: ["https://cityoforchardlake.com/nav/planning_commission/index.php"]
+      },
+{
+        id: 301,
+        municipality: "Pleasant Ridge",
+        county: "Oakland",
+        type: "City",
+        lat: 42.47,
+        lng: -83.1468,
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "Community Development page confirms planning/zoning function but names no director or firm.",
+        work_history: null,
+        sources: ["https://cityofpleasantridge.org/departments/community-development/"]
+      },
+{
+        id: 302,
+        municipality: "Rochester",
+        county: "Oakland",
+        type: "City",
+        lat: 42.6809,
+        lng: -83.1338,
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): REJECTED a ChatGPT-sourced claim (\\\"Jeremy Peckens, Planning and Zoning Administrator,\\\" sourced to a broken/generic MEDA directory link) — that name appears only on third-party aggregator sites (TheOrg, ContactOut, LinkedIn), never on the city's own domain. Independent research instead surfaced Nik Banda as Deputy City Manager / Economic & Community Development Director per the city's own directory and local news (\\\"Banda named new Rochester city manager\\\") — a different name AND a different title than the claim, so not confirmed as \\\"the planner\\\" either without a more direct check. Leaving planner_name Unknown; Nik Banda is a lead worth checking directly, not yet confirmed as a planning-specific role. Distinct from Rochester Hills (id 65, already on this map with its own confirmed planner Sara Roediger, AICP) — a separate city.",
+        work_history: null,
+        sources: ["https://www.ci.rochester.mi.us/"]
+      },
+{
+        id: 303,
+        municipality: "South Lyon",
+        county: "Oakland",
+        type: "City",
+        lat: 42.4597,
+        lng: -83.6529,
+        planner_name: "Hannah Firlit / Kristin Hatfield",
+        planner_title: "City Planner",
+        firm: "OHM Advisors",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "OHM Advisors staffs the Planning & Zoning Dept under contract; both use @ohm-advisors.com emails.",
+        work_history: null,
+        sources: ["https://www.southlyonmi.org/departments/planning_and_zoning/index.php"]
+      },
+{
+        id: 304,
+        municipality: "Sylvan Lake",
+        county: "Oakland",
+        type: "City",
+        lat: 42.6053,
+        lng: -83.3277,
+        planner_name: null,
+        planner_title: "Planning Consultant",
+        firm: "Giffels Webster",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "City's own contractor list names Giffels Webster as Planning Consultant; no individual named.",
+        work_history: null,
+        sources: ["https://www.sylvanlake.org/government/our_government/boards_and_commissions.php"]
+      },
+{
+        id: 305,
+        municipality: "Walled Lake",
+        county: "Oakland",
+        type: "City",
+        lat: 42.5386,
+        lng: -83.4816,
+        planner_name: null,
+        planner_title: null,
+        firm: "McKenna Associates",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "2017 Master Plan credits McKenna Associates; current 2026 contract status unconfirmed.",
+        work_history: null,
+        sources: ["https://walledlake.us/Master%20Plan%20Republished%20December%202017.pdf"]
+      },
+{
+        id: 306,
+        municipality: "Beverly Hills",
+        county: "Oakland",
+        type: "Village",
+        lat: 42.5155,
+        lng: -83.2278,
+        planner_name: "Susie Stec",
+        planner_title: "Planning & Economic Development Director",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "(Firm listed as: In-House (Village Staff).)",
+        work_history: null,
+        sources: ["https://www.villagebeverlyhills.com/community/staff_directory.php"]
+      },
+{
+        id: 307,
+        municipality: "Bingham Farms",
+        county: "Oakland",
+        type: "Village",
+        lat: 42.5147,
+        lng: -83.2782,
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "Giffels Webster designed the village's 2019 zoning ordinance formatting system, but no confirmed ongoing planning consultant relationship.",
+        work_history: null,
+        sources: ["https://www.binghamfarms.org/government/index.php"]
+      },
+{
+        id: 308,
+        municipality: "Franklin",
+        county: "Oakland",
+        type: "Village",
+        lat: 42.5237,
+        lng: -83.2827,
+        planner_name: "Christopher J. Doozan, AICP",
+        planner_title: "Community Planning Consultant",
+        firm: "McKenna Associates",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "McKenna appears in July 2026 planning commission packet and recurring FY2025-26 vendor payments. (Firm listed as: McKenna.)",
+        work_history: null,
+        sources: ["https://cms7files.revize.com/franklinmi/July%2015%20packet.pdf"]
+      },
+{
+        id: 309,
+        municipality: "Holly",
+        county: "Oakland",
+        type: "Village",
+        lat: 42.7923,
+        lng: -83.6252,
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "No consultant/firm named on planning-zoning page, staff directory, or 2021 Master Plan.",
+        work_history: null,
+        sources: ["https://www.hollyvillage.org/index.php/government/planning-zoning"]
+      },
+{
+        id: 310,
+        municipality: "Leonard",
+        county: "Oakland",
+        type: "Village",
+        lat: 42.8973,
+        lng: -83.1421,
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "Small village geographically within/adjacent to Addison Township; own Master Plan document credits no preparer.",
+        work_history: null,
+        sources: ["https://www.villageofleonard.org"]
+      },
+{
+        id: 311,
+        municipality: "Milford",
+        county: "Oakland",
+        type: "Village",
+        lat: 42.5928,
+        lng: -83.6008,
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "villageofmilford.org blocks automated access; confirmed NOT on Carlisle/Wortman's public client list. Distinct from a separate active data center controversy ('Project Flex') in nearby Lyon Township.",
+        work_history: null,
+        sources: []
+      },
+{
+        id: 312,
+        municipality: "Ortonville",
+        county: "Oakland",
+        type: "Village",
+        lat: 42.8534,
+        lng: -83.4441,
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "villageofortonville.org unreachable; adjacent Brandon Charter Township has an in-house Director (Jason Wilton) but that's a different municipality.",
+        work_history: null,
+        sources: []
+      },
+{
+        id: 313,
+        municipality: "Wolverine Lake",
+        county: "Oakland",
+        type: "Village",
+        lat: 42.5642,
+        lng: -83.4869,
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "Only Wikipedia reachable; names village president/clerk, not a planning official.",
+        work_history: null,
+        sources: ["https://en.wikipedia.org/wiki/Wolverine_Lake,_Michigan"]
+      },
+{
+        id: 314,
+        municipality: "Addison Township",
+        county: "Oakland",
+        type: "Township",
+        lat: 42.8656,
+        lng: -83.1934,
+        planner_name: "Pauline Bennett",
+        planner_title: "Clerk (primary Planning & Zoning contact)",
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "No contracted planning firm confirmed; Master Plan PDF is scanned/non-searchable.",
+        work_history: null,
+        sources: ["https://addisontownshipmi.gov/planning-zoning/"]
+      },
+{
+        id: 315,
+        municipality: "Commerce Township",
+        county: "Oakland",
+        type: "Charter Township",
+        lat: 42.5878,
+        lng: -83.488,
+        planner_name: "David Campbell",
+        planner_title: "Director of Planning",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "NEW 2026-08-20: Township Board adopted a 6-month data center moratorium Feb 2026 (originally set to expire ~Aug 2026; per the July 2026 Planning Dept monthly report, staff expected the Board to extend it ~4 months to Dec 2026 to allow time to finish standards). Planning Commission held a discussion-only item (agenda I2, moved to Aug 10 2026 due to the election) on 'Prospective Zoning Ordinance Amendments Relative to Data Centers' targeting the I-Industrial and TLM-Technology & Light Manufacturing districts — no data center is currently proposed; this is proactive standards-setting following Board/Commission direction sessions Apr 28 and May 4, 2026. No vote/adoption yet; the Aug 18, 2026 Board of Trustees agenda does not mention data centers. Source: Commerce Twp PC agenda/packet, Aug 10 2026 — https://commercetwp.com/media/ffxhssfy/2026-8-10-pln-agenda.pdf",
+        notes: "Supported by Senior Planner Paula Lankford and Associate Planner Bethany Miller; Giffels-Webster Engineers serves as township engineer (not planning consultant). (Firm listed as: In-House (Township Staff).)",
+        work_history: null,
+        sources: ["https://www.commercetwp.com/departments/planning/"]
+      },
+{
+        id: 316,
+        municipality: "Groveland Township",
+        county: "Oakland",
+        type: "Township",
+        lat: 42.839,
+        lng: -83.523,
+        planner_name: "Danielle Willcock",
+        planner_title: "Building, Planning, and Zoning Administrator",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "Regional coverage (Tri-County Times) lists Groveland Township among townships in this Oakland/Livingston/Genesee cluster with active data-center moratorium discussions in 2025-2026; not independently confirmed via the township's own site this session — verify directly.",
+        notes: "(Firm listed as: In-House (Township Staff).)",
+        work_history: null,
+        sources: ["https://grovelandmi.gov/departments/"]
+      },
+{
+        id: 317,
+        municipality: "Holly Township",
+        county: "Oakland",
+        type: "Township",
+        lat: 42.7898,
+        lng: -83.5735,
+        planner_name: "Alexis Farrell",
+        planner_title: "Senior Planner",
+        firm: "McKenna Associates",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "Passed a 180-day data center moratorium Feb 2026; renewed again July 2026 (5-0 vote) while updating a data-center ordinance dating to 1992. CWA served as township planner circa 2003-2008, later replaced by McKenna.",
+        notes: "Clerk Karin Winchester has also held the 'zoning administrator' title for permit-level administration.",
+        work_history: null,
+        sources: ["https://tctimes.com/articles/news/township-board-approves-renewal-of-data-center-moratorium/"]
+      },
+{
+        id: 318,
+        municipality: "Independence Township",
+        county: "Oakland",
+        type: "Charter Township",
+        lat: 42.7576,
+        lng: -83.3949,
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "independencetownship.com appears JS-rendered; no server-side content retrievable.",
+        work_history: null,
+        sources: ["https://www.independencetownship.com"]
+      },
+{
+        id: 319,
+        municipality: "Lyon Township",
+        county: "Oakland",
+        type: "Charter Township",
+        lat: 42.4959,
+        lng: -83.6141,
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "UPDATED 2026-08-20: 'Project Flex' is a real ~172-acre, ~1.8M sq ft data center proposed by Verrus (a Sidewalk Infrastructure Partners subsidiary, backed by Alphabet/StepStone/Ontario Teachers'), which already had preliminary Planning Commission approval before the Township's 6-month moratorium on NEW data center projects (enacted Mar 2, 2026 — does not appear to affect Project Flex itself). An active recall petition targets all seven Township trustees (officially tied to an unrelated wage-adjustment vote, though clearly entangled with resident anger over the project). CAUTION: a forwarded 2026-08-20 activist debrief additionally claimed a unanimous Aug 5, 2026 moratorium-extension vote, a resident push for an ethics policy, and a conflict-of-interest callout of two trustees over a sponsored golf outing with project beneficiaries — NONE of these three specific claims could be corroborated in official minutes/agendas or any news coverage found; treat as unverified pending direct confirmation. Distinct from the unrelated Lyon Township near Higgins Lake, Roscommon County. Sources: Detroit News (moratorium) — https://www.detroitnews.com/story/news/local/oakland-county/2026/03/03/as-project-flex-proceeds-lyon-township-hits-pause-on-new-data-centers/88960710007/ ; Detroit News (recall) — https://www.detroitnews.com/story/news/local/oakland-county/2026/05/06/group-looks-to-recall-lyon-trustees-over-data-center-with-unrelated-language/89929672007/",
+        notes: "lyontwp.org blocks automated access via robots.txt.",
+        work_history: null,
+        sources: ["https://www.lyontwp.org"]
+      },
+{
+        id: 320,
+        municipality: "Milford Township",
+        county: "Oakland",
+        type: "Charter Township",
+        lat: 42.5757,
+        lng: -83.5716,
+        planner_name: "Wendy Loncar",
+        planner_title: "Planning Dept contact / PC Recording Secretary",
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "Site references 'our Planners' holding monthly office hours implying a contracted consultant, but no firm name given.",
+        work_history: null,
+        sources: ["https://www.milfordtwpmi.gov/departments/charter_township_of_milford_-_planning/index.php"]
+      },
+{
+        id: 321,
+        municipality: "Oakland Township",
+        county: "Oakland",
+        type: "Charter Township",
+        lat: 42.6935,
+        lng: -83.169,
+        planner_name: "Donald Mende",
+        planner_title: "Planning Coordinator",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "(Firm listed as: In-House (Township Staff).)",
+        work_history: null,
+        sources: ["https://oaklandtwpmi.gov/departments/planning-zoning/"]
+      },
+{
+        id: 322,
+        municipality: "Orion Township",
+        county: "Oakland",
+        type: "Charter Township",
+        lat: 42.7869,
+        lng: -83.2377,
+        planner_name: "Tammy Girling",
+        planner_title: "Planning & Zoning Director",
+        firm: "In-House (City Staff)",
+        employment_type: "In-House",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "Department also references an unnamed 'Township Planning Consultant' who attends developer pre-application meetings. (Firm listed as: In-House (Township Staff).)",
+        work_history: null,
+        sources: ["https://www.oriontownship.org/departments/planning___zoning/index.php"]
+      },
+{
+        id: 323,
+        municipality: "Oxford Township",
+        county: "Oakland",
+        type: "Charter Township",
+        lat: 42.827,
+        lng: -83.1668,
+        planner_name: "Debra Walton",
+        planner_title: "Planning & Zoning Executive Assistant",
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "No dedicated 'Planning Director' title found; unclear if an outside consultant firm is also retained.",
+        work_history: null,
+        sources: ["https://oxfordtwpmi.gov/"]
+      },
+{
+        id: 324,
+        municipality: "Rose Township",
+        county: "Oakland",
+        type: "Township",
+        lat: 42.7473,
+        lng: -83.6852,
+        planner_name: "Steve McGee",
+        planner_title: "Building, Zoning & Code Enforcement",
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "Regional coverage indicates Rose Township has discussed a data-center ordinance/ban as of Feb 2026 (same Oakland/Livingston/Genesee cluster as Holly, Fenton, Groveland, Tyrone).",
+        notes: null,
+        work_history: null,
+        sources: ["https://rosetownship.com"]
+      },
+{
+        id: 325,
+        municipality: "Royal Oak Township",
+        county: "Oakland",
+        type: "Charter Township",
+        lat: 42.4675,
+        lng: -83.1349,
+        planner_name: null,
+        planner_title: null,
+        firm: "Unknown",
+        employment_type: "Unknown",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "No official township website could be located.",
+        work_history: null,
+        sources: ["https://en.wikipedia.org/wiki/Royal_Oak_Charter_Township,_Michigan"]
+      },
+{
+        id: 326,
+        municipality: "Springfield Township",
+        county: "Oakland",
+        type: "Charter Township",
+        lat: 42.7362,
+        lng: -83.488,
+        planner_name: "Megan Masson-Minock",
+        planner_title: "Principal, AICP (primary planning consultant since Mar 12, 2026; Ben Carlisle presented the contract)",
+        firm: "Carlisle/Wortman Associates",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: true,
+        cwa_alumni: false,
+        data_center_case: true,
+        data_center_notes: "UPDATED 2026-08-24 — MAJOR: (1) PLANNER FLIP TO CWA, mid-fight: Jan 12, 2026 special meeting approved a Carlisle/Wortman consulting agreement to run Building Department functions; then Mar 12, 2026 the board voted 7-0 to TERMINATE Giffels Webster and hire Carlisle/Wortman as planning consultant — Ben Carlisle presented personally, citing CWA experience with 'gravel mining and data centers'; Megan Masson-Minock (same CWA principal as Berkley) proposed as primary consultant; Supervisor Ric Davis championed the switch on rural-character/retainer-cost grounds. This happened with a data center moratorium, documented developer interest, AND the Levy mine application all pending. (2) MORATORIUM: 180-day data center moratorium passed early Jan 2026 (Detroit News 1/7/26; adoption meeting likely Dec 2025 — original resolution number still needed); Resolution 2026-09 (July 9, 2026) amends and EXTENDS it through Dec 10, 2026, with a revised draft ordinance to the PC and a possible August public hearing. (3) DEVELOPER INTEREST: pre-moratorium meetings with developers interested in an ~80-84 acre site off Andersonville Rd (Planet Detroit); township resident-Q&A page concedes 'a general inquiry, not a formal application'; township has NO municipal water/sewer. (4) Aug 25, 2026 PC agenda: 'Draft Data Center Zoning Ordinance Amendments' (old business) + Sheetz Final Site Plan (8500 Dixie Hwy) + Levy mine updates, all same night; the 30MB+ packet holds the draft ordinance — CHECK IT FOR CWA HRDF TEMPLATE FINGERPRINTS. (5) Separate fight: Burroughs Materials Co. (Levy-affiliated) 304-acre sand/gravel mine (244 ac Springfield + 60 ac Rose Twp) at 6651 Ormond Rd, wet-process, ~20 yrs, opposed by residents since mid-2025; preliminary site-plan review 5/19/25 was by then-planner Giffels Webster. Sources: https://www.springfield-twp.us/departments/clerk/minutes.php ; https://cms1files.revize.com/springfieldtwp/Minutes_TB_3-12-2026-FINAL.pdf (planner flip) ; https://cms1files.revize.com/springfieldtwp/July%202026%20-%20FINAL.pdf (Res 2026-09 extension) ; https://cms1files.revize.com/springfieldtwp/PC_Agenda_August_2026.pdf ; https://planetdetroit.org/2026/01/data-center-moratorium-northville/ ; https://www.springfield-twp.us/departments/supervisor/resident_questions.php ; https://www.sierraclub.org/michigan/southeast-michigan/blog/2025/09/springfield-twp-opposition-proposed-levy-burroughs-gravel",
+        notes: "Planner confirmed via Mar 12, 2026 board minutes (7-0 vote replacing Giffels Webster with CWA); CWA also took over Building Dept functions Jan 12, 2026. Full minutes archive is public at springfield-twp.us/departments/clerk/minutes.php (revize CMS).",
+        work_history: null,
+        sources: ["https://www.springfieldtwp.org/"]
+      },
+{
+        id: 1649,
+        municipality: "Lake Orion Village",
+        county: "Oakland",
+        type: "Village",
+        lat: 42.78,
+        lng: -83.24,
+        planner_name: "Sommer Nafal",
+        planner_title: "Planning and Zoning Coordinator",
+        firm: "McKenna Associates",
+        employment_type: "Contracted",
+        status: "active",
+        cwa_flag: false,
+        cwa_alumni: false,
+        data_center_case: false,
+        data_center_notes: null,
+        notes: "(248) 693-8391 ext. 107. Village Manager formally serves as Zoning Administrator (voting Planning Commission member); Village contracts with McKenna Associates for planning/zoning services; building inspections are handled separately by the Charter Township of Orion.",
+        work_history: null,
+        sources: ["lakeorion.org/planning-zoning-building"]
+      }
+];
+
+if (typeof L === 'undefined') { document.getElementById('oakmap').innerHTML = '<div style="padding:40px;text-align:center;color:#64748b;font-size:12px">Map library failed to load — refresh the page.</div>'; } else {
+const oakMap = L.map('oakmap', { scrollWheelZoom: false }).setView([42.62, -83.40], 10);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '&copy; OpenStreetMap' }).addTo(oakMap);
+OAKLAND.forEach(m => {
+  if (!m.lat || !m.lng) return;
+  const dc  = !!m.data_center_case;
+  const cwa = !!m.cwa_flag;
+  const fill = dc ? '#d95926' : (cwa ? '#9085e9' : '#64748b');
+  const cm = L.circleMarker([m.lat, m.lng], {
+    radius: dc ? 9 : (cwa ? 7 : 4.5),
+    color: cwa ? '#9085e9' : fill,
+    weight: cwa ? 2.5 : 1.2,
+    fillColor: fill,
+    fillOpacity: dc ? 0.85 : 0.55
+  }).addTo(oakMap);
+  const noteFull = m.data_center_notes || m.notes || '';
+  const note = noteFull.slice(0, 650);
+  cm.bindPopup('<div style="max-width:330px;max-height:260px;overflow-y:auto"><b style="font-size:13px;color:#f1f5f9">' + m.municipality + '</b><br>' +
+    '<span style="color:#9085e9;font-size:11px">' + (m.firm || 'Firm unknown') + (m.planner_name ? ' — ' + m.planner_name : '') + '</span><br>' +
+    '<span style="font-size:11px;color:#cbd5e1">' + note + (noteFull.length > 650 ? '…' : '') + '</span></div>');
+  if (dc) cm.bindTooltip(m.municipality, { permanent: true, direction: 'top', className: 'oak-tt', offset: [0, -9] });
+});
+}
+</script>
+</body>
+</html>
