@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Steve Cassin — Multi-Municipality Watch</title>
+<style>
+:root {
+  --surface-0:   #0f172a;
+  --surface-1:   #1e293b;
+  --surface-2:   #293548;
+  --surface-3:   #364560;
+  --border:      #334155;
+  --text-1:      #f1f5f9;
+  --text-2:      #94a3b8;
+  --text-3:      #64748b;
+
+  --c-cwahired:    #9085e9;
+  --c-client:      #b5834f;
+  --c-masterplan:  #c98500;
+  --c-dcbess:      #d95926;
+  --c-misattrib:   #d55181;
+  --c-unconfirmed: #5b7ca0;
+  --c-clear:       #199e70;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--surface-0);
+  color: var(--text-1);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+.page-header {
+  padding: 22px 28px 18px;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border);
+}
+.page-header h1 { font-size: 20px; font-weight: 700; color: var(--text-1); letter-spacing: -0.25px; }
+.page-header .subtitle { font-size: 12.5px; color: var(--text-2); margin-top: 4px; max-width: 760px; }
+.cwa-badge {
+  display: inline-block; font-size: 11px; font-weight: 700; color: #e66767;
+  background: rgba(230,103,103,0.15); border: 1px solid rgba(230,103,103,0.3);
+  border-radius: 4px; padding: 1px 6px; margin-left: 8px; vertical-align: middle; letter-spacing: 0.05em;
+}
+
+.legend-bar {
+  display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 11px 28px;
+  background: var(--surface-1); border-bottom: 1px solid var(--border); align-items: center;
+}
+.legend-heading { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-right: 4px; }
+.leg-item {
+  display: flex; align-items: center; gap: 5px; cursor: pointer; padding: 3px 8px 3px 5px;
+  border-radius: 20px; border: 1px solid transparent; transition: border-color 0.15s, opacity 0.15s; user-select: none;
+}
+.leg-item:hover { border-color: var(--border); }
+.leg-item.off { opacity: 0.3; }
+.leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.leg-label { font-size: 11.5px; color: var(--text-2); white-space: nowrap; }
+
+.scroll-wrap { overflow-x: auto; padding: 20px 28px 32px; }
+.chart-area { min-width: 960px; display: grid; grid-template-columns: 200px 1fr; gap: 0; }
+
+.axis-spacer { position: sticky; left: 0; z-index: 4; background: var(--surface-0); }
+.axis-svg-wrap { position: relative; }
+
+.lane { display: contents; }
+.lane-header {
+  position: sticky; left: 0; z-index: 4; box-shadow: 4px 0 8px -4px rgba(0,0,0,0.4);
+  background: var(--surface-2); border: 1px solid var(--border); border-right: none;
+  border-radius: 8px 0 0 8px; padding: 14px 14px; display: flex; flex-direction: column; gap: 2px; margin-top: 8px;
+}
+.lane-body {
+  border: 1px solid var(--border); border-left: 1px solid var(--border); border-radius: 0 8px 8px 0;
+  background: var(--surface-1); position: relative; margin-top: 8px; overflow: hidden;
+}
+.lh-county { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-3); }
+.lh-name { font-size: 14px; font-weight: 700; color: var(--text-1); margin-top: 1px; }
+.lh-planner { font-size: 12px; font-weight: 600; color: var(--text-2); margin-top: 6px; }
+.lh-title { font-size: 10.5px; color: var(--text-3); }
+.lh-status {
+  display: inline-block; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;
+  padding: 2px 6px; border-radius: 4px; margin-top: 6px; width: fit-content;
+}
+.lh-status.active { color: #b5834f; background: rgba(181,131,79,0.18); }
+.lh-status.none { background: rgba(100,116,139,0.15); color: #94a3b8; border: 1px solid #475569; }
+.lh-status.clear { color: #199e70; background: rgba(25,158,112,0.15); border: 1px solid rgba(25,158,112,0.35); }
+
+.pattern-strip { padding: 16px 28px; background: rgba(181,131,79,0.06); border-bottom: 1px solid rgba(181,131,79,0.22); }
+.pattern-strip-heading {
+  font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #b5834f;
+  margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+}
+.pattern-strip-heading::after { content: ''; flex: 1; height: 1px; background: rgba(181,131,79,0.25); }
+.pattern-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.pattern-card { background: var(--surface-1); border: 1px solid var(--border); border-left: 3px solid #b5834f; border-radius: 6px; padding: 10px 12px; }
+.pattern-card-num { font-size: 9px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #b5834f; margin-bottom: 3px; }
+.pattern-card-title { font-size: 12.5px; font-weight: 700; color: var(--text-1); margin-bottom: 4px; line-height: 1.3; }
+.pattern-card-body { font-size: 11px; color: var(--text-2); line-height: 1.5; }
+.pattern-card-body strong { color: var(--text-1); font-weight: 600; }
+.pattern-card-body em { color: #b5834f; font-style: normal; font-weight: 600; }
+.pattern-card-body a { color: #67e8f9; text-decoration: none; }
+.pattern-card-body a:hover { text-decoration: underline; }
+.pv-green { border-left: 3px solid #34d399; } .pv-green .pattern-card-num { color: #34d399; }
+.pv-amber { border-left: 3px solid #f5b942; } .pv-amber .pattern-card-num { color: #f5b942; }
+.pv-teal  { border-left: 3px solid #199e70; } .pv-teal .pattern-card-num { color: #199e70; }
+
+#tt {
+  position: fixed; background: #1e293b; border: 1px solid #475569; border-radius: 10px; padding: 13px 16px;
+  max-width: 340px; pointer-events: none; z-index: 9999; opacity: 0; transition: opacity 0.1s; box-shadow: 0 10px 32px rgba(0,0,0,0.5);
+}
+#tt.show { opacity: 1; }
+#tt.pinned { pointer-events: auto; }
+.tt-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.tt-label { font-size: 13.5px; font-weight: 600; color: #f1f5f9; line-height: 1.3; margin-bottom: 5px; }
+.tt-date { font-size: 11px; color: #94a3b8; margin-bottom: 7px; }
+.tt-detail { font-size: 12px; color: #cbd5e1; line-height: 1.55; }
+.tt-source { font-size: 11px; margin-top: 8px; padding-top: 7px; border-top: 1px solid #334155; }
+.tt-source a { color: #5eb1f0; text-decoration: none; }
+.tt-source a:hover { text-decoration: underline; }
+.tt-pin-hint { font-size: 9.5px; color: #64748b; margin-top: 6px; font-style: italic; }
+
+.section-break { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--text-3); padding: 16px 28px 4px; }
+
+.docs-strip { margin: 20px 28px 4px; padding: 14px 18px 10px; background: rgba(148,163,184,0.05); border: 1px solid #334155; border-radius: 10px; }
+.docs-strip-heading { font-weight: 700; font-size: 13px; margin-bottom: 8px; color: #e2e8f0; }
+.docs-strip ul { margin: 0; padding-left: 18px; }
+.docs-strip li { font-size: 11.5px; color: #94a3b8; line-height: 1.55; margin-bottom: 6px; }
+.docs-strip a { color: #67e8f9; text-decoration: none; }
+.docs-strip a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div style="font-size:11.5px;margin-bottom:8px;"><a href="index.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">← Planner Map</a><span style="color:var(--text-3);margin:0 8px;">|</span><a href="timeline.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">CWA Pattern Timeline</a><span style="color:var(--text-3);margin:0 8px;">|</span><a href="oakland.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">Oakland County Watch</a><span style="color:var(--text-3);margin:0 8px;">|</span><span style="color:var(--text-3);">Steve Cassin Watch (this page)</span></div>
+  <h1>Steve Cassin — Multi-Municipality Watch <span class="cwa-badge">CWA ALUMNUS</span></h1>
+  <p class="subtitle">A dedicated companion page tracking planner Stephen "Steve" Cassin (Cassin Planning Group, LLC / CWA alumnus, joined Carlisle Wortman &amp; Associates in 2017) across every Macomb–St. Clair County community where his name has surfaced: Port Huron Township, Casco Township, Lenox Township, Ira Township, Richmond, Richmond Township, Washington Township, and New Baltimore. Built after a report reached P.A.C.T. that Cassin has been influencing master plans across this corridor — every card below is labeled by how solid the evidence actually is. Hover a dot for detail; click to pin the card and open its source.</p>
+  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-09-05 by P.A.C.T. from the statewide planner map, official township/city sites, master plan documents, and press. Amber = confirmed but not yet a documented problem. Teal = actively checked, no connection or no activity found. Blue (dashed) = unconfirmed, needs a primary source.</div>
+</div>
+
+<div class="pattern-strip">
+  <div class="pattern-strip-heading">🟤 Confirmed — documented and sourced</div>
+  <div class="pattern-grid">
+    <div class="pattern-card">
+      <div class="pattern-card-num">Confirmed 1 — CWA Alumnus</div>
+      <div class="pattern-card-title">Cassin joined Carlisle Wortman &amp; Associates in June 2017</div>
+      <div class="pattern-card-body">CWA's own announcement confirms Stephen Cassin joined CWA staff after 12 years as Executive Director of Macomb County's Planning &amp; Economic Development Dept. and 42+ years total experience. CWA President Dick Carlisle personally welcomed him, noting it gave CWA four former presidents of the Michigan Association of Planning. Same lineage as Ben Carlisle, Auerbach, Lengyel, Passalacqua, and Elmiger. <a href="https://www.cwaplan.com/blog/2017/06/23/stephen-cassin-and-megan-masson-minock-join-our-staff" target="_blank">CWA announcement, Jun 23, 2017</a></div>
+    </div>
+    <div class="pattern-card">
+      <div class="pattern-card-num">Confirmed 2 — Port Huron Township</div>
+      <div class="pattern-card-title">Cassin Planning Group is the township's planning consultant</div>
+      <div class="pattern-card-body">2022 township documentation names Steve Cassin, AICP as planning consultant, with Karen LaVere also listed. No data center or battery storage activity found tied to the township.</div>
+    </div>
+    <div class="pattern-card">
+      <div class="pattern-card-num">Confirmed 3 — Casco Township (St. Clair Co.)</div>
+      <div class="pattern-card-title">Cassin Planning Group credited on the 2024 Master Plan Update</div>
+      <div class="pattern-card-body">The cover page of Casco Township's Master Plan (draft distributed Jul 15, 2024) credits Cassin Planning Group, LLC as the preparing firm. In-house ZA Joe Viaene appears to remain the day-to-day contact. The plan itself contains no data center, BESS, or new industrial-overlay language — see Checked-Clear below. <a href="https://cascostclair.gov/wp-content/uploads/2024/08/Draft-Casco-Master-Plan-for-Distribution-7-15-24.pdf" target="_blank">2024 Master Plan (draft)</a></div>
+    </div>
+    <div class="pattern-card">
+      <div class="pattern-card-num">Confirmed 4 — Lenox Township Data Bug</div>
+      <div class="pattern-card-title">A month-old correction had never made it into the map's structured data</div>
+      <div class="pattern-card-body">Lenox Township's notes have said since Aug 4, 2026 that the CWA planner there is Shana Lengyel, not Cassin — but the map's actual planner_name field still read "Stephen Cassin" until this session. Fixed 2026-09-05; the full misattribution history is kept in the record, not erased (see the Lenox lane below).</div>
+    </div>
+  </div>
+
+  <div class="pattern-strip-heading" style="color:#f5b942;margin-top:22px;">🟡 Unconfirmed — needs a primary source</div>
+  <div class="pattern-grid">
+    <div class="pattern-card pv-amber">
+      <div class="pattern-card-num">Unconfirmed 1 — New Baltimore / Richmond Township</div>
+      <div class="pattern-card-title">Cassin's own homepage nods to "recent projects" in both — no city document found yet</div>
+      <div class="pattern-card-body">Cassin Planning Group's website copy/imagery references New Baltimore and Richmond Township (and Ray Township/Romeo) as recent work. No minutes, master plan credit, or staff page names Cassin for any of the three this session. New Baltimore's Building/Codes/Zoning page names only City Clerk Marcia Shinska and a PC contact — no consultant. <strong>What would settle it:</strong> a direct pull of New Baltimore's and Richmond Township's planning-commission minutes or master-plan credits — both sites blocked this session's fetch tool via robots.txt, so this needs a live-browser check, not another automated search.</div>
+    </div>
+    <div class="pattern-card pv-amber">
+      <div class="pattern-card-num">Unconfirmed 2 — Ira Township</div>
+      <div class="pattern-card-title">A cached page reportedly also names "Stephen N. Cassin"</div>
+      <div class="pattern-card-body">The planner map already carried this flag from an earlier pass, alongside in-house contact Lori Endres (Planning &amp; Zoning Administrator / Deputy Clerk). Never independently verified, including this session. <strong>What would settle it:</strong> a direct call or email to Ira Township (iratownship.org) asking who currently handles planning review.</div>
+    </div>
+    <div class="pattern-card pv-amber">
+      <div class="pattern-card-num">Unconfirmed 3 — Founding-Date Conflict</div>
+      <div class="pattern-card-title">Cassin Planning Group's founding year doesn't line up with his CWA hire</div>
+      <div class="pattern-card-body">ZoomInfo lists Cassin Planning Group, LLC as founded 2014 — three years <em>before</em> CWA's 2017 announcement that he joined their staff. Either the LLC sat dormant while he worked at CWA, the founding date is wrong, or there's a gap in the public record about when he actually left CWA. No departure announcement found on CWA's own site.</div>
+    </div>
+  </div>
+
+  <div class="pattern-strip-heading" style="color:#199e70;margin-top:22px;">🟢 Checked — no connection or no activity found</div>
+  <div class="pattern-grid">
+    <div class="pattern-card pv-teal">
+      <div class="pattern-card-num">Clear 1 — Washington Township</div>
+      <div class="pattern-card-title">Master plan is a Giffels Webster product, not Cassin's</div>
+      <div class="pattern-card-body">The Township's Master Plan (Planning Commission Aug 8, 2024; Board Aug 28, 2024) credits Giffels Webster in its acknowledgments. Dana Berschback is the in-house Planning &amp; Zoning Director. The township's real data center fight — Prologis's 312-acre proposal, withdrawn May 19, 2026 amid opposition — runs on its own timeline below, with no Cassin fingerprints found anywhere in it.</div>
+    </div>
+    <div class="pattern-card pv-teal">
+      <div class="pattern-card-num">Clear 2 — Richmond (City)</div>
+      <div class="pattern-card-title">In-house planner confirmed; no data center/BESS activity found</div>
+      <div class="pattern-card-body">Troy S. Jeschke, Planning and Economic Development Director, is named directly on the city's own site. No outside consultant, and no data center or battery storage news found for the City of Richmond.</div>
+    </div>
+    <div class="pattern-card pv-teal">
+      <div class="pattern-card-num">Clear 3 — Richmond Township</div>
+      <div class="pattern-card-title">Volunteer-chaired Planning Commission, no paid consultant named</div>
+      <div class="pattern-card-body">Paul Stewart chairs the Planning Commission as a volunteer; the township's own site names no paid Zoning Administrator or planning firm. No data center or battery storage news found tied to Richmond Township.</div>
+    </div>
+  </div>
+
+  <div class="docs-strip">
+    <div class="docs-strip-heading">📥 What would move each amber card to green or confirmed</div>
+    <ul>
+      <li><strong>New Baltimore</strong> — pull the current Planning Commission minutes or any post-2020 master-plan/zoning-consultant credit directly (live browser, not an automated fetch — the site blocks it).</li>
+      <li><strong>Richmond Township</strong> — same approach: richmondtwp.org blocks automated fetches too; check its planning &amp; zoning page and recent PC minutes directly.</li>
+      <li><strong>Ira Township</strong> — a direct call/email (iratownship.org) asking who currently handles planning review would resolve the "Stephen N. Cassin" cached-page flag one way or the other.</li>
+      <li><strong>Cassin Planning Group's actual client roster</strong> — the firm's own site has no public client list; if a specific complaint or report exists naming other communities, that document would be the fastest way to expand this page accurately.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section-break" style="font-size:12px;padding-top:26px;">📅 Timeline — 8 lanes: Cassin's career, then each community</div>
+
+<div class="legend-bar" id="legend"></div>
+
+<div class="scroll-wrap">
+  <div class="chart-area" id="chart"></div>
+</div>
+
+<div id="tt"></div>
+<div style="text-align:center;font-size:10px;color:#64748b;padding:0 28px 40px;">Built 2026-09-05 by P.A.C.T. as a companion to the statewide <a href="index.html" style="color:#67e8f9;text-decoration:none;">planner map</a>. This page will be updated as amber items resolve.</div>
+
+<script>
+const TYPES = {
+  'cwa-hired':      { label: 'Career Milestone',                 color: '#9085e9' },
+  'client':         { label: 'Cassin Planning Group — Client',   color: '#b5834f' },
+  'master-plan':    { label: 'Master Plan Credit',                color: '#c98500' },
+  'dc-bess':        { label: 'Data Center / Battery Storage',     color: '#d95926' },
+  'misattribution': { label: 'Misattribution / Data Correction',  color: '#d55181' },
+  'unconfirmed':    { label: 'Unconfirmed Lead',                  color: '#5b7ca0' },
+  'checked-clear':  { label: 'Checked — No Connection Found',     color: '#199e70' },
+};
+
+const CASSIN_SITES = [
+  {
+    name: "Stephen Cassin",
+    county: "Career",
+    planner: "Stephen N. Cassin, AICP",
+    title: "President, Cassin Planning Group, LLC — CWA alumnus",
+    cwaStatus: "none",
+    statusLabel: "BIOGRAPHICAL",
+    events: [
+      {
+        date: "2014-01", type: "unconfirmed",
+        label: "Cassin Planning Group, LLC reportedly founded",
+        detail: "ZoomInfo lists 2014 as the founding year for Cassin Planning Group, LLC — three years before CWA's own 2017 announcement that Cassin joined their staff. Whether the LLC was dormant, the date is wrong, or there's a gap in the record is unconfirmed.",
+        source: "https://www.zoominfo.com/c/cassin-planning-group-llc/530442004", sourceLabel: "ZoomInfo company profile"
+      },
+      {
+        date: "2017-06-23", type: "cwa-hired",
+        label: "Joins Carlisle Wortman & Associates (CWA)",
+        detail: "CWA's own announcement: Cassin joins after 12 years as Executive Director of Macomb County's Planning & Economic Development Dept. and 42+ years total experience in land use planning, zoning, community/economic development, municipal administration, finance, and urban design. CWA President Dick Carlisle: 'We've seeing increased demand from cities to help them with their community- and economic development.' The hire gave CWA four former presidents of the Michigan Association of Planning — more than any other firm in the state.",
+        source: "https://www.cwaplan.com/blog/2017/06/23/stephen-cassin-and-megan-masson-minock-join-our-staff", sourceLabel: "CWA blog, Jun 23, 2017"
+      },
+      {
+        date: "2026-09-05", type: "unconfirmed",
+        label: "Career timeline still has a gap",
+        detail: "No public departure announcement from CWA's site or press names when Cassin left to run Cassin Planning Group full-time. He now presents as the independent firm's President with Karen LaVere as Principal Planner — but the transition itself is undocumented.",
+        source: "https://www.cassinplanninggroup.com/", sourceLabel: "Cassin Planning Group — current site"
+      }
+    ]
+  },
+  {
+    name: "Port Huron Township",
+    county: "St. Clair County",
+    planner: "Steve Cassin, AICP",
+    title: "Cassin Planning Group — Planning Consultant",
+    cwaStatus: "active",
+    statusLabel: "CASSIN — CONFIRMED CLIENT",
+    events: [
+      {
+        date: "2022-01", type: "client",
+        label: "Cassin Planning Group confirmed as consultant",
+        detail: "2022 township documentation names Steve Cassin, AICP as planning consultant; Karen LaVere also listed as a current consultant. Cassin Planning Group is described as a smaller regional firm serving Blue Water area communities.",
+        source: null, sourceLabel: null
+      },
+      {
+        date: "2026-09-05", type: "checked-clear",
+        label: "No data center or battery storage activity found",
+        detail: "A dedicated news and document search this session found no data center, BESS, or large-scale energy proposal tied to Port Huron Township. If there's a live issue here, it isn't in public records yet.",
+        source: null, sourceLabel: null
+      }
+    ]
+  },
+  {
+    name: "Casco Township",
+    county: "St. Clair County",
+    planner: "Stephen Cassin (Master Plan) / Joe Viaene (day-to-day ZA)",
+    title: "Cassin Planning Group — Master Plan consultant",
+    cwaStatus: "active",
+    statusLabel: "CASSIN — CONFIRMED CLIENT",
+    events: [
+      {
+        date: "2024-07-15", type: "master-plan",
+        label: "Cassin Planning Group credited on Master Plan Update",
+        detail: "The cover page of Casco Township's Master Plan Update (draft distributed for public review Jul 15, 2024) credits Cassin Planning Group, LLC as the preparing firm. Final adoption date not confirmed this session. Joe Viaene, the in-house Zoning Administrator, appears to remain the day-to-day contact for ongoing zoning matters.",
+        source: "https://cascostclair.gov/wp-content/uploads/2024/08/Draft-Casco-Master-Plan-for-Distribution-7-15-24.pdf", sourceLabel: "2024 Casco Township Master Plan (draft)"
+      },
+      {
+        date: "2026-09-05", type: "checked-clear",
+        label: "No data center/BESS language in the plan, no DC/BESS news found",
+        detail: "The 2024 master plan was reviewed section by section: no mention of data centers, battery storage, or a new industrial overlay district anywhere in it. Industrial use stays confined to the existing Marine City Hwy corridor; the only new district proposed is a small 'Adair Area Mixed Use District' plus two B-2 rezonings. A separate news search found no data center or battery storage proposal anywhere in Casco Township, St. Clair Co. Note: a second, unrelated Casco Township exists in Allegan County (Michigan Township Services/Tasha Smalley) — do not confuse the two.",
+        source: null, sourceLabel: null
+      }
+    ]
+  },
+  {
+    name: "Lenox Township",
+    county: "Macomb County",
+    planner: "Shana Lengyel (CWA) — Cassin's name history preserved below",
+    title: "Full data-center fight logged in timeline.html — this lane covers the Cassin/CWA attribution thread only",
+    cwaStatus: "active",
+    statusLabel: "CWA ACTIVE — NOT CASSIN",
+    events: [
+      {
+        date: "2024-01", type: "dc-bess",
+        label: "Developer first approaches Township under euphemisms",
+        detail: "Developer (later identified as Cloverleaf Infrastructure) approaches Lenox Township as early as Jan 2024 under names like 'Project Honeycomb' and 'EcoPower Travel Center' for the Oakridge Golf Course site — the same developer behind Dundee Township's 'Project Ironwood' and Frenchtown Charter Township's 'Project Cherry Blossom,' both Monroe County.",
+        source: "https://www.lenox-mi.gov/", sourceLabel: "Lenox Township"
+      },
+      {
+        date: "2026-02-02", type: "dc-bess",
+        label: "4-month moratorium passed",
+        detail: "Board passes a 4-month moratorium amid the escalating data-center fight. Full timeline of the scandal — FOIA'd emails contradicting public denials, the rejected moratorium extension, the ~200-resident turnout, and the recall petitions against four of five trustees — is in timeline.html and the main planner map's Lenox entry.",
+        source: "https://www.lenoxdatacenterinfo.org/timeline-of-events/", sourceLabel: "Lenox Data Center Info — Timeline"
+      },
+      {
+        date: "2026-03-23", type: "client",
+        label: "CWA's real Lenox planner, Shana Lengyel, presents draft ordinances",
+        detail: "March 23, 2026 PC minutes show Shana Lengyel, 'with Carlisle Wortman Associates, the new Planner for Lenox,' presenting both draft ordinances (I-94 Development District rezoning + standalone Data Center ordinance, Sec. 719.157) to the Commission. This is the primary-source confirmation of who CWA's actual Lenox planner is.",
+        source: null, sourceLabel: "Mar 23, 2026 PC minutes (downloaded directly)"
+      },
+      {
+        date: "2026-08-04", type: "misattribution",
+        label: "Correction: Lenox's CWA planner is Lengyel, not Cassin",
+        detail: "P.A.C.T.'s own tracking had, up to this point, misattributed CWA's Lenox drafting role to Stephen Cassin. The March 23 minutes resolve this: the correct planner is Shana Lengyel. This correction was written into the map's free-text notes on this date.",
+        source: null, sourceLabel: null
+      },
+      {
+        date: "2026-09-05", type: "misattribution",
+        label: "Data bug found and fixed — history kept, not erased",
+        detail: "A month after the Aug 4 correction, the map's structured planner_name/firm fields still literally read 'Stephen Cassin' / 'Carlisle/Wortman Associates' — the correction had only ever made it into the free-text notes. Fixed today at Mo's request; the full misattribution history (this lane) was explicitly kept rather than deleted, since it's part of the record of how Cassin's name became associated with Lenox in the first place.",
+        source: null, sourceLabel: null
+      }
+    ]
+  },
+  {
+    name: "Ira Township",
+    county: "St. Clair County",
+    planner: "Lori Endres (confirmed in-house) — Cassin mention unconfirmed",
+    title: "Planning and Zoning Administrator / Deputy Clerk",
+    cwaStatus: "none",
+    statusLabel: "UNCONFIRMED LEAD",
+    events: [
+      {
+        date: "2026-09-05", type: "unconfirmed",
+        label: "Cached page reportedly also names 'Stephen N. Cassin'",
+        detail: "The planner map has carried this flag since an earlier research pass: 'Lori Endres (unconfirmed — a cached page also names Stephen N. Cassin).' Endres is the township's confirmed in-house Planning and Zoning Administrator / Deputy Clerk. The alternate Cassin mention has never been independently verified, including this session — a direct site check wasn't completed.",
+        source: "https://www.iratownship.org/email-directory", sourceLabel: "Ira Township — email directory"
+      },
+      {
+        date: "2026-09-05", type: "checked-clear",
+        label: "No data center/battery storage news found",
+        detail: "A news search this session found no data center or battery storage proposal tied to Ira Township.",
+        source: null, sourceLabel: null
+      }
+    ]
+  },
+  {
+    name: "Richmond (City)",
+    county: "Macomb/St. Clair",
+    planner: "Troy S. Jeschke",
+    title: "In-House — Planning and Economic Development Director",
+    cwaStatus: "none",
+    statusLabel: "NO CASSIN CONNECTION",
+    events: [
+      {
+        date: "2026-09-05", type: "checked-clear",
+        label: "In-house planner confirmed; no Cassin connection found",
+        detail: "Troy S. Jeschke, Planning and Economic Development Director, is named directly on the City's own site. No outside consulting firm named, and nothing ties Cassin Planning Group to the City of Richmond.",
+        source: "https://www.cityofrichmond.net/174/Planning-Economic-Development", sourceLabel: "City of Richmond — Planning & Econ. Dev."
+      },
+      {
+        date: "2026-09-05", type: "checked-clear",
+        label: "No data center/BESS news found",
+        detail: "A dedicated search found no data center or battery storage proposal, moratorium, or news coverage tied to the City of Richmond.",
+        source: null, sourceLabel: null
+      }
+    ]
+  },
+  {
+    name: "Richmond Township",
+    county: "Macomb County",
+    planner: "Paul Stewart (PC Chair, volunteer)",
+    title: "No paid Zoning Administrator or planning firm named",
+    cwaStatus: "none",
+    statusLabel: "NO CASSIN CONNECTION",
+    events: [
+      {
+        date: "2026-09-05", type: "checked-clear",
+        label: "Volunteer-chaired PC; no paid consultant, no Cassin link",
+        detail: "The Township's own site names Paul Stewart as the volunteer Planning Commission Chair and does not name a paid Zoning Administrator or outside planning firm.",
+        source: "https://www.richmondtwp.org/departments_offices/planning_and_zoning.php", sourceLabel: "Richmond Township — Planning & Zoning"
+      },
+      {
+        date: "2026-09-05", type: "checked-clear",
+        label: "No data center/BESS news found",
+        detail: "A dedicated search found no data center or battery storage proposal, moratorium, or news coverage tied to Richmond Township.",
+        source: null, sourceLabel: null
+      }
+    ]
+  },
+  {
+    name: "Washington Township",
+    county: "Macomb County",
+    planner: "Dana Berschback",
+    title: "In-House Planning & Zoning Director — Master Plan by Giffels Webster",
+    cwaStatus: "clear",
+    statusLabel: "REAL DC FIGHT — NOT CASSIN",
+    events: [
+      {
+        date: "2025-11", type: "dc-bess",
+        label: "Prologis files conditional rezoning for 312-acre campus",
+        detail: "Prologis proposes a data center / technical campus on 312 acres south of 32 Mile Road, between M-53 and Powell Road.",
+        source: "https://planetdetroit.org/2026/04/washington-township-weighs-data-center-impacts/", sourceLabel: "Planet Detroit, Apr 2026"
+      },
+      {
+        date: "2025-12-11", type: "dc-bess",
+        label: "Prologis presents to Planning Commission",
+        detail: "Prologis representative Mark Hosfeld presents the proposal to the Planning Commission.",
+        source: "https://planetdetroit.org/2026/04/washington-township-weighs-data-center-impacts/", sourceLabel: "Planet Detroit, Apr 2026"
+      },
+      {
+        date: "2026-04-09", type: "dc-bess",
+        label: "Commission continues ordinance-development work",
+        detail: "Commissioners authorize continued work on data-center zoning standards, including a proposed five-year reversion clause if development isn't completed in time. Noise, water-capacity, and environmental concerns raised by residents and the township engineer.",
+        source: "https://planetdetroit.org/2026/04/washington-township-weighs-data-center-impacts/", sourceLabel: "Planet Detroit, Apr 2026"
+      },
+      {
+        date: "2026-05-19", type: "dc-bess",
+        label: "Prologis withdraws its application",
+        detail: "In a May 19 letter, Prologis withdraws and says it will wait until the township adopts an ordinance governing such facilities before proceeding — following months of community protest over the rezoning request.",
+        source: "https://planetdetroit.org/2026/05/washington-township-data-center-withdrawn/", sourceLabel: "Planet Detroit, May 2026"
+      },
+      {
+        date: "2026-06-12", type: "checked-clear",
+        label: "Detroit News confirms: company won't pursue project",
+        detail: "Detroit News reports Prologis will not pursue the project amid continued data-center opposition in the township.",
+        source: "https://www.detroitnews.com/story/news/local/macomb-county/2026/06/12/company-wont-pursue-project-at-washington-township-site-amid-data-center-opposition/90522656007/", sourceLabel: "Detroit News, Jun 12, 2026"
+      },
+      {
+        date: "2026-09-05", type: "checked-clear",
+        label: "No Cassin connection — Master Plan is a Giffels Webster product",
+        detail: "The Township's Master Plan (Planning Commission Aug 8, 2024; Board of Trustees Aug 28, 2024) credits Giffels Webster in its acknowledgments as the preparing firm. Dana Berschback is the in-house Director of Planning & Zoning. Nothing in the Prologis fight or the master plan ties to Cassin Planning Group.",
+        source: null, sourceLabel: null
+      }
+    ]
+  },
+  {
+    name: "New Baltimore",
+    county: "Macomb County",
+    planner: "Historic: Rod Arroyo (Giffels Webster) — current consultant unconfirmed",
+    title: "City — current planning consultant not confirmed since 2020",
+    cwaStatus: "none",
+    statusLabel: "UNCONFIRMED LEAD",
+    events: [
+      {
+        date: "2017-01", type: "master-plan",
+        label: "Giffels Webster confirmed for 2017 Master Plan",
+        detail: "Rod Arroyo (Partner) named as the contact for New Baltimore's 2017 Master Plan and 2020 Wayfinding Plan. Current contracted planner could not be confirmed as of the main planner map's last check — the city's CivicEngage site blocked minutes access.",
+        source: null, sourceLabel: null
+      },
+      {
+        date: "2026-09-05", type: "unconfirmed",
+        label: "Cassin's own site references 'recent projects' here — unverified",
+        detail: "Cassin Planning Group's homepage/team-page copy nods to New Baltimore (and Richmond Township, and Ray Township/Romeo) as recent work. No minutes, master-plan credit, or staff page names Cassin for New Baltimore this session. The City's own Building/Codes/Zoning page names only City Clerk Marcia Shinska and PC contact Annette Girodat — no consultant. A New Baltimore civic-alert page about a 'Master Plan Update' exists but was blocked by robots.txt this session — needs a live-browser check.",
+        source: "https://www.cassinplanninggroup.com/", sourceLabel: "Cassin Planning Group — current site"
+      }
+    ]
+  }
+];
+
+const T_START = new Date('2013-06-01');
+const T_END   = new Date('2027-01-01');
+const T_RANGE = T_END - T_START;
+const PX_PER_MONTH = 55;
+
+function parseDate(str) {
+  if (str.length === 7) return new Date(str + '-15');
+  return new Date(str);
+}
+function toX(dateStr, width) {
+  const t = parseDate(dateStr);
+  return Math.round(((t - T_START) / T_RANGE) * width);
+}
+function fmtDate(str) {
+  const d = parseDate(str);
+  if (str.length === 7) return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function starPath(cx, cy, r) {
+  const pts = [];
+  for (let i = 0; i < 10; i++) {
+    const a = (i * 36 - 90) * Math.PI / 180;
+    const rr = i % 2 === 0 ? r * 1.15 : r * 0.48;
+    pts.push(`${(cx + rr * Math.cos(a)).toFixed(1)},${(cy + rr * Math.sin(a)).toFixed(1)}`);
+  }
+  return `<polygon points="${pts.join(' ')}"/>`;
+}
+function hexPath(cx, cy, r) {
+  const pts = [];
+  for (let i = 0; i < 6; i++) {
+    const a = (i * 60 - 30) * Math.PI / 180;
+    pts.push(`${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`);
+  }
+  return `<polygon points="${pts.join(' ')}"/>`;
+}
+function xPath(cx, cy, r) {
+  const s = r * 0.78, sw = r * 0.4;
+  return `
+    <line x1="${cx-s}" y1="${cy-s}" x2="${cx+s}" y2="${cy+s}" stroke-width="${sw}" stroke-linecap="round"/>
+    <line x1="${cx+s}" y1="${cy-s}" x2="${cx-s}" y2="${cy+s}" stroke-width="${sw}" stroke-linecap="round"/>
+  `;
+}
+
+function shape(type, cx, cy, r) {
+  switch(type) {
+    case 'cwa-hired':      return starPath(cx, cy, r);
+    case 'client':         return `<rect x="${cx-r*.9}" y="${cy-r*.9}" width="${r*1.8}" height="${r*1.8}" rx="2.5"/>`;
+    case 'master-plan':    return `<polygon points="${cx},${cy-r*1.25} ${cx+r*1.25},${cy} ${cx},${cy+r*1.25} ${cx-r*1.25},${cy}"/>`;
+    case 'dc-bess':        return `<circle cx="${cx}" cy="${cy}" r="${r}"/>`;
+    case 'misattribution': return xPath(cx, cy, r);
+    case 'unconfirmed':    return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke-width="2" stroke-dasharray="4,3"/>`;
+    case 'checked-clear':  return hexPath(cx, cy, r);
+    default:               return `<circle cx="${cx}" cy="${cy}" r="${r}"/>`;
+  }
+}
+
+const activeTypes = new Set(Object.keys(TYPES));
+const LANE_H = 148;
+const TODAY = '2026-09-05';
+
+function buildLegend() {
+  const el = document.getElementById('legend');
+  el.innerHTML = '<span class="legend-heading">Filter by:</span>';
+  Object.entries(TYPES).forEach(([key, meta]) => {
+    const item = document.createElement('div');
+    item.className = 'leg-item';
+    item.dataset.key = key;
+    item.innerHTML = `<div class="leg-dot" style="background:${meta.color}"></div><span class="leg-label">${meta.label}</span>`;
+    item.addEventListener('click', () => {
+      if (activeTypes.has(key)) { activeTypes.delete(key); item.classList.add('off'); }
+      else                       { activeTypes.add(key);    item.classList.remove('off'); }
+      renderChart();
+    });
+    el.appendChild(item);
+  });
+}
+
+function stagger(events, svgWidth) {
+  const MID = LANE_H / 2;
+  const DOT_OFFSET = 20;
+  const MIN_GAP    = 72;
+  const sorted = events
+    .filter(e => activeTypes.has(e.type))
+    .sort((a, b) => parseDate(a.date) - parseDate(b.date));
+  const lastX = { above: -Infinity, below: -Infinity };
+  return sorted.map((ev, i) => {
+    const x = toX(ev.date, svgWidth);
+    const preferred = i % 2 === 0 ? 'above' : 'below';
+    const alt = preferred === 'above' ? 'below' : 'above';
+    let side;
+    if (x - lastX[preferred] >= MIN_GAP) side = preferred;
+    else if (x - lastX[alt] >= MIN_GAP) side = alt;
+    else side = (x - lastX[preferred] >= x - lastX[alt]) ? preferred : alt;
+    lastX[side] = x;
+    const dotY = side === 'above' ? MID - DOT_OFFSET : MID + DOT_OFFSET;
+    return { ev, x, dotY, side };
+  });
+}
+
+function buildAxisSVG(svgWidth) {
+  const H = 36;
+  let s = [`<svg width="${svgWidth}" height="${H}" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;display:block">`];
+  let d = new Date(T_START);
+  while (d <= T_END) {
+    const x = toX(d.toISOString().slice(0,7), svgWidth);
+    const m = d.getMonth();
+    if (m === 0) {
+      s.push(`<line x1="${x}" y1="0" x2="${x}" y2="${H}" stroke="#475569" stroke-width="1.5"/>`);
+      s.push(`<text x="${x+4}" y="13" fill="#94a3b8" font-size="12" font-weight="700" font-family="-apple-system,sans-serif">${d.getFullYear()}</text>`);
+    } else if (m % 3 === 0) {
+      s.push(`<line x1="${x}" y1="18" x2="${x}" y2="${H}" stroke="#334155" stroke-width="1"/>`);
+      const qLabel = ['','Q2','Q3','Q4'][Math.floor(m/3)];
+      s.push(`<text x="${x+4}" y="${H-2}" fill="#64748b" font-size="10" font-family="-apple-system,sans-serif">${qLabel}</text>`);
+    }
+    d.setMonth(d.getMonth() + 1);
+  }
+  const tx = toX(TODAY, svgWidth);
+  s.push(`<line x1="${tx}" y1="0" x2="${tx}" y2="${H}" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>`);
+  s.push('</svg>');
+  return s.join('');
+}
+
+function buildLaneSVG(community, svgWidth, communityIdx) {
+  const MID = LANE_H / 2;
+  const R   = 8;
+  const FONT = '-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif';
+  const positioned = stagger(community.events, svgWidth);
+  let s = [`<svg width="${svgWidth}" height="${LANE_H}" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;display:block">`];
+  let d = new Date(T_START);
+  while (d <= T_END) {
+    if (d.getMonth() % 3 === 0) {
+      const gx = toX(d.toISOString().slice(0,7), svgWidth);
+      const isYear = d.getMonth() === 0;
+      s.push(`<line x1="${gx}" y1="0" x2="${gx}" y2="${LANE_H}" stroke="${isYear ? '#475569' : '#293548'}" stroke-width="${isYear ? 1.5 : 1}"/>`);
+    }
+    d.setMonth(d.getMonth() + 1);
+  }
+  const tx = toX(TODAY, svgWidth);
+  s.push(`<line x1="${tx}" y1="0" x2="${tx}" y2="${LANE_H}" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>`);
+  s.push(`<line x1="0" y1="${MID}" x2="${svgWidth}" y2="${MID}" stroke="#475569" stroke-width="1.5"/>`);
+
+  positioned.forEach(({ ev, x, dotY, side }, i) => {
+    const meta = TYPES[ev.type];
+    const col  = meta.color;
+    const above = side === 'above';
+    const stemY1 = above ? MID - 2 : MID + 2;
+    s.push(`<line x1="${x}" y1="${stemY1}" x2="${x}" y2="${dotY + (above ? R+1 : -(R+1))}" stroke="${col}" stroke-width="1.5" opacity="0.55"/>`);
+    s.push(`<circle cx="${x}" cy="${dotY}" r="${R+7}" fill="transparent" class="ev-hit" data-ci="${communityIdx}" data-ei="${i}" style="cursor:pointer"/>`);
+
+    const strokeOnly = (ev.type === 'misattribution' || ev.type === 'unconfirmed');
+    if (strokeOnly) {
+      s.push(`<g fill="none" stroke="${col}">${shape(ev.type, x, dotY, R)}</g>`);
+    } else {
+      s.push(`<g fill="${col}" stroke="${col}" stroke-width="1">${shape(ev.type, x, dotY, R)}</g>`);
+    }
+
+    const words = ev.label.replace(/[✓⚠]/g,'').trim().split(' ');
+    const LINE_MAX = 22;
+    let lines = [], cur = '';
+    words.forEach(w => {
+      if ((cur + ' ' + w).trim().length <= LINE_MAX) cur = (cur + ' ' + w).trim();
+      else { if (cur) lines.push(cur); cur = w; }
+    });
+    if (cur) lines.push(cur);
+    lines = lines.slice(0, 2);
+
+    if (above) {
+      lines.reverse().forEach((line, li) => {
+        const ly = dotY - R - 7 - li * 12;
+        s.push(`<text x="${x}" y="${ly}" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="${FONT}">${line}</text>`);
+      });
+    } else {
+      lines.forEach((line, li) => {
+        const ly = dotY + R + 13 + li * 12;
+        s.push(`<text x="${x}" y="${ly}" text-anchor="middle" fill="#94a3b8" font-size="9.5" font-family="${FONT}">${line}</text>`);
+      });
+    }
+  });
+
+  s.push('</svg>');
+  return { svg: s.join(''), positioned };
+}
+
+const ttEl = document.getElementById('tt');
+let ttVisible = false;
+let ttPinned = false;
+let ttPinnedKey = null;
+const laneData = [];
+
+function showTT(e, ev, pinned) {
+  const meta = TYPES[ev.type];
+  const sourceHtml = ev.source
+    ? `<div class="tt-source">🔗 <a href="${ev.source}" target="_blank" rel="noopener">${ev.sourceLabel || 'Source'}</a></div>`
+    : (ev.sourceLabel ? `<div class="tt-source">📄 ${ev.sourceLabel}</div>` : '');
+  const pinHint = pinned
+    ? `<div class="tt-pin-hint">Pinned — click the dot again, or click elsewhere, to close.</div>`
+    : (ev.source ? `<div class="tt-pin-hint">Click the dot to pin this card and open the link.</div>` : '');
+  ttEl.innerHTML = `
+    <div class="tt-type" style="color:${meta.color}">${meta.label}</div>
+    <div class="tt-label">${ev.label}</div>
+    <div class="tt-date">${fmtDate(ev.date)}</div>
+    <div class="tt-detail">${ev.detail}</div>
+    ${sourceHtml}
+    ${pinHint}
+  `;
+  ttEl.classList.add('show');
+  ttEl.classList.toggle('pinned', !!pinned);
+  ttVisible = true;
+  if (!pinned) placeTT(e);
+}
+
+function placeTT(e) {
+  const W = 340, H = 210;
+  const vw = window.innerWidth, vh = window.innerHeight;
+  let l = e.clientX + 16, t = e.clientY + 16;
+  if (l + W > vw - 8) l = e.clientX - W - 16;
+  if (t + H > vh - 8) t = e.clientY - H - 16;
+  ttEl.style.left = l + 'px';
+  ttEl.style.top  = t + 'px';
+}
+
+document.addEventListener('mousemove', e => { if (ttVisible && !ttPinned) placeTT(e); });
+
+document.getElementById('chart').addEventListener('mouseover', e => {
+  if (ttPinned) return;
+  const hit = e.target.closest('.ev-hit');
+  if (!hit) return;
+  const ci = +hit.dataset.ci;
+  const ei = +hit.dataset.ei;
+  const positioned = laneData[ci];
+  if (positioned && positioned[ei]) showTT(e, positioned[ei].ev, false);
+});
+
+document.getElementById('chart').addEventListener('mouseout', e => {
+  if (ttPinned) return;
+  if (!e.target.closest('.ev-hit')) return;
+  ttEl.classList.remove('show');
+  ttVisible = false;
+});
+
+document.getElementById('chart').addEventListener('click', e => {
+  const hit = e.target.closest('.ev-hit');
+  if (!hit) {
+    if (ttPinned) { ttPinned = false; ttPinnedKey = null; ttEl.classList.remove('show', 'pinned'); ttVisible = false; }
+    return;
+  }
+  const ci = +hit.dataset.ci;
+  const ei = +hit.dataset.ei;
+  const key = ci + ':' + ei;
+  const positioned = laneData[ci];
+  if (!positioned || !positioned[ei]) return;
+  if (ttPinned && ttPinnedKey === key) {
+    ttPinned = false; ttPinnedKey = null; ttEl.classList.remove('show', 'pinned'); ttVisible = false;
+  } else {
+    ttPinned = true; ttPinnedKey = key;
+    showTT(e, positioned[ei].ev, true);
+  }
+  e.stopPropagation();
+});
+
+ttEl.addEventListener('click', e => e.stopPropagation());
+
+function renderChart() {
+  const chart = document.getElementById('chart');
+  chart.innerHTML = '';
+  laneData.length = 0;
+
+  const totalMonths = (T_END.getFullYear() - T_START.getFullYear()) * 12 + (T_END.getMonth() - T_START.getMonth());
+  const svgWidth = Math.max(960, totalMonths * PX_PER_MONTH);
+
+  const axisSpacerDiv = document.createElement('div');
+  axisSpacerDiv.className = 'axis-spacer';
+  const axisWrap = document.createElement('div');
+  axisWrap.className = 'axis-svg-wrap';
+  axisWrap.style.paddingLeft = '12px';
+  axisWrap.innerHTML = buildAxisSVG(svgWidth);
+  chart.appendChild(axisSpacerDiv);
+  chart.appendChild(axisWrap);
+
+  CASSIN_SITES.forEach((com, ci) => {
+    const { svg, positioned } = buildLaneSVG(com, svgWidth, ci);
+    laneData.push(positioned);
+
+    const header = document.createElement('div');
+    header.className = 'lane-header';
+    header.innerHTML = `
+      <div class="lh-county">${com.county}</div>
+      <div class="lh-name">${com.name}</div>
+      <div class="lh-planner">${com.planner}</div>
+      <div class="lh-title">${com.title}</div>
+      <div class="lh-status ${com.cwaStatus}">${com.statusLabel}</div>
+    `;
+
+    const body = document.createElement('div');
+    body.className = 'lane-body';
+    body.style.paddingLeft = '12px';
+    body.innerHTML = svg;
+
+    chart.appendChild(header);
+    chart.appendChild(body);
+  });
+}
+
+buildLegend();
+renderChart();
+
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(renderChart, 200);
+});
+</script>
+</body>
+</html>
