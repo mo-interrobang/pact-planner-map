@@ -866,7 +866,7 @@
 // this one line, by hand, whenever MUNICIPALITIES changes. Every
 // "Updated"/"Last updated" label on the page reads from this one constant —
 // nothing else needs to be touched, and nothing else should be hand-edited.
-const LAST_UPDATED = "2026-08-21"; // format: YYYY-MM-DD — set this by hand on every data update
+const LAST_UPDATED = "2026-09-05"; // format: YYYY-MM-DD — set this by hand on every data update
 
 const FIRMS = {
   "Carlisle/Wortman Associates": { color: "#E53935", short: "CWA" },
@@ -4066,9 +4066,9 @@ const MUNICIPALITIES = [
         employment_type: "Contracted",
         status: "active",
         cwa_flag: false,
-        cwa_alumni: false,
+        cwa_alumni: true,
         data_center_case: false,
-        notes: "Township surrounding Port Huron City. Cassin Planning Group confirmed — Steve Cassin AICP as planning consultant (2022 documentation; Karen Lavere also listed as current consultant). Cassin Planning Group is a smaller regional firm serving Blue Water area communities.",
+        notes: "Township surrounding Port Huron City. Cassin Planning Group confirmed — Steve Cassin AICP as planning consultant (2022 documentation; Karen Lavere also listed as current consultant). Cassin Planning Group is a smaller regional firm serving Blue Water area communities. CWA LINK 2026-09-05: Stephen Cassin joined Carlisle Wortman & Associates (CWA) in June 2017 per CWA's own announcement (12 yrs as Macomb County Planning/Econ Dev director, 42+ yrs experience; CWA President Dick Carlisle publicly welcomed him) -- makes Cassin a CWA alumnus, same lineage as Ben Carlisle/Auerbach/Lengyel/Passalacqua/Elmiger. ZoomInfo separately lists Cassin Planning Group LLC as founded 2014, which predates the 2017 CWA hire -- exact timeline of when he left CWA to run his own firm full-time is unconfirmed, flagged for follow-up. Source: https://www.cwaplan.com/blog/2017/06/23/stephen-cassin-and-megan-masson-minock-join-our-staff",
         work_history: null,
         sources: ["Port Huron Township planning records 2022 — Steve Cassin/Cassin Planning Group confirmed"]
       },
@@ -5758,7 +5758,7 @@ const MUNICIPALITIES = [
         type: "Township",
         lat: 42.8478,
         lng: -82.8954,
-        planner_name: "Stephen Cassin",
+        planner_name: "Shana Lengyel",
         planner_title: "Planning Consultant",
         firm: "Carlisle/Wortman Associates",
         employment_type: "Contract",
@@ -5767,7 +5767,7 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "MAJOR FINDING 2026-08-04: active, escalating scandal — not a quiet filing. Developer approached the Township as early as Jan 2024 under euphemisms ('Project Honeycomb,' 'EcoPower Travel Center') for the Oakridge Golf Course site, later identified as CLOVERLEAF — the SAME developer (Cloverleaf Infrastructure) behind the Dundee Township ('Project Ironwood,' id 350) and Frenchtown Charter Township ('Project Cherry Blossom,' id 352) proposals, both Monroe County — a THIRD Michigan township hit by the same company. Township's 2025 Master Plan quietly added an 'I-94 Development District' absent from earlier drafts. On Jan 28, 2026 the Supervisor's office PUBLICLY DENIED any communication with data-center developers — FOIA'd emails from the same month directly contradict this, showing meeting requests, a zoning map turned around in 15 minutes, and a solicited 'Letter of Support.' Board passed a 4-month moratorium Feb 2, 2026; FOIA emails (Feb 4) show developers had already received and commented on draft township ordinance language before the moratorium was even public. May 4, 2026: Board REJECTED its own Planning Commission's recommended 8-month moratorium extension. ~200 residents turned out June 1-2, 2026 demanding an extension; PC voted 4-2 (June 3) to delay sending the Data Center and 'I-94 Development District' draft ordinances to the Board after the outcry — but a first reading of the I-94 ordinance proceeded anyway July 13, 2026. Four of five Township trustees reportedly face RECALL PETITIONS over this. Developer runs a standalone PR site (lenoxdatacenter.com, 'Lenox's Next Chapter') claiming ~$240M/yr tax revenue with explicit US-vs-China AI-competitiveness framing. RESOLVED 2026-08-04 (evening): CWA's drafting role is CONFIRMED — the March 23, 2026 PC minutes (Mo downloaded directly) show planner Shana Lengyel, 'with Carlisle Wortman Associates, the new Planner for Lenox,' presenting and walking the Commission through both draft ordinances (I-94 Development District rezoning + standalone Data Center ordinance, Sec. 719.157). Corrects prior misattribution to Stephen Cassin. Also from that meeting: noise cap referenced at a flat 65 dB at the property line (matches CWA's usual opening-bid pattern seen at Scio); a proposed 1,350 ft residential setback defended as needing to be 'defendable' / not exclusionary zoning; and — the clearest resident-driven win — data centers were moved from Permitted-by-Right to Special Land Use (discretionary review) status at a commissioner's push. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison and People/Ben Carlisle.",
-        notes: "CORRECTED 2026-08-04 (evening): CWA planner is Shana Lengyel, confirmed via the March 23, 2026 PC minutes (prior attribution to Stephen Cassin was wrong). Township hall: 63775 Gratiot Ave, Lenox MI 48050. Township's domain migrated lenoxtwp.org -> lenox-mi.gov in 2026. Resident opposition hub: lenoxdatacenterinfo.org.",
+        notes: "CORRECTED 2026-08-04 (evening): CWA planner is Shana Lengyel, confirmed via the March 23, 2026 PC minutes (prior attribution to Stephen Cassin was wrong). Township hall: 63775 Gratiot Ave, Lenox MI 48050. Township's domain migrated lenoxtwp.org -> lenox-mi.gov in 2026. Resident opposition hub: lenoxdatacenterinfo.org. DATA SYNC 2026-09-05: the top-level planner_name/firm fields had never been updated to match this correction (still read 'Stephen Cassin' for a month) -- fixed today during a Cassin cross-municipality research pass.",
         work_history: null,
         sources: ["https://www.lenox-mi.gov/", "https://www.lenoxdatacenterinfo.org/timeline-of-events/", "https://www.lenoxdatacenterinfo.org/upcoming-meetings/", "https://lenoxdatacenter.com/", "https://planetdetroit.org/2026/07/data-center-news-saline-township/", "https://www.newsbreak.com/mlive-513121/4689291687627-lenox-township-comission-delays-data-center-ordinances-after-resident-outcry"]
       },
@@ -8484,10 +8484,10 @@ const MUNICIPALITIES = [
         employment_type: "In-House (City Staff)",
         status: "active",
         cwa_flag: false,
-        cwa_alumni: false,
+        cwa_alumni: true,
         data_center_case: false,
         data_center_notes: null,
-        notes: "Note: a separate, unrelated Casco Township exists in Allegan County — disambiguation risk flagged.",
+        notes: "Note: a separate, unrelated Casco Township exists in Allegan County — disambiguation risk flagged. NEW 2026-09-05: Cassin Planning Group, LLC (Stephen Cassin, AICP -- CWA alumnus, joined Carlisle Wortman & Associates 2017) is credited on the cover page as the consulting firm that prepared the Township's 2024 Master Plan Update. Viaene appears to remain the day-to-day in-house Zoning Administrator while Cassin Planning Group handled the Master Plan; relationship for ongoing zoning/site-plan work not yet separately confirmed. Source: https://cascostclair.gov/wp-content/uploads/2024/08/Draft-Casco-Master-Plan-for-Distribution-7-15-24.pdf",
         work_history: null,
         sources: []
       },
