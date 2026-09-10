@@ -103,7 +103,7 @@
     /* Stats bar */
     #stats-bar {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       border-bottom: 1px solid #334155;
     }
     .stat-cell {
@@ -116,6 +116,7 @@
     .stat-label { font-size: 9px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 1px; }
     .stat-number.cwa { color: #f87171; }
     .stat-number.flag { color: #fbbf24; }
+    .stat-number.dte { color: #2dd4bf; }
 
     /* Filters */
     #filters {
@@ -694,6 +695,10 @@
       <div class="stat-number flag" id="stat-dc">0</div>
       <div class="stat-label">Data Center Cases</div>
     </div>
+    <div class="stat-cell">
+      <div class="stat-number dte" id="stat-dte">0</div>
+      <div class="stat-label">🔌 DTE Builds</div>
+    </div>
   </div>
 
   <div id="filters">
@@ -772,6 +777,10 @@
             <input type="checkbox" id="toggle-dc-only" />
             <span class="layer-row-label">⚡ Data center cases only</span>
           </label>
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-dte-only" />
+            <span class="layer-row-label" style="color:#2dd4bf">🔌 DTE Energy builds/proposals only</span>
+          </label>
         </div>
       </div>
 
@@ -834,6 +843,10 @@
     <div class="legend-row">
       <div class="legend-dot" style="background:#757575; border:2px solid #9e9e9e"></div>
       <span class="legend-label">Unknown / Needs Research</span>
+    </div>
+    <div class="legend-row">
+      <div class="legend-dot" style="background:#0d9488"></div>
+      <span class="legend-label">🔌 DTE Energy build/proposal</span>
     </div>
     <div class="legend-sep"></div>
     <div class="legend-title">Lines</div>
@@ -990,6 +1003,7 @@ const MUNICIPALITIES = [
         status: "terminated",
         cwa_flag: true,
         cwa_alumni: false,
+        dte_flag: true,
         data_center_case: true,
         data_center_notes: "RD Michigan Property Owner I LLC / 'Related Digital' — 30 Hudson Yards, NY (likely Related Companies vehicle). Developer attorney: Alan Greene, Dykema Gossett PLLC. Case No. 25-001577-CZ, Washtenaw County Circuit Court, Judge Julia B. Owdzziej. Consent judgment entered Oct 1, 2025, overriding Planning Commission's 5-2 denial of Aug 12, 2025. Resident Kathryn Haushalter (atty. Ellis Boal) is challenging the consent judgment. ✅ CONFIRMED (Jun 2026 minutes): after the fallout, CWA/Auerbach ran a Feb–Jun 2026 ordinance-drafting process culminating in a 'High Energy Intensive Development (HEID)' ordinance explicitly covering data centers (presented Jun 2, 2026) — then CWA announced its own phase-out the same meeting. | UPDATE 2026-08-07: the DTE Electric special contracts for this project's power supply (MPSC Case No. U-21990, serving Green Chile Ventures LLC, an Oracle subsidiary) are under active legal challenge — this is a separate, UTILITY-REGULATORY track from the township zoning/consent-judgment litigation above, not a duplicate of it. MPSC approved the contracts Dec 18, 2025 via ex parte (non-contested-case) review rather than a full contested hearing. Michigan AG Dana Nessel, joined by Sierra Club, NRDC, Michigan Environmental Council, and the Citizens Utility Board of Michigan, appealed to the Michigan Court of Appeals Apr 17, 2026, arguing the contracts should have gone through a contested-case process with discovery and testimony, and that MPSC misapplied the narrow ex parte exemption (meant only for rate changes with no cost impact on other customers) to approve them in ~7 weeks versus the ~10 months typical for major cases, based on confidential contracts/financial analyses never entered into the record. Sierra Club/NRDC/MEC filed their opening brief Aug 7, 2026. If the appeal succeeds, the case could be remanded for a full contested proceeding, potentially forcing public disclosure of the redacted commercial terms. Construction is proceeding regardless — Blackstone/PIMCO-backed financing was secured by Apr 24, 2026, with a targeted Q4 2027 completion — so this is a collateral risk to the project's power-supply terms, not (yet) to construction itself. Full writeup in the P.A.C.T. vault: Documents/DTE-MPSC-Oracle-Contracts-Appeal. | UPDATE 2026-08-14, THIRD legal front (tax abatement): Township Board approved a reduced 12-yr/50% tax abatement for Oracle on Jul 15, 2026 (based on the original $4.8B valuation, not the current ~$43B), then reversed itself 5-0 on Jul 20 and dropped the valuation cap after Township Attorney Landry warned it would violate the Oct 2025 consent judgment. On Aug 12, 2026, attorney Ellis Boal (for resident Kathryn Haushalter) filed an objection with the Michigan State Tax Commission arguing the Township never actually held the public hearing it certified when creating the Industrial Development District — video of the Sept 10, 2025 meeting shows the Township Attorney stating on the record 'this is not a public hearing,' then later telling the Board no hearing was needed because the rezoning had 'already [been] denied.' State law (MCL 207.554(9)) requires the Commission to deny any exemption application that pre-dates a validly-created IDD. UPDATE 2026-09-10 (sweep, synced from timeline.html): the STC's Aug 18, 2026 meeting agenda (Exemptions + Special Items attachments) contained NO Oracle/Oracle America Cloud Services/Saline Township/Washtenaw County entry at all — the application was simply never docketed for that meeting, so no certificate was granted over the objection, but no denial was issued either. The $43B+ IFEC remains pending; it's unknown whether the absence reflects ordinary processing lag, a staff hold pending review of the Aug 12 objection, or a withdrawal. The STC's remaining 2026 meetings are Oct 20, Nov 17, and Dec 15 (the last two explicitly \"Exemption Appeals\") — Oct 20, 2026 is the earliest realistic next decision window. Sources: https://www.michiganpublic.org/environment-climate-change/2026-07-15/saline-township-approves-smaller-than-planned-tax-breaks-for-open-ai-data-center, https://planetdetroit.org/2026/07/data-center-news-saline-township/, https://www.youtube.com/@NoMichiganDataCenters.",
         notes: "Auerbach cited §12.04(A)(2) — language from a 2013 draft ordinance NEVER ENACTED. Actual §12.04(A) prohibits conditional rezoning outright. Saline Township Clerk Kelly Marion confirmed via FOIA that no amendment was ever adopted. ✅ CWA termination now CONFIRMED (was unconfirmed): Jun 2, 2026 PC minutes and Jun 10, 2026 Board minutes both state CWA is being phased out over 60 days, matching Kozma's June 12 email exactly. Auerbach was also consulted by Saline's litigation attorneys (Landry billing records) during the period the consent judgment was structured — despite his planning error being the catalyst for the lawsuit. NOTE: a July 2026 secondhand claim (Ypsilanti Twp resident Courtney Brady, citing 'the affidavit from LuAnne') describes a same-day Oct 1, 2025 Landry–Auerbach conferral on the consent judgment specifically — this wasn't independently found in the Kozma affidavit's text when searched directly, but may corroborate or be the same underlying fact as the 'Landry billing records' already cited here. Worth reconciling: locate the actual billing-records document.",
@@ -4107,6 +4121,7 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
+        dte_flag: true,
         data_center_case: true,
         data_center_notes: "Sanilac County is a major utility-scale solar battleground: (1) Watertown Solar — 172-182 MW Linea Energy project currently UNDER CONSTRUCTION, expected completion mid-2027. (2) Deckerville Solar — 200 MW DTE Energy project planned Q4 2028. (3) Riverbend Wind — Liberty Utilities project STALLED after decisive 365-77 voter rejection (August 2024); developer may attempt state-level PA 233 bypass.",
         notes: "Sanilac County seat. Amid massive renewable energy siting battles in the surrounding county, Sandusky is the administrative hub. Planner/firm not confirmed. Riverbend Wind voter rejection shows strong grassroots anti-industrial energy sentiment in rural Sanilac County. | Dual roles. PC chaired by G. Carman.",
@@ -4127,6 +4142,7 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
+        dte_flag: true,
         data_center_case: true,
         data_center_notes: "Huron County is home to the Century Oaks BESS — a 200 MW NextEra Energy battery storage facility that went OPERATIONAL July 8, 2026, making it Michigan's largest battery storage facility at completion. Silver Creek Solar — 200 MW DTE Energy project also planned for Huron County (August 2028 target). The county is one of Michigan's most active renewable energy siting zones.",
         notes: "Huron County seat, 'Thumb' region's administrative center. Rebecca Bachman (City Manager) oversees primary administrative zoning. Physical site development, soil erosion reviews, and building inspection managed through Huron County Building & Zoning Director Jeff Smith (co.huron.mi.us/building-zoning). Contact: 989-269-6431.",
@@ -6347,6 +6363,7 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
+        dte_flag: true,
         data_center_case: true,
         data_center_notes: "Panattoni (international developer) proposed 3 data center buildings (240k, 400k, 80k sq ft) plus 30k sq ft office and 10k-20k sq ft network building; ~1 gigabyte power usage. Site plan application proceeding to PC 2-11-26 for preliminary site plan approval. McKenna Associates hired as consulting firm for housing analysis. Joint PC with City of Belleville and Sumpter Township. UPDATE 2026-09-10 (Wayne County doc audit): project is officially named 'Project Cannoli.' End user confirmed as Google (Panattoni is the developer); DTE Energy is the utility partner (DTE Letter of Support, Dec 23, 2025). Township has a dedicated project page (vbtmi.gov/departments/municipal_services/data_center_project.php) with an FAQ (updated Jan 6, 2026), two Planning Commission presentations (Feb 11 and May 13, 2026), a Board of Trustees presentation (May 19, 2026), and a signed Development Agreement dated May 20, 2026. Separately, a second data center project -- a US Signal expansion at 9275 Haggerty Rd -- was discussed in Dec 10, 2025 PC minutes (power/water/noise concerns raised). No Raeden, CAL Realty, or Carlisle/Wortman Associates involvement found for either project. UPDATE 2026-09-10 (30-day sweep): the MPSC was expected to rule Sept 10, 2026 on DTE\u0027s power contracts for the Google campus -- the first CONTESTED rate case for a Michigan hyperscale data center, with AG Dana Nessel pushing for stronger ratepayer protections against DTE\u0027s proposed 80% minimum-billing floor. Separately, DTE filed Aug 25, 2026 for approval of two new natural-gas plants (2.1GW combined), citing data-center demand growth explicitly. Source: Planet Detroit, Sept 9, 2026.",
         notes: "Dan Power is Director of Planning & Economic Development (in-house staff). McKenna Associates engaged for housing analysis consulting. Van Buren Township holds joint Planning Commission meetings with City of Belleville and Sumpter Township. Contact: dpower@vanburen-mi.org.",
@@ -7240,18 +7257,19 @@ const MUNICIPALITIES = [
         type: "Charter Township",
         lat: 42.827,
         lng: -83.1668,
-        planner_name: "Debra Walton",
-        planner_title: "Planning & Zoning Executive Assistant",
-        firm: "Unknown",
-        employment_type: "Unknown",
+        planner_name: "Matteo Passalacqua",
+        planner_title: "Township Planner (Carlisle|Wortman)",
+        firm: "Carlisle/Wortman Associates",
+        employment_type: "Contracted",
         status: "active",
-        cwa_flag: false,
+        cwa_flag: true,
         cwa_alumni: false,
-        data_center_case: false,
-        data_center_notes: null,
-        notes: "No dedicated 'Planning Director' title found; unclear if an outside consultant firm is also retained.",
+        data_center_case: true,
+        dte_flag: false,
+        data_center_notes: "NEW 2026-09-10 (Mo's live packet pull from the Sept 10, 2026 Planning Commission meeting -- Data Center Article 5 Text Amendment DRAFT 062326, Article 2 Text Amendment DRAFT 032626 Redline, Article 3 Ordinance DRAFT 062326): first-reading public hearing on a full Data Center zoning package -- new Art. 2 Sec. 2.2 definition, a Data Center Overlay District applied to I-1/I-2 parcels between Ray Rd and Davison Lake Rd (Art. 3 Sec. 3.5), amended Art. 10 Sec. 10.1.J/K noise+vibration standards, and a new Sec. 5.41 use standard with a companion Data Center Engineering Report and Fire Dept Data Center Fire and Life Safety Review Requirements (draft, last updated 6/11/26). Meeting relocated from the usual Sanderson Meeting Room to the Oxford High School Performing Arts Center, suggesting expected high turnout. Township Planner Matteo Passalacqua (Carlisle|Wortman) presented a CWA review letter dated Aug 17, 2026; Sharpe Engineering review letter dated Jul 10, 2026; Oxford Fire Dept review letter dated Jul 8, 2026 -- none of the three letters themselves were included in this packet, only referenced in the Aug 27, 2026 PC minutes. Aug 27 minutes also note the Michigan Townships Association (MTA) supplied a draft data-center ordinance template to Commissioner Wagner, which was shared with Passalacqua -- worth checking how much of Oxford's draft traces to the MTA template vs. CWA's own standard HRDF-style template used elsewhere in this network.\n\nKEY CONCERNS FLAGGED (quick-turn review for Mo while she was live in the meeting): (1) NO data-center-specific setback -- Sec 5.41.2.a just defers to \"Section 3.7 for the underlying zoning district,\" i.e. ordinary I-1/I-2 setbacks, unlike Wixom's dedicated 2,640 ft (half-mile) data-center setback. (2) Renewable energy requirement is only 15% of projected annual demand (with an easy PPA/REC/green-power-program out if 15% \"cannot reasonably be achieved\") -- far below Pittsfield Township's CWA-network high of a claimed 90% on-site mandate. (3) Possible BESS carve-out: accessory battery storage tied to a data center only needs to meet 4 cherry-picked sub-clauses of Sec 5.39.C.2.b (i, iii, v, viii) rather than full Sec 5.41 review -- a structuring risk if a large storage component gets characterized as merely \"accessory.\" (4) Water usage caps are discretionary (\"the Planning Commission... MAY establish maximum daily or annual water usage limits\"), not a hard requirement, despite otherwise strong engineering-report requirements (hydrogeological study, WWAT, closed-loop cooling required by default, 2,000 ft well/surface-water survey radius). (5) CORRECTED per Mo (live, 2026-09-10): Oxford did NOT skip a moratorium-first posture -- the Township already has a one-year data-center moratorium in place, expiring Feb 2027. This first reading is happening ~5 months before that moratorium lapses, i.e. Oxford is using the moratorium window to adopt a permanent framework before it expires (the more typical CWA-network pattern), not adopting straight-to-permanent without ever pausing. Still worth watching: whether the permanent ordinance is finalized comfortably before the Feb 2027 deadline or the Township ends up needing a moratorium extension.\n\nSTRENGTHS noted for balance: data-center noise standard (55 dBA day / 45 dBA night Leq at nearest residential lot line, ALL operating scenarios including power outages) is tighter than several peer townships; decommissioning bond at 125% of estimated cost with a mandatory 5-year reassessment; required independent third-party peer review of BOTH pre- and post-construction noise/vibration studies (most townships only require one or the other).",
+        notes: "CORRECTED 2026-09-10 (was previously listed as 'Unknown' firm / Debra Walton -- stale, predates the current CWA engagement): Debra Walton (Planning & Zoning Executive Assistant) may still be the administrative point of contact, but Matteo Passalacqua of Carlisle/Wortman Associates is the Township's actual retained Planning Consultant, presenting substantive review letters to the Planning Commission as of at least Aug 27, 2026. Oxford Township joins the CWA/Passalacqua network already tracked at Wixom and elsewhere in this map.",
         work_history: null,
-        sources: ["https://oxfordtwpmi.gov/"]
+        sources: ["https://oxfordtwpmi.gov/", "Oxford Township PC Meeting Packet, Sept 10, 2026 (agenda, Aug 27 2026 approved-draft minutes, Data Center Article 2/3/5 text amendment drafts, Data Center Engineering Report, Fire Dept Data Center Fire and Life Safety Review Requirements) -- pulled directly by Mo from the Township's own site the night of the first reading", "Mo, live 2026-09-10: Oxford Township's existing 1-year data-center moratorium expires Feb 2027"]
       },
       {
         id: 324,
@@ -20399,8 +20417,8 @@ const MUNICIPALITIES = [
         municipality: "Akron Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.64222,
+        lng: -83.52583,
         planner_name: "Christina Martens",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20419,8 +20437,8 @@ const MUNICIPALITIES = [
         municipality: "Village of Akron",
         county: "Tuscola",
         type: "Village",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.56667,
+        lng: -83.51417,
         planner_name: "James Dickinson",
         planner_title: "Interim Zoning Administrator",
         firm: "SafeBuilt",
@@ -20439,8 +20457,8 @@ const MUNICIPALITIES = [
         municipality: "Almer Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.53139,
+        lng: -83.40111,
         planner_name: "Greg Festian",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20459,8 +20477,8 @@ const MUNICIPALITIES = [
         municipality: "City of Cass City",
         county: "Tuscola",
         type: "City",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.59944,
+        lng: -83.17639,
         planner_name: "Debbie Powell",
         planner_title: "Village Manager / Zoning Administrator",
         firm: "SafeBuilt",
@@ -20479,8 +20497,8 @@ const MUNICIPALITIES = [
         municipality: "Columbia Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.63278,
+        lng: -83.4275,
         planner_name: "Kathy Trischler",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20499,8 +20517,8 @@ const MUNICIPALITIES = [
         municipality: "Dayton Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.37472,
+        lng: -83.27417,
         planner_name: "Travis Klimek",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20519,8 +20537,8 @@ const MUNICIPALITIES = [
         municipality: "Denmark Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.42889,
+        lng: -83.66417,
         planner_name: "Eric Barden",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20539,8 +20557,8 @@ const MUNICIPALITIES = [
         municipality: "Elkland Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.61194,
+        lng: -83.17889,
         planner_name: "Gary Jones",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20559,8 +20577,8 @@ const MUNICIPALITIES = [
         municipality: "Ellington Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.54333,
+        lng: -83.30167,
         planner_name: "Doug Lagos",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20579,8 +20597,8 @@ const MUNICIPALITIES = [
         municipality: "Elmwood Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.63444,
+        lng: -83.28389,
         planner_name: "Chris Graff",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20599,8 +20617,8 @@ const MUNICIPALITIES = [
         municipality: "Village of Fairgrove",
         county: "Tuscola",
         type: "Village",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.52639,
+        lng: -83.54472,
         planner_name: "Paul Strasz",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20619,8 +20637,8 @@ const MUNICIPALITIES = [
         municipality: "Fremont Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.35194,
+        lng: -83.38944,
         planner_name: "Jerry White",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20639,8 +20657,8 @@ const MUNICIPALITIES = [
         municipality: "Village of Gagetown",
         county: "Tuscola",
         type: "Village",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.6575,
+        lng: -83.24389,
         planner_name: "Gene Bucholtz",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20659,8 +20677,8 @@ const MUNICIPALITIES = [
         municipality: "Gilford Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.53,
+        lng: -83.65194,
         planner_name: "Chris Hager",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20679,8 +20697,8 @@ const MUNICIPALITIES = [
         municipality: "Indianfields Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.47778,
+        lng: -83.40389,
         planner_name: "Paul Strasz",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20699,8 +20717,8 @@ const MUNICIPALITIES = [
         municipality: "Juniata Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.43639,
+        lng: -83.51861,
         planner_name: "Troy Hecht",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20719,8 +20737,8 @@ const MUNICIPALITIES = [
         municipality: "Kingston Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.44917,
+        lng: -83.17583,
         planner_name: "Ken Walkiewicz",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20739,8 +20757,8 @@ const MUNICIPALITIES = [
         municipality: "Village of Kingston",
         county: "Tuscola",
         type: "Village",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.41361,
+        lng: -83.18667,
         planner_name: "Jeff Machota",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20759,8 +20777,8 @@ const MUNICIPALITIES = [
         municipality: "Koylton Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.3725,
+        lng: -83.16028,
         planner_name: "Vacant",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20779,8 +20797,8 @@ const MUNICIPALITIES = [
         municipality: "Village of Mayville",
         county: "Tuscola",
         type: "Village",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.33611,
+        lng: -83.35083,
         planner_name: "Bernie Nilot",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20799,8 +20817,8 @@ const MUNICIPALITIES = [
         municipality: "Millington Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.27889,
+        lng: -83.52167,
         planner_name: "Tammy Daenzer",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20819,8 +20837,8 @@ const MUNICIPALITIES = [
         municipality: "Village of Millington",
         county: "Tuscola",
         type: "Village",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.28222,
+        lng: -83.52944,
         planner_name: "Jeff Bassett",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20839,8 +20857,8 @@ const MUNICIPALITIES = [
         municipality: "Novesta Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.5475,
+        lng: -83.17917,
         planner_name: "Steve Ross",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20859,8 +20877,8 @@ const MUNICIPALITIES = [
         municipality: "Village of Unionville",
         county: "Tuscola",
         type: "Village",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.65417,
+        lng: -83.46833,
         planner_name: "John Katnik",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20879,8 +20897,8 @@ const MUNICIPALITIES = [
         municipality: "Vassar Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.34722,
+        lng: -83.53139,
         planner_name: "Troy Eurich",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20899,8 +20917,8 @@ const MUNICIPALITIES = [
         municipality: "Watertown Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.27028,
+        lng: -83.40444,
         planner_name: "Rick Pyles",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20919,8 +20937,8 @@ const MUNICIPALITIES = [
         municipality: "Wells Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.45611,
+        lng: -83.29389,
         planner_name: "Paul Strasz",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20939,8 +20957,8 @@ const MUNICIPALITIES = [
         municipality: "Wisner Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.59972,
+        lng: -83.63361,
         planner_name: "Bradley Barnes",
         planner_title: "Zoning Administrator",
         firm: "SafeBuilt",
@@ -20959,8 +20977,8 @@ const MUNICIPALITIES = [
         municipality: "Tuscola Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.34806,
+        lng: -83.63694,
         planner_name: "Matt Jobson",
         planner_title: "Zoning Administrator",
         firm: "In-House (Township Staff)",
@@ -20979,8 +20997,8 @@ const MUNICIPALITIES = [
         municipality: "Arbela Township",
         county: "Tuscola",
         type: "Township",
-        lat: 43.5,
-        lng: -83.35,
+        lat: 43.26111,
+        lng: -83.64778,
         planner_name: "Carrie Woelzlein",
         planner_title: "Zoning Administrator",
         firm: "In-House (Township Staff)",
@@ -34385,6 +34403,22 @@ function drawMarkers(data) {
       }).addTo(markersLayer);
     }
 
+    // On-map badge for DTE Energy builds/proposals — offset to the bottom-left
+    // corner so it doesn't collide with the centered CWA badge or the
+    // bottom-right Data Center Case badge when a municipality carries multiple flags.
+    if (m.dte_flag && !isUnzoned) {
+      const dteBadge = L.marker([m.lat, m.lng], {
+        icon: L.divIcon({
+          html: `<div style="font-size:9px;color:white;background:#0d9488;border-radius:50%;width:14px;height:14px;display:flex;align-items:center;justify-content:center;font-weight:900;border:1px solid rgba(0,0,0,0.35);box-shadow:0 0 2px rgba(0,0,0,0.5)" title="DTE Energy build/proposal">🔌</div>`,
+          className: '',
+          iconSize: [14, 14],
+          iconAnchor: [23, -9]
+        }),
+        zIndexOffset: 105,
+        interactive: false
+      }).addTo(markersLayer);
+    }
+
     marker.addTo(markersLayer);
     markerRefs[m.id] = marker;
   });
@@ -34479,6 +34513,7 @@ function drawFirmLines(data) {
 
 let activeFirms = new Set(Object.keys(FIRMS));
 let showDCOnly = false;
+let showDTEOnly = false;
 let currentSearch = '';
 let currentSort = 'name';
 
@@ -34566,6 +34601,7 @@ function buildMuniList(data) {
       m.cwa_flag ? '⚠' : '',
       m.cwa_alumni ? '🔶' : '',
       m.data_center_case ? '⚡' : '',
+      m.dte_flag ? '🔌' : '',
       m.status === 'terminated' ? '✕' : ''
     ].filter(Boolean).join('');
 
@@ -34607,6 +34643,7 @@ function updateStats(data) {
   document.getElementById('stat-total').textContent = data.length;
   document.getElementById('stat-cwa').textContent = data.filter(m => m.cwa_flag && m.status === 'active').length;
   document.getElementById('stat-dc').textContent = data.filter(m => m.data_center_case).length;
+  document.getElementById('stat-dte').textContent = data.filter(m => m.dte_flag).length;
   document.getElementById('gap-num').textContent = data.filter(m => !m.planner_name).length;
 }
 
@@ -34623,6 +34660,9 @@ function getFilteredData() {
 
     // DC only toggle
     if (showDCOnly && !m.data_center_case) return false;
+
+    // DTE Energy builds/proposals only toggle
+    if (showDTEOnly && !m.dte_flag) return false;
 
     // Search
     if (search) {
@@ -34696,6 +34736,11 @@ document.getElementById('toggle-firm-lines').addEventListener('change', e => {
 
 document.getElementById('toggle-dc-only').addEventListener('change', e => {
   showDCOnly = e.target.checked;
+  refreshMap();
+});
+
+document.getElementById('toggle-dte-only').addEventListener('change', e => {
+  showDTEOnly = e.target.checked;
   refreshMap();
 });
 
@@ -34788,8 +34833,10 @@ function showGaps() {
   activeFirms = new Set(Object.keys(FIRMS));
   document.querySelectorAll('#firm-filters input[type="checkbox"]').forEach(cb => { cb.checked = true; });
   showDCOnly = false;
+  showDTEOnly = false;
 
   document.getElementById('toggle-dc-only').checked = false;
+  document.getElementById('toggle-dte-only').checked = false;
   refreshMap();
   // Flash the unknown municipalities
   MUNICIPALITIES.filter(m => !m.planner_name).forEach(m => {
