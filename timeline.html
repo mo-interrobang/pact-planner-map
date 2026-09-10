@@ -325,7 +325,7 @@ body {
   <div style="font-size:11.5px;margin-bottom:8px;"><a href="index.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">← Planner Map</a><span style="color:var(--text-3);margin:0 8px;">|</span><span style="color:var(--text-3);">CWA Pattern Timeline (this page)</span><span style="color:var(--text-3);margin:0 8px;">|</span><a href="auerbach-line.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">Auerbach Line: Saline ↔ Allen Park</a><span style="color:var(--text-3);margin:0 8px;">|</span><a href="oakland.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">Oakland County Watch</a><span style="color:var(--text-3);margin:0 8px;">|</span><a href="cassin.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">Steve Cassin Watch</a></div>
   <h1>CWA Pattern — Michigan Communities vs. Data Center Developers <span class="cwa-badge">CARLISLE/WORTMAN ASSOCIATES</span></h1>
   <p class="subtitle">When each community was approached, who CWA placed as planner, and how each case unfolded. Hover events for full detail — click a dot to pin the card open and follow its source link.</p>
-  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Updated 2026-08-14 — entries added in this update (Wixom's setback fight, Saline's Oracle tax-break objection, Allen Park's stalled ZBA appeal and ordinance, Ypsilanti's UM site decision, and more) are marked <span class="tt-new-badge" style="margin:0 4px;">NEW</span></div>
+  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Updated 2026-09-10 — entries added in this update (Wixom's ordinance adoption + mootness argument, Ypsilanti Township's Sept 9 town hall, Saline's STC non-docketing synced from the planner map) are marked <span class="tt-new-badge" style="margin:0 4px;">NEW</span></div>
 </div>
 
 <div class="pattern-strip">
@@ -848,10 +848,10 @@ const COMMUNITIES = [
         source: 'https://www.michiganpublic.org/education/2026-08-12/university-of-michigan-chooses-site-for-controversial-computing-center-near-ypsilanti', sourceLabel: 'Michigan Public, "University of Michigan chooses site for controversial computing center," Aug 12, 2026'
       },
       {
-        date: '2026-09-09', type: 'future', isNew: true,
-        label: '⚠ UM community town hall scheduled',
-        detail: 'UM has scheduled a community town hall for September 9, 2026 at the Ann Arbor Marriott Ypsilanti at Eagle Crest — the next confirmed public event following the Aug 11 site confirmation. Whether this is genuine engagement or a formality after a site decision the township says was made without them is the open question.',
-        source: 'https://bridgemi.com/business-watch/u-m-affirms-ypsilanti-1-2b-computing-center-site-township-officials-vow-fight/', sourceLabel: 'Bridge Michigan, "U-M affirms Ypsilanti site, township officials vow fight," Aug 2026'
+        date: '2026-09-09', type: 'community', isNew: true,
+        label: 'UM community town hall held — drew heavy opposition',
+        detail: 'UM\'s community town hall at the Ann Arbor Marriott Ypsilanti at Eagle Crest drew heavy resident opposition. State Rep. Jimmie Wilson Jr. alleged a "bait and switch," saying officials were originally told the project was only ~20 acres/two office buildings before UM\'s Aug 11 confirmation of the full 144-acre Textile Road site. Supervisor Brenda Stumbo said the township wants to sit down with UM\'s incoming president; the township says it is "exploring legal options" but has not filed suit as of Sept 10, 2026. UM maintains no nuclear materials will be stored on-site and no Huron River water will be used.',
+        source: 'https://www.clickondetroit.com/news/local/2026/09/10/ypsilanti-township-residents-voice-concerns-over-proposed-university-of-michigan-los-alamos-data-center/', sourceLabel: 'ClickOnDetroit, "Ypsilanti Township residents voice concerns," Sept 10, 2026'
       },
       {
         date: '2026-04-22', type: 'future',
@@ -940,10 +940,16 @@ const COMMUNITIES = [
         source: 'https://www.wixomgov.org/home/showpublisheddocument/12923/639221486671883649', sourceLabel: 'City of Wixom — City Council Presentation Slides, Aug 11, 2026'
       },
       {
-        date: '2026-08-25', type: 'future', isNew: true,
-        label: '⚠ Second reading & adoption vote — moratorium expires Sept 24, 2026',
-        detail: 'Second reading and the adoption vote are proposed for Aug 25, 2026 — the moratorium itself now expires Sept 24, 2026 (a more precise date than the earlier Aug/Sept estimate). Key open question: do the struck enforcement provisions (bond, CBA, rate pass-through, monitoring, shutdown triggers) stay struck? If so, the story is that Council wrote real enforcement teeth into the ordinance and legal review removed them — worth a FOIA request for the City Attorney\'s written "unenforceable or preempted" analysis, which would also be directly useful in Allen Park and Berlin Township.',
-        source: 'https://www.wxyz.com/news/data-centers/wixom-city-council-takes-steps-to-regulate-data-centers-as-6-month-moratorium-nears-end', sourceLabel: 'WXYZ, "Wixom city council takes steps to regulate data centers," Aug 12, 2026'
+        date: '2026-08-25', type: 'protection', isNew: true,
+        label: 'Second reading & adoption vote — ordinance ADOPTED; moratorium expired Sept 24, 2026',
+        detail: 'City Council holds the Second Reading and formally ADOPTS the data center ordinance, making data centers a special land use only in M-1/M-2 industrial zones with the standards developed through the summer (noise, cooling, setback, utility-capacity, traffic, decommissioning). UPDATE 2026-09-10: some secondary coverage (Law360, Detroit News — Sept 2, 2026) describes the adopted setback as \"1,500 ft,\" which conflicts with the 2,640 ft figure from the Aug 3, 2026 legal revision above — needs reconciliation against the adopted ordinance\'s actual text before either number is cited as final. Key open question, still unresolved: do the struck enforcement provisions (bond, CBA, rate pass-through, monitoring, shutdown triggers) stay struck in the adopted text?',
+        source: 'https://www.wixomgov.org/departments/construction-development-services-building/data-center-moratorium-ordinance', sourceLabel: 'City of Wixom — Data Center Moratorium & Ordinance page'
+      },
+      {
+        date: '2026-09-02', type: 'legal', isNew: true,
+        label: 'City argues Sansone federal suit is now moot',
+        detail: 'In the Wixom Industrial One LLC / Sansone Group federal suit filed Aug 7, 2026 (Eastern District of Michigan), the City moves to argue the case is now moot given the newly adopted Aug 25 ordinance. No ruling has been issued as of Sept 10, 2026 — this is the first real test of whether adopting a compliant ordinance can moot a pending zoning-enabling-act challenge, directly relevant to Gibraltar\'s parallel Raeden/CAL Realty suit and to Allen Park\'s frozen ZBA appeal.',
+        source: 'https://www.law360.com/publicpolicy/articles/2520404', sourceLabel: 'Law360, Sept 2, 2026'
       }
     ]
   },
