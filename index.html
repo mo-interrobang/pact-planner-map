@@ -103,7 +103,7 @@
     /* Stats bar */
     #stats-bar {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       border-bottom: 1px solid #334155;
     }
     .stat-cell {
@@ -699,6 +699,10 @@
       <div class="stat-number dte" id="stat-dte">0</div>
       <div class="stat-label">🔌 DTE Builds</div>
     </div>
+    <div class="stat-cell">
+      <div class="stat-number" id="stat-bess" style="color:#16a34a">0</div>
+      <div class="stat-label">🔋 BESS Cases</div>
+    </div>
   </div>
 
   <div id="filters">
@@ -781,6 +785,10 @@
             <input type="checkbox" id="toggle-dte-only" />
             <span class="layer-row-label" style="color:#2dd4bf">🔌 DTE Energy builds/proposals only</span>
           </label>
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-bess-only" />
+            <span class="layer-row-label" style="color:#16a34a">🔋 BESS (battery storage) cases only</span>
+          </label>
         </div>
       </div>
 
@@ -847,6 +855,10 @@
     <div class="legend-row">
       <div class="legend-dot" style="background:#0d9488"></div>
       <span class="legend-label">🔌 DTE Energy build/proposal</span>
+    </div>
+    <div class="legend-row">
+      <div class="legend-dot" style="background:#16a34a"></div>
+      <span class="legend-label">🔋 BESS (battery storage) case — hover icon for why</span>
     </div>
     <div class="legend-sep"></div>
     <div class="legend-title">Lines</div>
@@ -3602,6 +3614,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "UPDATED 2026-08-05: BESS developer identified — NewEdge Renewable Power, 260 MW facility on leased ag land near W Main St/S Van Kal St (Oshtemo/Almena border); not a formal application yet, just a lease + informal PC presentations (Aug/Oct 2025). Board paused BESS 5-2 Nov 11, 2025 (12-month, expires ~Nov 25, 2026); a 27-page draft BESS ordinance still not public as of early Aug 2026, first public draft targeted for the Aug 13, 2026 PC meeting. Separate 1-year data center moratorium moved through readings starting ~Mar 10, 2026 (no known applicant at the time — Supervisor Cheri Bell). A NEW 6-month large-scale solar moratorium had its first reading in mid-2026, second reading Aug 11, 2026. Oshtemo is part of a multi-township coalition challenging the MPSC's PA 233 authority to override local zoning for utility-scale BESS/solar/wind — now petitioned to the MI Supreme Court.",
+        bess_flag: true,
+        bess_reason: "BESS: NewEdge Renewable Power's 260 MW facility (informal stage, board paused BESS review Nov 2025). A separate 1-yr data-center moratorium exists here too but has no named applicant.",
         notes: "West Kalamazoo County township with rapid residential growth. In-house planning staff (Jodi Stefforia, Planning Director; Colten Hutson, ZA; Leeanna Harris) drives the BESS/data-center/solar ordinance work — NOT PCI or CWA (no connection to either found). Oshtemo separately hired Progressive Companies (planner Jason Ball, Sara Moring-Hilt) for an unrelated general zoning-ordinance rewrite (PC updates Jun 25 & Jul 23, 2026) — worth not conflating the two efforts. UPDATED 2026-08-05: active recall campaign (recalloshtemo.org, organizer Katherine/Katie Schneider, who also leads BESS opposition with Donita/Gary DeBruin) targeting Trustees Neil Sikora, Zak Ford, Kristin Cole, plus Supervisor Cheri Bell and Clerk Dusty Farmer — signature drive fell short for Nov 2026 ballot, next window Nov 2028. | jstefforia@oshtemo.org, 269-216-5232.",
         work_history: null,
         sources: ["Oshtemo Township planning documents", "WWMT — https://wwmt.com/news/local/oshtemo-township-battery-storage-system-vote-pause-board-residents-concern-environment-safety-renewable-energy-kalamazoo-county-west-michigan", "WWMT — https://wwmt.com/news/local/oshtemo-township-residents-organize-against-battery-storage-facility-plans-newedge-public-service-commission-wwmt", "Public Media Network — https://publicmedianet.org/news/community/oshtemo-township-board-advances-energy-ordinance-timeline-adopts-first-reading-of-solar-moratorium/", "Ballotpedia recall — https://ballotpedia.org/Town_board_recall,_Oshtemo_Township,_Michigan_(2025-2026)", "recalloshtemo.org"]
@@ -3950,6 +3964,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "Tuscola County is a major renewable energy battleground: (1) Tuscola II Energy Storage — 100 MW NextEra BESS project in Fairgrove Township seeking SLUP. (2) Birch Valley Solar — Ranger Power, Arbela Township, facing significant local opposition. (3) Lake Iris Solar — 95.6 MW CMS Energy, St. Clair County border area, planned 2026.",
+        bess_flag: true,
+        bess_reason: "Regional BESS/solar context for Tuscola County (a renewable-energy battleground) -- no project sited in Caro itself. See Fairgrove Twp for the actual BESS project (Tuscola II).",
         notes: "Tuscola County seat. Scott R. Czasak confirmed as Zoning Administrator (sczasak@carocity.net, 989-673-7671 ext 5225). Rowe Professional Services confirmed as master plan preparer (ongoing contract). Mid-Michigan firm also active in Gratiot, Bay, and Lapeer County communities.",
         work_history: null,
         sources: ["City of Caro — Rowe Professional Services master plan", "Tuscola County energy project filings"]
@@ -3989,6 +4005,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "Tuscola II Energy Storage — 100 MW NextEra Energy BESS project seeking Special Land Use Permit (SLUP). One of Michigan's largest battery storage facilities proposed for this rural township.",
+        bess_flag: true,
+        bess_reason: "BESS: Tuscola II Energy Storage, NextEra Energy, 100 MW -- seeking a Special Land Use Permit. Not a data center.",
         notes: "Small Tuscola County township facing major industrial-scale BESS siting pressure from NextEra Energy's 100 MW Tuscola II project. SLUP process ongoing. Township planning capacity is extremely limited vs. scale of this project. | (989) 553-5315. Very limited PC activity.",
         work_history: null,
         sources: ["Tuscola II Energy Storage SLUP filing", "NextEra Energy project documentation"]
@@ -4145,6 +4163,8 @@ const MUNICIPALITIES = [
         dte_flag: true,
         data_center_case: true,
         data_center_notes: "Huron County is home to the Century Oaks BESS — a 200 MW NextEra Energy battery storage facility that went OPERATIONAL July 8, 2026, making it Michigan's largest battery storage facility at completion. Silver Creek Solar — 200 MW DTE Energy project also planned for Huron County (August 2028 target). The county is one of Michigan's most active renewable energy siting zones.",
+        bess_flag: true,
+        bess_reason: "BESS: Century Oaks, NextEra Energy, 200 MW, went operational July 2026 -- Michigan's largest battery storage facility. Regional Huron Co. context, not sited in Bad Axe itself.",
         notes: "Huron County seat, 'Thumb' region's administrative center. Rebecca Bachman (City Manager) oversees primary administrative zoning. Physical site development, soil erosion reviews, and building inspection managed through Huron County Building & Zoning Director Jeff Smith (co.huron.mi.us/building-zoning). Contact: 989-269-6431.",
         work_history: null,
         sources: ["Bad Axe city website — planner not identified", "Century Oaks BESS operational July 8 2026", "NextEra Energy documentation", "Silver Creek Solar DTE filing"]
@@ -5745,6 +5765,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "Hayes Township is developing a utility-scale solar and BESS (battery energy storage) ordinance, discussed at the Charlevoix County Planning Commission March 2025. Township is modeling its ordinance on the MTA sample ordinance. Rationale: state law (effective Nov. 2023/2024) prevents townships from blocking 50+ MW projects without a 'workable' ordinance. Hayes is getting ahead of developers.",
+        bess_flag: true,
+        bess_reason: "BESS: Township is proactively drafting a solar + battery storage ordinance ahead of any developer -- no project yet, no data center.",
         notes: "Hayes Township retains Preston Community Services as designated professional planning consultant. Peter Preston (Principal) serves as primary planner — executes code updates and Zoning Board evaluations. One of the most proactively engaged townships in Charlevoix County on energy development. LinkedIn: linkedin.com/in/peter-preston-81458226.",
         work_history: null,
         sources: ["Charlevoix County PC Minutes March 6 2025", "MTA sample energy ordinance", "Michigan P.A. 233 of 2023"]
@@ -6386,6 +6408,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "Data center ordinance amendment confirmed in active drafting as of Feb 23, 2026 PC meeting (Old Business item). No pending data center application — CWA drafting proactively. Battery energy storage facility (Key Capture Energy, 6709 East Joy Road) applied May 18, 2026 — CUP postponed pending engineering/planner review. Township held a public BESS education workshop Feb 26, 2026.",
+        bess_flag: true,
+        bess_reason: "BESS: Key Capture Energy applied for a battery storage facility (CUP pending). A separate data-center ordinance is being drafted proactively here too, but has no application.",
         notes: "Planning Commission contracted to Carlisle/Wortman Associates (CWA). Michelle Marin (Associate, AICP) and Paul Montagno (Principal) alternate as Planning Consultant — confirmed by PC minutes Jan–May 2026 and Sep 2025. Anne Alexander is Building Coordinator (staff, aalexander@salem-mi.org, (248) 912-6720). PC Chair: Pam Merlo; Vice-Chair: Kevin Frost; Secretary: Michael Huntsman. CWA managing concurrent ordinance amendments: Rural Uses (triggered by Cardinal Farms CUP controversy Apr 2025, public hearing May 2026) and Data Centers (proactive, no pending application). Northwest Washtenaw County, borders Wayne County to the north.",
         work_history: null,
         sources: ["https://www.salem-mi.org/government/boards_committees___commissions/planning_commission.php", "https://salemtwpmi.documents-on-demand.com/?l=447f6aee3a284784abcffe016dbe4b87 (PC minutes portal — docs 72fdbc7f, 9e8ff33f, 23072035, 11aa8f43, 098f2b98, 18dd4c68, 7991955c all confirm CWA consultants)"]
@@ -9867,6 +9891,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "NEW 2026-08-05: BESS developer = Heron Energy Storage, LLC — Special Land Use/site plan for a BESS facility on Riverview Dr (Parcel #03-08-034-021-51), submitted Feb 2026, still under review (tabled repeatedly for missing decommissioning/financial-guarantee/emergency-access info) as of Jun 2026. Board requested a 6-month BESS moratorium (with authority to expand) approved by PC Jun 17, 2026. Separately, Data Center moratorium Ordinance 193 was passed Apr 2026 and EXTENDED TO ONE YEAR by May 20, 2026 (heavy public opposition at that hearing — fire safety, water use ~300M gal/day cited by a resident, bald eagle nest, property values). An Ad Hoc Data Center Ordinance Committee was formed Jun 17, 2026: Township Board members VanDenBerg & Albertson-Stowell, 2 PC members (TBD), 3 Citizens Coalition members (Ally Riston-Komroy, Lisa Mulder, Brad Seekman), 2 alternates (Robert Petric, Wendy Pedrolini). U-M's Dr. Sarah Mills (co-author of the Feb 2026 statewide data-center guidebook, already tracked as Auerbach/CWA's MAP webinar co-instructor) is noted in the May 20, 2026 PC minutes as holding an Aug 31, 2026 meeting IN DORR TOWNSHIP for township officials on data center ordinances — this specific meeting could not be independently corroborated outside the Gun Plain minutes (worth confirming directly). Coldwater Township (Branch Co.) — Michigan's one operational BESS site — invited Gun Plain's board to visit its facility (Jun 2026). UPDATE 2026-09-10 (30-day BESS sweep): Township formally adopted Ordinance 196, a temporary moratorium on considering any FUTURE BESS applications, effective Aug 10, 2026 -- a follow-up/formalization of the informal 6-month BESS pause noted above, in direct response to the contentious Heron Energy Storage fight. Source: gunplain.org notice of adoption.",
+        bess_flag: true,
+        bess_reason: "BESS: Heron Energy Storage LLC facility under review, prompted a formal BESS moratorium (Ordinance 196). A SEPARATE data-center moratorium (Ordinance 193) also exists here -- two distinct fights, not one.",
         notes: "Contracted planning/zoning firm is Professional Code Inspections of Michigan, Inc. (PCI, pcimi.com) — 'Lori from PCI' referenced directly in Feb 18 & Jun 17, 2026 PC minutes (Mo's own downloaded copies). PCI ALSO serves Dorr, Otsego, and Wayland Townships (all in this same Allegan Co. cluster) plus 20+ other West Michigan municipalities out of its Dorr office — a parallel single-firm-across-multiple-townships pattern to the CWA/Auerbach pattern already tracked in Washtenaw/Wayne County. PC members: Robert Bennett (Chair), Paul Sullivan (Vice Chair), Diane Webber (Secretary), Dana Albertson-Stowell, Kelly McHugh, Wayne Novick, Bill Shannon. CORRECTED 2026-08-05: 'Mike' referenced alongside Lori in PC minutes is Mike VanDenBerg, Gun Plain's elected Township Supervisor — an official, NOT PCI staff (confirmed via ballotpedia.org and gunplain.org/elected-officials/). Also corrected: the widely-reported 'Plainwell battery storage' project is developer Copenhagen Infrastructure Partners (CIP) at the Riverview Dr site — Supervisor VandenBerg has publicly noted resident confusion between this BESS project and an unrelated data center; whether 'Heron Energy Storage LLC' is CIP's project-specific entity name for the same site is unconfirmed. PCI's own website has no published model/template data-center ordinance and no staff bios for Castello, Jason Derry, Kirk Scharphorn Jr., or Heather Mitchell — unlike CWA, no evidence found that PCI is circulating shared ordinance language across its client townships (Gun Plain's own draft ordinances 187/192/193/196 are scanned/non-OCR and could not be read to confirm or rule this out further).",
         work_history: null,
         sources: ["Gun Plain Charter Township PC Minutes, Nov 19 2025 – Jun 17 2026 (Mo's direct downloads)", "gunplain.org — https://www.gunplain.org/resolution-2026-8-to-extend-the-temporary-moratorium-on-data-centers-from-ordinance-193/", "gunplain.org — https://www.gunplain.org/resolution-2026-9-to-impose-a-temporary-moratorium-on-future-battery-energy-storage-systems-bess/", "pcimi.com — https://www.pcimi.com/dorr/"]
@@ -9927,6 +9953,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "MAJOR ACTIVE CASE, NEW 2026-08-05: Microsoft purchased ~272 acres off 144th Ave (near US-131) in 2024 for $48M+, ~128 acres for the data center footprint, plus an adjacent ~144-acre 'Microsoft West' parcel — one of several concurrent MI Microsoft sites (Gaines Twp ~414 ac 'South Campus', Lowell Twp ~235 ac 'Valley Three', the latter paused after opposition). Site is already zoned commercial/industrial, so NO rezoning is required and the project can proceed 'by right' — meaning no formal PC hearing has happened yet and none is required to start. Baxtel lists status as 'land bank,' planned year 2028 — no construction timeline confirmed. Heavy pre-application resident opposition since Dec 2025 (Facebook group 'Dorr Township MI – We the People,' ~100-person Jan 31 2026 meeting w/ state Reps. Jim DeSana & Joseph Fox, industrial hygienist Kristen Meghan Kelly; Microsoft held its own community workshop Feb 5, 2026). SEPARATELY, PC began preliminary BESS-ordinance discussion Feb 17, 2026 (Chair Dan Beute) — no BESS developer named, draft going to Township Attorney next, residents perceive it as connected to the Microsoft project though township frames it as a distinct, proactive item. Lakeshore Advantage (Holland-based regional economic-development org) is the one named partner organization beyond Microsoft itself. No Dykema Gossett or other cross-case law-firm connection found. UPDATE 2026-09-10 (sweep): on Sept 1, 2026 over 100 West Michigan municipal officials (from Allegan, Barry, and Kent counties) attended a closed-door, invite-only data-center seminar at Dorr Township Hall hosted by Professional Code Inspections of Michigan (PCI); 50+ protesters gathered outside with 'No Data Center' signs citing aquifer/well-water concerns. Confirms the township's data-center moratorium runs through Spring 2027. Source: WWMT, Sept 1, 2026.",
+        bess_flag: true,
+        bess_reason: "Primarily the Microsoft data-center case. A separate, unrelated BESS ordinance discussion (no developer) is also underway here -- don't conflate the two.",
         notes: "PCI (Professional Code Inspections of Michigan, pcimi.com) is confirmed on Dorr Township's own website as the contracted provider for permits, inspections, AND zoning questions — i.e., functionally the township's zoning administrator/building department, not merely a firm with an office located there. PCI's Dorr office serves 23+ West Michigan municipalities incl. Gun Plain, Otsego, and Wayland Townships in this same cluster (pcimi.com/dorr/) — worth treating as a parallel single-firm-across-multiple-townships pattern alongside the CWA/Auerbach pattern tracked elsewhere. No direct evidence found (yet) that PCI has personally reviewed the Microsoft site plan or is drafting the BESS ordinance language (that's going to the Township Attorney) — flagged as an inference, not confirmed.",
         work_history: null,
         sources: ["Dorr Twp Planning & Zoning page — https://www.dorrtownshipmi.gov/Departments/Planning-Zoning", "PCI Dorr ZA contact — https://www.pcimi.com/contact/dorr-township-za/", "WWMT — https://wwmt.com/news/local/dorr-township-planning-commission-discussion-battery-energy-storage-system-bess-residents-concerns-data-center-wwmt", "Data Center Dynamics — https://www.datacenterdynamics.com/en/news/microsoft-plans-data-centers-in-dorr-and-lowell-townships-applies-for-property-rezoning-in-gaines-townships/", "Baxtel — https://baxtel.com/data-center/microsoft-dorr-1", "Wilcox Newspapers — https://wilcoxnewspapers.com/data-center-opposition-continues-in-dorr-township/"]
@@ -9947,6 +9975,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "CORRECTED 2026-08-05: firm changed from PCImi to McKenna Associates — PC minutes (Jun 11, 2025) directly credit \"Rebecca Harvey, the Township Planner\" with drafting the BESS ordinance starting from a University of Michigan sample ordinance; Harvey is confirmed as Becky Harvey, AICP, Senior Principal Planning Consultant at McKenna Associates (mcka.com), NOT PCI. PCI's relationship with Wayland (a testimonial on pcimi.com from Supervisor Roger VanVolkinburg) is tied to building-department services, separate from ordinance drafting. Very active 2026 docket. Apr 8, 2026: Supervisor Roger VanVolkinburg asked the PC to begin drafting a data-center ordinance; a BESS draft was already awaiting Township Attorney language. Jun 10, 2026: PC discussed a 1-year data center moratorium (consultant Rebecca Harvey warned outright exclusion risks 'exclusionary zoning' liability) and reviewed the BESS ordinance; hearings set for July. Jul 8, 2026 (7-0 votes): ADOPTED a 12-month data center moratorium AND new BESS ordinance sections (Sec. 3.50 off-site BESS, Sec. 3.51 on-site BESS, amended Sec. 13.03) — minutes note the BESS ordinance was 'modeled after other communities' ordinances,' plausibly including neighboring Gun Plain/Oshtemo drafts. No BESS or data-center developer named — both efforts are preemptive, explicitly prompted by residents citing the Microsoft/Dorr Twp fight and Gaines Township data-center activity nearby. Separately, Wayland has an active, contentious SOLAR case: Blazing Star Solar LLC (Apex Clean Energy subsidiary), 125 MW on 13 parcels — approved 4-3 with conditions (50 dBA sound cap, decommissioning agreement) Jun 10, 2026, Findings of Fact approved Jul 8, 2026.",
+        bess_flag: true,
+        bess_reason: "BESS: adopted new BESS ordinance sections (Sec. 3.50/3.51) alongside a separate 12-month data-center moratorium -- both preemptive, no developer named for either.",
         notes: "PCI (Professional Code Inspections of Michigan) is Wayland's contracted building/zoning firm — Kirk Scharphorn Jr. named as Zoning Administrator on the township's own site; PCI's Dorr-office roster also lists Lori Castello (Planner/ZA) and Mike Burns (Plumbing/Mechanical Inspector) — the same 'Lori' and likely the same 'Mike' referenced in Gun Plain Twp's PC minutes, confirming PCI staff cover both townships. HOWEVER the PC's actual day-to-day planning consultant of record in 2026 minutes is Rebecca Harvey ('Township Zoning Consultant') — her firm affiliation (PCI vs. independent) is UNCONFIRMED; commissioners separately email PCI directly for hearing-notice publication, so PCI retains at least an administrative role. A client testimonial on pcimi.com from 'Roger VanVolkinburg — Wayland Township Supervisor' corroborates the PCI relationship generally.",
         work_history: null,
         sources: ["Wayland Twp PC Minutes, Apr 8 2026 — https://waytwp.org/wp-content/uploads/2026/04/4-8-26-Draft.pdf", "Wayland Twp PC Minutes, Jun 10 2026 — https://waytwp.org/wp-content/uploads/2026/07/6-10-26.pdf", "Wayland Twp PC Minutes, Jul 8 2026 — https://waytwp.org/wp-content/uploads/2026/07/7-8-26-draft.pdf", "Wayland Twp Zoning & Planning page — https://waytwp.org/departments/zoning/", "PCI Dorr office roster — https://www.pcimi.com/dorr/", "Blazing Star Solar — https://www.blazingstarsolar.com/"]
@@ -9988,6 +10018,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "NEW 2026-08-05, HIGH PRIORITY: NorthStar Clean Energy (operating as Allegan Solar LLC) filed a Special Use Permit for a 101-105.6 MW AC solar array with a 50 MW BESS (88 battery containers, all sited in Monterey), spanning Monterey and neighboring Hopkins Township. Mar 9, 2026 hearing: PCI's Lori Castello flagged multiple ordinance gaps (parcels under 20-acre minimum, fence height violations, and critically NO provision for BESS as a principal use, only accessory-to-solar) — hearing continued to May 11. Resident Anita Kerber presented a 28-signature moratorium petition; PC said it lacks moratorium authority (rests with the Township Board). May 11, 2026: NorthStar/Allegan Solar WITHDREW its local Special Use Permit application and announced it would instead pursue approval at the STATE level under PA 233 (Michigan's siting-preemption law) — a documented instance of a developer bypassing local review entirely after hitting ordinance gaps, the same PA 233 end-run tracked elsewhere in this dataset (Ypsilanti Township water ban, etc.). Jul 13, 2026: PC still has NOT adopted a BESS ordinance; Castello cautioned commissioners to \"research it very good before getting into it.\" NorthStar's Senior Manager Colin Daining publicly denied any connection to the Dorr Microsoft data center despite social-media rumors linking the two.",
+        bess_flag: true,
+        bess_reason: "BESS: NorthStar Clean Energy/Allegan Solar LLC's 50 MW battery component of a 101 MW solar array -- not a data center.",
         notes: "PCI (pcimi.com/dorr) confirmed directly on Monterey's township site and by name in PC minutes — Lori Castello is the active reviewing Zoning Administrator. This is the strongest evidence in the whole PCI cluster of a real, live special-use fight with a clear ordinance gap and a developer pivoting to state preemption.",
         work_history: null,
         sources: ["Wilcox Newspapers/Allegan County News — https://wilcoxnewspapers.com/full-house-at-monterey-meeting-to-contest-solar-project/", "Monterey Twp Mar 2026 PC minutes — http://www.montereytownship.org/minutes/P3-26.pdf", "Monterey Twp May 2026 PC minutes — http://www.montereytownship.org/minutes/P5-26.pdf", "Monterey Twp Jul 2026 PC minutes — http://www.montereytownship.org/minutes/P7-26.pdf", "NorthStar PA 233 site plan (May 2026) — https://northstarcleanenergy.com/wp-content/uploads/2026/05/Allegan-Solar-Site-Plan-PA233.pdf"]
@@ -10008,6 +10040,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "NEW 2026-08-05, HIGH PRIORITY: same NorthStar Clean Energy/Allegan Solar LLC 101+ MW solar + 50 MW BESS project as Monterey Township (id 459) spans into Hopkins — a ZBA variance fight is on file here (see Hopkins ZBA review memo/findings-of-fact worksheets, Feb 2026). SEPARATELY, Hopkins Township has BOTH an active data-center moratorium (Ordinance 2026-16/17, public hearing Jun 23, 2026) AND an already-ADOPTED solar/BESS ordinance (Sec. 157.056, adopted Sept 2025) — making Hopkins the most regulation-ready of the whole PCI cluster on this issue, ahead of Gun Plain, Dorr, or Wayland.",
+        bess_flag: true,
+        bess_reason: "BESS: same NorthStar 50 MW battery project as neighboring Monterey Twp, plus an already-adopted solar/BESS ordinance (Sec. 157.056). A separate data-center moratorium is also in place.",
         notes: "PCI (pcimi.com/dorr) confirmed on the township's own site; Lori Castello named present at the Sept 23, 2025 PC meeting specifically for the BESS/solar zoning ordinance amendment — the earliest confirmed PCI-attributed renewable-energy ordinance work in this whole cluster.",
         work_history: null,
         sources: ["Hopkins Twp ZBA Allegan Solar review memo — https://www.hopkinstownship.org/wp-content/uploads/2026/02/allegan-solar-review-memo-FOF-decision-worksheets-and-notice-info.pdf", "Hopkins Twp PC minutes 9/23/25 — https://www.hopkinstownship.org/wp-content/uploads/2026/01/9-23-25-Hopkins-Township-Planning-Commission-minutes.pdf"]
@@ -10028,6 +10062,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "NEW 2026-08-05: Had solar/battery-storage moratoriums in place into early 2026; REPEALED them at the Apr 14, 2026 board meeting in favor of a newly-approved \"Revised Zoning Ordinance Book,\" and the Board voted the SAME meeting to retain Foster & Swift as legal counsel specifically for renewable energy and data center issues. No developer/applicant named — preemptive. Exact original moratorium adoption date not locatable online (township's minutes archive has a gap); a records request to the clerk would nail it down. The revised zoning ordinance's BESS/solar chapter is not yet posted publicly as a standalone document.",
+        bess_flag: true,
+        bess_reason: "BESS: repealed an earlier solar/battery-storage moratorium in favor of a new zoning ordinance book; no developer, preemptive.",
         notes: "PCI (pcimi.com) confirmed as the township's contracted building/electrical/mechanical permitting provider. No individual PCI planner is named on Overisel's own materials for the ordinance rewrite specifically — Lori Castello (PCI's confirmed renewable-energy specialist at neighboring Hopkins Twp, id 460) is a plausible but UNCONFIRMED candidate.",
         work_history: null,
         sources: ["Overisel Twp Apr 14, 2026 board minutes — https://overiseltownship.org/wp-content/uploads/2026/04/Minutes-April-14-2026.pdf", "Overisel Twp Building page — https://overiseltownship.org/building/"]
@@ -11208,6 +11244,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "Township Board adopted a 1-Year Data Center & Battery Energy Storage System (\\\"BESS\\\") Moratorium — \\\"An Ordinance to protect the public health, safety, and welfare by establishing regulations relating to a temporary moratorium on considering applications for Data Centers, Battery Energy Storage Systems ('BESS'), all related infrastructure facilities.\\\" Adopted May 21, 2026 (Resolution/Ordinance 2026-6, passed unanimously per board minutes). One-year term, extendable by Board resolution.",
+        bess_flag: true,
+        bess_reason: "BESS: named jointly with data centers in the Township's 1-year moratorium -- &quot;Data Center & Battery Energy Storage System (BESS) Moratorium.&quot;",
         notes: "PULSE-CHECK/RESEARCH PASS 2026-08-06: planner name could not be confirmed despite checking the township's own site — leaving Unknown rather than guessing. No PDF of the moratorium ordinance text itself was locatable online, only the notice text and board minutes; a copy can be requested from Township Clerk Valerie Locke, 269-445-3941. Part of a wave of Cass County township moratoria in May 2026 alongside Penn and Porter Townships — see City of Dowagiac (id 533) for the operating data center case driving this county-wide activity.",
         work_history: null,
         sources: ["https://www.jeffersontownshiponline.org/", "https://www.jeffersontownshiponline.org/hall-rental", "https://84208827-456f-4aad-8761-1b439d6cfb6d.filesusr.com/ugd/dd5b20_ddc589ca8f9b493793e914ea3cd79197.pdf"]
@@ -11528,6 +11566,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "LOW CONFIDENCE / secondhand: an Oct 2, 2025 Watershed Voice article on Lockport Township's BESS ordinance amendment states similar BESS ordinance language was \"already adopted in Fabius Township and under review in Constantine and Park townships\" as of that date. No Constantine-specific project, application, or hearing notice was found on Constantine's own site. Treat as an in-progress ordinance review, not a specific developer project.",
+        bess_flag: true,
+        bess_reason: "BESS: township reportedly reviewing a BESS ordinance (low-confidence, secondhand report) -- no confirmed project or hearing.",
         notes: "RESEARCH PASS 2026-08-06 (primary-source sweep of Cass/St. Joseph/Kalamazoo counties): Matthew Jorgensen (contact: swmizoning@gmail.com) appears as Zoning Administrator across at least Constantine, Lockport (id 542), Mendon (id 543), and Park (id 546) Townships — a real shared/regional zoning-service pattern in St. Joseph County, tagged here as its own firm bucket (\"SWMI Shared Zoning Svc\") so the map's firm-connection lines surface it. Supervisor is Erin Arnett; Erin Johnson is Code Compliance Officer (separate role).",
         work_history: null,
         sources: ["https://constantinetwp.com/contact/", "https://watershedvoice.com/2025/10/01/meeting-primer-lockport-township-planning-commission/", "https://constantinetwp.com/newslist.php"]
@@ -11548,6 +11588,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "MAJOR CASE. Applicant Three Lakes Solar, LLC (a subsidiary of EDP Renewables) proposes a combined ~178 MW solar array + ~122 MW Battery Energy Storage System (BESS) near the M-60 corridor west of Three Rivers, involving 50+ landowners. Planning Commission public hearing held Dec 9-10, 2025; PC voted unanimously to recommend approval to the Township Board (per WWMT). Projected construction start ~2027, completion as early as 2029. Per WWMT (quoting Supervisor Dan Wilkins, name from news only, not independently verified on the township site), the Board passed resolutions opposing state preemption (PA 233/PA 235) and banned officials from signing developer NDAs. The township also has a draft Solar Energy Ordinance amendment (labeled \"Draft #2\", adoption date left blank as of the document reviewed) creating a Solar Overlay District (S-1) for systems >1MW with BESS provisions (secured enclosure required). Direct PDFs: https://fabiustownship.org/wp-content/uploads/Notice-of-Public-Hearing.pdf and https://fabiustownship.org/wp-content/uploads/FABIUS-TOWNSHIP-SOLAR-ORDINANCE-DRAFT-PROPOSED-FINAL-V2.pdf",
+        bess_flag: true,
+        bess_reason: "BESS: Three Lakes Solar (EDP Renewables) proposes a 178 MW solar array + 122 MW battery storage system -- not a data center.",
         notes: "RESEARCH PASS 2026-08-06 (primary-source sweep of Cass/St. Joseph/Kalamazoo counties): Highest-confidence major finding in this sweep — multiple primary-source township PDFs plus corroborating news coverage. Planning Commission Chair is Randy Schmeling (confirmed via two independent township documents); Township Clerk is Carol Wilkins. Douglas Kuhlman (Zoning Administrator) also appears in Lockport Township's ZBA contact list (id 542), suggesting he may cover more than one township, though not confirmed as a formal firm — left as an individual, not tagged under the shared-firm bucket used for the Jorgensen pattern.",
         work_history: null,
         sources: ["https://fabiustownship.org/wp-content/uploads/Notice-of-Public-Hearing.pdf", "https://fabiustownship.org/wp-content/uploads/FABIUS-TOWNSHIP-SOLAR-ORDINANCE-DRAFT-PROPOSED-FINAL-V2.pdf", "https://fabiustownship.org/wp-content/uploads/Proposed-Solar-Ordinance.pdf", "https://fabiustownship.org/2023/04/fabius-twp-planning-commission-agenda-04-11-2023/", "https://wwmt.com/news/local/southwest-michigan-fabius-township-three-rivers-commission-zoning-300-megawatt-solar-array-battery-energy-storage-system-bess-proposal-state-local-law-wwmt", "https://wwmt.com/news/local/township-data-center-bess-law-solar-wind-renewable-energy-michigan-state-law-lansing-whitmer-fabius-st-joseph-county-michigan-pledge-develop-wwmt"]
@@ -11648,6 +11690,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "Planning Commission considered a proposed Battery Energy Storage Systems (BESS) text amendment to the zoning ordinance at a meeting held Oct 2, 2025 (58982 Holtom Rd., Three Rivers). Proposed rules would define BESS and set requirements for fencing, safety signage, emergency shutdown access, fire response plans, and decommissioning. As of that meeting, no formal BESS application had been filed in Lockport (per the township's own staff report/post) — this is ordinance/policy-drafting activity, not an active project proposal. Township has had a solar ordinance in place since 2023.",
+        bess_flag: true,
+        bess_reason: "BESS: Planning Commission considered a BESS zoning text amendment -- no application filed yet.",
         notes: "RESEARCH PASS 2026-08-06 (primary-source sweep of Cass/St. Joseph/Kalamazoo counties): CONFLICTING SOURCE FLAG: the Lockport Township \"Boards\" page lists current Zoning Administrator as Matt Jorgensen (same swmizoning@gmail.com contact used by Constantine/Mendon/Park Townships), while a Watershed Voice article dated Oct 1, 2025 attributes the Zoning Administrator role/staff report to \"Doug Kuhlman\" instead — may reflect a role transition, a shared/split arrangement, or a reporting error. Flagging explicitly rather than picking one silently. Supervisor is Mark Major; Clerk is Theresa Ankney.",
         work_history: null,
         sources: ["https://lockporttwp.com/boards/", "https://lockporttwp.com/building-ordinances-and-zoning/", "https://lockporttwp.com/2025/09/information-about-bess-battery-energy-storage-system-public-hearing/", "https://watershedvoice.com/2025/10/01/meeting-primer-lockport-township-planning-commission/"]
@@ -11688,6 +11732,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "Planning Commission held/scheduled a public hearing on Oct 6, 2025 on a proposed zoning ordinance amendment adding Battery Energy Storage Systems (BESS) to the township's renewable-energy regulations — a regulatory/enabling amendment, not a specific developer project (no developer, MW size, or parcel named). Outcome/vote of that hearing could not be confirmed; no follow-up notice found as of this research. Direct PDF: https://mottville.org/wp-content/uploads/2025/09/Mottville-BESS-Notice-100625.pdf",
+        bess_flag: true,
+        bess_reason: "BESS: Planning Commission held a hearing on a BESS zoning amendment -- a regulatory update, not a specific project.",
         notes: "RESEARCH PASS 2026-08-06 (primary-source sweep of Cass/St. Joseph/Kalamazoo counties): CONFLICTING SOURCE FLAG: mottville.org has two officials pages that disagree — /officials/ (matches the current Sept-2025 BESS PDF) lists Douglas Kuhlman as Zoning Administrator; a separate, likely-stale page /township-officials/ lists Matt Jorgensen instead. Weighted the more current /officials/ page + matching BESS PDF as authoritative. Planning Commission Chair is Susan Willis. Contact: 269-651-3130.",
         work_history: null,
         sources: ["https://mottville.org/officials/", "https://mottville.org/township-officials/", "https://mottville.org/wp-content/uploads/2025/09/Mottville-BESS-Notice-100625.pdf"]
@@ -11808,6 +11854,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "Host to the \"Electric City\" battery storage project: a 10MW/40MWh battery storage facility on the city's own electric distribution system, developer Prism Power (Michigan-based), funded in part by a $1,047,266 Michigan Public Service Commission (MPSC) grant, construction estimated to begin 2025. Confirmed by Chris McArthur, Electric Superintendent. NOTE: this is a city-initiated municipal utility asset, not a contested private-developer siting dispute — a different flavor than the moratorium/opposition stories seen elsewhere in this county.",
+        bess_flag: true,
+        bess_reason: "BESS: city-owned &quot;Electric City&quot; battery storage project (10MW/40MWh) on its own municipal utility grid -- not a contested private data-center dispute.",
         notes: "RESEARCH PASS 2026-08-06 (primary-source sweep of Cass/St. Joseph/Kalamazoo counties): Separate government from Sturgis Township (id 548) — do not conflate. City Planning Commission exists (meets 5:30pm 3rd Tuesday) but member/chair names could not be found.",
         work_history: null,
         sources: ["https://www.sturgismi.gov/182/Community-Development", "https://www.publicpower.org/periodical/article/michigan-psc-announces-funding-sturgis-michigan-energy-storage-project", "https://www.sturgismi.gov/169/Boards-Commissions-Listing"]
@@ -11908,6 +11956,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "Township's own website states verbatim it has \"added three new ordinances to the township, with regards to cemetery, solar energy, and battery storage systems\" (under the site's \"Various Ordinances\" tab) — existence of solar + battery-storage ordinances is confirmed directly from the township's own site text, but the actual PDFs are scanned/image-based and could not be read to confirm whether they're permissive siting rules or a restrictive/moratorium-style approach. Needs manual download/OCR to confirm intent.",
+        bess_flag: true,
+        bess_reason: "BESS: township confirms it adopted solar + battery-storage ordinances, but the text isn't readable yet to confirm intent.",
         notes: "RESEARCH PASS 2026-08-06 (primary-source sweep of Cass/St. Joseph/Kalamazoo counties): SCMCCI (South Central Michigan Construction Code Inspections) handles building permits; unclear if it also covers zoning administration specifically — employment_type left Unknown pending clarification. Zoning administrator individual not identified.",
         work_history: null,
         sources: ["https://www.climaxtownship.org/", "https://www.climaxtownship.org/committee-members", "https://www.climaxtownship.org/planning-commission", "https://www.climaxtownship.org/zoning-ordinances"]
@@ -11988,6 +12038,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "PC discussed adding Battery Energy Storage Systems (BESS) as a special land use within the US-131 corridor (May 4, 2026 PC minutes); Township Board then adopted Ordinance #292-BESS at its June 9, 2026 meeting, limiting BESS to the US-131 Corridor District Zoning District, unanimous roll-call vote. No standalone PDF of the adopted ordinance text was posted on the Ordinances page as of this research — meeting minutes are the best primary documents available.",
+        bess_flag: true,
+        bess_reason: "BESS: adopted Ordinance #292-BESS, limiting battery storage to the US-131 Corridor District -- not a data center case.",
         notes: "RESEARCH PASS 2026-08-06 (primary-source sweep of Cass/St. Joseph/Kalamazoo counties): Distinct from the separately-incorporated Village of Schoolcraft — not researched here. Planning Commission Chair confirmed as Barry Visel; Supervisor Don Ulsh. MINOR DISCREPANCY: Kalamazoo County's own zoning-services directory lists this township under Associated Government Services (AGS) for building inspections, while the township's own site directs zoning contacts to SCMCCI — unresolved whether these are two different contractors for two different functions or outdated info on one side.",
         work_history: null,
         sources: ["https://schoolcrafttownshipmi.gov/board-of-appeals/", "https://schoolcrafttownshipmi.gov/ordinances/", "https://schoolcrafttownshipmi.gov/meeting-minutes/", "https://schoolcrafttownshipmi.gov/wp-content/uploads/2026/06/Meeting-Minutes-Schoolcraft-Township-Planning-Commission-May-4-2026.pdf", "https://schoolcrafttownshipmi.gov/wp-content/uploads/2026/07/JUNE2026MINUTESFINAL.pdf", "https://www.kalcounty.gov/417/Zoning-Inspections"]
@@ -12048,6 +12100,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "ACTIVE/ONGOING as of Aug 19, 2026. A former marijuana-growing facility (\"Harbor Farmz\", CEO Michael Ward) at 2839 Full Circle Drive, Davis Creek Business Park, Milwood neighborhood, contacted CPED in March 2026 about converting to a data center; city staff determined this would be a permitted use under the existing M-2 (heavy industrial) zoning, no rezoning required. Reported scale: current facility 32,850 sq ft, current draw ~1 MW, potential capacity up to 15 MW, with a 600 kW backup generator. No formal site plan application filed as of the article dates (June-July 2026). NEW (2026-08-17/19): City Commission unanimously adopted a 1-year moratorium the night of Aug 17, 2026, covering data centers, battery energy storage systems (BESS), crypto mining, and AI facilities citywide — resolving the informal discussion first raised by Vice Mayor Drew Duncan in July. CivicClerk agenda portal is JS-rendered and inaccessible to automated fetch — sources below are news coverage, not primary municipal record. UPDATE 2026-09-10 (30-day sweep): Planning Commission unanimously approved (up to 1-year) moratorium language covering data centers, crypto mining, AND battery storage facilities on Sept 9, 2026 -- appears to be the Planning Commission\u0027s formal follow-through on the Aug 17 City Commission action noted above, not a separate incident (exact procedural relationship between the two votes not fully clear from coverage -- worth a direct confirm). Source: WKZO, Sept 9, 2026.",
+        bess_flag: true,
+        bess_reason: "Mixed: a possible data-center conversion (Harbor Farmz facility) AND a citywide moratorium covering data centers, BESS, and crypto mining together.",
         notes: "RESEARCH PASS 2026-08-06 (primary-source sweep of Cass/St. Joseph/Kalamazoo counties): Distinct from Kalamazoo (Charter) Township (already on the map, separate government) — that township has reportedly adopted its own battery-storage/data-center moratorium per Public Media Network coverage, not independently verified in this pass since it was out of scope. Rebekah Kik (prior Deputy City Manager overseeing planning) departed the city in May 2026 for a Notre Dame job; Anderson is the confirmed current CPED contact per the city's own department page.",
         work_history: null,
         sources: ["https://www.kalamazoocity.org/Government/Departments/CPED", "https://secondwavemedia.com/from-cannabis-to-ai-proposed-kalamazoo-data-center-sparks-questions-about-the-future-in-milwood/", "https://publicmedianet.org/videos/kalamazoo-eyes-data-center-moratorium-with-scope-still-undecided/", "https://wkzo.com/2026/07/21/951191/", "https://wkzo.com/2026/07/20/950828/", "https://www.arcwestmichigan.com/ (Aug 18, 2026 — Kalamazoo moratorium adoption)", "https://www.woodtv.com/ (\"Kalamazoo leaders approve pause on data centers\")"]
@@ -12068,6 +12122,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "MAJOR CASE, ENACTED. At its 2025 year-end goal-setting session, staff (per Chief Development Officer Peter Dame) recommended a proactive/preventative moratorium — city confirmed zero applications received for data centers or BESS to date. Planning Commission public hearing Feb 19, 2026; City Council first consideration ~Feb 24, 2026; final Council vote/unanimous approval Mar 24-25, 2026, enacting the moratorium through end of 2026 or until zoning amendments to Chapter 42 of city code are finalized, whichever first. Scope covers both data centers and BESS. No developer or specific project named. Primary ordinance/minutes PDFs could not be retrieved this session (site access issues on portagemi.gov) — recommend a direct follow-up pull.",
+        bess_flag: true,
+        bess_reason: "BESS: citywide moratorium covers both data centers and BESS, but zero applications for either have been received -- precautionary only.",
         notes: "RESEARCH PASS 2026-08-06 (primary-source sweep of Cass/St. Joseph/Kalamazoo counties): This is the first Kalamazoo County municipality in this sweep to have actually enacted (not just discussed) a moratorium. Peter Dame (Chief Development Officer, Office of the City Manager) is the official quoted publicly on this issue; Eric Feldt is listed as the sole staff contact on the city's official Planning Commission page but his exact title could not be confirmed due to repeated portagemi.gov access failures this session.",
         work_history: null,
         sources: ["https://www.portagemi.gov/439/Planning-Commission", "https://portagemi.gov/directory.aspx?EID=141", "https://wwmt.com/news/local/portage-considers-one-year-moratorium-data-centers-battery-energy-storage-systems-bess-facilities-development-michigan-wwmt", "https://www.wmuk.org/wmuk-news/2026-03-26/portage-hits-pause-on-data-centers-and-bess-facilities", "https://watershedvoice.com/2026/03/25/portage-moves-toward-data-center-pause-as-concerns-grow-nationwide/"]
@@ -33868,6 +33924,8 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "NEW 2026-09-10 (30-day sweep). BESS (battery storage), not a data center: Copenhagen Infrastructure Partners' \"Swan and Cygnet Energy Storage\" project -- 140 acres, 400MW combined, on the former Hickory Ridge Golf Course site. Aug 11, 2026: Comstock Parks Board weighed accepting ~105 acres of land donated by the developer for recreational use. Aug 13, 2026: Planning Commission public hearing, no decision -- formal opposition from the Comstock school board over proximity to Comstock Elementary/a planned STEM Academy. Aug 27, 2026: Planning Commission pushed back on the project's two-LLC financial structure and decommissioning bond ($22.5M estimated decommissioning cost vs. ~$28M bond offered) -- no vote taken, deliberations continue. Sources: publicmedianet.org (Aug 11, Aug 27), wwmt.com (Aug 13).",
+        bess_flag: true,
+        bess_reason: "BESS: Copenhagen Infrastructure Partners' 400 MW battery storage project (Swan and Cygnet Energy Storage) -- explicitly not a data center.",
         notes: "One of the most detailed, highest-profile BESS (as opposed to data-center) fights found in Michigan as of Sept 2026 -- land-donation/community-amenity offer and decommissioning-bond scrutiny are both distinctive elements worth tracking as a template for other BESS siting fights.",
         work_history: null,
         sources: ["https://publicmedianet.org/news/community/comstock-parks-board-weighs-accepting-land-from-battery-storage-project/", "https://wwmt.com/news/local/comstock-township-hearing-proposed-battery-energy-storage-system-bess-community-infrastructure-kalamazoo-county-west-michigan", "https://publicmedianet.org/news/community/comstock-planning-commissioners-push-back-on-battery-storage-financial-terms-decommissioning-details/"]
@@ -34419,6 +34477,25 @@ function drawMarkers(data) {
       }).addTo(markersLayer);
     }
 
+    // On-map badge for BESS (battery energy storage) cases — offset to the
+    // top-right corner so it doesn't collide with the centered CWA badge or
+    // the bottom-row DC/DTE badges. Hover shows the specific, per-municipality
+    // reason (bess_reason) rather than a generic label, since a bare "BESS"
+    // icon on its own doesn't explain why a given community has one.
+    if (m.bess_flag && !isUnzoned) {
+      const bessTitle = (m.bess_reason || 'Battery Energy Storage (BESS) case').replace(/"/g, '&quot;');
+      const bessBadge = L.marker([m.lat, m.lng], {
+        icon: L.divIcon({
+          html: `<div style="font-size:9px;color:white;background:#16a34a;border-radius:50%;width:14px;height:14px;display:flex;align-items:center;justify-content:center;font-weight:900;border:1px solid rgba(0,0,0,0.35);box-shadow:0 0 2px rgba(0,0,0,0.5)" title="${bessTitle}">🔋</div>`,
+          className: '',
+          iconSize: [14, 14],
+          iconAnchor: [-9, 23]
+        }),
+        zIndexOffset: 107,
+        interactive: false
+      }).addTo(markersLayer);
+    }
+
     marker.addTo(markersLayer);
     markerRefs[m.id] = marker;
   });
@@ -34514,6 +34591,7 @@ function drawFirmLines(data) {
 let activeFirms = new Set(Object.keys(FIRMS));
 let showDCOnly = false;
 let showDTEOnly = false;
+let showBESSOnly = false;
 let currentSearch = '';
 let currentSort = 'name';
 
@@ -34602,6 +34680,7 @@ function buildMuniList(data) {
       m.cwa_alumni ? '🔶' : '',
       m.data_center_case ? '⚡' : '',
       m.dte_flag ? '🔌' : '',
+      m.bess_flag ? '🔋' : '',
       m.status === 'terminated' ? '✕' : ''
     ].filter(Boolean).join('');
 
@@ -34644,6 +34723,7 @@ function updateStats(data) {
   document.getElementById('stat-cwa').textContent = data.filter(m => m.cwa_flag && m.status === 'active').length;
   document.getElementById('stat-dc').textContent = data.filter(m => m.data_center_case).length;
   document.getElementById('stat-dte').textContent = data.filter(m => m.dte_flag).length;
+  document.getElementById('stat-bess').textContent = data.filter(m => m.bess_flag).length;
   document.getElementById('gap-num').textContent = data.filter(m => !m.planner_name).length;
 }
 
@@ -34663,6 +34743,9 @@ function getFilteredData() {
 
     // DTE Energy builds/proposals only toggle
     if (showDTEOnly && !m.dte_flag) return false;
+
+    // BESS (battery storage) cases only toggle
+    if (showBESSOnly && !m.bess_flag) return false;
 
     // Search
     if (search) {
@@ -34741,6 +34824,11 @@ document.getElementById('toggle-dc-only').addEventListener('change', e => {
 
 document.getElementById('toggle-dte-only').addEventListener('change', e => {
   showDTEOnly = e.target.checked;
+  refreshMap();
+});
+
+document.getElementById('toggle-bess-only').addEventListener('change', e => {
+  showBESSOnly = e.target.checked;
   refreshMap();
 });
 
@@ -34834,9 +34922,11 @@ function showGaps() {
   document.querySelectorAll('#firm-filters input[type="checkbox"]').forEach(cb => { cb.checked = true; });
   showDCOnly = false;
   showDTEOnly = false;
+  showBESSOnly = false;
 
   document.getElementById('toggle-dc-only').checked = false;
   document.getElementById('toggle-dte-only').checked = false;
+  document.getElementById('toggle-bess-only').checked = false;
   refreshMap();
   // Flash the unknown municipalities
   MUNICIPALITIES.filter(m => !m.planner_name).forEach(m => {
