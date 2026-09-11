@@ -892,7 +892,7 @@
 // this one line, by hand, whenever MUNICIPALITIES changes. Every
 // "Updated"/"Last updated" label on the page reads from this one constant —
 // nothing else needs to be touched, and nothing else should be hand-edited.
-const LAST_UPDATED = "2026-09-10"; // format: YYYY-MM-DD — set this by hand on every data update
+const LAST_UPDATED = "2026-09-11"; // format: YYYY-MM-DD — set this by hand on every data update
 
 const FIRMS = {
   "Carlisle/Wortman Associates": { color: "#E53935", short: "CWA" },
@@ -1583,44 +1583,6 @@ const MUNICIPALITIES = [
         sources: ["Giffels Webster website — giffelswebster.com"]
       },
       {
-        id: 21,
-        municipality: "Lansing",
-        county: "Ingham",
-        type: "City",
-        lat: 42.7325,
-        lng: -84.5555,
-        planner_name: "Lynn Wilson",
-        planner_title: "AICP",
-        firm: "OHM Advisors",
-        employment_type: "Contracted",
-        status: "active",
-        cwa_flag: false,
-        cwa_alumni: false,
-        data_center_case: false,
-        notes: "⚠️ DUPLICATE/STALE — see the other 'Lansing' entry (Rawley Van Fossen, Director of Economic Development and Planning, In-House) for confirmed current data and the active Deep Green data center case; this entry's OHM Advisors/Lynn Wilson info is from the generic MAP directory and hasn't been independently confirmed against the city's actual planning office. Kept rather than deleted pending cleanup.",
-        work_history: null,
-        sources: ["MAP Private Practice Directory — planningmi.org"]
-      },
-      {
-        id: 33,
-        municipality: "Lincoln Park",
-        county: "Wayne",
-        type: "City",
-        lat: 42.2431,
-        lng: -83.178,
-        planner_name: "Monique Guerrero Woods",
-        planner_title: "Director, Community Planning & Development",
-        firm: "In-House (City Staff)",
-        employment_type: "In-House (City Staff)",
-        status: "active",
-        cwa_flag: false,
-        cwa_alumni: false,
-        data_center_case: false,
-        notes: "Confirmed from official city staff directory (citylp.com). Email: mguerrero@citylp.com. Phone: 313-827-6060. Planning page states 'Planning staff hired by the City Council.'",
-        work_history: null,
-        sources: ["citylp.com/directory.aspx", "citylp.com/413/Planning-and-Engineering"]
-      },
-      {
         id: 34,
         municipality: "Ecorse",
         county: "Wayne",
@@ -1635,9 +1597,9 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
-        notes: "Name found via infomi.com government directory (phone 313-294-3717). Official city site (ecorsemi.gov) does not publicly name the planning director. Rhonda Miller separately listed as Economic Development Director. Confidence: MEDIUM — verify at 313-386-2520.",
+        notes: "Danielle Kaun listed as Planning Director via infomi.com government directory (phone 313-294-3717); official city site (ecorsemi.gov) does not publicly name a planning director, so confidence on this title remains MEDIUM — verify at 313-386-2520. Rhonda Miller is confirmed as Economic Development Director at the Ecorse Community & Economic Development Dept per the city's own site; MML posted a Building Official job opening suggesting staffing flux. Planning & Zoning Department exists at Albert B. Buday Civic Center. Downriver municipality. No CWA connection identified. | MERGED 2026-09-11: consolidated from a duplicate record (formerly id 268) found in the statewide duplicate-record audit.",
         work_history: null,
-        sources: ["ecorsemi.gov", "infomi.com/city/ecorse"]
+        sources: ["ecorsemi.gov", "infomi.com/city/ecorse", "https://www.ecorsemi.gov/Departments/Community-Development.aspx"]
       },
       {
         id: 35,
@@ -1653,10 +1615,11 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
-        data_center_case: false,
-        notes: "Large city (~95k pop) with in-house Planning & Zoning Division within Economic Development Dept. David Breneau confirmed as Zoning Administrator per Oct 2024 ZBA meeting minutes. Massara Zwayen is Assistant Planning Manager. Division email: cityplanning@dearborn.gov, 313-943-2150.",
+        data_center_case: true,
+        data_center_notes: "NEW 2026-09-10 (30-day sweep; merged 2026-09-11 from duplicate record, formerly id 1658). City Council advanced a 6-month freeze on new data-center development in early September 2026, joining a wave of nearly simultaneous local moratoriums statewide (Ypsilanti City, Garfield Twp, Wixom rezoning, Lenox Twp zoning review). No specific developer or site named in coverage -- reads as a precautionary/standards-setting measure, not a response to a live proposal. Source: Hoodline, Sept 2026 (\"Dearborn Moves to Freeze New Data Centers as AI Boom Sparks Regional Backlash\").",
+        notes: "Large city (~95k pop) with in-house Planning & Zoning Division within Economic Development Dept. David Breneau confirmed as Zoning Administrator per Oct 2024 ZBA meeting minutes. Massara Zwayen is Assistant Planning Manager. Division email: cityplanning@dearborn.gov, 313-943-2150. | No named developer or project for the data-center freeze -- precautionary case, similar in character to Genoa/Green Oak/Rochester Hills rather than an active-fight case like Gibraltar or Wixom. | MERGED 2026-09-11: consolidated from a duplicate record (formerly id 1658) found in the statewide duplicate-record audit.",
         work_history: null,
-        sources: ["dearborn.gov/business/planning-zoning"]
+        sources: ["dearborn.gov/business/planning-zoning", "https://hoodline.com/2026/09/dearborn-moves-to-freeze-new-data-centers-as-ai-boom-sparks-regional-backlash/"]
       },
       {
         id: 36,
@@ -1772,25 +1735,6 @@ const MUNICIPALITIES = [
         notes: "CORRECTION 2026-09-10 (Mo's own primary-source pull -- Trenton PC Public Hearing minutes, Feb 12, 2025): the previous 'Carlisle/Wortman Associates' firm attribution for Trenton was WRONG -- direct primary-source confirmation (signed-off PC minutes) shows Trenton's actual Planning Consultant is Elizabeth Gunden of Beckett & Raeder, present at the Feb 12, 2025 meeting and giving the monthly consultant report; Chuck Earl (same name as Gibraltar's McKenna/Building Official contact -- unconfirmed whether same person, flagged not assumed) was Vice Chairman of Trenton's PC as of that meeting. This flips cwa_flag false and firm/planner_name to Beckett & Raeder. FLAG FOR MO: Trenton was very likely included on the CWA sites list already posted publicly earlier this session -- this correction means it should NOT have been on that list, worth a follow-up correction if it went out. Original (incorrect) attribution was based on an indirect DocumentCenter filename reference, not a primary planning-consultant credit -- lesson: prefer signed reports/roll-call minutes over inferred document titles for firm attribution. CWA handles professional urban planning and site reviews -- THIS LINE WAS THE ERROR, retained here struck through in spirit (not removed) for the record. Daily zoning compliance runs through the Building and Engineering Department. trentonmi.org/502/Planning-Commission.",
         work_history: null,
         sources: ["trentonmi.org/DocumentCenter/View/2404 (Site Plan Review Application — Planning Consultant referenced, ORIGINAL SOURCE, NOW SUPERSEDED)", "trentonmi.org (Revize CMS blocked)", "Trenton Planning Commission Public Hearing Minutes, Feb 12, 2025 (Mo's own download, primary source for correction)"]
-      },
-      {
-        id: 42,
-        municipality: "Wyandotte",
-        county: "Wayne",
-        type: "City",
-        lat: 42.2142,
-        lng: -83.1496,
-        planner_name: "Joseph Keller Gruber",
-        planner_title: "Community Development Office Contact",
-        firm: "In-House (City Staff)",
-        employment_type: "In-House (City Staff)",
-        status: "active",
-        cwa_flag: false,
-        cwa_alumni: false,
-        data_center_case: false,
-        notes: "Joseph Keller Gruber listed in Community Development Office (734-324-7298). Julie Sadlowski (Engineering Office Supervisor) also handles zoning. No explicit 'Planning Director' title found — functions split between departments. Confidence: MEDIUM.",
-        work_history: null,
-        sources: ["wyandottemi.gov", "wyan.org/Directory.aspx?did=11"]
       },
       {
         id: 43,
@@ -1941,9 +1885,9 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
-        notes: "Contracted planning confirmed — $40,888 'Planning Consultant' budget line in FY2024-25. Brian V. Borden AICP of SAFEbuilt held the contract through at least 2018-19 (confirmed in annual reports). Giffels Webster RFP document (#182336) exists in CivicWeb portal — likely the current planning consultant contract. SmithGroup handled separate 2023-25 Master Plan update. In-house: Derek Thiel MPA (Community Dev Director, non-planner). Contact Derek Thiel (734) 676-4422 to confirm current firm. | 734-676-4422. Title unconfirmed; call to verify.",
+        notes: "Contracted planning confirmed — $40,888 'Planning Consultant' budget line in FY2024-25. Brian V. Borden AICP of SAFEbuilt held the contract through at least 2018-19 (confirmed in annual reports). Giffels Webster RFP document (#182336) exists in CivicWeb portal — likely the current planning consultant contract. SmithGroup handled separate 2023-25 Master Plan update. In-house: Derek Thiel MPA (Community Dev Director, non-planner). Contact Derek Thiel (734) 676-4422 to confirm current firm. | 734-676-4422. Title unconfirmed; call to verify. | 2026-08-07 re-check (originally logged under a duplicate record, id 270, now merged in): the 'Giffels Webster RFP.pdf' lead is literally Giffels Webster's own submitted proposal/response, not proof of an awarded or current contract — no award notice, signed agreement, or news confirms them as the active planning firm. The township is separately, currently recruiting an in-house Community Development & DDA Director (per an MML job posting), suggesting the in-house/contracted arrangement may be in flux right now. | MERGED 2026-09-11: consolidated from a duplicate record (formerly id 270) found in the statewide duplicate-record audit.",
         work_history: "SAFEbuilt / Brian Borden AICP through 2018-19; current firm unconfirmed",
-        sources: ["grosseile.com (Revize-blocked)", "2024-25 Budget (Planning Consultant line item)", "2018-19 Annual Report (Borden/SAFEbuilt confirmed)", "grosseile.civicweb.net document #182336 (Giffels Webster RFP — unconfirmed)"]
+        sources: ["grosseile.com (Revize-blocked)", "2024-25 Budget (Planning Consultant line item)", "2018-19 Annual Report (Borden/SAFEbuilt confirmed)", "grosseile.civicweb.net document #182336 (Giffels Webster RFP — unconfirmed)", "https://classifieds.mml.org/job/community-development-downtown-development-authority-director/85121888/"]
       },
       {
         id: 51,
@@ -2877,9 +2821,9 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "Deep Green (UK-based) proposed a 24 MW data center at Cedar & Larch Streets (2.5-acre rezoning, announced Nov 5, 2025; 8 MW from grid + 16 MW on-site fuel cell; ~500,000 gal/yr water use) — moratorium imposed by City Council. Active rezoning case Z-3-2026 for tech/data facility pending. Capital city actively grappling with data center land use regulations. ⚠️ Revolving-door lead: Josh Hovey, a Lansing Planning Commissioner for ~10 years (stepped down end of summer 2025, last attended March 2025), is now Deep Green's spokesman/consultant via Bellwether Public Relations (his PR firm), which began working with Deep Green Oct 2025 — discussions reportedly started ~9 months before that per BWL general manager Dick Peffley. Hovey says he wasn't on the commission while working with Deep Green and has followed the city's recusal policy; still worth tracking as a former-official-to-developer pipeline, same shape as the CWA/Auerbach pattern elsewhere in this dataset.",
-        notes: "State capital. In-house planning department. Data center moratorium (Z-3-2026) reflects growing pressure from tech facility proposals. GM/Stellantis automotive footprint shapes industrial land use. | Confirmed: Rawley Van Fossen oversees Planning Office including zoning and Comprehensive Plan. Sources: lansingmi.gov, LinkedIn. | NOTE: a second, older/stale 'Lansing' entry exists elsewhere in this dataset (Lynn Wilson / OHM Advisors, MAP directory contact only, data_center_case: false) — that one has not been independently confirmed against the city's actual planning office and looks superseded by this entry; flagged for cleanup rather than deleted outright.",
+        notes: "State capital. In-house planning department. Data center moratorium (Z-3-2026) reflects growing pressure from tech facility proposals. GM/Stellantis automotive footprint shapes industrial land use. | Confirmed: Rawley Van Fossen oversees Planning Office including zoning and Comprehensive Plan. Sources: lansingmi.gov, LinkedIn. | MERGED 2026-09-11: the second, older/stale 'Lansing' entry (Lynn Wilson / OHM Advisors, MAP directory contact only, unconfirmed against the city's actual planning office) has been deleted as a confirmed duplicate-record found in the statewide duplicate-record audit; this entry is the sole surviving Lansing record.",
         work_history: null,
-        sources: ["City of Lansing planning department", "Z-3-2026 rezoning documents", "Deep Green data center moratorium 2026", "Michigan Advance, March 6, 2026 — https://michiganadvance.com/2026/03/06/a-former-lansing-planning-commissioner-is-helping-a-data-center-developer-pitch-its-plan-to-the-city/"]
+        sources: ["City of Lansing planning department", "Z-3-2026 rezoning documents", "Deep Green data center moratorium 2026", "Michigan Advance, March 6, 2026 — https://michiganadvance.com/2026/03/06/a-former-lansing-planning-commissioner-is-helping-a-data-center-developer-pitch-its-plan-to-the-city/", "MAP Private Practice Directory — planningmi.org"]
       },
       {
         id: 100,
@@ -3634,10 +3578,13 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
-        data_center_case: false,
-        notes: "East Kalamazoo County township. Contracts planning services. Kalamazoo River corridor environmental cleanup legacy (Enbridge pipeline spill 2010 upstream context). Rural/suburban edge management. | Confirmed on Comstock Township website. kmucha@mcka.com. PLB listing was incorrect. | COORDINATE CORRECTED 2026-09-11 (statewide close-pair audit, see reference_map_coordinate_corrections.md): moved to Wikipedia infobox township centroid.",
+        data_center_case: true,
+        bess_reason: "BESS: Copenhagen Infrastructure Partners' 400 MW battery storage project (Swan and Cygnet Energy Storage) -- explicitly not a data center.",
+        bess_flag: true,
+        data_center_notes: "NEW 2026-09-10 (30-day sweep; merged 2026-09-11 from duplicate record, formerly id 1653). BESS (battery storage), not a data center: Copenhagen Infrastructure Partners' \"Swan and Cygnet Energy Storage\" project -- 140 acres, 400MW combined, on the former Hickory Ridge Golf Course site. Aug 11, 2026: Comstock Parks Board weighed accepting ~105 acres of land donated by the developer for recreational use. Aug 13, 2026: Planning Commission public hearing, no decision -- formal opposition from the Comstock school board over proximity to Comstock Elementary/a planned STEM Academy. Aug 27, 2026: Planning Commission pushed back on the project's two-LLC financial structure and decommissioning bond ($22.5M estimated decommissioning cost vs. ~$28M bond offered) -- no vote taken, deliberations continue. Sources: publicmedianet.org (Aug 11, Aug 27), wwmt.com (Aug 13).",
+        notes: "East Kalamazoo County township. Contracts planning services. Kalamazoo River corridor environmental cleanup legacy (Enbridge pipeline spill 2010 upstream context). Rural/suburban edge management. | Confirmed on Comstock Township website. kmucha@mcka.com. PLB listing was incorrect. | COORDINATE CORRECTED 2026-09-11 (statewide close-pair audit, see reference_map_coordinate_corrections.md): moved to Wikipedia infobox township centroid. | One of the most detailed, highest-profile BESS (as opposed to data-center) fights found in Michigan as of Sept 2026 -- land-donation/community-amenity offer and decommissioning-bond scrutiny are both distinctive elements worth tracking as a template for other BESS siting fights. | MERGED 2026-09-11: consolidated from a duplicate record (formerly id 1653, added in the Sept 10 sweep without checking for this existing record) found in the statewide duplicate-record audit.",
         work_history: null,
-        sources: ["Comstock Township website"]
+        sources: ["Comstock Township website", "https://publicmedianet.org/news/community/comstock-parks-board-weighs-accepting-land-from-battery-storage-project/", "https://wwmt.com/news/local/comstock-township-hearing-proposed-battery-energy-storage-system-bess-community-infrastructure-kalamazoo-county-west-michigan", "https://publicmedianet.org/news/community/comstock-planning-commissioners-push-back-on-battery-storage-financial-terms-decommissioning-details/"]
       },
       {
         id: 139,
@@ -6147,9 +6094,9 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "Monique Guerrero reappointed as Director of Community Planning & Development for a two-year term beginning January 1, 2025 (confirmed in September 8, 2025 regular meeting minutes). Downriver municipality. Planning department contact: planning@citylp.com, 313-386-1800 x1296. No CWA or data center connection identified.",
+        notes: "Monique Guerrero (also recorded as Monique Guerrero Woods) confirmed as Director, Community Planning & Development, City of Lincoln Park (in-house). Reappointed for a two-year term beginning January 1, 2025 (confirmed in Sept 8, 2025 regular meeting minutes). Contact: mguerrero@citylp.com or planning@citylp.com, 313-827-6060 / 313-386-1800 x1296. Downriver municipality. No CWA or data center connection identified. | MERGED 2026-09-11: consolidated from a duplicate record (formerly id 33) found in the statewide duplicate-record audit — both entries independently confirmed the same person/role via different sources.",
         work_history: null,
-        sources: ["https://www.citylp.com/170/Planning-Commission"]
+        sources: ["https://www.citylp.com/170/Planning-Commission", "citylp.com/directory.aspx", "citylp.com/413/Planning-and-Engineering"]
       },
       {
         id: 267,
@@ -6159,7 +6106,7 @@ const MUNICIPALITIES = [
         lat: 42.214,
         lng: -83.149,
         planner_name: "Joseph Keller Gruber",
-        planner_title: "Community Development",
+        planner_title: "Community Development Office Contact",
         firm: "Unknown",
         employment_type: "Staff",
         status: "active",
@@ -6167,29 +6114,9 @@ const MUNICIPALITIES = [
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "Joseph Keller Gruber (MCD, MiPDM) is primary Community Development contact at Wyandotte (jgruber@wyandottemi.gov). Kelly Roberts (Engineering Office Supervisor & Development Coordinator) also handles zoning-related issues. Community Development dept exercises administrative supervision over planning and redevelopment. Downriver municipality. No CWA or data center connection identified.",
+        notes: "Joseph Keller Gruber (MCD, MiPDM) is primary Community Development contact at Wyandotte (jgruber@wyandottemi.gov), 734-324-7298. Kelly Roberts (Engineering Office Supervisor & Development Coordinator) also handles zoning-related issues per one source; a separate source instead names Julie Sadlowski (Engineering Office Supervisor) in that same zoning-adjacent role — discrepancy not resolved, may reflect a personnel change between when each was researched. Community Development dept exercises administrative supervision over planning and redevelopment. Downriver municipality. No CWA or data center connection identified. | MERGED 2026-09-11: consolidated from a duplicate record (formerly id 42) found in the statewide duplicate-record audit — this map had already flagged the Wyandotte duplicate once before (2026-09-10 geographic QA pass) without resolving it; resolved now.",
         work_history: null,
-        sources: ["https://www.wyandottemi.gov/205/Community-Development"]
-      },
-      {
-        id: 268,
-        municipality: "Ecorse",
-        county: "Wayne",
-        type: "City",
-        lat: 42.249,
-        lng: -83.146,
-        planner_name: "Rhonda Miller",
-        planner_title: "Economic Development Director",
-        firm: "Unknown",
-        employment_type: "Staff",
-        status: "active",
-        cwa_flag: false,
-        cwa_alumni: false,
-        data_center_case: false,
-        data_center_notes: null,
-        notes: "Rhonda Miller is Economic Development Director at Ecorse Community & Economic Development Dept. No specific city planner or zoning administrator identified by name in public records — MML posted a Building Official job opening suggesting staffing flux. Planning & Zoning Department exists at Albert B. Buday Civic Center. Downriver municipality. No CWA connection identified.",
-        work_history: null,
-        sources: ["https://www.ecorsemi.gov/Departments/Community-Development.aspx"]
+        sources: ["https://www.wyandottemi.gov/205/Community-Development", "wyandottemi.gov", "wyan.org/Directory.aspx?did=11"]
       },
       {
         id: 269,
@@ -6210,26 +6137,6 @@ const MUNICIPALITIES = [
         notes: "Planning Commission meets 2nd Wednesday of the month at 7:30 PM. No planner, zoning administrator, or planning consultant identified by name from public records. Contact: 313-429-1060, building@melvindale.org. Downriver municipality. Needs further research to identify planning staff.",
         work_history: null,
         sources: ["https://melvindale.org/city-services/building-department/"]
-      },
-      {
-        id: 270,
-        municipality: "Grosse Ile Township",
-        county: "Wayne",
-        type: "Township",
-        lat: 42.132,
-        lng: -83.158,
-        planner_name: null,
-        planner_title: "Contracted Zoning Professional",
-        firm: "Giffels Webster",
-        employment_type: "Contract",
-        status: "research-needed",
-        cwa_flag: false,
-        cwa_alumni: false,
-        data_center_case: false,
-        data_center_notes: null,
-        notes: "2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): RE-CHECKED, still genuinely unresolved — the \\\"Giffels Webster RFP.pdf\\\" circulating as a lead is literally Giffels Webster's own submitted proposal/response, not proof of an awarded or current contract; no award notice, signed agreement, or news confirms them as the active planning firm. The township is separately, currently recruiting an in-house Community Development & DDA Director (per an MML job posting), suggesting the in-house/contracted arrangement may be in flux right now. Leaving planner info Unknown rather than guessing. NOTE FOR MAP MAINTAINER: there appear to be two separate \\\"Grosse Ile Township\\\" entries on this map (this one, id 270, and id 50 which already has a confirmed planner, Derek Thiel) — worth checking whether that's a genuine duplicate needing a merge, in a future data-cleanup pass.",
-        work_history: null,
-        sources: ["https://classifieds.mml.org/job/community-development-downtown-development-authority-director/85121888/", "https://grosseile.civicweb.net/document/182336/Giffels%20Webster%20RFP.pdf"]
       },
       {
         id: 271,
@@ -7209,10 +7116,10 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "UPDATED 2026-08-20: 'Project Flex' is a real ~172-acre, ~1.8M sq ft data center proposed by Verrus (a Sidewalk Infrastructure Partners subsidiary, backed by Alphabet/StepStone/Ontario Teachers'), which already had preliminary Planning Commission approval before the Township's 6-month moratorium on NEW data center projects (enacted Mar 2, 2026 — does not appear to affect Project Flex itself). An active recall petition targets all seven Township trustees (officially tied to an unrelated wage-adjustment vote, though clearly entangled with resident anger over the project). CAUTION: a forwarded 2026-08-20 activist debrief additionally claimed a unanimous Aug 5, 2026 moratorium-extension vote, a resident push for an ethics policy, and a conflict-of-interest callout of two trustees over a sponsored golf outing with project beneficiaries — NONE of these three specific claims could be corroborated in official minutes/agendas or any news coverage found; treat as unverified pending direct confirmation. Distinct from the unrelated Lyon Township near Higgins Lake, Roscommon County. Sources: Detroit News (moratorium) — https://www.detroitnews.com/story/news/local/oakland-county/2026/03/03/as-project-flex-proceeds-lyon-township-hits-pause-on-new-data-centers/88960710007/ ; Detroit News (recall) — https://www.detroitnews.com/story/news/local/oakland-county/2026/05/06/group-looks-to-recall-lyon-trustees-over-data-center-with-unrelated-language/89929672007/",
-        notes: "lyontwp.org blocks automated access via robots.txt.",
+        data_center_notes: "UPDATED 2026-08-20: 'Project Flex' is a real ~172-acre, ~1.8M sq ft data center proposed by Verrus (a Sidewalk Infrastructure Partners subsidiary, backed by Alphabet/StepStone/Ontario Teachers'), which already had preliminary Planning Commission approval before the Township's 6-month moratorium on NEW data center projects (enacted Mar 2, 2026 — does not appear to affect Project Flex itself). An active recall petition targets all seven Township trustees (officially tied to an unrelated wage-adjustment vote, though clearly entangled with resident anger over the project). CAUTION: a forwarded 2026-08-20 activist debrief additionally claimed a unanimous Aug 5, 2026 moratorium-extension vote, a resident push for an ethics policy, and a conflict-of-interest callout of two trustees over a sponsored golf outing with project beneficiaries — NONE of these three specific claims could be corroborated in official minutes/agendas or any news coverage found; treat as unverified pending direct confirmation. Distinct from the unrelated Lyon Township near Higgins Lake, Roscommon County. | MERGED 2026-09-11 (formerly a separate record, id 1654, added in the Sept 10 sweep): end customer for Project Flex reported as Anthropic (first Anthropic-linked site on this map). Aug 13, 2026: Verrus submitted revised plans (taller acoustic walls, relocated transmission line, reduced lighting) after an independent noise study found the original sound study inadequate. As of early Sept 2026 the township confirmed the project will NOT be on the Sept 14, 2026 Planning Commission agenda. Source: The Livingston Post, Sept 8, 2026 (\"Project Flex, One Year Later, Part I\"). Sources: Detroit News (moratorium) — https://www.detroitnews.com/story/news/local/oakland-county/2026/03/03/as-project-flex-proceeds-lyon-township-hits-pause-on-new-data-centers/88960710007/ ; Detroit News (recall) — https://www.detroitnews.com/story/news/local/oakland-county/2026/05/06/group-looks-to-recall-lyon-trustees-over-data-center-with-unrelated-language/89929672007/",
+        notes: "lyontwp.org blocks automated access via robots.txt. Distinct from Lyon Township, Wayne County if one exists on other trackers -- this is Lyon Township, OAKLAND County (Milford/South Lyon area). Anthropic as an end-user is a first for this map -- watch for more Anthropic-linked Michigan sites. | MERGED 2026-09-11: consolidated from a duplicate record (formerly id 1654) found in the statewide duplicate-record audit.",
         work_history: null,
-        sources: ["https://www.lyontwp.org"]
+        sources: ["https://www.lyontwp.org", "https://thelivingstonpost.com/project-flex-one-year-later-part-i/"]
       },
       {
         id: 320,
@@ -7870,10 +7777,10 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "RE-APPLIED 2026-08-04 after a file reversion (originally added 2026-08-03): NOT a CWA site — planner is OHM Advisors, not Carlisle/Wortman. Board Resolution (Mar 10, 2026) imposed an interim/temporary moratorium on 'Technology Uses, Data Center Uses and other High Resource Demand Uses' under Zoning Ordinance No. 300 Sec. 7.13. PC held a special-meeting public hearing on the moratorium ordinance Apr 1, 2026, then reaffirmed a motion to draft a permanent Zoning Ordinance Amendment for data centers Apr 16, 2026. No data-center item appeared on the Jun 18 or Jul 23, 2026 PC agendas (unrelated gas station/parking/sign/contractor's-yard items) — status of the permanent ordinance draft as of early Aug 2026 unconfirmed. Separately, developer Cloverleaf Infrastructure ('Project Cherry Blossom,' cherryblossomdatacenter.com) has proposed a 200-acre, 4-building campus at 1500 N. Dixie Hwy (former ProMedica hospital site) — the same developer pursuing 'Project Ironwood' in neighboring Dundee Township (id 350).",
-        notes: "Official site is a stale/legacy page with no working department subpages. Confirmed via 5 local PC agenda/minutes documents (Jan 15, Apr 1, Apr 16, Jun 18, Jul 23 2026), all signed by Gary Dahl, Building Official.",
+        data_center_notes: "RE-APPLIED 2026-08-04 after a file reversion (originally added 2026-08-03): NOT a CWA site — planner is OHM Advisors, not Carlisle/Wortman. Board Resolution (Mar 10, 2026) imposed an interim/temporary moratorium on 'Technology Uses, Data Center Uses and other High Resource Demand Uses' under Zoning Ordinance No. 300 Sec. 7.13. PC held a special-meeting public hearing on the moratorium ordinance Apr 1, 2026, then reaffirmed a motion to draft a permanent Zoning Ordinance Amendment for data centers Apr 16, 2026. No data-center item appeared on the Jun 18 or Jul 23, 2026 PC agendas (unrelated gas station/parking/sign/contractor's-yard items) — status of the permanent ordinance draft as of early Aug 2026 unconfirmed. Separately, developer Cloverleaf Infrastructure ('Project Cherry Blossom,' cherryblossomdatacenter.com) has proposed a 200-acre, 4-building campus at 1500 N. Dixie Hwy (former ProMedica hospital site) — the same developer pursuing 'Project Ironwood' in neighboring Dundee Township (id 350). | MERGED 2026-09-11 (formerly a separate record, id 1656, added in the Sept 10 sweep): coverage from WXYZ/Yahoo (Nov 2025 - Mar 2026) describes this same Cloverleaf project as a ~200-acre site on a FORMER GOLF COURSE near I-75/N. Dixie Hwy, rather than the 'former ProMedica hospital site' framing above — possibly two different descriptions of the same site, or two nearby/adjacent parcels; not resolved, worth verifying directly. Township Clerk Kyle Bryant said as of the Sept 10 sweep the concept was still early-stage, land must be sold/rezoned before it can advance. Developer claims 100+ jobs and $26M+ in annual tax revenue.",
+        notes: "Official site is a stale/legacy page with no working department subpages. Confirmed via 5 local PC agenda/minutes documents (Jan 15, Apr 1, Apr 16, Jun 18, Jul 23 2026), all signed by Gary Dahl, Building Official. | Second Cloverleaf Infrastructure project on this map alongside Dundee Township -- worth watching whether this firm becomes a recurring statewide pattern the way CWA/Auerbach is for planning consultants. | MERGED 2026-09-11: consolidated from a duplicate record (formerly id 1656) found in the statewide duplicate-record audit.",
         work_history: null,
-        sources: ["https://frenchtowntownship.org/", "April 1 2026 PC Agenda.pdf, April 16 2026 PC Agenda.pdf, June 18 2026 PC Agenda.pdf, July 23 2026 PC Agenda.pdf (local copies, C:\\Users\\mchia\\PACT\\)", "https://cherryblossomdatacenter.com/faqs"]
+        sources: ["https://frenchtowntownship.org/", "April 1 2026 PC Agenda.pdf, April 16 2026 PC Agenda.pdf, June 18 2026 PC Agenda.pdf, July 23 2026 PC Agenda.pdf (local copies, C:\\Users\\mchia\\PACT\\)", "https://cherryblossomdatacenter.com/faqs", "https://www.wxyz.com/news/frenchtown-township-holds-public-meeting-for-potential-200-acre-data-center", "https://www.yahoo.com/news/articles/frenchtown-township-review-data-center-084537652.html"]
       },
       {
         id: 353,
@@ -13077,16 +12984,16 @@ const MUNICIPALITIES = [
         lng: -85.763,
         planner_name: "Dennis Kaminski",
         planner_title: "Zoning Administrator",
-        firm: "PCImi",
-        employment_type: "Contracted",
+        firm: "In-House (City Staff) for Zoning Administration; Professional Code Inspections (PCImi) contracted separately for building inspection/permitting",
+        employment_type: "In-House / Contracted (mixed)",
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "Village's own site states explicitly: 'The Village of Kent City contracts with Professional Code Inspections for all building inspection and permitting services.' Note: this is the Village of Kent City, not 'the City of Kent' (no such city exists in Michigan).",
+        notes: "Village's own site states explicitly: 'The Village of Kent City contracts with Professional Code Inspections for all building inspection and permitting services.' Dennis Kaminski serves as the Village's in-house Zoning Administrator; PCI's contract covers building inspection/permitting specifically, not zoning administration itself. Contact: (616) 678-7232, cell (616) 293-0695, vkc.zoning@kentcitymi.org. Note: this is the Village of Kent City, not 'the City of Kent' (no such city exists in Michigan) — also sometimes referred to informally as just 'Kent City.' | MERGED 2026-09-11: consolidated from a duplicate record (formerly id 1644, which had mistakenly listed the municipality type as 'City' rather than 'Village') found in the statewide duplicate-record audit.",
         work_history: null,
-        sources: ["Village of Kent City — https://www.kentcitymi.org/government/village_forms___permits.php"]
+        sources: ["Village of Kent City — https://www.kentcitymi.org/government/village_forms___permits.php", "kentcitymi.org/departments/zoning_administration.php"]
       },
       {
         id: 612,
@@ -22702,11 +22609,11 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
-        data_center_case: false,
-        data_center_notes: null,
-        notes: "Confirmed in-house (906-346-6246, ccarter@forsythtwpmi.org). Note: assessing (not zoning/building) is separately contracted to the Marquette County Equalization Dept — not to be confused with a zoning arrangement.",
+        data_center_case: true,
+        data_center_notes: "NEW 2026-09-10 (30-day sweep; merged 2026-09-11 from duplicate record, formerly id 1657). Developer/promoter: Aeris Energy (principal Barry Bahrman), marketing the area -- including the former K.I. Sawyer Air Force Base -- as a hyperscale data-center location. A contentious town hall Aug 22, 2026 drew major opposition over water use, pollution, noise, and jobs; a county commissioner clarified rumors of military activity at Sawyer are unrelated (only temporary aircraft storage during runway repairs confirmed). Forsyth Township enacted a ONE-YEAR MORATORIUM to draft data-center zoning ordinances. State Rep. Karl Bohnak committed to supporting a state-level moratorium bill when pressed by attendees. A precursor community-organizing event (\"Lessons Learned from the Data Center Fightback\") was held in Marquette Aug 10, 2026. Sources: Mining Journal, Aug 22, 2026; Upper Michigan's Source, Aug 10, 2026.",
+        notes: "Confirmed in-house (906-346-6246, ccarter@forsythtwpmi.org). Note: assessing (not zoning/building) is separately contracted to the Marquette County Equalization Dept — not to be confused with a zoning arrangement. | First Upper Peninsula data-center fight of any real scale found on this map -- the K.I. Sawyer former Air Force base angle (large existing infrastructure, remote/low-population siting) is a genuinely different profile from the downstate suburban/exurban fights and may be a preview of a UP-specific pattern. | MERGED 2026-09-11: consolidated from a duplicate record (formerly id 1657) found in the statewide duplicate-record audit.",
         work_history: null,
-        sources: ["Forsyth Township assessing/zoning page — https://forsythtownship.org/assessing-zoning/"]
+        sources: ["Forsyth Township assessing/zoning page — https://forsythtownship.org/assessing-zoning/", "https://www.miningjournal.net/news/front-page-news/2026/08/town-hall-held-in-forsyth-township-addresses-data-centers-military-presence/", "https://www.uppermichiganssource.com/2026/08/11/we-cant-be-afraid-marquette-residents-learn-how-have-voice-data-centers/"]
       },
       {
         id: 1093,
@@ -28662,11 +28569,11 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
-        data_center_case: false,
-        data_center_notes: null,
-        notes: "Via township office (517) 676-9523.",
+        data_center_case: true,
+        data_center_notes: "NEW 2026-09-10 (30-day sweep; merged 2026-09-11 from duplicate record, formerly id 1655). Early-stage, developer NOT named: Mason City Council unanimously approved a \"Mason Connect\" community outreach plan (Aug 18, 2026) for an unidentified developer's proposed data center; involves a State Boundary Commission annexation question (project site may span Mason city/Vevay Township line). Town hall set for Sept 14, 2026. Source: WILX, Aug 18, 2026.",
+        notes: "Via township office (517) 676-9523. | The duplicate record this was merged from (id 1655) used a coordinate ~21km from this township's own centroid — likely because that record was geocoded to the Mason-area project site referenced in its data_center_notes rather than the township center; the annexation question there suggests the actual project site may be outside Vevay Township's boundaries entirely (possibly within the City of Mason). Worth re-checking after the Sept 14, 2026 town hall to confirm which jurisdiction the project actually lands in and whether a developer name surfaces. | MERGED 2026-09-11: consolidated from a duplicate record (formerly id 1655) found in the statewide duplicate-record audit.",
         work_history: null,
-        sources: ["vevaytownship.org/our-officials"]
+        sources: ["vevaytownship.org/our-officials", "https://www.wilx.com/2026/08/18/mason-city-council-approves-data-center-communication-plan/"]
       },
       {
         id: 1391,
@@ -33729,26 +33636,6 @@ const MUNICIPALITIES = [
         sources: ["villageofparma.org/forms/permits"]
       },
       {
-        id: 1644,
-        municipality: "Kent City",
-        county: "Kent",
-        type: "City",
-        lat: 43.23,
-        lng: -85.75,
-        planner_name: "Dennis Kaminski",
-        planner_title: "Zoning Administrator",
-        firm: "In-House (City Staff)",
-        employment_type: "In-house",
-        status: "active",
-        cwa_flag: false,
-        cwa_alumni: false,
-        data_center_case: false,
-        data_center_notes: null,
-        notes: "(616) 678-7232, cell (616) 293-0695, vkc.zoning@kentcitymi.org.",
-        work_history: null,
-        sources: ["kentcitymi.org/departments/zoning_administration.php"]
-      },
-      {
         id: 1645,
         municipality: "Lowell Township",
         county: "Kent",
@@ -33907,128 +33794,6 @@ const MUNICIPALITIES = [
         notes: "Contact: Jessika Cole, Zoning Administrator, girardtownshipzoning@gmail.com, 517-798-3151. Township Hall: 1009 Marshall Road, Coldwater, MI 49036. No outside planning consulting firm identified in coverage — appears self-administered (not CWA).",
         work_history: null,
         sources: ["https://wtvbam.com/2026/07/09/957539/", "https://wtvbam.com/2026/06/15/949415/"]
-      },
-            {
-        id: 1653,
-        municipality: "Comstock Township",
-        county: "Kalamazoo",
-        type: "Township",
-        lat: 42.3081,
-        lng: -85.5019,
-        planner_name: null,
-        planner_title: null,
-        firm: null,
-        employment_type: null,
-        status: "active",
-        cwa_flag: false,
-        cwa_alumni: false,
-        data_center_case: true,
-        data_center_notes: "NEW 2026-09-10 (30-day sweep). BESS (battery storage), not a data center: Copenhagen Infrastructure Partners' \"Swan and Cygnet Energy Storage\" project -- 140 acres, 400MW combined, on the former Hickory Ridge Golf Course site. Aug 11, 2026: Comstock Parks Board weighed accepting ~105 acres of land donated by the developer for recreational use. Aug 13, 2026: Planning Commission public hearing, no decision -- formal opposition from the Comstock school board over proximity to Comstock Elementary/a planned STEM Academy. Aug 27, 2026: Planning Commission pushed back on the project's two-LLC financial structure and decommissioning bond ($22.5M estimated decommissioning cost vs. ~$28M bond offered) -- no vote taken, deliberations continue. Sources: publicmedianet.org (Aug 11, Aug 27), wwmt.com (Aug 13).",
-        bess_flag: true,
-        bess_reason: "BESS: Copenhagen Infrastructure Partners' 400 MW battery storage project (Swan and Cygnet Energy Storage) -- explicitly not a data center.",
-        notes: "One of the most detailed, highest-profile BESS (as opposed to data-center) fights found in Michigan as of Sept 2026 -- land-donation/community-amenity offer and decommissioning-bond scrutiny are both distinctive elements worth tracking as a template for other BESS siting fights.",
-        work_history: null,
-        sources: ["https://publicmedianet.org/news/community/comstock-parks-board-weighs-accepting-land-from-battery-storage-project/", "https://wwmt.com/news/local/comstock-township-hearing-proposed-battery-energy-storage-system-bess-community-infrastructure-kalamazoo-county-west-michigan", "https://publicmedianet.org/news/community/comstock-planning-commissioners-push-back-on-battery-storage-financial-terms-decommissioning-details/"]
-      },
-      {
-        id: 1654,
-        municipality: "Lyon Township",
-        county: "Oakland",
-        type: "Township",
-        lat: 42.4728,
-        lng: -83.5866,
-        planner_name: null,
-        planner_title: null,
-        firm: null,
-        employment_type: null,
-        status: "active",
-        cwa_flag: false,
-        cwa_alumni: false,
-        data_center_case: true,
-        data_center_notes: "NEW 2026-09-10 (30-day sweep). \"Project Flex\" -- data center operator Verrus, end customer reported as Anthropic. Aug 13, 2026: Verrus submitted revised plans (taller acoustic walls, relocated transmission line, reduced lighting) after an independent noise study found the original sound study inadequate. As of early Sept 2026 the township confirmed the project will NOT be on the Sept 14, 2026 Planning Commission agenda. Lyon Township's own 6-month data-center moratorium (enacted March 2026) does not apply to this project (predates or is otherwise exempted -- exact mechanism not detailed in coverage). Source: The Livingston Post, Sept 8, 2026 (\"Project Flex, One Year Later, Part I\").",
-        notes: "Distinct from Lyon Township, Wayne County if one exists on other trackers -- this is Lyon Township, OAKLAND County (Milford/South Lyon area). Anthropic as an end-user is a first for this map -- watch for more Anthropic-linked Michigan sites.",
-        work_history: null,
-        sources: ["https://thelivingstonpost.com/project-flex-one-year-later-part-i/"]
-      },
-      {
-        id: 1655,
-        municipality: "Vevay Township",
-        county: "Ingham",
-        type: "Township",
-        lat: 42.5792,
-        lng: -84.4430,
-        planner_name: null,
-        planner_title: null,
-        firm: null,
-        employment_type: null,
-        status: "active",
-        cwa_flag: false,
-        cwa_alumni: false,
-        data_center_case: true,
-        data_center_notes: "NEW 2026-09-10 (30-day sweep). Early-stage, developer NOT named: Mason City Council unanimously approved a \"Mason Connect\" community outreach plan (Aug 18, 2026) for an unidentified developer's proposed data center; involves a State Boundary Commission annexation question (project site may span Mason city/Vevay Township line). Town hall set for Sept 14, 2026. Source: WILX, Aug 18, 2026.",
-        notes: "Located under Vevay Township since the annexation question suggests the actual site may be outside Mason's current city limits -- worth re-checking after the Sept 14 town hall to confirm which jurisdiction the project actually lands in and whether a developer name surfaces.",
-        work_history: null,
-        sources: ["https://www.wilx.com/2026/08/18/mason-city-council-approves-data-center-communication-plan/"]
-      },
-      {
-        id: 1656,
-        municipality: "Frenchtown Township",
-        county: "Monroe",
-        type: "Township",
-        lat: 41.9081,
-        lng: -83.4327,
-        planner_name: null,
-        planner_title: null,
-        firm: null,
-        employment_type: null,
-        status: "active",
-        cwa_flag: false,
-        cwa_alumni: false,
-        data_center_case: true,
-        data_center_notes: "NEW 2026-09-10 (30-day sweep). Developer Cloverleaf Infrastructure (the same firm behind Dundee Township's \"Project Ironwood\" -- DISTINCT site, do not conflate) is pursuing a ~200-acre data center on a former golf course near I-75 and North Dixie Highway. Public informational meeting held; first reported Nov 2025, still active as of a March 2026 Planet Detroit story and a subsequent \"Frenchtown Township to review data center moratorium\" report. Township Clerk Kyle Bryant said the concept is still early-stage -- land must be sold/rezoned before it can advance. Projected 100+ jobs, $26M+ annual tax revenue claimed by the developer.",
-        notes: "Second Cloverleaf Infrastructure project on this map alongside Dundee Township -- worth watching whether this firm becomes a recurring statewide pattern the way CWA/Auerbach is for planning consultants.",
-        work_history: null,
-        sources: ["https://www.wxyz.com/news/frenchtown-township-holds-public-meeting-for-potential-200-acre-data-center", "https://www.yahoo.com/news/articles/frenchtown-township-review-data-center-084537652.html"]
-      },
-      {
-        id: 1657,
-        municipality: "Forsyth Township",
-        county: "Marquette",
-        type: "Township",
-        lat: 46.3628,
-        lng: -87.3931,
-        planner_name: null,
-        planner_title: null,
-        firm: null,
-        employment_type: null,
-        status: "active",
-        cwa_flag: false,
-        cwa_alumni: false,
-        data_center_case: true,
-        data_center_notes: "NEW 2026-09-10 (30-day sweep). Developer/promoter: Aeris Energy (principal Barry Bahrman), marketing the area -- including the former K.I. Sawyer Air Force Base -- as a hyperscale data-center location. A contentious town hall Aug 22, 2026 drew major opposition over water use, pollution, noise, and jobs; a county commissioner clarified rumors of military activity at Sawyer are unrelated (only temporary aircraft storage during runway repairs confirmed). Forsyth Township enacted a ONE-YEAR MORATORIUM to draft data-center zoning ordinances. State Rep. Karl Bohnak committed to supporting a state-level moratorium bill when pressed by attendees. A precursor community-organizing event (\"Lessons Learned from the Data Center Fightback\") was held in Marquette Aug 10, 2026. Sources: Mining Journal, Aug 22, 2026; Upper Michigan's Source, Aug 10, 2026.",
-        notes: "First Upper Peninsula data-center fight of any real scale found on this map -- the K.I. Sawyer former Air Force base angle (large existing infrastructure, remote/low-population siting) is a genuinely different profile from the downstate suburban/exurban fights and may be a preview of a UP-specific pattern.",
-        work_history: null,
-        sources: ["https://www.miningjournal.net/news/front-page-news/2026/08/town-hall-held-in-forsyth-township-addresses-data-centers-military-presence/", "https://www.uppermichiganssource.com/2026/08/11/we-cant-be-afraid-marquette-residents-learn-how-have-voice-data-centers/"]
-      },
-      {
-        id: 1658,
-        municipality: "Dearborn",
-        county: "Wayne",
-        type: "City",
-        lat: 42.3223,
-        lng: -83.1763,
-        planner_name: null,
-        planner_title: null,
-        firm: null,
-        employment_type: null,
-        status: "active",
-        cwa_flag: false,
-        cwa_alumni: false,
-        data_center_case: true,
-        data_center_notes: "NEW 2026-09-10 (30-day sweep). City Council advanced a 6-month freeze on new data-center development in early September 2026, joining a wave of nearly simultaneous local moratoriums statewide (Ypsilanti City, Garfield Twp, Wixom rezoning, Lenox Twp zoning review). No specific developer or site named in coverage -- reads as a precautionary/standards-setting measure, not a response to a live proposal. Source: Hoodline, Sept 2026 (\"Dearborn Moves to Freeze New Data Centers as AI Boom Sparks Regional Backlash\").",
-        notes: "No named developer or project -- precautionary case, similar in character to Genoa/Green Oak/Rochester Hills rather than an active-fight case like Gibraltar or Wixom.",
-        work_history: null,
-        sources: ["https://hoodline.com/2026/09/dearborn-moves-to-freeze-new-data-centers-as-ai-boom-sparks-regional-backlash/"]
       },
     ];
 
