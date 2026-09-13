@@ -223,6 +223,25 @@ body {
 .week-event-text a { color: #7dd3fc; text-decoration: none; }
 .week-event-text a:hover { text-decoration: underline; }
 .week-empty { color: var(--text-3); font-size: 11px; font-style: italic; }
+.week-packet-link {
+  color: #94a3b8;
+  text-decoration: none;
+  white-space: nowrap;
+  font-size: 11px;
+  border-bottom: 1px dotted #94a3b8;
+}
+.week-packet-link:hover { color: #e2e8f0; border-bottom-color: #e2e8f0; }
+.week-packet-missing { color: var(--text-3); font-size: 10.5px; font-style: italic; white-space: nowrap; }
+.week-alert {
+  margin-top: 5px;
+  padding: 6px 8px;
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  border-radius: 6px;
+  color: #fca5a5;
+  font-size: 11px;
+  line-height: 1.4;
+}
 
 /* ── MAIN LAYOUT ── */
 .scroll-wrap {
@@ -811,7 +830,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next Planning Commission meeting: Sept 14, 2026, 7:00 PM",
         detail: "Computed from the Commission's stated recurring pattern (2nd and 4th Monday of each month); no specific posted agenda confirmed for this date as of Sept 13, 2026. The Township Board's next meeting date could not be confirmed — lyontwp.org blocks most Board sub-pages to automated access.",
-        source: "https://www.lyontwp.org/government/township_boards_and_commissions/planning_commission_.php", sourceLabel: "Lyon Township — Planning Commission page"
+        source: "https://www.lyontwp.org/government/township_boards_and_commissions/planning_commission_.php", sourceLabel: "Lyon Township — Planning Commission page",
+        packetChecked: true
       },
       {
         date: "2026-10-05", type: "meeting", isNew: true,
@@ -970,7 +990,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next City Council meeting: Sept 14, 2026, 7:00 PM",
         detail: "Posted agenda on the city's Legistar portal.",
-        source: "https://roch.legistar.com/Calendar.aspx", sourceLabel: "Rochester Hills Legistar calendar"
+        source: "https://roch.legistar.com/Calendar.aspx", sourceLabel: "Rochester Hills Legistar calendar",
+        packet: "https://roch.legistar.com/View.ashx?M=A&ID=1366720&GUID=72B686C0-CE13-4FD8-9BEF-FAED0E1B8F1E"
       },
       {
         date: "2026-09-15", type: "meeting", isNew: true,
@@ -1015,7 +1036,9 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next Planning Commission meeting: Sept 14, 2026, 7:00 PM",
         detail: "Per the Township's official 2026 all-meeting schedule; the regular 1st-Monday date was moved from Sept 7 due to Labor Day.",
-        source: "https://www.commercetwp.com/media/ellpldnz/2026-all-meeting-schedules.pdf", sourceLabel: "Commerce Township — 2026 meeting schedule"
+        source: "https://www.commercetwp.com/media/ellpldnz/2026-all-meeting-schedules.pdf", sourceLabel: "Commerce Township — 2026 meeting schedule",
+        packet: "https://commercetwp.com/media/juholhgh/2026-9-14-pln-agenda-packet.pdf",
+        alertNote: "DATA CENTER on agenda — Item H1 (PZ26-01): public hearing on a zoning text amendment creating standards/procedures for if and when a data center is proposed. No project is currently proposed; this is a pre-emptive ordinance update."
       },
       {
         date: "2026-10-13", type: "meeting", isNew: true,
@@ -1043,7 +1066,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next Township Board meeting: Sept 14, 2026, 7:00 PM",
         detail: "Township Offices, 395 Mill St, Ortonville.",
-        source: "https://brandontownship.us/", sourceLabel: "Brandon Township — event calendar"
+        source: "https://brandontownship.us/", sourceLabel: "Brandon Township — event calendar",
+        packetChecked: true
       },
       {
         date: "2026-09-22", type: "meeting", isNew: true,
@@ -1083,7 +1107,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next Township Board meeting: Sept 14, 2026, 7:00 PM",
         detail: "4695 Grange Hall Rd, Holly, MI.",
-        source: "https://grovelandmi.gov/events/", sourceLabel: "Groveland Township — event calendar"
+        source: "https://grovelandmi.gov/events/", sourceLabel: "Groveland Township — event calendar",
+        packetChecked: true
       },
       {
         date: "2026-09-21", type: "meeting", isNew: true,
@@ -1187,7 +1212,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next City Council meeting: Sept 14, 2026",
         detail: "5:30 PM Special Meeting / 6:00 PM Committee-of-the-Whole Regular Meeting, Fracassi Municipal Campus. The Planning Commission's next date could not be confirmed — it holds several session types monthly on an irregular pattern.",
-        source: "https://www.cityofsouthfield.com/news", sourceLabel: "City of Southfield — news/agendas"
+        source: "https://www.cityofsouthfield.com/news", sourceLabel: "City of Southfield — news/agendas",
+        packet: "https://www.cityofsouthfield.com/news/city-council-september-14-regular-conducted-committee-whole-meeting-agenda"
       },
       {
         date: "2026-09-16", type: "meeting", isNew: true,
@@ -1349,7 +1375,9 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next City Council meeting: Sept 14, 2026, 7:00 PM",
         detail: "Per the city's meeting minutes & agendas page.",
-        source: "https://www.auburnhills.org/government/mayor-city-council/meeting-minutes-agendas/", sourceLabel: "City of Auburn Hills — Council agendas"
+        source: "https://www.auburnhills.org/government/mayor-city-council/meeting-minutes-agendas/", sourceLabel: "City of Auburn Hills — Council agendas",
+        packet: "https://www.auburnhills.org/wp-content/uploads/2026/09/CC-AGENDA-PACKET-09-14-26.pdf",
+        alertNote: "DATA CENTER on agenda — proposed Ordinance No. 26-951 establishing zoning standards for data centers (definition + “Designed Electrical Load Capacity” standards). Attached Aug 24 minutes record resident comments on grid burden and site-obsolescence risk."
       },
       {
         date: "2026-10-07", type: "meeting", isNew: true,
@@ -1436,7 +1464,9 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next City Commission meeting: Sept 14, 2026, 7:00 PM (est.)",
         detail: "Computed from the Commission's stated recurring pattern (2nd and 4th Monday of every month); the city's CivicClerk portal is JavaScript-rendered and could not be used to verify a posted agenda.",
-        source: "https://www.bhamgov.org/about_birmingham/city_government/boards___commissions/city_commission/index.php", sourceLabel: "City of Birmingham — City Commission page"
+        source: "https://www.bhamgov.org/about_birmingham/city_government/boards___commissions/city_commission/index.php", sourceLabel: "City of Birmingham — City Commission page",
+        packet: "https://birminghammi.api.civicclerk.com/v1/Meetings/GetMeetingFileStream(fileId=8266,plainText=false)",
+        alertNote: "FLOCK/ALPR on agenda — Item 10.D under Communications: “Communication about Flock Cameras.” Only the agenda (not the full packet backup) could be verified, so no further detail is confirmed."
       },
       {
         date: "2026-09-23", type: "meeting", isNew: true,
@@ -1490,7 +1520,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next Board of Trustees meeting: Sept 14, 2026, 6:30 PM (est.)",
         detail: "Per the Township's stated recurring pattern (2nd and 4th Monday); no specific posted Sept agenda found.",
-        source: "https://www.bloomfieldtwp.org/government/board-of-trustees/", sourceLabel: "Bloomfield Township — Board of Trustees page"
+        source: "https://www.bloomfieldtwp.org/government/board-of-trustees/", sourceLabel: "Bloomfield Township — Board of Trustees page",
+        packetChecked: true
       },
       {
         date: "2026-09-21", type: "meeting", isNew: true,
@@ -1550,7 +1581,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next Planning Commission meeting: Sept 14, 2026, 7:00 PM",
         detail: "Specific posted agenda/packet found for this date, matching the official 2nd-Monday pattern.",
-        source: "https://www.farmgov.com/government/agendas-and-minutes/planning-commission/2026/", sourceLabel: "City of Farmington — 2026 Planning Commission agendas"
+        source: "https://www.farmgov.com/government/agendas-and-minutes/planning-commission/2026/", sourceLabel: "City of Farmington — 2026 Planning Commission agendas",
+        packet: "https://www.farmgov.com/media/v2qfyzzv/09-14-26-planning-commission-agenda-packet.pdf"
       },
       {
         date: "2026-09-21", type: "meeting", isNew: true,
@@ -1577,7 +1609,9 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next City Council meeting: Sept 14, 2026, 7:30 PM",
         detail: "Study Session & Regular Session, per the city's official posted 2026 schedule.",
-        source: "https://www.fhgov.com/government-business/agendasminutesvideos/city-council/2026/", sourceLabel: "City of Farmington Hills — 2026 Council schedule"
+        source: "https://www.fhgov.com/government-business/agendasminutesvideos/city-council/2026/", sourceLabel: "City of Farmington Hills — 2026 Council schedule",
+        packet: "https://www.fhgov.com/media/p1nhrp5m/ss-agenda-9-14-26.pdf",
+        alertNote: "DATA CENTER on agenda — Study Session Item 5: “Educational Presentation Regarding Data Center Uses,” alongside Item 4, an update from a DTE Energy representative."
       },
       {
         date: "2026-09-17", type: "meeting", isNew: true,
@@ -1610,7 +1644,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next City Council meeting: Sept 14, 2026, 7:00 PM",
         detail: "Meets the 2nd and 4th Monday of each month in City Council Chambers.",
-        source: "https://www.ferndalemi.gov/government/city-meetings", sourceLabel: "City of Ferndale — City meetings page"
+        source: "https://www.ferndalemi.gov/government/city-meetings", sourceLabel: "City of Ferndale — City meetings page",
+        packetChecked: true
       },
       {
         date: "2026-09-16", type: "meeting", isNew: true,
@@ -1637,7 +1672,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next Village Council meeting: Sept 14, 2026, 6:00 PM",
         detail: "Per the Village's official 2026 meeting-dates schedule.",
-        source: "https://www.franklin.mi.us/government/village_president_and_council/meeting_dates.php", sourceLabel: "Village of Franklin — 2026 meeting schedule"
+        source: "https://www.franklin.mi.us/government/village_president_and_council/meeting_dates.php", sourceLabel: "Village of Franklin — 2026 meeting schedule",
+        packet: "https://cms7files.revize.com/franklinmi/Packet%2009-14-2026.pdf"
       },
       {
         date: "2026-09-16", type: "meeting", isNew: true,
@@ -1853,7 +1889,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next Village Council meeting: Sept 14, 2026, 6:30 PM (est.)",
         detail: "Computed from the Council's stated recurring pattern (2nd and 4th Monday, 6:30 PM); corroborated by a noted special+regular meeting for this date.",
-        source: "https://www.lakeorion.org/village-manager", sourceLabel: "Village of Lake Orion — Village Manager page"
+        source: "https://www.lakeorion.org/village-manager", sourceLabel: "Village of Lake Orion — Village Manager page",
+        packet: "https://mccmeetings.blob.core.usgovcloudapi.net/lakorionmi-pubu/MEET-Packet-e45869442fa44eeba56b2f25e3afcf88.pdf"
       },
       {
         date: "2026-10-05", type: "meeting", isNew: true,
@@ -1907,7 +1944,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next Village Council meeting: Sept 14, 2026, 7:00 PM (est.)",
         detail: "Rowland Hall; computed from the Council's stated recurring pattern (2nd Monday of each month). The Planning Commission's next date could not be confirmed — sources conflict on its recurring day and no current schedule is posted.",
-        source: "https://www.villageofleonard.org/minutes-agendas", sourceLabel: "Village of Leonard — minutes & agendas page"
+        source: "https://www.villageofleonard.org/minutes-agendas", sourceLabel: "Village of Leonard — minutes & agendas page",
+        packetChecked: true
       },
       {
         date: "2026-09-17", type: "meeting", isNew: true,
@@ -1934,7 +1972,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next City Council meeting: Sept 14, 2026, 6:30 PM",
         detail: "Specific posted meeting on the city's Municode Meetings portal.",
-        source: "https://madisonheights-mi.municodemeetings.com/", sourceLabel: "City of Madison Heights — Municode Meetings portal"
+        source: "https://madisonheights-mi.municodemeetings.com/", sourceLabel: "City of Madison Heights — Municode Meetings portal",
+        packet: "https://mccmeetings.blob.core.usgovcloudapi.net/mdsnhgtsmi-pubu/MEET-Packet-30f317883fbc4736a266170b8a08d2ee.pdf"
       },
       {
         date: "2026-09-22", type: "meeting", isNew: true,
@@ -2048,7 +2087,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next City Council meeting: Sept 14, 2026, 7:00 PM",
         detail: "Per the city's current City Council agenda page. The Planning Commission's next date could not be confirmed — its schedule is irregular (roughly biweekly with ad-hoc cancellations) and no agenda has been posted past Sept 9, 2026.",
-        source: "https://cityofnovi.org/agendas-minutes/city-council/current-city-council-agenda/", sourceLabel: "City of Novi — City Council agendas"
+        source: "https://cityofnovi.org/agendas-minutes/city-council/current-city-council-agenda/", sourceLabel: "City of Novi — City Council agendas",
+        packetChecked: true
       },
       {
         date: "2026-09-23", type: "meeting", isNew: true,
@@ -2331,7 +2371,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next City Council meeting: Sept 14, 2026, 7:00 PM",
         detail: "Per the city's official online calendar. The Planning Commission's next date could not be confirmed — its schedule pages were intermittently unreachable.",
-        source: "https://www.ci.rochester.mi.us/calendar.aspx?CID=14", sourceLabel: "City of Rochester — official calendar"
+        source: "https://www.ci.rochester.mi.us/calendar.aspx?CID=14", sourceLabel: "City of Rochester — official calendar",
+        packetChecked: true
       },
       {
         date: "2026-10-05", type: "meeting", isNew: true,
@@ -2358,7 +2399,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next City Commission meeting: Sept 14, 2026, 7:30 PM (est.)",
         detail: "Computed from a recurring 2nd/4th-Monday pattern inferred from multiple 2025–26 meeting instances; no posted Sept 2026 agenda confirmed.",
-        source: "https://www.romi.gov/412/City-Commission", sourceLabel: "City of Royal Oak — City Commission page"
+        source: "https://www.romi.gov/412/City-Commission", sourceLabel: "City of Royal Oak — City Commission page",
+        packetChecked: true
       },
       {
         date: "2026-10-13", type: "meeting", isNew: true,
@@ -2412,7 +2454,9 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next City Council meeting: Sept 14, 2026, 6:30 PM (est.)",
         detail: "Computed from the Council's stated recurring pattern (2nd and 4th Monday, 6:30 PM).",
-        source: "https://www.southlyonmi.org/government/city_council/index.php", sourceLabel: "City of South Lyon — City Council page"
+        source: "https://www.southlyonmi.org/government/city_council/index.php", sourceLabel: "City of South Lyon — City Council page",
+        packet: "https://cms5.revize.com/revize/southlyon/packet_Online%20Copy_09-14-2026_REDACTED.pdf",
+        alertNote: "FLOCK/ALPR on agenda — New Business Item #3, “Flock Camera Discussion.” Council discussed the camera-contract renewal, resident feedback on the Police Dept.'s posted Flock policy, and Fourth Amendment case law (no case found striking the systems down). No mention of ALPR/immigration-enforcement data sharing."
       },
       {
         date: "2026-09-24", type: "meeting", isNew: true,
@@ -2526,7 +2570,8 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "meeting", isNew: true,
         label: "Next Board of Trustees meeting: Sept 14, 2026, 6:00 PM (est.)",
         detail: "Computed from the Board's stated recurring pattern (2nd and 4th Monday), corroborated by real 2026 agenda filenames.",
-        source: "https://www.waterfordmi.gov/168/Board-of-Trustees", sourceLabel: "Waterford Township — Board of Trustees page"
+        source: "https://www.waterfordmi.gov/168/Board-of-Trustees", sourceLabel: "Waterford Township — Board of Trustees page",
+        packetChecked: true
       },
       {
         date: "2026-09-22", type: "meeting", isNew: true,
@@ -3188,7 +3233,13 @@ function buildWeekSection() {
         const text = e.source
           ? `<a href="${e.source}" target="_blank" rel="noopener">${e.label}</a>`
           : e.label;
-        html += `<li class="week-event-item">${icon}<span class="week-event-text"><b>${e.name}:</b> ${text}</span></li>`;
+        const packetLink = e.packet
+          ? ` <a href="${e.packet}" target="_blank" rel="noopener" class="week-packet-link" title="Meeting agenda/packet">📄 Packet</a>`
+          : (e.packetChecked ? ` <span class="week-packet-missing">(packet not posted yet)</span>` : '');
+        const alertHtml = e.alertNote
+          ? `<div class="week-alert">⚠️ ${e.alertNote}</div>`
+          : '';
+        html += `<li class="week-event-item">${icon}<span class="week-event-text"><b>${e.name}:</b> ${text}${packetLink}${alertHtml}</span></li>`;
       });
       html += `</ul>`;
     }
