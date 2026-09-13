@@ -520,6 +520,8 @@ const TYPES = {
   'legal':          { label: 'Legal / Formal',       color: '#3987e5' },
   'cwa-terminated': { label: 'CWA Terminated',       color: '#d55181' },
   'future':         { label: 'Upcoming Deadline',    color: '#5b7ca0' },
+  'surveillance':   { label: 'Flock / ALPR Camera',  color: '#34d399' },
+  'immigration':    { label: 'ICE / Immigration',    color: '#f472b6' },
 };
 
 // ─────────────────────────────────────────────
@@ -782,9 +784,15 @@ const COMMUNITIES = [
         source: "https://www.yahoo.com/news/us/articles/data-center-moratorium-extended-rochester-162847091.html", sourceLabel: "mlive/Yahoo, Aug 12, 2026"
       },
       {
+        date: "2026-09-13", type: "community", isNew: true,
+        label: "CORRECTION: OU data-center siting conflict flagged",
+        detail: "Fresh research (Sept 2026 completeness sweep) surfaced a direct conflict in the public record: FOX 2 Detroit (June 26, 2026) reports the university's proposed data center is on OU's campus in Rochester Hills, not Auburn Hills as earlier framed on this map. The university was negotiating development agreements through summer 2026, with formal due diligence beginning October 2026. OU's campus straddles both cities, which may explain the discrepancy — flagging for direct confirmation with the university or either city rather than asserting one siting as authoritative.",
+        source: "https://www.fox2detroit.com/news/plans-data-center-oakland-university-campus-move-forward", sourceLabel: "FOX 2 Detroit, Jun 26, 2026"
+      },
+      {
         date: "2027-03-04", type: "future", isNew: true,
         label: "⚠ Extended moratorium expires",
-        detail: "Separately, Oakland University's board approved a due-diligence phase (June 2026) for a standalone 20 MW data center on a 15-acre parcel on the Auburn Hills side of its campus — exempt from Rochester Hills zoning as a state-university project, but worth tracking on its own June 2027 due-diligence deadline given its scale relative to the city's existing small data centers."
+        detail: "Separately, Oakland University's board approved a due-diligence phase (June 2026) for a standalone 20 MW data center on a 15-acre parcel — reported siting conflicts between Auburn Hills and Rochester Hills, see the Sept 2026 correction above — exempt from local zoning as a state-university project, but worth tracking on its own June 2027 due-diligence deadline given its scale relative to the city's existing small data centers."
       }
     ]
   },
@@ -801,6 +809,12 @@ const COMMUNITIES = [
         label: "6-month moratorium (precautionary)",
         detail: "Township Board adopts a 6-month data center moratorium in February 2026 with no developer proposal on file. Per the July 2026 staff report, the board is expected to extend it ~4 months (to ~December 2026) to finish standards. Date approximate.",
         source: "https://commercetwp.com/media/xh4nuv4s/plng-dept-monthly-report_july-2026.pdf", sourceLabel: "Commerce Twp Planning Dept report, Jul 2026"
+      },
+      {
+        date: "2026-07-14", type: "protection", isNew: true,
+        label: "Board resolution formally extends data-center moratorium",
+        detail: "Township Board approves a resolution extending the temporary moratorium on land-use consideration of data centers, per the July 14, 2026 board agenda and meeting synopsis — confirms the extension the July staff report had projected, ahead of the Aug 10 Planning Commission discussion of prospective standards.",
+        source: "https://commercetwp.com/media/kkelywcu/2026-07-14-synopsis.pdf", sourceLabel: "Commerce Twp Board meeting synopsis, Jul 14, 2026"
       },
       {
         date: "2026-08-10", type: "community",
@@ -840,10 +854,22 @@ const COMMUNITIES = [
     statusLabel: "NON-CWA — DATA CENTER ACTIVITY",
     events: [
       {
-        date: "2026-09-13", type: "community",
-        label: "Logged in the Sept 13, 2026 completeness sweep",
-        detail: "Regional coverage (Tri-County Times) lists Groveland Township among townships in this Oakland/Livingston/Genesee cluster with active data-center moratorium discussions in 2025-2026; not independently confirmed via the township's own site this session — verify directly.",
-        source: "https://grovelandmi.gov/departments/", sourceLabel: "see municipality record for full sourcing"
+        date: "2026-02-01", type: "protection", isNew: true,
+        label: "Board approves 5-0 one-year data-center moratorium",
+        detail: "Township Board of Trustees votes 5-0 to enact a temporary, one-year moratorium on data centers (expires Feb 2027). Distinct from an earlier, separately-flagged Tri-County Times claim that traced to Tyrone Township — this Groveland-specific Feb 2026 moratorium is independently confirmed via The Citizen. Date approximate (month confirmed, exact day not given in source).",
+        source: "https://thecitizenonline.com/articles/news/local-committee-delivers-data-center-impact-study/", sourceLabel: "The Citizen, Aug 29, 2026 (retrospective)"
+      },
+      {
+        date: "2026-04-01", type: "community", isNew: true,
+        label: "Board establishes GTRAC resident advisory committee",
+        detail: "Board establishes the Groveland Township Residents Advisory Committee (GTRAC), 7 residents, to study data-center impacts and recommend ordinance protections. Date approximate (month confirmed).",
+        source: "https://thecitizenonline.com/articles/news/local-committee-delivers-data-center-impact-study/", sourceLabel: "The Citizen, Aug 29, 2026 (retrospective)"
+      },
+      {
+        date: "2026-08-17", type: "community", isNew: true,
+        label: "GTRAC delivers Data Center Impact Assessment to PC",
+        detail: "GTRAC delivers a 100+-page Data Center Impact Assessment to the Planning Commission, recommending independent applicant-funded studies (hydrogeologic, arsenic mobilization, fire, noise, grid capacity), a protective ordinance (special land use permits, surety bonds, air/water/noise/lighting standards), and Master Plan amendments. Committee chair: Melissa Ford. A joint Planning Commission/Board meeting was expected in September 2026.",
+        source: "https://thecitizenonline.com/articles/news/local-committee-delivers-data-center-impact-study/", sourceLabel: "The Citizen, Aug 29, 2026"
       }
     ]
   },
@@ -1011,6 +1037,12 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Beverly Hills as of Sept 2026. (Firm listed as: In-House (Village Staff).)"
+      },
+      {
+        date: "2026-09-01", type: "surveillance", isNew: true,
+        label: "Council briefed on existing Flock ALPR camera program",
+        detail: "At the Sept 1, 2026 Village Council meeting, Public Safety Director Arnold gave an overview of the village's existing automated license plate reader cameras, provided under an agreement with Flock Safety — an informational briefing on a pre-existing program, not a new contract vote.",
+        source: "https://www.villagebeverlyhills.com/news_detail_T8_R845.php", sourceLabel: "Village of Beverly Hills meeting recap, Sept 1, 2026"
       }
     ]
   },
@@ -1086,6 +1118,12 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Clawson as of Sept 2026. Planning function sits under Community & Economic Development dept; staff directory not accessible. 425 N. Main St, (248) 435-4500."
+      },
+      {
+        date: "2026-09-09", type: "surveillance", isNew: true,
+        label: "Named among cities that ended Flock Safety contract",
+        detail: "City Council rejected a Flock Safety ALPR camera contract in a May 11, 2026 vote, after which two police officers threatened to quit/resigned in protest. Statewide roundup coverage (Michigan Public, Aug 19, 2026; Lenawee Voice, Sept 9, 2026) continues to cite Clawson as a current example of a Michigan city that cancelled Flock.",
+        source: "https://www.michiganpublic.org/politics-government/2026-08-19/communities-across-michigan-move-to-ditch-flock-cameras", sourceLabel: "Michigan Public, Aug 19, 2026"
       }
     ]
   },
@@ -1131,6 +1169,12 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Ferndale as of Sept 2026. CONFIRMED CWA ALUMNI: Melissa Kalnasy is City Planner at Ferndale and former Carlisle/Wortman Associates employee per LinkedIn profile. She/Her."
+      },
+      {
+        date: "2026-09-09", type: "surveillance", isNew: true,
+        label: "Named among cities that ended Flock Safety contract",
+        detail: "Statewide roundup coverage lists Ferndale among Michigan communities (with Clawson, Westland, Milford) that have recently ended their Flock Safety ALPR camera contracts, following a Nov 24/Dec 15, 2025 council vote to switch toward an alternative vendor. Confirmed as still current status as of this Sept 9, 2026 report.",
+        source: "https://lenaweevoice.com/2026/09/09/local-governments-reconsidering-use-of-flock-cameras/", sourceLabel: "Lenawee Voice, Sept 9, 2026"
       }
     ]
   },
@@ -1326,6 +1370,12 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Milford as of Sept 2026. villageofmilford.org blocks automated access; confirmed NOT on Carlisle/Wortman's public client list. Distinct from a separate active data center controversy ('Project Flex') in nearby Lyon Township."
+      },
+      {
+        date: "2026-08-19", type: "surveillance", isNew: true,
+        label: "Named among communities that cancelled Flock Safety contract",
+        detail: "Michigan Public reports Milford is among metro Detroit communities (with Clawson, Ferndale, Westland) that have cancelled a Flock Safety ALPR camera contract, in coverage tied to Sumpter Township's own cancellation. An unverified social-media post described a unanimous council vote cancelling a 5-camera contract, with a separate 10-camera contract renewal expected in August 2026 — treat that detail as unconfirmed.",
+        source: "https://www.michiganpublic.org/politics-government/2026-08-19/communities-across-michigan-move-to-ditch-flock-cameras", sourceLabel: "Michigan Public, Aug 19, 2026"
       }
     ]
   },
@@ -1446,6 +1496,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Orion Township as of Sept 2026. Department also references an unnamed 'Township Planning Consultant' who attends developer pre-application meetings. (Firm listed as: In-House (Township Staff).)"
+      },
+      {
+        date: "2026-06-17", type: "protection", isNew: true,
+        label: "Board passes 6-month data-center moratorium 7-0",
+        detail: "Township board votes 7-0 to pass a six-month moratorium on data centers so planning staff can draft ordinance amendments — the current ordinance doesn't address them. Not an outright ban, per Supervisor Chris Barnett.",
+        source: "https://lakeorionreview.com/articles/news/orion-twp-board-passes-six-month-moratorium-on-data-centers/", sourceLabel: "Lake Orion Review, Jun 2026"
+      },
+      {
+        date: "2026-08-27", type: "surveillance", isNew: true,
+        label: "Named in county Flock/ALPR camera vandalism investigation",
+        detail: "Orion Township is named among Oakland County communities where Flock license-plate-reader cameras were vandalized; the Oakland County Sheriff's Office investigated at least 8 such incidents countywide (one arrest, in Commerce Township), amid broader public debate over surveillance camera use.",
+        source: "https://wcsx.com/2026/08/27/vandalism-of-safety-cameras-sparks-debate-over-surveillance-in-metro-detroit/", sourceLabel: "WCSX/WRIF, Aug 27, 2026"
       }
     ]
   },
@@ -1633,6 +1695,12 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Waterford Township as of Sept 2026. Confirmed in-house Director of Development Services for Waterford Township."
+      },
+      {
+        date: "2026-07-10", type: "immigration", isNew: true,
+        label: "Border Patrol charges man after Waterford PD-reported crash",
+        detail: "A Mexican national was charged with illegal re-entry into the U.S. after U.S. Border Patrol agents responded to a Waterford Police Department call following a traffic crash in the township. The only Border Patrol/ICE-adjacent item found tied specifically to Waterford Township; falls just outside the strict 60-day research window (5 days) but included as the closest available data point.",
+        source: "https://www.fox2detroit.com/news/mexican-national-charged-illegally-re-entering-us-after-waterford-crash-arrest", sourceLabel: "FOX 2 Detroit, Jul 10, 2026"
       }
     ]
   },
@@ -1714,6 +1782,10 @@ function shape(type, cx, cy, r) {
       return xPath(cx, cy, r);
     case 'future':         // dashed circle
       return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke-width="2" stroke-dasharray="4,3"/>`;
+    case 'surveillance':   // eye (two overlapping circles)
+      return `<circle cx="${cx}" cy="${cy}" r="${r*1.2}" fill="none" stroke-width="2"/><circle cx="${cx}" cy="${cy}" r="${r*0.45}"/>`;
+    case 'immigration':    // pentagon
+      return pentagonPath(cx, cy, r);
     default:
       return `<circle cx="${cx}" cy="${cy}" r="${r}"/>`;
   }
@@ -1725,6 +1797,15 @@ function starPath(cx, cy, r) {
     const a = (i * 36 - 90) * Math.PI / 180;
     const rr = i % 2 === 0 ? r * 1.15 : r * 0.48;
     pts.push(`${(cx + rr * Math.cos(a)).toFixed(1)},${(cy + rr * Math.sin(a)).toFixed(1)}`);
+  }
+  return `<polygon points="${pts.join(' ')}"/>`;
+}
+
+function pentagonPath(cx, cy, r) {
+  const pts = [];
+  for (let i = 0; i < 5; i++) {
+    const a = (i * 72 - 90) * Math.PI / 180;
+    pts.push(`${(cx + r * 1.15 * Math.cos(a)).toFixed(1)},${(cy + r * 1.15 * Math.sin(a)).toFixed(1)}`);
   }
   return `<polygon points="${pts.join(' ')}"/>`;
 }
@@ -2451,7 +2532,7 @@ const OAKLAND = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "Rochester Hills enacted a precautionary data-center moratorium (approved Feb 23, 2026, ~180 days, no single named developer/project inside city limits identified) to study noise, vibration, light pollution, and water/electricity demand ahead of drafting standards for facilities ≥ 2 MW; original expiration Sept 5, 2026. Aug 10-11, 2026 City Council (item 2026-0070) voted UNANIMOUSLY to extend it. RESOLVED 2026-09-13 (it did not lapse): the extension runs another 180 days, to March 4, 2027 — confirmed date, not just 'roughly mid-March.' Public comment at the extension vote: Councilwoman Theresa Mungioli proposed half-mile-plus residential setbacks (drew applause); residents split on moratorium-only vs. real regulation. Separately, Oakland University (whose campus straddles Auburn Hills/Rochester Hills) is not covered by this moratorium — it's exempt as a state-university project — but its board approved a due-diligence phase in June 2026 for a standalone 20 MW data center on a 15-acre parcel in Auburn Hills; due diligence runs through June 2027, with construction (if approved) 18-21 months after that. Sources: Detroit News, Aug 11 2026 — https://www.detroitnews.com/story/news/local/oakland-county/2026/08/11/rochester-hills-extends-data-center-moratorium/91256551007/ ; mlive/Yahoo, Aug 12 2026 — https://www.yahoo.com/news/us/articles/data-center-moratorium-extended-rochester-162847091.html ; Legistar agenda — https://roch.legistar.com/View.ashx?M=A&ID=1366718&GUID=D820CF15-2283-454E-AC4F-3DC3231A4A22",
+        data_center_notes: "Rochester Hills enacted a precautionary data-center moratorium (approved Feb 23, 2026, ~180 days, no single named developer/project inside city limits identified) to study noise, vibration, light pollution, and water/electricity demand ahead of drafting standards for facilities ≥ 2 MW; original expiration Sept 5, 2026. Aug 10-11, 2026 City Council (item 2026-0070) voted UNANIMOUSLY to extend it. RESOLVED 2026-09-13 (it did not lapse): the extension runs another 180 days, to March 4, 2027 — confirmed date, not just 'roughly mid-March.' Public comment at the extension vote: Councilwoman Theresa Mungioli proposed half-mile-plus residential setbacks (drew applause); residents split on moratorium-only vs. real regulation. Separately, Oakland University's board approved a due-diligence phase in June 2026 for a standalone 20 MW data center on a 15-acre parcel — exempt from local zoning as a state-university project; due diligence runs through June 2027, with construction (if approved) 18-21 months after that. CORRECTION 2026-09-13 (60-day completeness sweep): FOX 2 Detroit (Jun 26, 2026) reports this project is on OU's campus in Rochester Hills, not Auburn Hills as earlier framed here — OU's campus straddles both cities, which may explain the discrepancy; flagging for direct confirmation rather than asserting one siting as authoritative. Sources: Detroit News, Aug 11 2026 — https://www.detroitnews.com/story/news/local/oakland-county/2026/08/11/rochester-hills-extends-data-center-moratorium/91256551007/ ; mlive/Yahoo, Aug 12 2026 — https://www.yahoo.com/news/us/articles/data-center-moratorium-extended-rochester-162847091.html ; Legistar agenda — https://roch.legistar.com/View.ashx?M=A&ID=1366718&GUID=D820CF15-2283-454E-AC4F-3DC3231A4A22",
         notes: "In-house Planning and Economic Development Director. Giffels Webster (Jill Bahm, Ian Hogg) provided the Master Plan (Phase 1 Jan 2024 – Phase 5 Jul 2025) and won an APA award in 2019 for prior planning work. Both in-house staff and Giffels Webster active.",
         work_history: null,
         sources: ["City of Rochester Hills; Giffels Webster project records"]
@@ -3005,7 +3086,7 @@ const OAKLAND = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "CORRECTED 2026-09-13 (Oakland County completeness research): the previously-noted Tri-County Times \"data-center moratorium\" claim for Groveland Township traces to an article actually about Tyrone Township, not Groveland \u2014 that specific claim is retracted. A genuine data-center-related planning discussion on Aug 17, 2026 is corroborated by a second source (Springfield Township's own page, referencing the same regional conversation), but no confirmed Groveland-specific moratorium or ordinance exists as of this update.",
+        data_center_notes: "CORRECTED 2026-09-13 (Oakland County completeness research): the previously-noted Tri-County Times \"data-center moratorium\" claim for Groveland Township traces to an article actually about Tyrone Township, not Groveland \u2014 that specific claim is retracted. FURTHER VERIFIED 2026-09-13 (60-day news sweep): a separate, well-sourced report (The Citizen, Aug 29, 2026) independently confirms Groveland Township DOES have its own genuine data-center moratorium \u2014 Board of Trustees voted 5-0 to enact a one-year moratorium in Feb 2026 (expires Feb 2027), distinct from the earlier misattributed claim. A Groveland Township Residents Advisory Committee (GTRAC, 7 residents) formed April 2026 delivered a 100+-page Data Center Impact Assessment to the Planning Commission Aug 17, 2026, recommending applicant-funded independent studies and a protective ordinance; a joint Planning Commission/Board meeting was expected September 2026.",
         notes: "(Firm listed as: In-House (Township Staff).)",
         work_history: null,
         sources: ["https://grovelandmi.gov/departments/"]
