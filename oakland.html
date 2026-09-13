@@ -2567,7 +2567,7 @@ function xPath(cx, cy, r) {
 // ─────────────────────────────────────────────
 const activeTypes = new Set(Object.keys(TYPES));
 const LANE_H = 148;
-const TODAY = '2026-08-24';
+const TODAY = new Date().toISOString().slice(0, 10);
 
 // ─────────────────────────────────────────────
 //  LEGEND
@@ -2852,6 +2852,13 @@ function renderChart() {
   const totalMonths = (T_END.getFullYear() - T_START.getFullYear()) * 12 + (T_END.getMonth() - T_START.getMonth());
   const svgWidth = Math.max(960, totalMonths * PX_PER_MONTH);
 
+  // Give the timeline column an explicit pixel width instead of "1fr". A flex/grid
+  // fraction track can never exceed the width available inside .scroll-wrap, so the
+  // wide SVGs were being clipped by .lane-body's overflow:hidden instead of pushing
+  // .chart-area wider than the viewport — which is what .scroll-wrap's overflow-x:auto
+  // needs in order to actually show a scrollbar and let the timeline scroll.
+  chart.style.gridTemplateColumns = `200px ${svgWidth + 12}px`;
+
   // Axis row
   const axisSpacerDiv = document.createElement('div');
   axisSpacerDiv.className = 'axis-spacer';
@@ -2887,6 +2894,36 @@ function renderChart() {
     chart.appendChild(header);
     chart.appendChild(body);
   });
+
+  if (!hasScrolledToToday) {
+    scrollToCurrentQuarter(svgWidth);
+    hasScrolledToToday = true;
+  }
+}
+
+// ─────────────────────────────────────────────
+//  AUTO-SCROLL TO CURRENT QUARTER
+// ─────────────────────────────────────────────
+let hasScrolledToToday = false;
+
+function scrollToCurrentQuarter(svgWidth) {
+  const wrap = document.querySelector('.scroll-wrap');
+  if (!wrap) return;
+  const HEADER_W = 200; // sticky lane-header column width, always visible on the left
+  const PAD_L = 12;     // matches axisWrap/lane-body's inline padding-left
+
+  const now = new Date();
+  const qStartMonth = Math.floor(now.getMonth() / 3) * 3;
+  const qStart = new Date(now.getFullYear(), qStartMonth, 1);
+  const qEnd = new Date(now.getFullYear(), qStartMonth + 3, 1);
+  const xStart = toX(qStart.toISOString().slice(0, 10), svgWidth);
+  const xEnd = toX(qEnd.toISOString().slice(0, 10), svgWidth);
+  const qCenterAbs = HEADER_W + PAD_L + (xStart + xEnd) / 2;
+
+  const visibleTimelineWidth = Math.max(0, wrap.clientWidth - HEADER_W);
+  let target = qCenterAbs - HEADER_W - (visibleTimelineWidth / 2);
+  const maxScroll = Math.max(0, wrap.scrollWidth - wrap.clientWidth);
+  wrap.scrollLeft = Math.min(Math.max(0, target), maxScroll);
 }
 
 // ─────────────────────────────────────────────
