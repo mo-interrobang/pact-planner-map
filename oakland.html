@@ -166,6 +166,64 @@ body {
 }
 .top-scrollbar-thumb:hover, .top-scrollbar-thumb.dragging { background: var(--text-2); }
 
+/* ── THIS WEEK AT A GLANCE ── */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  padding: 6px 28px 24px;
+}
+@media (max-width: 1000px) {
+  .week-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+}
+.week-day-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.week-day-card.is-today {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 1px #0ea5e9 inset;
+}
+.week-day-name {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+}
+.week-day-date {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-top: -4px;
+}
+.week-event-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.week-event-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+.week-event-icon { flex-shrink: 0; margin-top: 2px; }
+.week-event-text { color: var(--text-2); }
+.week-event-text b { color: var(--text-1); font-weight: 600; }
+.week-event-text a { color: #7dd3fc; text-decoration: none; }
+.week-event-text a:hover { text-decoration: underline; }
+.week-empty { color: var(--text-3); font-size: 11px; font-style: italic; }
+
 /* ── MAIN LAYOUT ── */
 .scroll-wrap {
   overflow-x: auto;
@@ -543,6 +601,10 @@ body {
     </ul>
   </div>
 </div>
+
+<div class="section-break" style="font-size:12px;padding-top:26px;">🗓️ This Week — Council &amp; Planning Commission Meetings</div>
+
+<div class="week-grid" id="weekGrid"></div>
 
 <div class="section-break" style="font-size:12px;padding-top:26px;">📅 Timeline — all 61 Oakland County municipalities + county government (62 lanes)</div>
 
@@ -3064,9 +3126,82 @@ document.querySelector('.scroll-wrap').addEventListener('scroll', updateTopScrol
 window.addEventListener('resize', updateTopScrollbar);
 
 // ─────────────────────────────────────────────
+//  THIS WEEK AT A GLANCE
+//  Mon–Fri grid built fresh from COMMUNITIES on every load, so it never
+//  goes stale the way a hand-written date range would. If today falls on
+//  a weekend, it jumps ahead to the coming Monday; otherwise it shows the
+//  week already in progress.
+// ─────────────────────────────────────────────
+function miniIcon(type) {
+  const meta = TYPES[type] || { color: '#94a3b8' };
+  return `<svg class="week-event-icon" width="14" height="14" viewBox="0 0 14 14" fill="${meta.color}" stroke="${meta.color}">${shape(type, 7, 7, 4.5)}</svg>`;
+}
+
+function buildWeekSection() {
+  const grid = document.getElementById('weekGrid');
+  if (!grid) return;
+
+  // Filter out the blanket "nothing found here" entries logged during research
+  // sweeps — those aren't events, just an audit trail that a day was checked.
+  const boilerplate = [
+    'No documented data-center activity',
+    'CWA client — no data-center proposal, moratorium, or ordinance found',
+    'completeness sweep'
+  ];
+
+  const now = new Date();
+  const dow = now.getDay(); // 0=Sun ... 6=Sat
+  let offsetToMonday;
+  if (dow === 0) offsetToMonday = 1;
+  else if (dow === 6) offsetToMonday = 2;
+  else offsetToMonday = 1 - dow;
+  const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + offsetToMonday);
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+  let html = '';
+  for (let i = 0; i < 5; i++) {
+    const d = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i);
+    const dateStr = d.toISOString().slice(0, 10);
+    const dateLabel = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+
+    let dayEvents = [];
+    COMMUNITIES.forEach(c => {
+      c.events.forEach(e => {
+        if (e.date === dateStr && !boilerplate.some(b => e.label.includes(b))) {
+          dayEvents.push({ name: c.name, ...e });
+        }
+      });
+    });
+    dayEvents.sort((a, b) => a.name.localeCompare(b.name));
+
+    const isToday = dateStr === todayStr;
+    html += `<div class="week-day-card${isToday ? ' is-today' : ''}">`;
+    html += `<div class="week-day-name">${dayNames[i]}</div>`;
+    html += `<div class="week-day-date">${dateLabel}</div>`;
+    if (dayEvents.length === 0) {
+      html += `<div class="week-empty">No meetings currently listed</div>`;
+    } else {
+      html += `<ul class="week-event-list">`;
+      dayEvents.forEach(e => {
+        const icon = miniIcon(e.type);
+        const text = e.source
+          ? `<a href="${e.source}" target="_blank" rel="noopener">${e.label}</a>`
+          : e.label;
+        html += `<li class="week-event-item">${icon}<span class="week-event-text"><b>${e.name}:</b> ${text}</span></li>`;
+      });
+      html += `</ul>`;
+    }
+    html += `</div>`;
+  }
+  grid.innerHTML = html;
+}
+
+// ─────────────────────────────────────────────
 //  INIT
 // ─────────────────────────────────────────────
 buildLegend();
+buildWeekSection();
 renderChart();
 
 let resizeTimer;
