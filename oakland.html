@@ -522,6 +522,7 @@ const TYPES = {
   'future':         { label: 'Upcoming Deadline',    color: '#5b7ca0' },
   'surveillance':   { label: 'Flock / ALPR Camera',  color: '#34d399' },
   'immigration':    { label: 'ICE / Immigration',    color: '#f472b6' },
+  'meeting':        { label: 'Next Meeting Scheduled', color: '#0ea5e9' },
 };
 
 // ─────────────────────────────────────────────
@@ -601,6 +602,12 @@ const COMMUNITIES = [
         label: "Full docket read: Behrmann texts confirmed, Passalacqua cleared, motion to dismiss reviewed",
         detail: "All 30 complaint exhibits and the City's Sept 1, 2026 Motion to Dismiss (ECF 7, 7 exhibits) read in full. The motion argues more than mootness: it also says Wixom One has no protected property interest in an unapproved site plan or discretionary waiver, that it got adequate process at the 7/14/26 hearing, and that its equal-protection claim names no comparable data-center applicant \u2014 none of which engages the Behrmann/Gottschall texts or the targeting narrative. Those texts (Exhibits 25, 28, 29) hold up as real evidence: Behrmann told Gottschall by text on 6/28/26 \u2018I would not grant the waiver and I will not vote to approve the current draft\u2019 two weeks before the vote, and separately told Benson the Dowagiac comparison was \u2018not apples to apples\u2019 before using it publicly anyway on 7/14/26. Matteo Passalacqua (the CWA planner) is NOT implicated in any of it \u2014 he's shown throughout only drafting ordinance language and presenting research at Council's direction; the bad-faith allegations fall on elected officials (Behrmann, Gottschall) and staff (Benson). The 'Rassel Letters' (Exhibits 9, 21) turn out to be from Wixom One's own attorney, not a third party. Project size confirmed at 519,400 sq ft per the signed complaint. Case remains unresolved \u2014 no ruling on the motion yet.",
         source: "https://dockets.justia.com/docket/michigan/miedce/2:2026cv12754/396764", sourceLabel: "PACER docket, full complaint (ECF 1) and motion to dismiss (ECF 7) read 2026-09-13"
+      },
+      {
+        date: "2026-09-15", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 15, 2026",
+        detail: "Regular City Council meeting; specific time not posted on the agendas page (Council typically meets at 7:00 PM).",
+        source: "https://www.wixomgov.org/departments/city-clerk/agendas-and-minutes/city-council", sourceLabel: "City of Wixom — Council agendas & minutes"
       }
     ]
   },
@@ -670,6 +677,12 @@ const COMMUNITIES = [
         date: "2026-09-14", type: "future", isNew: true,
         label: "⚠ Planning Commission meeting — Project Flex pulled from agenda",
         detail: "Sept 14, 2026 was expected to be the final site-plan decision, one year and six days after the original conditional approval — but the Township pulled Project Flex from that agenda after the Livingston Post's retrospective ran. UPDATE 2026-09-13 (fresh 60-day sweep): as of the Sept 8, 2026 report, no litigation has been filed by either side, and the developer says it now favors negotiation over litigation — see the Sept 8 event above. Status otherwise unresolved."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 14, 2026, 7:00 PM",
+        detail: "Computed from the Commission's stated recurring pattern (2nd and 4th Monday of each month); no specific posted agenda confirmed for this date as of Sept 13, 2026. The Township Board's next meeting date could not be confirmed — lyontwp.org blocks most Board sub-pages to automated access.",
+        source: "https://www.lyontwp.org/government/township_boards_and_commissions/planning_commission_.php", sourceLabel: "Lyon Township — Planning Commission page"
       }
     ]
   },
@@ -727,6 +740,18 @@ const COMMUNITIES = [
         date: "2026-12-10", type: "future",
         label: "⚠ Extended moratorium expires",
         detail: "The extended moratorium runs out December 10, 2026. Whatever ordinance CWA has drafted by then governs any application for the Andersonville Road site — the same is-it-protection-or-the-appearance-of-protection question P.A.C.T. tracks at every CWA site."
+      },
+      {
+        date: "2026-09-22", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 22, 2026, 7:00 PM",
+        detail: "Per the Township's official 2026 meeting-dates schedule (4th Tuesday of each month).",
+        source: "https://cms1files.revize.com/springfieldtwp/2026_Meeting_Dates.pdf", sourceLabel: "Springfield Township — 2026 meeting schedule"
+      },
+      {
+        date: "2026-10-08", type: "meeting", isNew: true,
+        label: "Next Township Board meeting: Oct 8, 2026, 7:00 PM",
+        detail: "Per the Township's official 2026 meeting-dates schedule (2nd Thursday of each month); the Sept 10 occurrence has already passed.",
+        source: "https://cms1files.revize.com/springfieldtwp/2026_Meeting_Dates.pdf", sourceLabel: "Springfield Township — 2026 meeting schedule"
       }
     ]
   },
@@ -805,6 +830,18 @@ const COMMUNITIES = [
         date: "2027-03-04", type: "future", isNew: true,
         label: "⚠ Extended moratorium expires",
         detail: "Separately, Oakland University's board approved a due-diligence phase (June 2026) for a standalone 20 MW data center on a 15-acre parcel — reported siting conflicts between Auburn Hills and Rochester Hills, see the Sept 2026 correction above — exempt from local zoning as a state-university project, but worth tracking on its own June 2027 due-diligence deadline given its scale relative to the city's existing small data centers."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 14, 2026, 7:00 PM",
+        detail: "Posted agenda on the city's Legistar portal.",
+        source: "https://roch.legistar.com/Calendar.aspx", sourceLabel: "Rochester Hills Legistar calendar"
+      },
+      {
+        date: "2026-09-15", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 15, 2026, 7:00 PM",
+        detail: "Posted agenda on the city's Legistar portal.",
+        source: "https://roch.legistar.com/Calendar.aspx", sourceLabel: "Rochester Hills Legistar calendar"
       }
     ]
   },
@@ -838,6 +875,18 @@ const COMMUNITIES = [
         date: "2026-12-15", type: "future",
         label: "⚠ Moratorium expected to run to ~Dec 2026",
         detail: "Extension to ~December 2026 anticipated per the staff report; standards must be adopted before expiry or the gap reopens. Date approximate."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 14, 2026, 7:00 PM",
+        detail: "Per the Township's official 2026 all-meeting schedule; the regular 1st-Monday date was moved from Sept 7 due to Labor Day.",
+        source: "https://www.commercetwp.com/media/ellpldnz/2026-all-meeting-schedules.pdf", sourceLabel: "Commerce Township — 2026 meeting schedule"
+      },
+      {
+        date: "2026-10-13", type: "meeting", isNew: true,
+        label: "Next Board of Trustees meeting: Oct 13, 2026, 7:00 PM",
+        detail: "Per the Township's official 2026 all-meeting schedule (2nd Tuesday of each month); the Sept 8 occurrence has already passed.",
+        source: "https://www.commercetwp.com/media/ellpldnz/2026-all-meeting-schedules.pdf", sourceLabel: "Commerce Township — 2026 meeting schedule"
       }
     ]
   },
@@ -854,6 +903,18 @@ const COMMUNITIES = [
         label: "Logged in the Sept 13, 2026 completeness sweep",
         detail: "UPDATED 2026-08-04: Board unanimously approved a 1-year moratorium on data center development (Resolution 424-26) on/around May 9, 2026, requested by the Planning Commission to allow time to draft an ordinance. Local news (The Citizen) directly names 'Carlisle Wortman' as having presented to the township on data-center noise and electrical/grid impacts — a documented instance of CWA shaping the township's policy response. A follow-on 'Data Center Definition Ordinance' (interim, defines the use for enforcement) was posted June 2026; both PDFs are scanned/non-OCR and could not be read for CWA-template language this pass. No full HRDF-style standards ordinance (materials %, PUE, dBA, lot size, setbacks, renewable %) is public yet — moratorium runs to ~May 2027. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison.",
         source: "https://thecitizenonline.com/articles/news/township-oks-temporary-data-center-moratorium/", sourceLabel: "see municipality record for full sourcing"
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next Township Board meeting: Sept 14, 2026, 7:00 PM",
+        detail: "Township Offices, 395 Mill St, Ortonville.",
+        source: "https://brandontownship.us/", sourceLabel: "Brandon Township — event calendar"
+      },
+      {
+        date: "2026-09-22", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 22, 2026, 7:00 PM",
+        detail: "Brandon Township Hall.",
+        source: "https://brandontownship.us/", sourceLabel: "Brandon Township — event calendar"
       }
     ]
   },
@@ -882,6 +943,18 @@ const COMMUNITIES = [
         label: "GTRAC delivers Data Center Impact Assessment to PC",
         detail: "GTRAC delivers a 100+-page Data Center Impact Assessment to the Planning Commission, recommending independent applicant-funded studies (hydrogeologic, arsenic mobilization, fire, noise, grid capacity), a protective ordinance (special land use permits, surety bonds, air/water/noise/lighting standards), and Master Plan amendments. Committee chair: Melissa Ford. A joint Planning Commission/Board meeting was expected in September 2026.",
         source: "https://thecitizenonline.com/articles/news/local-committee-delivers-data-center-impact-study/", sourceLabel: "The Citizen, Aug 29, 2026"
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next Township Board meeting: Sept 14, 2026, 7:00 PM",
+        detail: "4695 Grange Hall Rd, Holly, MI.",
+        source: "https://grovelandmi.gov/events/", sourceLabel: "Groveland Township — event calendar"
+      },
+      {
+        date: "2026-09-21", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 21, 2026, 7:00 PM",
+        detail: "4695 Grange Hall Rd, Holly, MI.",
+        source: "https://grovelandmi.gov/events/", sourceLabel: "Groveland Township — event calendar"
       }
     ]
   },
@@ -898,6 +971,12 @@ const COMMUNITIES = [
         label: "Logged in the Sept 13, 2026 completeness sweep",
         detail: "Passed a 180-day data center moratorium Feb 2026; renewed again July 2026 (5-0 vote) while updating a data-center ordinance dating to 1992. CWA served as township planner circa 2003-2008, later replaced by McKenna.",
         source: "https://tctimes.com/articles/news/township-board-approves-renewal-of-data-center-moratorium/", sourceLabel: "see municipality record for full sourcing"
+      },
+      {
+        date: "2026-09-16", type: "meeting", isNew: true,
+        label: "Next Township Board meeting: Sept 16, 2026 (est.)",
+        detail: "Computed from a consistent pattern in 2025–26 minutes (3rd Wednesday of the month); time not confirmed. The Planning Commission's next date could not be reliably determined — available 2026 records are too sparse and conflict with older postings.",
+        source: "https://hollytownship.org/boards-and-commissions/meeting-minutes/", sourceLabel: "Holly Township — meeting minutes"
       }
     ]
   },
@@ -913,6 +992,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "Logged in the Sept 13, 2026 completeness sweep",
         detail: "NEW 2026-09-13: Pontiac adopted a 6-month data center moratorium Jan 21, 2026 (confirmed by Detroit News and the statewide datacenterbans.com tracker, which as of Sept 7, 2026 still lists it 'active'). A plain 6-month count would put expiration around July 21, 2026 — meaning either the moratorium was extended or the tracker is stale; NOT YET CONFIRMED which. A separate flag from a borrowed county-wide tracking spreadsheet claiming a 'detention center, moratorium exp June 2027' issue in Pontiac was run down and found no supporting record anywhere — almost certainly a copy-paste artifact carrying a date into the wrong column in that source spreadsheet, not a real second issue; treat it as noise."
+      },
+      {
+        date: "2026-09-22", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 22, 2026, 6:00 PM",
+        detail: "Council Chambers, City Hall, per the city's official 2026 Council meeting schedule.",
+        source: "https://cms3.revize.com/revize/pontiacminew/2026%20Pontiac%20City%20Council%20Meeting%20Schedule%20050526.pdf", sourceLabel: "City of Pontiac — 2026 Council schedule"
+      },
+      {
+        date: "2026-10-07", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 7, 2026 (est.)",
+        detail: "Computed from the stated recurring pattern (1st Wednesday of each month, 6:00 PM); no specific October agenda posted yet as of Sept 13, 2026.",
+        source: "https://www.pontiac.mi.us/government/boards___commissions/planning_commission/index.php", sourceLabel: "City of Pontiac — Planning Commission page"
       }
     ]
   },
@@ -929,6 +1020,18 @@ const COMMUNITIES = [
         label: "Logged in the Sept 13, 2026 completeness sweep",
         detail: "Regional coverage indicates Rose Township has discussed a data-center ordinance/ban as of Feb 2026 (same Oakland/Livingston/Genesee cluster as Holly, Fenton, Groveland, Tyrone).",
         source: "https://rosetownship.com", sourceLabel: "see municipality record for full sourcing"
+      },
+      {
+        date: "2026-10-01", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 1, 2026, 7:00 PM",
+        detail: "Per the Township's official FY2026-27 meeting schedule (1st Thursday of each month); the Sept 3 occurrence has already passed.",
+        source: "https://www.rosetownship.com/images/FY202627MeetingDates.pdf", sourceLabel: "Rose Township — FY2026-27 meeting schedule"
+      },
+      {
+        date: "2026-10-14", type: "meeting", isNew: true,
+        label: "Next Board of Trustees meeting: Oct 14, 2026, 7:00 PM",
+        detail: "Per the Township's official FY2026-27 meeting schedule (2nd Wednesday of each month); the Sept 9 occurrence has already passed.",
+        source: "https://www.rosetownship.com/images/FY202627MeetingDates.pdf", sourceLabel: "Rose Township — FY2026-27 meeting schedule"
       }
     ]
   },
@@ -944,6 +1047,12 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "Logged in the Sept 13, 2026 completeness sweep",
         detail: "NEW (2026-08-19, cross-referenced from MLive's statewide data center tracking map): developer Metrobloks proposed a 100-megawatt data center on a vacant parcel near I-696. Status: Pending — Southfield city leaders voted to approve plans on Dec. 15, 2025. Source: MLive, Dec 2025 — https://www.mlive.com/news/2025/12/100k-square-foot-data-center-proposed-for-vacant-southfield-parcel-near-i-696.html"
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 14, 2026",
+        detail: "5:30 PM Special Meeting / 6:00 PM Committee-of-the-Whole Regular Meeting, Fracassi Municipal Campus. The Planning Commission's next date could not be confirmed — it holds several session types monthly on an irregular pattern.",
+        source: "https://www.cityofsouthfield.com/news", sourceLabel: "City of Southfield — news/agendas"
       }
     ]
   },
@@ -959,6 +1068,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "CWA client — no data-center proposal, moratorium, or ordinance found",
         detail: "Confirmed Carlisle/Wortman Associates client (Benjamin R. Carlisle). No documented data-center application, moratorium, or ordinance activity found as of Sept 2026 — logged here as a CWA-relationship watch point, not an active case. CONFIRMED: Ben Carlisle (CWA President) listed as Troy planner on CWA About page. Troy also has in-house Community Development Director R. Brent Savidant, AICP. CWA likely serves as primary planning consultant alongside city staff. Also notable: Mark F. Miller (CWA Community Planner, AICP, former Troy City Manager for 5 years) is on CWA staff. | Thoroughly checked (Jul 2026): all 18 Planning Commission meetings Aug 2025–Jul 2026 reviewed and full-text searched for data center/BESS terms — none found. Carlisle's actual work in this window (Neighborhood Node design standards, North Troy Zoning District form-based code) is unrelated urban design, not infrastructure-use zoning."
+      },
+      {
+        date: "2026-09-22", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 22, 2026, 7:00 PM",
+        detail: "Per the city's official boards & committees meeting schedule.",
+        source: "https://apps.troymi.gov/BoardsAndCommittees/MeetingSchedule?boardAndCommitteeName=Planning+Commission", sourceLabel: "City of Troy — Planning Commission schedule"
+      },
+      {
+        date: "2026-09-28", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 28, 2026, 7:30 PM",
+        detail: "Per the city's official boards & committees meeting schedule.",
+        source: "https://apps.troymi.gov/BoardsAndCommittees/MeetingSchedule?boardAndCommitteeName=City+Council", sourceLabel: "City of Troy — City Council schedule"
       }
     ]
   },
@@ -974,6 +1095,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "CWA client — no data-center proposal, moratorium, or ordinance found",
         detail: "Confirmed Carlisle/Wortman Associates client (Matteo Passalacqua). No documented data-center application, moratorium, or ordinance activity found as of Sept 2026 — logged here as a CWA-relationship watch point, not an active case. CWA mentioned in White Lake Township Community Development inter-office memoranda. | Named in 2024-2026 staff report memos."
+      },
+      {
+        date: "2026-09-15", type: "meeting", isNew: true,
+        label: "Next Township Board meeting: Sept 15, 2026, 6:30 PM",
+        detail: "Per the Township's official meetings page.",
+        source: "https://www.whitelaketwp.com/meetings", sourceLabel: "White Lake Township — meetings page"
+      },
+      {
+        date: "2026-10-01", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 1, 2026, 6:30 PM",
+        detail: "Per the Township's official meetings page.",
+        source: "https://www.whitelaketwp.com/meetings", sourceLabel: "White Lake Township — meetings page"
       }
     ]
   },
@@ -989,6 +1122,12 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "CWA client — no data-center proposal, moratorium, or ordinance found",
         detail: "Confirmed Carlisle/Wortman Associates client (Benjamin R. Carlisle). No documented data-center application, moratorium, or ordinance activity found as of Sept 2026 — logged here as a CWA-relationship watch point, not an active case. Confirmed CWA client — Ben Carlisle (CWA President) serves Berkley per his CV and CWA About page. Day-to-day planning is actually done by CWA principal Megan Masson-Minock."
+      },
+      {
+        date: "2026-09-22", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 22, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (4th Tuesday of each month). The City Council's next date could not be confirmed — the council schedule page is stale and the CivicClerk portal is JavaScript-rendered and unreadable to automated fetch.",
+        source: "https://www.berkleymich.org/boards_and_commissions/planning.php", sourceLabel: "City of Berkley — Planning Commission page"
       }
     ]
   },
@@ -1004,6 +1143,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "CWA client — no data-center proposal, moratorium, or ordinance found",
         detail: "Confirmed Carlisle/Wortman Associates client (Derek Werner). No documented data-center application, moratorium, or ordinance activity found as of Sept 2026 — logged here as a CWA-relationship watch point, not an active case. CHECKED 2026-08-04: no data-center activity found. CWA provides all planning services by contract — city has no in-house planner. UPDATE: on May 11, 2026 City Council unanimously voted to TABLE/postpone a proposed 2-year CWA contract renewal ($95-179/hr) and directed the city manager to solicit competing bids — a resident cited a conflict-of-interest concern since CWA also serves neighboring Independence Township. Governance friction, not data-center-related, but a live flashpoint in the CWA relationship worth tracking. Planning Commission Chair: Derek Werner."
+      },
+      {
+        date: "2026-09-28", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 28, 2026 (est.)",
+        detail: "Computed from a stated recurring pattern; time not posted on the page (historically ~7:00 PM).",
+        source: "https://www.villageofclarkston.org/government/city_council/agendas_minutes.php", sourceLabel: "City of the Village of Clarkston — Council agendas"
+      },
+      {
+        date: "2026-10-05", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 5, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (1st Monday of each month).",
+        source: "https://www.villageofclarkston.org/government/boards_committees_commissions/planning_commission/index.php", sourceLabel: "City of the Village of Clarkston — Planning Commission page"
       }
     ]
   },
@@ -1019,6 +1170,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Addison Township as of Sept 2026. No contracted planning firm confirmed; Master Plan PDF is scanned/non-searchable."
+      },
+      {
+        date: "2026-09-21", type: "meeting", isNew: true,
+        label: "Next Board of Trustees meeting: Sept 21, 2026, 6:00–7:00 PM",
+        detail: "Per the Township's official site meeting-information section.",
+        source: "https://addisontownshipmi.gov/", sourceLabel: "Addison Township — official site"
+      },
+      {
+        date: "2026-10-13", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 13, 2026, 6:00 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (2nd Tuesday of each month).",
+        source: "https://addisontownshipmi.gov/", sourceLabel: "Addison Township — official site"
       }
     ]
   },
@@ -1034,6 +1197,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Auburn Hills as of Sept 2026. In-house Director of Community Development. OHM Advisors performs engineering/site plan review services — not primary planning consultant role."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 14, 2026, 7:00 PM",
+        detail: "Per the city's meeting minutes & agendas page.",
+        source: "https://www.auburnhills.org/government/mayor-city-council/meeting-minutes-agendas/", sourceLabel: "City of Auburn Hills — Council agendas"
+      },
+      {
+        date: "2026-10-07", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 7, 2026 (est.)",
+        detail: "Computed from a 1st-Wednesday pattern seen in posted 2026 agenda packets; exact time uncertain (recent agendas alternate 6:00/7:00 PM).",
+        source: "https://www.auburnhills.org/", sourceLabel: "City of Auburn Hills — 2026 agenda packets"
       }
     ]
   },
@@ -1055,6 +1230,18 @@ const COMMUNITIES = [
         label: "Council briefed on existing Flock ALPR camera program",
         detail: "At the Sept 1, 2026 Village Council meeting, Public Safety Director Arnold gave an overview of the village's existing automated license plate reader cameras, provided under an agreement with Flock Safety — an informational briefing on a pre-existing program, not a new contract vote.",
         source: "https://www.villagebeverlyhills.com/news_detail_T8_R845.php", sourceLabel: "Village of Beverly Hills meeting recap, Sept 1, 2026"
+      },
+      {
+        date: "2026-09-15", type: "meeting", isNew: true,
+        label: "Next Village Council meeting: Sept 15, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Council's stated recurring pattern (1st and 3rd Tuesday of the month).",
+        source: "https://www.villagebeverlyhills.com/government/council/view_council_meeting.php", sourceLabel: "Village of Beverly Hills — Council page"
+      },
+      {
+        date: "2026-09-23", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 23, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (4th Wednesday of the month).",
+        source: "https://www.villagebeverlyhills.com/government/board_committee/planning_commission/index.php", sourceLabel: "Village of Beverly Hills — Planning Commission page"
       }
     ]
   },
@@ -1070,6 +1257,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Bingham Farms as of Sept 2026. Giffels Webster designed the village's 2019 zoning ordinance formatting system, but no confirmed ongoing planning consultant relationship."
+      },
+      {
+        date: "2026-09-28", type: "meeting", isNew: true,
+        label: "Next Village Council meeting: Sept 28, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Council's stated recurring pattern (4th Monday of the month).",
+        source: "https://www.binghamfarms.org/government/village_council/index.php", sourceLabel: "Village of Bingham Farms — Council page"
+      },
+      {
+        date: "2026-10-12", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 12, 2026 (est.)",
+        detail: "The regularly-scheduled Sept 14, 2026 Planning Commission meeting was explicitly cancelled per a notice posted 9/10/2026; next occurrence computed from the stated 2nd-Monday pattern.",
+        source: "https://www.binghamfarms.org/", sourceLabel: "Village of Bingham Farms — homepage notice"
       }
     ]
   },
@@ -1085,6 +1284,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Birmingham as of Sept 2026. Nicholas Dupuis promoted to Planning Director in 2021. In-house position."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next City Commission meeting: Sept 14, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (2nd and 4th Monday of every month); the city's CivicClerk portal is JavaScript-rendered and could not be used to verify a posted agenda.",
+        source: "https://www.bhamgov.org/about_birmingham/city_government/boards___commissions/city_commission/index.php", sourceLabel: "City of Birmingham — City Commission page"
+      },
+      {
+        date: "2026-09-23", type: "meeting", isNew: true,
+        label: "Next Planning Board meeting: Sept 23, 2026 (est.)",
+        detail: "Computed from the Board's stated bi-weekly (2nd/4th week) pattern; exact time unconfirmed.",
+        source: "https://bhamgov.org/about_birmingham/city_government/boards___commissions/planning_board.php", sourceLabel: "City of Birmingham — Planning Board page"
       }
     ]
   },
@@ -1100,6 +1311,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Bloomfield Hills as of Sept 2026. Site (bloomfieldhillsmi.net) was unreachable to automated research this session."
+      },
+      {
+        date: "2026-10-13", type: "meeting", isNew: true,
+        label: "Next City Commission meeting: Oct 13, 2026, 7:30 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (2nd Tuesday of every month); the Sept 8 occurrence has already passed.",
+        source: "https://www.bloomfieldhills.gov/251/Mayor-City-Commission", sourceLabel: "City of Bloomfield Hills — City Commission page"
+      },
+      {
+        date: "2026-10-13", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 13, 2026, 4:00 PM (est.)",
+        detail: "Computed from the same 2nd-Tuesday pattern reflected in the city's online calendar.",
+        source: "https://www.bloomfieldhills.gov/Calendar.aspx?CID=14", sourceLabel: "City of Bloomfield Hills — online calendar"
       }
     ]
   },
@@ -1115,6 +1338,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Bloomfield Township as of Sept 2026. Confirmed in-house Director of Planning, Building and Ordinance for Bloomfield Township."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next Board of Trustees meeting: Sept 14, 2026, 6:30 PM (est.)",
+        detail: "Per the Township's stated recurring pattern (2nd and 4th Monday); no specific posted Sept agenda found.",
+        source: "https://www.bloomfieldtwp.org/government/board-of-trustees/", sourceLabel: "Bloomfield Township — Board of Trustees page"
+      },
+      {
+        date: "2026-09-21", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 21, 2026, 7:00 PM (est.)",
+        detail: "Per the Township's official posting (1st and 3rd Monday of every month).",
+        source: "https://www.bloomfieldtwp.org/media/2whcw1sx/4-2026-planning-commission-posting.pdf", sourceLabel: "Bloomfield Township — 2026 Planning Commission posting"
       }
     ]
   },
@@ -1136,6 +1371,18 @@ const COMMUNITIES = [
         label: "Named among cities that ended Flock Safety contract",
         detail: "City Council rejected a Flock Safety ALPR camera contract in a May 11, 2026 vote, after which two police officers threatened to quit/resigned in protest. Statewide roundup coverage (Michigan Public, Aug 19, 2026; Lenawee Voice, Sept 9, 2026) continues to cite Clawson as a current example of a Michigan city that cancelled Flock.",
         source: "https://www.michiganpublic.org/politics-government/2026-08-19/communities-across-michigan-move-to-ditch-flock-cameras", sourceLabel: "Michigan Public, Aug 19, 2026"
+      },
+      {
+        date: "2026-09-15", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 15, 2026, 7:30 PM (est., low confidence)",
+        detail: "Pattern (1st and 3rd Tuesday, 7:30 PM) sourced from a 2025-labeled schedule document, not reconfirmed for 2026 — worth a direct call to confirm before relying on this date.",
+        source: "https://www.cityofclawson.com/your_government/boards_and_commissions.php", sourceLabel: "City of Clawson — boards & commissions page"
+      },
+      {
+        date: "2026-09-22", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 22, 2026, 7:30 PM (est., low confidence)",
+        detail: "Pattern (2nd and 4th Tuesday, 7:30 PM) sourced from the same 2025-labeled schedule document, not reconfirmed for 2026.",
+        source: "https://www.cityofclawson.com/your_government/boards_and_commissions.php", sourceLabel: "City of Clawson — boards & commissions page"
       }
     ]
   },
@@ -1151,6 +1398,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Farmington as of Sept 2026. OHM Advisors won 2024 RFQ for master plan, parks & rec plan, and downtown plan. Kristen Hatfield AICP and Jennifer Morris are named OHM leads for Farmington. Contracted planning relationship."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 14, 2026, 7:00 PM",
+        detail: "Specific posted agenda/packet found for this date, matching the official 2nd-Monday pattern.",
+        source: "https://www.farmgov.com/government/agendas-and-minutes/planning-commission/2026/", sourceLabel: "City of Farmington — 2026 Planning Commission agendas"
+      },
+      {
+        date: "2026-09-21", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 21, 2026, 7:00 PM (est.)",
+        detail: "Computed from the official 1st-and-3rd-Monday pattern (the Sept 7 occurrence appears to have shifted to Sept 8 due to Labor Day).",
+        source: "https://www.farmgov.com/government/city-council/city-council-meetings/", sourceLabel: "City of Farmington — City Council meetings page"
       }
     ]
   },
@@ -1166,6 +1425,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Farmington Hills as of Sept 2026. In-house Director. Additionally, Giffels Webster provides supplemental planning consultant services including master plan updates and attendance at Planning Commission meetings. Both in-house staff and Giffels Webster active."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 14, 2026, 7:30 PM",
+        detail: "Study Session & Regular Session, per the city's official posted 2026 schedule.",
+        source: "https://www.fhgov.com/government-business/agendasminutesvideos/city-council/2026/", sourceLabel: "City of Farmington Hills — 2026 Council schedule"
+      },
+      {
+        date: "2026-09-17", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 17, 2026, 7:30 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (3rd Thursday, 7:30 PM); no cancellation notice found.",
+        source: "https://www.fhgov.com/government-business/boards-and-commissions/planning-commission/", sourceLabel: "City of Farmington Hills — Planning Commission page"
       }
     ]
   },
@@ -1202,6 +1473,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Franklin as of Sept 2026. McKenna appears in July 2026 planning commission packet and recurring FY2025-26 vendor payments. (Firm listed as: McKenna.)"
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next Village Council meeting: Sept 14, 2026, 6:00 PM",
+        detail: "Per the Village's official 2026 meeting-dates schedule.",
+        source: "https://www.franklin.mi.us/government/village_president_and_council/meeting_dates.php", sourceLabel: "Village of Franklin — 2026 meeting schedule"
+      },
+      {
+        date: "2026-09-16", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 16, 2026, 7:00 PM",
+        detail: "Specific date posted on the Village's agendas & minutes page.",
+        source: "https://www.franklin.mi.us/government/agendas_&_minutes/planning_commission.php", sourceLabel: "Village of Franklin — Planning Commission agendas"
       }
     ]
   },
@@ -1217,6 +1500,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Hazel Park as of Sept 2026. Confirmed in-house Planning & Community Development Director."
+      },
+      {
+        date: "2026-09-22", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 22, 2026, 6:00 PM (est.)",
+        detail: "Computed from the Council's stated recurring pattern (2nd and 4th Tuesday, 6:00 PM).",
+        source: "https://www.hazelpark.org/visitors/meeting_information.php", sourceLabel: "City of Hazel Park — meeting information page"
+      },
+      {
+        date: "2026-10-06", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 6, 2026, 6:30 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (1st Tuesday, 6:30 PM); the Sept 1 occurrence has already passed.",
+        source: "https://www.hazelpark.org/visitors/meeting_information.php", sourceLabel: "City of Hazel Park — meeting information page"
       }
     ]
   },
@@ -1232,6 +1527,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Highland Township as of Sept 2026. IN-HOUSE planning staff confirmed. Beth Corwin is Planning & Development Director. Additional staff: Tim McLean (Zoning Administrator), Samantha George (Asst. Zoning Administrator), Steven C. Tino (Building Official). No CWA involvement found. CWA blog reference was likely historical or project-based."
+      },
+      {
+        date: "2026-10-01", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 1, 2026",
+        detail: "Per the Township's official 2026 schedule; the Sept 3 and Sept 17 dates were both explicitly cancelled. Exact time not stated in the source (historically ~7:00 PM).",
+        source: "https://www.highlandtwp.net/", sourceLabel: "Highland Township — official 2026 schedule"
+      },
+      {
+        date: "2026-10-05", type: "meeting", isNew: true,
+        label: "Next Board of Trustees meeting: Oct 5, 2026, 6:30 PM (est.)",
+        detail: "Computed from the Board's stated recurring pattern (1st Monday, 6:30 PM); Sept 7 fell on Labor Day.",
+        source: "https://www.highlandtwp.net/", sourceLabel: "Highland Township — official site"
       }
     ]
   },
@@ -1247,6 +1554,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Holly as of Sept 2026. No consultant/firm named on planning-zoning page, staff directory, or 2021 Master Plan."
+      },
+      {
+        date: "2026-09-23", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 23, 2026, 6:00 PM (est.)",
+        detail: "Computed from the Village's stated recurring pattern (4th Wednesday of the month, 6:00 PM).",
+        source: "https://www.hollyvillage.org/index.php/government/boards-commissions", sourceLabel: "Village of Holly — boards & commissions page"
+      },
+      {
+        date: "2026-10-13", type: "meeting", isNew: true,
+        label: "Next Village Council meeting: Oct 13, 2026, 6:00 PM (est.)",
+        detail: "Computed from a consistent 2nd-Tuesday pattern seen in recent agendas, with occasional holiday-driven shifts; the Sept 8 occurrence has already passed.",
+        source: "https://www.hollyvillage.org/index.php/document-library/2-council-agenda-packets/108-2025-agendas", sourceLabel: "Village of Holly — Council agenda packets"
       }
     ]
   },
@@ -1262,6 +1581,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Huntington Woods as of Sept 2026. Francesco Ferrara is Deputy Planning Official."
+      },
+      {
+        date: "2026-09-15", type: "meeting", isNew: true,
+        label: "Next City Commission meeting: Sept 15, 2026, 7:30 PM",
+        detail: "Per the city's official dated 2026 annual meeting schedule.",
+        source: "https://www.ci.huntington-woods.mi.us/government/city_commission/meeting_schedule.php", sourceLabel: "City of Huntington Woods — 2026 meeting schedule"
+      },
+      {
+        date: "2026-09-28", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 28, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (4th Monday of the month).",
+        source: "https://www.ci.huntington-woods.mi.us/government/boards___commissions/planning_commission/agendas___minutes___schedule.php", sourceLabel: "City of Huntington Woods — Planning Commission page"
       }
     ]
   },
@@ -1277,6 +1608,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Independence Township as of Sept 2026. independencetownship.com appears JS-rendered; no server-side content retrievable."
+      },
+      {
+        date: "2026-09-22", type: "meeting", isNew: true,
+        label: "Next Board of Trustees meeting: Sept 22, 2026, 6:00 PM",
+        detail: "Per the Township's official published 2026 meeting-date list.",
+        source: "https://www.indtwp.com/government/meeting_dates_and_times.php", sourceLabel: "Independence Township — 2026 meeting dates"
+      },
+      {
+        date: "2026-10-08", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 8, 2026, 6:00 PM",
+        detail: "Per the Township's official published 2026 meeting-date list; the Sept 10 occurrence has already passed.",
+        source: "https://www.indtwp.com/government/meeting_dates_and_times.php", sourceLabel: "Independence Township — 2026 meeting dates"
       }
     ]
   },
@@ -1292,6 +1635,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Keego Harbor as of Sept 2026. Site does not disclose whether she is a direct city employee or contracted."
+      },
+      {
+        date: "2026-09-17", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 17, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Council's stated recurring pattern (3rd Thursday of each month).",
+        source: "https://www.keegoharbor.org/government/city_council/agendas_minutes.php", sourceLabel: "City of Keego Harbor — Council agendas"
+      },
+      {
+        date: "2026-09-22", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 22, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (4th Tuesday, 7:00 PM); the last posted agenda on file was Aug 25, 2026.",
+        source: "https://www.keegoharbor.org/government/boards_commissions/planning_commission/index.php", sourceLabel: "City of Keego Harbor — Planning Commission page"
       }
     ]
   },
@@ -1322,6 +1677,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Lake Orion Village as of Sept 2026. (248) 693-8391 ext. 107. Village Manager formally serves as Zoning Administrator (voting Planning Commission member); Village contracts with McKenna Associates for planning/zoning services; building inspections are handled separately by the Charter Township of Orion."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next Village Council meeting: Sept 14, 2026, 6:30 PM (est.)",
+        detail: "Computed from the Council's stated recurring pattern (2nd and 4th Monday, 6:30 PM); corroborated by a noted special+regular meeting for this date.",
+        source: "https://www.lakeorion.org/village-manager", sourceLabel: "Village of Lake Orion — Village Manager page"
+      },
+      {
+        date: "2026-10-05", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 5, 2026, 6:30 PM (est.)",
+        detail: "Inferred 1st-Monday pattern from multiple 2026 agenda-packet dates; no meeting found posted between Sept 13 and Oct 5.",
+        source: "https://mccmeetings.blob.core.usgovcloudapi.net/lakorionmi-pubu", sourceLabel: "Village of Lake Orion — agenda packet portal"
       }
     ]
   },
@@ -1337,6 +1704,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Lathrup Village as of Sept 2026. City is mid-update on its 2026 Comprehensive Plan via Giffels Webster; staff directory names Austin Colson under the same title — possible recent staffing change, flagged not resolved."
+      },
+      {
+        date: "2026-09-15", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 15, 2026, 7:00 PM",
+        detail: "Specific posted agenda on the city's Municode Meetings portal.",
+        source: "https://lathrup-mi.municodemeetings.com/", sourceLabel: "City of Lathrup Village — Municode Meetings portal"
+      },
+      {
+        date: "2026-09-21", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 21, 2026, 7:00 PM",
+        detail: "Regular Meeting; a Study Session is also posted for Sept 14, 2026, 6:00 PM.",
+        source: "https://lathrup-mi.municodemeetings.com/", sourceLabel: "City of Lathrup Village — Municode Meetings portal"
       }
     ]
   },
@@ -1352,6 +1731,12 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Leonard as of Sept 2026. Small village geographically within/adjacent to Addison Township; own Master Plan document credits no preparer."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next Village Council meeting: Sept 14, 2026, 7:00 PM (est.)",
+        detail: "Rowland Hall; computed from the Council's stated recurring pattern (2nd Monday of each month). The Planning Commission's next date could not be confirmed — sources conflict on its recurring day and no current schedule is posted.",
+        source: "https://www.villageofleonard.org/minutes-agendas", sourceLabel: "Village of Leonard — minutes & agendas page"
       }
     ]
   },
@@ -1367,6 +1752,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Madison Heights as of Sept 2026. Lonnerstater previously worked for Carlisle/Wortman Associates before joining Madison Heights as in-house City Planner. He was the sole author of all staff memos in the June 15, 2026 Planning Commission packet. If a data center developer approaches Madison Heights, his prior CWA experience and remaining professional relationships with Auerbach/Montagno are worth monitoring."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 14, 2026, 6:30 PM",
+        detail: "Specific posted meeting on the city's Municode Meetings portal.",
+        source: "https://madisonheights-mi.municodemeetings.com/", sourceLabel: "City of Madison Heights — Municode Meetings portal"
+      },
+      {
+        date: "2026-09-22", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 22, 2026, 5:30 PM (rescheduled)",
+        detail: "Rescheduled from the originally-planned Sept 21 date, per the city's Municode Meetings portal.",
+        source: "https://madisonheights-mi.municodemeetings.com/", sourceLabel: "City of Madison Heights — Municode Meetings portal"
       }
     ]
   },
@@ -1388,6 +1785,18 @@ const COMMUNITIES = [
         label: "Named among communities that cancelled Flock Safety contract",
         detail: "Michigan Public reports Milford is among metro Detroit communities (with Clawson, Ferndale, Westland) that have cancelled a Flock Safety ALPR camera contract, in coverage tied to Sumpter Township's own cancellation. An unverified social-media post described a unanimous council vote cancelling a 5-camera contract, with a separate 10-camera contract renewal expected in August 2026 — treat that detail as unconfirmed.",
         source: "https://www.michiganpublic.org/politics-government/2026-08-19/communities-across-michigan-move-to-ditch-flock-cameras", sourceLabel: "Michigan Public, Aug 19, 2026"
+      },
+      {
+        date: "2026-09-21", type: "meeting", isNew: true,
+        label: "Next Village Council meeting: Sept 21, 2026, 7:30 PM (est.)",
+        detail: "Computed from the Council's stated recurring pattern (1st and 3rd Monday, 7:30 PM).",
+        source: "https://www.villageofmilford.org/government/council/index.php", sourceLabel: "Village of Milford — Council page"
+      },
+      {
+        date: "2026-10-13", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 13, 2026, 7:30 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (2nd Tuesday, 7:30 PM); the Sept 8 occurrence has already passed.",
+        source: "https://www.villageofmilford.org/government/boards/planning_commission.php", sourceLabel: "Village of Milford — Planning Commission page"
       }
     ]
   },
@@ -1403,6 +1812,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Milford Township as of Sept 2026. Site references 'our Planners' holding monthly office hours implying a contracted consultant, but no firm name given."
+      },
+      {
+        date: "2026-09-16", type: "meeting", isNew: true,
+        label: "Next Board of Trustees meeting: Sept 16, 2026, 6:00 PM (est.)",
+        detail: "Milford Civic Center; computed from the Board's stated recurring pattern (3rd Wednesday of each month).",
+        source: "https://www.milfordtwpmi.gov/departments/charter_township_of_milford_-_township_hall/index.php", sourceLabel: "Milford Township — Township Hall page"
+      },
+      {
+        date: "2026-09-24", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 24, 2026, 7:00 PM",
+        detail: "Milford Civic Center; last-Thursday-of-the-month pattern, also referenced as a specific upcoming event on the township homepage.",
+        source: "https://www.milfordtwpmi.gov/departments/charter_township_of_milford_-_planning/index.php", sourceLabel: "Milford Township — Planning page"
       }
     ]
   },
@@ -1418,6 +1839,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Northville as of Sept 2026. Justin Quagliata, AICP is in-house Community Development Director (also serves as City Planner and Zoning Administrator). City ended its consulting contract with Carlisle/Wortman in May 2024 — now fully in-house. McKenna is headquartered in Northville but does not hold the current planning contract."
+      },
+      {
+        date: "2026-09-15", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 15, 2026, 6:30 PM",
+        detail: "Northville City Hall; explicit next-meeting date stated, matching the 1st-and-3rd-Tuesday pattern (with noted election-date exceptions).",
+        source: "https://www.cityofnorthvillemi.gov/182/Planning-Commission", sourceLabel: "City of Northville — Planning Commission page"
+      },
+      {
+        date: "2026-09-21", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 21, 2026, 6:30 PM (est.)",
+        detail: "Computed from the Council's stated recurring pattern (1st and 3rd Monday, 6:30 PM). Note: Northville is one unified city government spanning Wayne and Oakland Counties, with no separate meeting body for the Oakland County portion.",
+        source: "https://www.cityofnorthvillemi.gov/194/City-Council-Meetings", sourceLabel: "City of Northville — City Council meetings page"
       }
     ]
   },
@@ -1433,6 +1866,12 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Novi as of Sept 2026. Lindsay Bell AICP serves as Director of Planning. Charles Boulard is Community Development Director above her. In-house position."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 14, 2026, 7:00 PM",
+        detail: "Per the city's current City Council agenda page. The Planning Commission's next date could not be confirmed — its schedule is irregular (roughly biweekly with ad-hoc cancellations) and no agenda has been posted past Sept 9, 2026.",
+        source: "https://cityofnovi.org/agendas-minutes/city-council/current-city-council-agenda/", sourceLabel: "City of Novi — City Council agendas"
       }
     ]
   },
@@ -1463,6 +1902,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Oak Park as of Sept 2026. Kimberly Marrone serves as Municipal Services Director, which encompasses planning functions for Oak Park."
+      },
+      {
+        date: "2026-09-22", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 22, 2026, 7:00 PM",
+        detail: "Per the city's official 2026 meeting calendar.",
+        source: "https://www.oakparkmi.gov/media/documents/oak-park-calendar---2026.pdf", sourceLabel: "City of Oak Park — 2026 meeting calendar"
+      },
+      {
+        date: "2026-10-05", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 5, 2026, 6:00 PM",
+        detail: "Per the city's official 2026 meeting calendar; no September Planning Commission meeting is listed.",
+        source: "https://www.oakparkmi.gov/media/documents/oak-park-calendar---2026.pdf", sourceLabel: "City of Oak Park — 2026 meeting calendar"
       }
     ]
   },
@@ -1478,6 +1929,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Oakland Township as of Sept 2026. (Firm listed as: In-House (Township Staff).)"
+      },
+      {
+        date: "2026-09-22", type: "meeting", isNew: true,
+        label: "Next Board of Trustees meeting: Sept 22, 2026, 7:00 PM",
+        detail: "Per the Township's homepage calendar.",
+        source: "https://oaklandtwpmi.gov/", sourceLabel: "Oakland Township — official site calendar"
+      },
+      {
+        date: "2026-10-06", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 6, 2026, 7:00 PM",
+        detail: "Per the Township's homepage calendar.",
+        source: "https://oaklandtwpmi.gov/", sourceLabel: "Oakland Township — official site calendar"
       }
     ]
   },
@@ -1493,6 +1956,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Orchard Lake Village as of Sept 2026. Planning Commission is all-volunteer with no listed staff planner; Building/Zoning handled by in-house Building Dept (Gerry McCallum, City Manager)."
+      },
+      {
+        date: "2026-09-21", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 21, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Council's stated recurring pattern (3rd Monday of the month).",
+        source: "https://www.cityoforchardlake.com/nav/city_council/index.php", sourceLabel: "City of Orchard Lake Village — Council page"
+      },
+      {
+        date: "2026-10-06", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 6, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (1st Tuesday); the Sept 1 occurrence has already passed.",
+        source: "https://www.cityoforchardlake.com/nav/planning_commission/index.php", sourceLabel: "City of Orchard Lake Village — Planning Commission page"
       }
     ]
   },
@@ -1520,6 +1995,18 @@ const COMMUNITIES = [
         label: "Named in county Flock/ALPR camera vandalism investigation",
         detail: "Orion Township is named among Oakland County communities where Flock license-plate-reader cameras were vandalized; the Oakland County Sheriff's Office investigated at least 8 such incidents countywide (one arrest, in Commerce Township), amid broader public debate over surveillance camera use.",
         source: "https://wcsx.com/2026/08/27/vandalism-of-safety-cameras-sparks-debate-over-surveillance-in-metro-detroit/", sourceLabel: "WCSX/WRIF, Aug 27, 2026"
+      },
+      {
+        date: "2026-09-16", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 16, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (1st and 3rd Wednesday), confirmed against the posted 2026 schedule.",
+        source: "https://www.oriontownship.org/government/boards___commissions/planning_commission.php", sourceLabel: "Orion Township — Planning Commission page"
+      },
+      {
+        date: "2026-09-21", type: "meeting", isNew: true,
+        label: "Next Board of Trustees meeting: Sept 21, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Board's stated recurring pattern (1st and 3rd Monday); the Sept 7 occurrence shifted to Sept 8 due to Labor Day.",
+        source: "https://www.oriontownship.org/government/board_of_trustees/agendas_synopses___minutes.php", sourceLabel: "Orion Township — Board of Trustees page"
       }
     ]
   },
@@ -1535,6 +2022,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Ortonville as of Sept 2026. villageofortonville.org unreachable; adjacent Brandon Charter Township has an in-house Director (Jason Wilton) but that's a different municipality."
+      },
+      {
+        date: "2026-09-28", type: "meeting", isNew: true,
+        label: "Next Village Council meeting: Sept 28, 2026 (est.)",
+        detail: "Computed from the Council's stated recurring pattern (4th Monday); time not published.",
+        source: "https://www.ortonvillevillage.com/government/public_meetings.php", sourceLabel: "Village of Ortonville — public meetings page"
+      },
+      {
+        date: "2026-10-05", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 5, 2026 (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (1st Monday); the Sept 7 occurrence has already passed; time not published.",
+        source: "https://www.ortonvillevillage.com/government/public_meetings.php", sourceLabel: "Village of Ortonville — public meetings page"
       }
     ]
   },
@@ -1557,6 +2056,18 @@ const COMMUNITIES = [
         label: "First reading: full Data Center zoning package, CWA-drafted",
         detail: "Planning Commission first-reading public hearing on a full Data Center zoning package: a new definition, a Data Center Overlay District (I-1/I-2 parcels between Ray Rd and Davison Lake Rd), amended noise/vibration standards, and a new use standard with companion Engineering Report and Fire Dept review requirements. Meeting relocated to the high school Performing Arts Center, suggesting expected high turnout. Township Planner Matteo Passalacqua (Carlisle|Wortman) presented a CWA review letter (Aug 17, 2026); the Michigan Townships Association separately supplied a draft template to a commissioner, shared with Passalacqua — worth checking how much of Oxford's draft traces to the MTA template vs. CWA's own. Concerns flagged live: NO data-center-specific setback (defers to ordinary I-1/I-2 setbacks, unlike Wixom's 2,640 ft); renewable requirement only 15% (with an easy out); a possible BESS carve-out from full review; water-usage caps are discretionary, not mandatory. Strengths: noise standard (55/45 dBA day/night, all scenarios including outages) tighter than several peers; 125% decommissioning bond with 5-year reassessment; independent peer review of both pre- and post-construction noise studies.",
         source: "https://oxfordtwpmi.gov/", sourceLabel: "Oxford Twp PC packet, Sept 10, 2026 (pulled live by Mo)"
+      },
+      {
+        date: "2026-09-24", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 24, 2026, 6:30 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (2nd and 4th Thursday); the Sept 10 occurrence has already passed.",
+        source: "https://oxfordtwpmi.gov/planning-commission/", sourceLabel: "Oxford Township — Planning Commission page"
+      },
+      {
+        date: "2026-10-14", type: "meeting", isNew: true,
+        label: "Next Board of Trustees meeting: Oct 14, 2026, 6:00 PM (est.)",
+        detail: "Computed from the Board's stated recurring pattern (2nd Wednesday); the Sept 9 occurrence has already passed.",
+        source: "https://oxfordtwpmi.gov/board-of-trustees/", sourceLabel: "Oxford Township — Board of Trustees page"
       }
     ]
   },
@@ -1572,6 +2083,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Oxford Village as of Sept 2026. ADDED 2026-09-13 (Mo's Oakland County completeness audit — legally distinct incorporated village within Oxford Township, which was already tracked separately in this map; genuinely missing prior to this add, not a duplicate). Council-Manager government. Village offices (248) 628-2543; Kim Dawe, Building Dept. Clerk, office@thevillageofoxford.org; Code Enforcement Kaethe Econcomos, codeofficer@thevillageofoxford.org. Village elections are run by Oxford Township; fire service by Oxford Fire Dept (shared with the Township); assessing/equalization and dispatch by Oakland County."
+      },
+      {
+        date: "2026-09-15", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 15, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (1st and 3rd Tuesday); the Sept 1 occurrence has already passed.",
+        source: "https://www.thevillageofoxford.org/boards___commissions/planning_commission.php", sourceLabel: "Village of Oxford — Planning Commission page"
+      },
+      {
+        date: "2026-10-13", type: "meeting", isNew: true,
+        label: "Next Village Council meeting: Oct 13, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Council's stated recurring pattern (2nd Tuesday); the Sept 8 occurrence has already passed.",
+        source: "https://www.thevillageofoxford.org/boards___commissions/village_council.php", sourceLabel: "Village of Oxford — Village Council page"
       }
     ]
   },
@@ -1587,6 +2110,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Pleasant Ridge as of Sept 2026. Community Development page confirms planning/zoning function but names no director or firm."
+      },
+      {
+        date: "2026-10-13", type: "meeting", isNew: true,
+        label: "Next City Commission meeting: Oct 13, 2026",
+        detail: "Per the city's published full-year 2026 schedule; time not stated on the page.",
+        source: "https://cityofpleasantridge.org/government/boards-commissions/city-commission/", sourceLabel: "City of Pleasant Ridge — City Commission page"
+      },
+      {
+        date: "2026-10-26", type: "meeting", isNew: true,
+        label: "Next Planning Commission / DDA meeting: Oct 26, 2026 (est.)",
+        detail: "This body meets quarterly (4th Monday of Jan/Apr/Jul/Oct) per its stated pattern; an unscheduled interim meeting could also occur ‘as necessary’ but none is confirmed.",
+        source: "https://cityofpleasantridge.org/government/boards-commissions/planning-commission-dda/", sourceLabel: "City of Pleasant Ridge — Planning Commission/DDA page"
       }
     ]
   },
@@ -1602,6 +2137,12 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Rochester as of Sept 2026. 2026-08-07 (verified against ChatGPT-sourced lead, checked independently before applying): REJECTED a ChatGPT-sourced claim (\\\"Jeremy Peckens, Planning and Zoning Administrator,\\\" sourced to a broken/generic MEDA directory link) — that name appears only on third-party aggregator sites (TheOrg, ContactOut, LinkedIn), never on the city's own domain. Independent research instead surfaced Nik Banda as Deputy City Manager / Economic & Community Development Director per the city's own directory and local news (\\\"Banda named new Rochester city manager\\\") — a different name AND a different title than the claim, so not confirmed as \\\"the planner\\\" either without a more direct check. Leaving planner_name Unknown; Nik Banda is a lead worth checking directly, not yet confirmed as a planning-specific role. Distinct from Rochester Hills (id 65, already on this map with its own confirmed planner Sara Roediger, AICP) — a separate city."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 14, 2026, 7:00 PM",
+        detail: "Per the city's official online calendar. The Planning Commission's next date could not be confirmed — its schedule pages were intermittently unreachable.",
+        source: "https://www.ci.rochester.mi.us/calendar.aspx?CID=14", sourceLabel: "City of Rochester — official calendar"
       }
     ]
   },
@@ -1617,6 +2158,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Royal Oak as of Sept 2026. Confirmed from Royal Oak city staff directory."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next City Commission meeting: Sept 14, 2026, 7:30 PM (est.)",
+        detail: "Computed from a recurring 2nd/4th-Monday pattern inferred from multiple 2025–26 meeting instances; no posted Sept 2026 agenda confirmed.",
+        source: "https://www.romi.gov/412/City-Commission", sourceLabel: "City of Royal Oak — City Commission page"
+      },
+      {
+        date: "2026-10-13", type: "meeting", isNew: true,
+        label: "Next Planning Commission / ZBA meeting: Oct 13, 2026",
+        detail: "Per the city's official 2026 Planning Commission/ZBA meeting schedule (2nd Tuesday of each month).",
+        source: "https://www.romi.gov/DocumentCenter/View/25314/Meeting-Schedule---PC--ZBA-2026-PDF", sourceLabel: "City of Royal Oak — 2026 PC/ZBA schedule"
       }
     ]
   },
@@ -1632,6 +2185,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Royal Oak Township as of Sept 2026. No official township website could be located."
+      },
+      {
+        date: "2026-10-06", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 6, 2026, 6:30 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (1st Tuesday of every month).",
+        source: "https://www.royaloaktwp.com/index.php/government/boards-commissions/planning-commission", sourceLabel: "Royal Oak Township — Planning Commission page"
+      },
+      {
+        date: "2026-10-08", type: "meeting", isNew: true,
+        label: "Next Board of Trustees meeting: Oct 8, 2026, 6:30 PM (est.)",
+        detail: "Computed from the Board's stated recurring pattern (2nd Thursday); the page's own date table is stale (last shows 2022 dates).",
+        source: "https://www.royaloaktwp.com/index.php/regular-meetings-2", sourceLabel: "Royal Oak Township — regular meetings page"
       }
     ]
   },
@@ -1647,6 +2212,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for South Lyon as of Sept 2026. OHM Advisors staffs the Planning & Zoning Dept under contract; both use @ohm-advisors.com emails."
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 14, 2026, 6:30 PM (est.)",
+        detail: "Computed from the Council's stated recurring pattern (2nd and 4th Monday, 6:30 PM).",
+        source: "https://www.southlyonmi.org/government/city_council/index.php", sourceLabel: "City of South Lyon — City Council page"
+      },
+      {
+        date: "2026-09-24", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 24, 2026",
+        detail: "Per the city's official 2026 Planning & Zoning meeting-dates document; time not stated on the PDF (generally ~7:00 PM per city site).",
+        source: "https://cms5.revize.com/revize/southlyon/Planning%20and%20Zoning%202026%20Meeting%20Dates%20and%20Deadline.pdf", sourceLabel: "City of South Lyon — 2026 Planning & Zoning meeting dates"
       }
     ]
   },
@@ -1662,6 +2239,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Southfield Township as of Sept 2026. ADDED 2026-09-13 (Mo's Oakland County completeness audit — distinct from the City of Southfield, already tracked separately in this map; genuinely missing prior to this add). Active township government since 1830, based in Beverly Hills, MI (not part of the City of Southfield). 7-member Planning Commission (one ex-officio Trustee seat + six 3-year appointed terms), meets 4th Tuesday of March/May/August/October. General office contact (248) 540-3420, info@southfieldtownshipmi.gov, Township Hall at 18550 W. 13 Mile Rd., Beverly Hills, MI 48025. No named Zoning Administrator/planning consultant surfaced in this pass — Planning Commission Chair listed as the closest identifiable planning-side contact; worth a direct call to confirm who actually administers zoning day to day."
+      },
+      {
+        date: "2026-10-13", type: "meeting", isNew: true,
+        label: "Next Board of Trustees meeting: Oct 13, 2026, 6:00 PM (est.)",
+        detail: "Computed from the Board's stated recurring pattern, which meets only in Jan/Mar/Apr/Jun/Jul/Sep/Oct/Dec (2nd Tuesday).",
+        source: "https://southfieldtownshipmi.gov/board-of-trustees/", sourceLabel: "Southfield Township — Board of Trustees page"
+      },
+      {
+        date: "2026-10-27", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 27, 2026, 6:00 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern, which meets only in Mar/May/Aug/Oct (4th Tuesday).",
+        source: "https://southfieldtownshipmi.gov/planning-commission/", sourceLabel: "Southfield Township — Planning Commission page"
       }
     ]
   },
@@ -1677,6 +2266,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Sylvan Lake as of Sept 2026. City's own contractor list names Giffels Webster as Planning Consultant; no individual named."
+      },
+      {
+        date: "2026-10-14", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Oct 14, 2026, 7:00 PM (est.)",
+        detail: "Computed from a recurring 2nd-Wednesday pattern inferred from multiple 2024–26 dated agendas; no October 2026 agenda posted yet.",
+        source: "https://www.sylvanlake.org/government/city_council/index.php", sourceLabel: "City of Sylvan Lake — City Council page"
+      },
+      {
+        date: "2026-10-14", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 14, 2026, 7:00 PM (est.)",
+        detail: "Same 2nd-Wednesday pattern; the most recent confirmed occurrence was Aug 12, 2026.",
+        source: "https://sylvanlake.org/i_want_to/find/agendas___minutes/planning_commission/index.php", sourceLabel: "City of Sylvan Lake — Planning Commission page"
       }
     ]
   },
@@ -1692,6 +2293,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Walled Lake as of Sept 2026. 2017 Master Plan credits McKenna Associates; current 2026 contract status unconfirmed."
+      },
+      {
+        date: "2026-09-15", type: "meeting", isNew: true,
+        label: "Next City Council meeting: Sept 15, 2026, 7:30 PM",
+        detail: "Per the city's official 2026 meeting schedule.",
+        source: "https://walledlake.us/MtgSchedule2026_2.pdf", sourceLabel: "City of Walled Lake — 2026 meeting schedule"
+      },
+      {
+        date: "2026-10-13", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Oct 13, 2026, 7:30 PM",
+        detail: "Per the city's official 2026 meeting schedule (2nd Tuesday of each month).",
+        source: "https://walledlake.us/MtgSchedule2026_2.pdf", sourceLabel: "City of Walled Lake — 2026 meeting schedule"
       }
     ]
   },
@@ -1713,6 +2326,18 @@ const COMMUNITIES = [
         label: "Border Patrol charges man after Waterford PD-reported crash",
         detail: "A Mexican national was charged with illegal re-entry into the U.S. after U.S. Border Patrol agents responded to a Waterford Police Department call following a traffic crash in the township. The only Border Patrol/ICE-adjacent item found tied specifically to Waterford Township; falls just outside the strict 60-day research window (5 days) but included as the closest available data point.",
         source: "https://www.fox2detroit.com/news/mexican-national-charged-illegally-re-entering-us-after-waterford-crash-arrest", sourceLabel: "FOX 2 Detroit, Jul 10, 2026"
+      },
+      {
+        date: "2026-09-14", type: "meeting", isNew: true,
+        label: "Next Board of Trustees meeting: Sept 14, 2026, 6:00 PM (est.)",
+        detail: "Computed from the Board's stated recurring pattern (2nd and 4th Monday), corroborated by real 2026 agenda filenames.",
+        source: "https://www.waterfordmi.gov/168/Board-of-Trustees", sourceLabel: "Waterford Township — Board of Trustees page"
+      },
+      {
+        date: "2026-09-22", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 22, 2026 (est.)",
+        detail: "Inferred 4th-Tuesday pattern from dated 2026 agenda/minutes filenames; exact time not confirmed.",
+        source: "https://www.waterfordmi.gov/303/Planning-Commission", sourceLabel: "Waterford Township — Planning Commission page"
       }
     ]
   },
@@ -1728,6 +2353,12 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for West Bloomfield Township as of Sept 2026. DUAL ROLE: Wade Burkholder, AICP simultaneously holds two positions — (1) Deputy Director of Planning and Development Services for West Bloomfield Township (this in-house public employee role) and (2) Senior Planner at ROWE Professional Services, contracted to the City of Lapeer. Both roles are active concurrently. McKenna Associates also awarded a $112K contract plus $50K MSHDA grant specifically for a new Master Plan — project consultant, not primary planning administrator."
+      },
+      {
+        date: "2026-09-21", type: "meeting", isNew: true,
+        label: "Next Township Board meeting: Sept 21, 2026, 6:00 PM (est.)",
+        detail: "Computed from the Board's stated recurring pattern (1st and 3rd Monday, 6:00 PM); no specific posted Sept 2026 agenda confirmed — the site is otherwise mostly blocked to automated access. The Planning Commission's next date could not be confirmed at all (its schedule pages returned robots-blocked/inaccessible on every attempt).",
+        source: "https://www.wbtownship.org/government/departments/clerk/township_board_agendas_and_minutes.php", sourceLabel: "West Bloomfield Township — Clerk / Board agendas page"
       }
     ]
   },
@@ -1743,6 +2374,18 @@ const COMMUNITIES = [
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
         detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Wolverine Lake as of Sept 2026. Only Wikipedia reachable; names village president/clerk, not a planning official."
+      },
+      {
+        date: "2026-09-24", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 24, 2026, 7:00 PM",
+        detail: "Per the Village's official 2026 meeting-dates form.",
+        source: "https://cms8.revize.com/revize/wolverinelakemi/Meeting%20Dates%20Form%202026.pdf", sourceLabel: "Village of Wolverine Lake — 2026 meeting dates"
+      },
+      {
+        date: "2026-10-14", type: "meeting", isNew: true,
+        label: "Next Village Council meeting: Oct 14, 2026, 7:00 PM",
+        detail: "Per the Village's official 2026 meeting-dates form.",
+        source: "https://cms8.revize.com/revize/wolverinelakemi/Meeting%20Dates%20Form%202026.pdf", sourceLabel: "Village of Wolverine Lake — 2026 meeting dates"
       }
     ]
   },
@@ -1798,6 +2441,8 @@ function shape(type, cx, cy, r) {
       return `<circle cx="${cx}" cy="${cy}" r="${r*1.2}" fill="none" stroke-width="2"/><circle cx="${cx}" cy="${cy}" r="${r*0.45}"/>`;
     case 'immigration':    // pentagon
       return pentagonPath(cx, cy, r);
+    case 'meeting':        // calendar (outlined square with header line)
+      return `<rect x="${cx-r*1.1}" y="${cy-r*1.1}" width="${r*2.2}" height="${r*2.2}" rx="1.5" fill="none" stroke-width="2"/><line x1="${cx-r*1.1}" y1="${cy-r*0.3}" x2="${cx+r*1.1}" y2="${cy-r*0.3}" stroke-width="2"/>`;
     default:
       return `<circle cx="${cx}" cy="${cy}" r="${r}"/>`;
   }
