@@ -485,6 +485,55 @@ body {
 </div>
 </div>
 
+<div class="docs-strip">
+    <div class="docs-strip-heading">📥 Documents to get next — each one settles a card above</div>
+    <ul>
+      <li><strong>Springfield Dec 2025 board + PC minutes</strong> — original moratorium resolution number and date, earliest developer-contact records, and the likeliest home of any "three developers" statement. Archive: <a href="https://www.springfield-twp.us/departments/clerk/minutes.php" target="_blank">springfield-twp.us minutes page</a> (all 2026 minutes are posted there).</li>
+      <li><strong>Springfield Aug 25 PC packet</strong> (30MB+) — contains the draft data center ordinance, now a CWA product: <a href="https://cms1files.revize.com/springfieldtwp/PC_Packet_August_2026.pdf" target="_blank">direct link</a>. Check it against the CWA template fingerprints.</li>
+      <li><strong>Register of Deeds, 8300 Andersonville Rd</strong> — the deed into 84 Andersonville LLC (who sold it, when, for how much) and any recorded mortgage. Confirms whether the site was recently transferred and who financed it.</li>
+      <li><strong>Groveland Township FOIA</strong> — all data-center developer communications, Jan 2024–present. Names the two developers the resident described and tests whether the corridor investor's Groveland land is involved.</li>
+      <li><strong>Van Buren Township (Wayne Co.) DTE special contract</strong> — the second of DTE's two data-center contracts, now at the MPSC. Identify the developer and docket; add to the statewide tracker.</li>
+      <li><strong>Springfield clerk records request</strong> — all data-center developer communications and meeting records, Dec 2025-present (tests the "1 meeting vs 3 developers" discrepancy from the clerk's own file).</li>
+      <li><strong>Independence Township minutes/recordings</strong> — any reference to Springfield data center offers (the "$6B" remark).</li>
+      <li><strong>York Township (Washtenaw) minutes</strong> — any Sansone Group application and its outcome.</li>
+      <li><strong>Lyon Township post-Aug-1 minutes</strong> — exact extension date/vote tally (manual pull; site blocks crawlers) — the extension itself is now confirmed by Livingston Post reporting, this just pins down the date and tally.</li>
+      <li><strong>Oakland County FOIA</strong> — Parks &amp; Rec and Economic Development records on Lyon Oaks (appraisals, disposal studies, developer inquiries) and BOC emails mentioning Verrus, Sidewalk Infrastructure, Project Flex, or Sheetz.</li>
+      <li><strong>Wixom federal docket, Exhibits 5, 9, 21, 25, 28, 29</strong> (PACER, 2:26-cv-12754) — the Carlisle|Wortman memo, two "Rassel Letters," and Councilman Behrmann's texts, all entered by the plaintiff. A docket summary is not the same as reading them.</li>
+      <li><strong>Outcome of Wixom's Sept 2, 2026 mootness motion</strong> — if granted, the case ends without ever testing whether the struck enforcement provisions or the setback survive a Zoning Enabling Act challenge.</li>
+      <li><strong>Wixom project size, reconciled</strong> — the lawsuit's own complaint says 519,400 sq ft; some coverage says "more than 600,000 sq ft" across three buildings. Pin down which is current.</li>
+      <li><strong>Lyon Township Sept 14 Planning Commission agenda</strong> (or wherever Project Flex's final site-plan decision moves to) — Township pulled it from the Sept 14 agenda after a year-later retrospective ran; find out where it landed.</li>
+      <li><strong>Moratorium status update (2026-09-14)</strong> — four of five confirmed via independent news sources: Pontiac enacted a 6-month moratorium Jan 21, 2026 (<a href="https://www.wkar.org/wkar-news/2026-02-27/michigan-data-center-tracker-moratoria-legislation-and-grid-impact" target="_blank">WKAR</a>, <a href="https://www.datacenterbans.com/state/michigan" target="_blank">datacenterbans.com</a>); Orion Township's board voted 7-0 for a 6-month moratorium June 15, 2026, expiring ~Dec 15, 2026 (Lake Orion Review); Independence Township's board voted unanimously for a 6-month moratorium July 21, 2026, expiring ~Jan 21, 2027 (<a href="https://clarkstonnews.com/articles/news/independence-twp-green-lights-moratorium-on-data-centers/" target="_blank">Clarkston News</a>); Rose Township's Planning Commission recommended a 1-year moratorium to its Board on Jan 15, 2026 (<a href="https://www.rosetownship.com/images/2026.01.15PCminutesapproved.pdf" target="_blank">PC minutes</a>) but no Board vote has been confirmed since. Still open: Pontiac's reported post-July extension (no source found yet — the only leads are unverifiable Facebook/Instagram posts), Rose Township's current Board-level status, and Addison Township's claimed "drafting instead of moratorium" posture, which could not be confirmed from any public record and needs a direct clerk call before it's treated as fact.</li>
+    </ul>
+  </div>
+
+<div class="section-break" style="font-size:12px;padding-top:26px;">🗓️ This Week — Council &amp; Planning Commission Meetings</div>
+
+<div class="week-grid" id="weekGrid"></div>
+
+<div class="section-break" style="font-size:12px;padding-top:26px;">📅 Timeline — all 61 Oakland County municipalities + county government (62 lanes)</div>
+
+<div class="legend-bar" id="legend"></div>
+
+<div class="top-scrollbar-wrap">
+  <span class="top-scrollbar-label">Timeline</span>
+  <button class="jump-btn" id="jumpTodayBtn">Jump to current quarter</button>
+  <div class="top-scrollbar-track" id="topScrollTrack">
+    <div class="top-scrollbar-thumb" id="topScrollThumb"></div>
+  </div>
+</div>
+
+<div class="scroll-wrap">
+  <div class="chart-area" id="chart"></div>
+</div>
+
+<div id="tt"></div>
+
+<div class="section-break" style="font-size:12px;padding-top:26px;">🗺 Map — all 61 Oakland County municipalities (subset of the statewide planner map)</div>
+<div class="map-legend"><span class="dot" style="background:#d95926;"></span>Active data center case&nbsp;<span class="dot" style="background:#9085e9;"></span>CWA-planned community&nbsp;<span class="dot" style="background:#64748b;"></span>Other municipality — larger markers = live fights; purple rings = CWA contract&nbsp;&nbsp;<span class="dot" style="background:#34d399;"></span>Flock/ALPR camera (deflock.org, 523 sites confirmed inside Oakland County's boundary)<label style="margin-left:14px;color:#cbd5e1;cursor:pointer;"><input type="checkbox" id="camToggle" checked style="vertical-align:middle;margin-right:5px;">Show cameras</label></div>
+<div class="map-wrap"><div id="oakmap"></div></div>
+<div style="text-align:center;font-size:10px;color:#64748b;padding:0 28px 40px;">Data subset generated from the statewide <a href="index.html" style="color:#67e8f9;text-decoration:none;">P.A.C.T. planner map</a> (county == Oakland), 2026-08-24.</div>
+
+
 <div class="pattern-strip">
   <div class="pattern-strip-heading" style="color:#34d399;">✅ Proven — documented and sourced</div>
   <div class="pattern-grid">
@@ -598,55 +647,7 @@ body {
       <div class="pattern-card-body">A forwarded debrief claimed a unanimous Aug 5 moratorium-extension vote, a resident ethics-policy push, and two trustees called out over a sponsored golf outing with project beneficiaries. A bylined Sept 8, 2026 local-news piece (Livingston Post) independently confirms the Board of Trustees <strong>did</strong> extend the moratorium "in early August 2026" — so the core claim was right — but does not pin down Aug 5 specifically or "unanimous," and the ethics-policy push and golf-outing conflict callout still have zero corroboration anywhere. Treat the extension as real; keep the other three specifics flagged pending a direct pull of Lyon Township's own posted minutes (site blocks automated review — pull manually or call (248) 437-2240).</div>
     </div>
   </div>
-
-  <div class="docs-strip">
-    <div class="docs-strip-heading">📥 Documents to get next — each one settles a card above</div>
-    <ul>
-      <li><strong>Springfield Dec 2025 board + PC minutes</strong> — original moratorium resolution number and date, earliest developer-contact records, and the likeliest home of any "three developers" statement. Archive: <a href="https://www.springfield-twp.us/departments/clerk/minutes.php" target="_blank">springfield-twp.us minutes page</a> (all 2026 minutes are posted there).</li>
-      <li><strong>Springfield Aug 25 PC packet</strong> (30MB+) — contains the draft data center ordinance, now a CWA product: <a href="https://cms1files.revize.com/springfieldtwp/PC_Packet_August_2026.pdf" target="_blank">direct link</a>. Check it against the CWA template fingerprints.</li>
-      <li><strong>Register of Deeds, 8300 Andersonville Rd</strong> — the deed into 84 Andersonville LLC (who sold it, when, for how much) and any recorded mortgage. Confirms whether the site was recently transferred and who financed it.</li>
-      <li><strong>Groveland Township FOIA</strong> — all data-center developer communications, Jan 2024–present. Names the two developers the resident described and tests whether the corridor investor's Groveland land is involved.</li>
-      <li><strong>Van Buren Township (Wayne Co.) DTE special contract</strong> — the second of DTE's two data-center contracts, now at the MPSC. Identify the developer and docket; add to the statewide tracker.</li>
-      <li><strong>Springfield clerk records request</strong> — all data-center developer communications and meeting records, Dec 2025-present (tests the "1 meeting vs 3 developers" discrepancy from the clerk's own file).</li>
-      <li><strong>Independence Township minutes/recordings</strong> — any reference to Springfield data center offers (the "$6B" remark).</li>
-      <li><strong>York Township (Washtenaw) minutes</strong> — any Sansone Group application and its outcome.</li>
-      <li><strong>Lyon Township post-Aug-1 minutes</strong> — exact extension date/vote tally (manual pull; site blocks crawlers) — the extension itself is now confirmed by Livingston Post reporting, this just pins down the date and tally.</li>
-      <li><strong>Oakland County FOIA</strong> — Parks &amp; Rec and Economic Development records on Lyon Oaks (appraisals, disposal studies, developer inquiries) and BOC emails mentioning Verrus, Sidewalk Infrastructure, Project Flex, or Sheetz.</li>
-      <li><strong>Wixom federal docket, Exhibits 5, 9, 21, 25, 28, 29</strong> (PACER, 2:26-cv-12754) — the Carlisle|Wortman memo, two "Rassel Letters," and Councilman Behrmann's texts, all entered by the plaintiff. A docket summary is not the same as reading them.</li>
-      <li><strong>Outcome of Wixom's Sept 2, 2026 mootness motion</strong> — if granted, the case ends without ever testing whether the struck enforcement provisions or the setback survive a Zoning Enabling Act challenge.</li>
-      <li><strong>Wixom project size, reconciled</strong> — the lawsuit's own complaint says 519,400 sq ft; some coverage says "more than 600,000 sq ft" across three buildings. Pin down which is current.</li>
-      <li><strong>Lyon Township Sept 14 Planning Commission agenda</strong> (or wherever Project Flex's final site-plan decision moves to) — Township pulled it from the Sept 14 agenda after a year-later retrospective ran; find out where it landed.</li>
-      <li><strong>Moratorium status update (2026-09-14)</strong> — four of five confirmed via independent news sources: Pontiac enacted a 6-month moratorium Jan 21, 2026 (<a href="https://www.wkar.org/wkar-news/2026-02-27/michigan-data-center-tracker-moratoria-legislation-and-grid-impact" target="_blank">WKAR</a>, <a href="https://www.datacenterbans.com/state/michigan" target="_blank">datacenterbans.com</a>); Orion Township's board voted 7-0 for a 6-month moratorium June 15, 2026, expiring ~Dec 15, 2026 (Lake Orion Review); Independence Township's board voted unanimously for a 6-month moratorium July 21, 2026, expiring ~Jan 21, 2027 (<a href="https://clarkstonnews.com/articles/news/independence-twp-green-lights-moratorium-on-data-centers/" target="_blank">Clarkston News</a>); Rose Township's Planning Commission recommended a 1-year moratorium to its Board on Jan 15, 2026 (<a href="https://www.rosetownship.com/images/2026.01.15PCminutesapproved.pdf" target="_blank">PC minutes</a>) but no Board vote has been confirmed since. Still open: Pontiac's reported post-July extension (no source found yet — the only leads are unverifiable Facebook/Instagram posts), Rose Township's current Board-level status, and Addison Township's claimed "drafting instead of moratorium" posture, which could not be confirmed from any public record and needs a direct clerk call before it's treated as fact.</li>
-    </ul>
-  </div>
 </div>
-
-<div class="section-break" style="font-size:12px;padding-top:26px;">🗓️ This Week — Council &amp; Planning Commission Meetings</div>
-
-<div class="week-grid" id="weekGrid"></div>
-
-<div class="section-break" style="font-size:12px;padding-top:26px;">📅 Timeline — all 61 Oakland County municipalities + county government (62 lanes)</div>
-
-<div class="legend-bar" id="legend"></div>
-
-<div class="top-scrollbar-wrap">
-  <span class="top-scrollbar-label">Timeline</span>
-  <button class="jump-btn" id="jumpTodayBtn">Jump to current quarter</button>
-  <div class="top-scrollbar-track" id="topScrollTrack">
-    <div class="top-scrollbar-thumb" id="topScrollThumb"></div>
-  </div>
-</div>
-
-<div class="scroll-wrap">
-  <div class="chart-area" id="chart"></div>
-</div>
-
-<div id="tt"></div>
-
-<div class="section-break" style="font-size:12px;padding-top:26px;">🗺 Map — all 61 Oakland County municipalities (subset of the statewide planner map)</div>
-<div class="map-legend"><span class="dot" style="background:#d95926;"></span>Active data center case&nbsp;<span class="dot" style="background:#9085e9;"></span>CWA-planned community&nbsp;<span class="dot" style="background:#64748b;"></span>Other municipality — larger markers = live fights; purple rings = CWA contract&nbsp;&nbsp;<span class="dot" style="background:#34d399;"></span>Flock/ALPR camera (deflock.org, 523 sites confirmed inside Oakland County's boundary)<label style="margin-left:14px;color:#cbd5e1;cursor:pointer;"><input type="checkbox" id="camToggle" checked style="vertical-align:middle;margin-right:5px;">Show cameras</label></div>
-<div class="map-wrap"><div id="oakmap"></div></div>
-<div style="text-align:center;font-size:10px;color:#64748b;padding:0 28px 40px;">Data subset generated from the statewide <a href="index.html" style="color:#67e8f9;text-decoration:none;">P.A.C.T. planner map</a> (county == Oakland), 2026-08-24.</div>
 
 
 <script>
