@@ -250,6 +250,16 @@
     .leaflet-popup-content { margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
     .leaflet-popup-close-button { color: #94a3b8 !important; font-size: 18px !important; top: 8px !important; right: 10px !important; }
     .leaflet-popup-close-button:hover { color: #f1f5f9 !important; background: transparent !important; }
+    .grid-watch-rank-label {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      color: #fff !important;
+      font-weight: 700;
+      font-size: 10px;
+      text-shadow: 0 0 2px #000, 0 0 2px #000;
+    }
+    .grid-watch-rank-label::before { display: none; }
 
     /* Popup content */
     .popup-header {
@@ -34048,22 +34058,56 @@ const substationsLayer = L.geoJSON(SUBSTATIONS_GEOJSON, {
 const GRID_WATCH_LIST = [{"municipality":"Thetford Township","county":"Genesee","type":"Township","firm":"Wade Trim","employment_type":"Contracted","lat":43.1619,"lng":-83.6344,"sub_name":"Thetford","sub_city":"Clio","sub_lines":16,"sub_dist_mi":0.31,"line_dist_mi":0.27,"score":14.5},{"municipality":"Brownstown Township","county":"Wayne","type":"Charter Township","firm":"SafeBuilt","employment_type":"Contracted","lat":42.1173,"lng":-83.2674,"sub_name":"Brownstown","sub_city":"Trenton","sub_lines":17,"sub_dist_mi":0.96,"line_dist_mi":0.11,"score":12.88},{"municipality":"Flat Rock","county":"Wayne","type":"City","firm":"McKenna Associates","employment_type":"Contracted","lat":42.0992,"lng":-83.2752,"sub_name":"Brownstown","sub_city":"Trenton","sub_lines":17,"sub_dist_mi":1.79,"line_dist_mi":1.35,"score":10.65},{"municipality":"City of Plainwell","county":"Allegan","type":"City","firm":"PCImi","employment_type":"Contracted","lat":42.447,"lng":-85.6386,"sub_name":"Argenta","sub_city":"Plainwell","sub_lines":15,"sub_dist_mi":1.72,"line_dist_mi":1.32,"score":9.53},{"municipality":"Rockwood","county":"Wayne","type":"City","firm":"McKenna Associates","employment_type":"Contracted","lat":42.0706,"lng":-83.2455,"sub_name":"Brownstown","sub_city":"Trenton","sub_lines":17,"sub_dist_mi":3.14,"line_dist_mi":0.23,"score":8.31},{"municipality":"Marine City","county":"St. Clair","type":"City","firm":"McKenna Associates","employment_type":"Contracted","lat":42.7206,"lng":-82.4877,"sub_name":"St. Clair","sub_city":"East China","sub_lines":16,"sub_dist_mi":3.09,"line_dist_mi":3.06,"score":7.88},{"municipality":"Eastpointe","county":"Macomb","type":"City","firm":"McKenna Associates","employment_type":"Contracted","lat":42.4678,"lng":-82.9549,"sub_name":"Unknown128466","sub_city":"Warren","sub_lines":12,"sub_dist_mi":2.17,"line_dist_mi":2.17,"score":6.96},{"municipality":"Tallmadge Township","county":"Ottawa","type":"Township","firm":"Fresh Coast Planning","employment_type":"Contracted","lat":43.013,"lng":-85.774,"sub_name":"Tallmadge","sub_city":"Grand Rapids","sub_lines":14,"sub_dist_mi":3.48,"line_dist_mi":1.87,"score":6.48},{"municipality":"Plymouth Charter Township","county":"Wayne","type":"Township","firm":"McKenna Associates","employment_type":"Contracted","lat":42.37,"lng":-83.48194,"sub_name":"Wayne","sub_city":"Canton Twp","sub_lines":15,"sub_dist_mi":4.23,"line_dist_mi":4.05,"score":6.22},{"municipality":"Lake Angelus","county":"Oakland","type":"City","firm":"McKenna Associates","employment_type":"Contracted","lat":42.7339,"lng":-83.3327,"sub_name":"Unknown128507","sub_city":"Lake Orion","sub_lines":11,"sub_dist_mi":2.5,"line_dist_mi":0.12,"score":6.0},{"municipality":"City of Otsego","county":"Allegan","type":"City","firm":"PCImi","employment_type":"Contracted","lat":42.4548,"lng":-85.702,"sub_name":"Argenta","sub_city":"Plainwell","sub_lines":15,"sub_dist_mi":4.95,"line_dist_mi":3.26,"score":5.66},{"municipality":"Roseville","county":"Macomb","type":"City","firm":"McKenna Associates","employment_type":"Contracted","lat":42.4973,"lng":-82.9371,"sub_name":"Unknown128466","sub_city":"Warren","sub_lines":12,"sub_dist_mi":3.43,"line_dist_mi":3.01,"score":5.6},{"municipality":"Otsego Township","county":"Allegan","type":"Township","firm":"PCImi","employment_type":"Contracted","lat":42.4595,"lng":-85.702,"sub_name":"Argenta","sub_city":"Plainwell","sub_lines":15,"sub_dist_mi":5.04,"line_dist_mi":3.04,"score":5.6},{"municipality":"Grandville","county":"Kent","type":"City","firm":"Progressive Companies","employment_type":"Contracted","lat":42.9084,"lng":-85.76,"sub_name":"Tallmadge","sub_city":"Grand Rapids","sub_lines":14,"sub_dist_mi":4.9,"line_dist_mi":4.42,"score":5.32},{"municipality":"Harper Woods","county":"Wayne","type":"City","firm":"McKenna Associates","employment_type":"Contracted","lat":42.4345,"lng":-82.9374,"sub_name":"Unknown128466","sub_city":"Warren","sub_lines":12,"sub_dist_mi":4.07,"line_dist_mi":4.07,"score":5.09},{"municipality":"Kingsford City","county":"Dickinson","type":"City","firm":"CUPPAD","employment_type":"Contracted","lat":45.7956,"lng":-88.0809,"sub_name":"Plains","sub_city":"Quinnesec","sub_lines":13,"sub_dist_mi":5.2,"line_dist_mi":5.1,"score":4.76},{"municipality":"Lake Orion Village","county":"Oakland","type":"Village","firm":"McKenna Associates","employment_type":"Contracted","lat":42.78,"lng":-83.24,"sub_name":"Unknown128507","sub_city":"Lake Orion","sub_lines":11,"sub_dist_mi":4.01,"line_dist_mi":3.07,"score":4.71},{"municipality":"Walled Lake","county":"Oakland","type":"City","firm":"McKenna Associates","employment_type":"Contracted","lat":42.5386,"lng":-83.4816,"sub_name":"Wixom","sub_city":"Wixom","sub_lines":9,"sub_dist_mi":2.97,"line_dist_mi":2.44,"score":4.52},{"municipality":"Blendon Township","county":"Ottawa","type":"Township","firm":"PCImi","employment_type":"Contracted","lat":42.895,"lng":-85.881,"sub_name":"Tallmadge","sub_city":"Grand Rapids","sub_lines":14,"sub_dist_mi":6.31,"line_dist_mi":0.83,"score":4.51},{"municipality":"Georgetown Township","county":"Ottawa","type":"Township","firm":"Progressive Companies","employment_type":"Contracted","lat":42.8784,"lng":-85.7758,"sub_name":"Tallmadge","sub_city":"Grand Rapids","sub_lines":14,"sub_dist_mi":6.52,"line_dist_mi":5.5,"score":4.41},{"municipality":"Ash Township","county":"Monroe","type":"Township","firm":"Wade Trim","employment_type":"Contracted","lat":42.073,"lng":-83.406,"sub_name":"Brownstown","sub_city":"Trenton","sub_lines":17,"sub_dist_mi":8.59,"line_dist_mi":0.43,"score":4.4},{"municipality":"Utica","county":"Macomb","type":"City","firm":"Macomb County Planning","employment_type":"Contracted","lat":42.6267,"lng":-83.0271,"sub_name":"Unknown128399","sub_city":"Sterling Heights","sub_lines":8,"sub_dist_mi":2.71,"line_dist_mi":1.25,"score":4.2},{"municipality":"City of Parchment","county":"Kalamazoo","type":"City","firm":"Unknown","employment_type":"Contracted","lat":42.3256,"lng":-85.5678,"sub_name":"Argenta","sub_city":"Plainwell","sub_lines":15,"sub_dist_mi":7.91,"line_dist_mi":6.86,"score":4.12},{"municipality":"Allendale Township","county":"Ottawa","type":"Township","firm":"Fresh Coast Planning","employment_type":"Contracted","lat":42.972,"lng":-85.953,"sub_name":"Tallmadge","sub_city":"Grand Rapids","sub_lines":14,"sub_dist_mi":7.29,"line_dist_mi":3.68,"score":4.08},{"municipality":"Martin Township","county":"Allegan","type":"Township","firm":"PCImi","employment_type":"Contracted","lat":42.5528,"lng":-85.6072,"sub_name":"Argenta","sub_city":"Plainwell","sub_lines":15,"sub_dist_mi":8.06,"line_dist_mi":4.2,"score":4.07},{"municipality":"Lake Charter Township","county":"Berrien","type":"Charter Township","firm":"Williams & Works","employment_type":"Contracted","lat":41.968,"lng":-86.543,"sub_name":"Cook","sub_city":"Baroda","sub_lines":5,"sub_dist_mi":0.79,"line_dist_mi":0.16,"score":3.96},{"municipality":"Richland Charter Township","county":"Kalamazoo","type":"Township","firm":"Williams & Works","employment_type":"Contracted","lat":42.3667,"lng":-85.4614,"sub_name":"Argenta","sub_city":"Plainwell","sub_lines":15,"sub_dist_mi":8.9,"line_dist_mi":4.52,"score":3.78},{"municipality":"Highland Park","county":"Wayne","type":"City","firm":"McKenna Associates","employment_type":"Contracted","lat":42.4059,"lng":-83.0968,"sub_name":"Unknown128466","sub_city":"Warren","sub_lines":12,"sub_dist_mi":6.95,"line_dist_mi":6.94,"score":3.62},{"municipality":"Grosse Pointe Farms","county":"Wayne","type":"City","firm":"McKenna Associates","employment_type":"Contracted","lat":42.4053,"lng":-82.8944,"sub_name":"Unknown128466","sub_city":"Warren","sub_lines":12,"sub_dist_mi":7.05,"line_dist_mi":7.05,"score":3.58},{"municipality":"Royal Oak Township","county":"Oakland","type":"Charter Township","firm":"McKenna Associates","employment_type":"Contracted","lat":42.4675,"lng":-83.1349,"sub_name":"Unknown128466","sub_city":"Warren","sub_lines":12,"sub_dist_mi":7.06,"line_dist_mi":7.05,"score":3.58}];
 
 const gridWatchLayer = L.layerGroup();
+const GW_SCORES = GRID_WATCH_LIST.map(w => w.score);
+const GW_MAX = Math.max(...GW_SCORES);
+const GW_MIN = Math.min(...GW_SCORES);
+
+// Visual encoding so rank is readable at a glance, not just on hover:
+// bigger + darker/more saturated red = higher grid-proximity score.
+// Rank number is a permanent on-map label (not just in the tooltip).
+function gwRadius(score) {
+  const t = (score - GW_MIN) / ((GW_MAX - GW_MIN) || 1);
+  return 6 + t * 12; // 6px (lowest) to 18px (highest)
+}
+function gwColor(score) {
+  const t = (score - GW_MIN) / ((GW_MAX - GW_MIN) || 1);
+  // light salmon (#fecaca) at low end -> deep red (#7f1d1d) at high end
+  const stops = [
+    [254, 202, 202], [239, 68, 68], [127, 29, 29]
+  ];
+  const seg = t < 0.5 ? 0 : 1;
+  const localT = t < 0.5 ? t / 0.5 : (t - 0.5) / 0.5;
+  const a = stops[seg], b = stops[seg + 1];
+  const r = Math.round(a[0] + (b[0] - a[0]) * localT);
+  const g = Math.round(a[1] + (b[1] - a[1]) * localT);
+  const bch = Math.round(a[2] + (b[2] - a[2]) * localT);
+  return `rgb(${r},${g},${bch})`;
+}
+
 GRID_WATCH_LIST.forEach((w, idx) => {
+  const rank = idx + 1;
+  const radius = gwRadius(w.score);
+  const fill = gwColor(w.score);
   const marker = L.circleMarker([w.lat, w.lng], {
-    radius: 7,
-    color: '#f87171',
-    fillColor: '#ef4444',
-    fillOpacity: 0.55,
-    weight: 2
+    radius: radius,
+    color: '#fff',
+    weight: 1,
+    fillColor: fill,
+    fillOpacity: 0.85
   });
-  marker.bindTooltip(`
-    \ud83c\udfaf <b>#${idx + 1} ${w.municipality}</b>, ${w.county} County (${w.type})<br>
+  marker.bindTooltip(`${rank}`, {
+    permanent: true,
+    direction: 'center',
+    className: 'grid-watch-rank-label'
+  });
+  marker.bindPopup(`
+    \ud83c\udfaf <b>#${rank} ${w.municipality}</b>, ${w.county} County (${w.type})<br>
     Planning: ${w.firm} (${w.employment_type})<br>
     Nearest 345kV+ substation: <b>${w.sub_name}</b> (${w.sub_city}) \u2014 ${w.sub_lines} lines, ${w.sub_dist_mi}mi away<br>
     Nearest 345kV+ line: ${w.line_dist_mi}mi<br>
-    Grid proximity score: ${w.score}<br>
+    Grid proximity score: <b>${w.score}</b> (higher = closer to a bigger substation)<br>
     <div style="color:#94a3b8;font-size:11px;margin-top:4px;max-width:260px;">Heuristic screen only \u2014 not a confirmed case. Flags municipalities with contracted (non-in-house) planning near high-capacity grid infrastructure, the same profile every confirmed case on this map shares.</div>
-  `, { sticky: true, className: 'dark-tooltip' });
+  `, { className: 'dark-tooltip' });
   marker.addTo(gridWatchLayer);
 });
 
