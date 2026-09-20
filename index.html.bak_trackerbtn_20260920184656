@@ -224,8 +224,6 @@
     .btn-oakland:hover { background: #92400e; }
     .btn-patterns { background: #3b2a5e; color: #c4b5fd; border: 1px solid #6d28d9; text-decoration: none; display: flex; align-items: center; justify-content: center; }
     .btn-patterns:hover { background: #5b21b6; }
-    .btn-tracker { background: #14532d; color: #86efac; border: 1px solid #166534; text-decoration: none; display: flex; align-items: center; justify-content: center; }
-    .btn-tracker:hover { background: #166534; }
 
     /* ─── Map container ────────────────────────────────────────── */
     #map-container {
@@ -755,7 +753,6 @@
     <a href="cassin.html" target="_blank" class="btn btn-timeline">🕵 Cassin Watch</a>
     <a href="oakland.html" target="_blank" class="btn btn-oakland">🗺 Oakland County</a>
     <a href="cross-municipality-patterns.html" target="_blank" class="btn btn-patterns">🧩 Cross-Muni Patterns</a>
-    <a href="../PACT_Data_Center_Developer_Tracker.xlsx" download class="btn btn-tracker">📊 Developer Tracker</a>
   </div>
 </div>
 
