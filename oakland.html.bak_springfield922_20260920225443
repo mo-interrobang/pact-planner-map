@@ -915,17 +915,11 @@ const COMMUNITIES = [
         detail: "The extended moratorium runs out December 10, 2026. Whatever ordinance CWA has drafted by then governs any application for the Andersonville Road site — the same is-it-protection-or-the-appearance-of-protection question P.A.C.T. tracks at every CWA site."
       },
       {
-        date: "2026-09-22", type: "cwa-action", isNew: true,
-        label: "PC subcommittee update on Data Center Ordinance; Dixie Hwy rezoning hearing",
-        detail: "Packet posted Sept 17, 2026 and reviewed 2026-09-20. Old Business: the PC formed a subcommittee (Chair Brian Galley, Commissioner Kevin Sclesky, Commissioner Andy Donato, resident/energy engineer Brandon Boucher) that met Sept 10 to refine the draft Data Center Zoning Ordinance — expanded definition (co-location, cloud, hyperscale, crypto mining, AI training), tiered 100–400 ft setbacks from sensitive uses, 50-ft landscape greenbelt, strict lighting caps, pre/post-construction noise testing every 3 years, closed-loop cooling, annual water-use reporting, 150% decommissioning bond. No vote taken; revisions go to Fire Dept/Engineer/Attorney, PC review moves to the Oct 27 meeting. Public Hearing: 10774 Dixie Hwy rezoning (R-1 to C-1, applicant Adam Magaluk) — unrelated to data centers but the C-1 district itself permits \'data processing centers\' as a listed use. Communication item: Levy/Burroughs gravel mine — site investigation ongoing, Township Board's mining-ordinance first reading (postponed Aug 13) now expected on the October Board agenda. Public comment covered both fights: data-center water use/EMF/grid-demand concerns and gravel-mine silica dust/groundwater/traffic concerns.",
-        source: "https://cms1files.revize.com/springfieldtwp/PC_Agenda_September_22_2026.pdf", sourceLabel: "Springfield Twp PC agenda, Sept 22, 2026",
-        packet: "https://cms1files.revize.com/springfieldtwp/PC_Packet_September_22_2026.pdf",
+        date: "2026-09-22", type: "meeting", isNew: true,
+        label: "Next Planning Commission meeting: Sept 22, 2026, 7:00 PM",
+        detail: "Per the Township's official 2026 meeting-dates schedule (4th Tuesday of each month).",
+        source: "https://cms1files.revize.com/springfieldtwp/2026_Meeting_Dates.pdf", sourceLabel: "Springfield Township — 2026 meeting schedule",
         packetChecked: true
-      },
-      {
-        date: "2026-10-27", type: "future", isNew: true,
-        label: "⚠ Next Planning Commission review of Data Center Ordinance",
-        detail: "Subcommittee's revised draft returns to the full PC after circulating to the Fire Department, Township Engineer, and Township Attorney."
       },
       {
         date: "2026-10-08", type: "meeting", isNew: true,
@@ -1260,45 +1254,17 @@ const COMMUNITIES = [
     planner: "Benjamin R. Carlisle",
     title: "CWA — President, AICP, LEED-AP (Planning Consultant)",
     cwaStatus: "active",
-    statusLabel: "CWA — ACTIVE, DATA CENTER MORATORIUM",
+    statusLabel: "CWA — WATCH (no DC activity found)",
     events: [
       {
-        date: "2026-09-20", type: "community", isNew: true,
-        label: "CORRECTION: Troy has an active data-center moratorium — the \'no DC activity\' status below was wrong",
-        detail: "Found 2026-09-20 via routine packet-link check: Troy Planning Commission approved a six-month moratorium on data processing centers Mar 13, 2026, and City Council approved it Mar 18, 2026 — both missed by the Jul 2026 18-meeting review below, which apparently searched the wrong window or terminology. See the dated events that follow for the moratorium's history and Sept 2026 extension.",
-        source: "https://www.timestribunenews.com/2026/03/13/troy-planning-commission-approves-six-month-moratorium-on-data-processing-centers/", sourceLabel: "Troy Times Tribune, Mar 13, 2026"
-      },
-      {
-        date: "2026-03-13", type: "protection", isNew: true,
-        label: "Planning Commission approves six-month moratorium on data processing centers",
-        source: "https://www.timestribunenews.com/2026/03/13/troy-planning-commission-approves-six-month-moratorium-on-data-processing-centers/", sourceLabel: "Troy Times Tribune, Mar 13, 2026"
-      },
-      {
-        date: "2026-03-18", type: "protection", isNew: true,
-        label: "City Council approves the six-month moratorium",
-        source: "https://www.timestribunenews.com/2026/03/18/troy-city-council-approves-six-month-moratorium-on-data-processing-centers/", sourceLabel: "Troy Times Tribune, Mar 18, 2026"
-      },
-      {
-        date: "2026-06-18", type: "community", isNew: true,
-        label: "Mid-moratorium update to officials",
-        source: "https://www.timestribunenews.com/2026/06/18/troy-officials-provide-data-center-update-mid-way-through-moratorium/", sourceLabel: "Troy Times Tribune, Jun 18, 2026"
-      },
-      {
-        date: "2026-09-10", type: "cwa-action", isNew: true,
-        label: "PC public hearing on moratorium extension — \'the most anticipated item\' on the agenda",
-        detail: "Public hearing held; Planning Commission approved extending the moratorium (exact new expiration date not yet confirmed — the source article's full text is paywalled/blocked to automated fetch beyond the preview). Needs a direct pull of the Sept 10 PC minutes or agenda packet to pin down the new expiration date and any ordinance draft discussed.",
-        source: "https://www.timestribunenews.com/2026/09/17/troy-planning-commission-approves-data-center-moratorium-extension/", sourceLabel: "Troy Times Tribune, Sept 17, 2026",
-        packetChecked: false
-      },
-      {
         date: "2026-09-13", type: "community",
-        label: "Superseded by the correction above — original (incorrect) research note",
-        detail: "ORIGINAL NOTE, LEFT FOR THE RECORD (see 2026-09-20 correction above): \'Confirmed Carlisle/Wortman Associates client (Benjamin R. Carlisle). No documented data-center application, moratorium, or ordinance activity found as of Sept 2026 — logged here as a CWA-relationship watch point, not an active case... Thoroughly checked (Jul 2026): all 18 Planning Commission meetings Aug 2025–Jul 2026 reviewed and full-text searched for data center/BESS terms — none found.\' Ben Carlisle (CWA President) is still confirmed as Troy\'s CWA planner; in-house Community Development Director is R. Brent Savidant, AICP; Mark F. Miller (CWA Community Planner, former Troy City Manager) also on CWA staff."
+        label: "CWA client — no data-center proposal, moratorium, or ordinance found",
+        detail: "Confirmed Carlisle/Wortman Associates client (Benjamin R. Carlisle). No documented data-center application, moratorium, or ordinance activity found as of Sept 2026 — logged here as a CWA-relationship watch point, not an active case. CONFIRMED: Ben Carlisle (CWA President) listed as Troy planner on CWA About page. Troy also has in-house Community Development Director R. Brent Savidant, AICP. CWA likely serves as primary planning consultant alongside city staff. Also notable: Mark F. Miller (CWA Community Planner, AICP, former Troy City Manager for 5 years) is on CWA staff. | Thoroughly checked (Jul 2026): all 18 Planning Commission meetings Aug 2025–Jul 2026 reviewed and full-text searched for data center/BESS terms — none found. Carlisle's actual work in this window (Neighborhood Node design standards, North Troy Zoning District form-based code) is unrelated urban design, not infrastructure-use zoning."
       },
       {
         date: "2026-09-22", type: "meeting", isNew: true,
         label: "Next Planning Commission meeting: Sept 22, 2026, 7:00 PM",
-        detail: "No agenda/packet document link found on the city's schedule page as of 2026-09-20 (meeting is listed but undocumented beyond the date/time). Given the active moratorium, worth checking again closer to the meeting for a posted agenda.",
+        detail: "Per the city's official boards & committees meeting schedule.",
         source: "https://apps.troymi.gov/BoardsAndCommittees/MeetingSchedule?boardAndCommitteeName=Planning+Commission", sourceLabel: "City of Troy — Planning Commission schedule",
         packetChecked: true
       },
