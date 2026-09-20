@@ -577,21 +577,6 @@ body {
       <div class="pattern-card-body">Per DTE's own investor disclosure, the utility holds exactly <strong>two data-center special contracts</strong> statewide: Saline Township (approved Dec 18, 2025 — the ~1.3 GW Oracle/OpenAI project, now under an AG reopen motion) and <strong>Van Buren Township (Wayne County), pending before the MPSC.</strong> Together they are worth "nearly $9 billion" to DTE through 2045. The takeaway for Oakland County: <em>no</em> local project — not Wixom, not Lyon's Project Flex, not Springfield — has reached that utility-contract stage yet. That makes the MPSC docket an early-warning tripwire: the day an Oakland project files a DTE special contract, it has stopped being theoretical. Sources: DTE Energy investor release (2026); MPSC news releases.</div>
     </div>
     <div class="pattern-card pv-green">
-      <div class="pattern-card-num">Proven 14 — Madison Heights Joins the Map</div>
-      <div class="pattern-card-title">12-month moratorium plus a dedicated Data Center Commission</div>
-      <div class="pattern-card-body">Aug 24, 2026: City Council adopted a Temporary Data Center Development Moratorium Resolution, pausing new data-center applications for 12 months and creating a nine-member Data Center Commission to study appropriate regulations before any are accepted (accessory server rooms and telecom facilities are exempt). Copies of the resolution were directed to state and federal representatives. A new city on the tracker, found via a routine packet check rather than a live application — the proactive-standards pattern showing up county-wide, not just in CWA-client townships.</div>
-    </div>
-    <div class="pattern-card pv-green">
-      <div class="pattern-card-num">Proven 15 — Milford Township, Public Hearing Sept 24</div>
-      <div class="pattern-card-title">Draft Data Center Ordinance goes to a Planning Commission hearing, no application on file</div>
-      <div class="pattern-card-body">Milford Township's Planning Commission holds a public hearing on a draft Data Center Ordinance <strong>Sept 24, 2026, 7:00 PM</strong>, Milford Civic Center — drafted under Michigan's Zoning Enabling Act as a guide for future development, not in response to a pending project. Notice published Sept 10 &amp; 17 in Hometown Life. Contact: Planning Coordinator Wendy Loncar, 248-685-8731, wloncar@milfordtwpmi.gov. <a href="https://cms4files1.revize.com/milfordtownship/docs/Planning/Public%20Notice%20proposed%20Data%20Center%20Ordinance.pdf" target="_blank">Public hearing notice</a></div>
-    </div>
-    <div class="pattern-card pv-green">
-      <div class="pattern-card-num">Proven 16 — Auburn Hills Rolls Back Permitted-Use Status</div>
-      <div class="pattern-card-title">Ordinance 26-951: data centers move from principal use to special land use, capped at six sites</div>
-      <div class="pattern-card-body">Council adopted Ordinance 26-951 Aug 24, 2026 (Planning Commission recommended approval Aug 12): removes data centers as a principal permitted use in Technology &amp; Research districts and relocates them to special-land-use status in Light Industrial and General Industrial districts. Six specific properties are named as eligible; any other site needs a full Planned Unit Development approved by Council. Public comment raised electrical-grid-capacity concerns; one Council member flagged that the PUD path could still open additional sites beyond the six.</div>
-    </div>
-    <div class="pattern-card pv-green">
       <div class="pattern-card-num">Proven 13 — Groveland's Quiet Preparation</div>
       <div class="pattern-card-title">A non-CWA township writing data-center rules before any application arrives</div>
       <div class="pattern-card-body">Groveland Township — directly north of Springfield, and planned by <strong>Wade Trim, not Carlisle/Wortman</strong> (so this is a separate thread from the CWA-template pattern) — ran a <strong>January 2026 master-plan visioning workshop that explicitly added standards for data centers, battery storage, commercial solar, and commercial wind.</strong> Townships don't proactively write data-center rules unless someone has been asking, which lines up with the resident testimony about developers courting Groveland land. Groveland appears on no public data-center tracker yet — the activity is early and quiet. Sources: The Citizen, Jan 17, 2026; Groveland Township Planning Commission.</div>
@@ -3479,8 +3464,7 @@ const OAKLAND = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: true,
-        data_center_case: true,
-        data_center_notes: "NEW 2026-09-20 (oakland.html packet-link check): Aug 24, 2026 City Council adopted a 12-month Temporary Data Center Development Moratorium Resolution, pausing new data-center applications and creating a 9-member Data Center Commission to study appropriate regulations before any are accepted. Exempts accessory server rooms/equipment and telecom facilities. Resolution acknowledges both benefits (broadband, tax revenue) and concerns (electricity/water use, noise, environmental impact); copies directed to state and federal representatives. Source: Madison Heights Council packet (Aug 24, 2026 minutes), via mccmeetings.blob.core.usgovcloudapi.net/mdsnhgtsmi-pubu.",
+        data_center_case: false,
         notes: "Lonnerstater previously worked for Carlisle/Wortman Associates before joining Madison Heights as in-house City Planner. He was the sole author of all staff memos in the June 15, 2026 Planning Commission packet. If a data center developer approaches Madison Heights, his prior CWA experience and remaining professional relationships with Auerbach/Montagno are worth monitoring.",
         work_history: "Carlisle/Wortman Associates → City of Madison Heights (current, in-house)",
         sources: ["P.A.C.T. research", "Madison Heights PC packet, June 15, 2026"]
@@ -3596,8 +3580,7 @@ const OAKLAND = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
-        data_center_case: true,
-        data_center_notes: "NEW 2026-09-20 (oakland.html packet-link check): Sept 14, 2026 City Council Study Session agenda item 5 was an 'Educational Presentation Regarding Data Center Uses' — no ordinance or application on the table yet, and the posted agenda gives no detail on what was presented or discussed. Needs a follow-up check of the study session minutes/video once posted. Source: fhgov.com Sept 14, 2026 study session agenda.",
+        data_center_case: false,
         notes: "In-house Director. Additionally, Giffels Webster provides supplemental planning consultant services including master plan updates and attendance at Planning Commission meetings. Both in-house staff and Giffels Webster active.",
         work_history: null,
         sources: ["City of Farmington Hills; Giffels Webster project records"]
@@ -3673,8 +3656,7 @@ const OAKLAND = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
-        data_center_case: true,
-        data_center_notes: "NEW 2026-09-20 (oakland.html packet-link check): Aug 24, 2026 City Council adopted Ordinance 26-951 (Planning Commission recommended approval Aug 12, 2026). Removes data centers as a principal permitted use in Technology & Research (T&R) districts; relocates them to special-land-use status in Light Industrial (I-1) and General Industrial (I-2) districts. Identifies six specific properties eligible for data centers; any additional site requires a Planned Unit Development approved by Council. Public comment at the Aug 24 meeting raised electrical-grid-capacity concerns; Council Member Marzolf flagged that the PUD option could allow data centers beyond the six named sites. Source: Auburn Hills CC agenda packet, 09-14-26 (carries the Aug 24 meeting minutes) — auburnhills.org.",
+        data_center_case: false,
         notes: "In-house Director of Community Development. OHM Advisors performs engineering/site plan review services — not primary planning consultant role.",
         work_history: null,
         sources: ["City of Auburn Hills"]
@@ -4228,7 +4210,7 @@ const OAKLAND = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "NEW 2026-08-20: Township Board adopted a 6-month data center moratorium Feb 2026 (originally set to expire ~Aug 2026; per the July 2026 Planning Dept monthly report, staff expected the Board to extend it ~4 months to Dec 2026 to allow time to finish standards). Planning Commission held a discussion-only item (agenda I2, moved to Aug 10 2026 due to the election) on 'Prospective Zoning Ordinance Amendments Relative to Data Centers' targeting the I-Industrial and TLM-Technology & Light Manufacturing districts — no data center is currently proposed; this is proactive standards-setting following Board/Commission direction sessions Apr 28 and May 4, 2026. No vote/adoption yet; the Aug 18, 2026 Board of Trustees agenda does not mention data centers. Source: Commerce Twp PC agenda/packet, Aug 10 2026 — https://commercetwp.com/media/ffxhssfy/2026-8-10-pln-agenda.pdf. UPDATE 2026-09-20: the public hearing on this text amendment (PZ26-01) was held Sept 14, 2026 (Planning Commission regular meeting); packet reiterates \'NO DATA CENTER IS CURRENTLY PROPOSED; THE PROPOSED AMENDMENTS...ARE INTENDED TO CREATE STANDARDS AND PROCEDURES FOR IF AND WHEN A DATA CENTER IS PROPOSED.\' Source: commercetwp.com/media/juholhgh/2026-9-14-pln-agenda-packet.pdf",
+        data_center_notes: "NEW 2026-08-20: Township Board adopted a 6-month data center moratorium Feb 2026 (originally set to expire ~Aug 2026; per the July 2026 Planning Dept monthly report, staff expected the Board to extend it ~4 months to Dec 2026 to allow time to finish standards). Planning Commission held a discussion-only item (agenda I2, moved to Aug 10 2026 due to the election) on 'Prospective Zoning Ordinance Amendments Relative to Data Centers' targeting the I-Industrial and TLM-Technology & Light Manufacturing districts — no data center is currently proposed; this is proactive standards-setting following Board/Commission direction sessions Apr 28 and May 4, 2026. No vote/adoption yet; the Aug 18, 2026 Board of Trustees agenda does not mention data centers. Source: Commerce Twp PC agenda/packet, Aug 10 2026 — https://commercetwp.com/media/ffxhssfy/2026-8-10-pln-agenda.pdf",
         notes: "Supported by Senior Planner Paula Lankford and Associate Planner Bethany Miller; Giffels-Webster Engineers serves as township engineer (not planning consultant). (Firm listed as: In-House (Township Staff).)",
         work_history: null,
         sources: ["https://www.commercetwp.com/departments/planning/"]
@@ -4327,8 +4309,8 @@ const OAKLAND = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
-        data_center_case: true,
-        data_center_notes: "NEW 2026-09-20 (oakland.html packet-link check): Planning Commission public hearing on a draft Data Center Ordinance set for Sept 24, 2026, 7:00 PM, Milford Civic Center. Notice published Sept 10 & 17, 2026 in Hometown Life; drafted under Michigan's Zoning Enabling Act as a guide for future data-center development — proactive standards-setting, no application on file. Contact: Planning Coordinator Wendy Loncar, 248-685-8731, wloncar@milfordtwpmi.gov. Added to Mo's calendar. Source: https://cms4files1.revize.com/milfordtownship/docs/Planning/Public%20Notice%20proposed%20Data%20Center%20Ordinance.pdf",
+        data_center_case: false,
+        data_center_notes: null,
         notes: "Site references 'our Planners' holding monthly office hours implying a contracted consultant, but no firm name given.",
         work_history: null,
         sources: ["https://www.milfordtwpmi.gov/departments/charter_township_of_milford_-_planning/index.php"]
