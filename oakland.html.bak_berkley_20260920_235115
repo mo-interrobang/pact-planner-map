@@ -1344,23 +1344,17 @@ const COMMUNITIES = [
     planner: "Benjamin R. Carlisle",
     title: "CWA — President, AICP, LEED-AP (Planning Consultant)",
     cwaStatus: "active",
-    statusLabel: "CWA — ACTIVE, DATA CENTER ORDINANCE DRAFTED",
+    statusLabel: "CWA — WATCH (no DC activity found)",
     events: [
       {
         date: "2026-09-13", type: "community",
         label: "CWA client — no data-center proposal, moratorium, or ordinance found",
-        detail: "SUPERSEDED by the 2026-08-25 finding below. Original note: Confirmed Carlisle/Wortman Associates client (Benjamin R. Carlisle). No documented data-center application, moratorium, or ordinance activity found as of Sept 2026 — logged here as a CWA-relationship watch point, not an active case. Confirmed CWA client — Ben Carlisle (CWA President) serves Berkley per his CV and CWA About page. Day-to-day planning is actually done by CWA principal Megan Masson-Minock."
-      },
-      {
-        date: "2026-08-25", type: "cwa-action", isNew: true,
-        label: "CONFIRMED: data-center zoning amendment drafted, heading to Council this fall",
-        detail: "CONFIRMED 2026-09-20 (Mo's own downloaded Sept 22, 2026 PC packet, which includes the Aug 25, 2026 PC minutes): under Staff Comments, Community Development Director Kapelanski confirmed \"the data center amendment will be proceeding to the City Council later in the fall.\" This resolves the prior \"unresolved\" status from the Feb 24, 2026 PC agenda item (\"Discussion of potential Zoning Ordinance amendment to regulate data centers\") that had no memo, presenter, or minutes since. No draft ordinance text found in this packet \u2014 only the staff confirmation that it exists and is moving. Status upgraded from CWA-WATCH to CWA-ACTIVE.",
-        source: "N/A — Mo's own downloaded Sept 22, 2026 PC packet (includes Aug 25, 2026 minutes)", sourceLabel: "City of Berkley — Sept 22, 2026 PC packet, p.2-3"
+        detail: "Confirmed Carlisle/Wortman Associates client (Benjamin R. Carlisle). No documented data-center application, moratorium, or ordinance activity found as of Sept 2026 — logged here as a CWA-relationship watch point, not an active case. Confirmed CWA client — Ben Carlisle (CWA President) serves Berkley per his CV and CWA About page. Day-to-day planning is actually done by CWA principal Megan Masson-Minock."
       },
       {
         date: "2026-09-22", type: "meeting", isNew: true,
-        label: "PC meeting Sept 22, 2026 — no data-center item on THIS agenda",
-        detail: "CONFIRMED 2026-09-20: the Sept 22, 2026 agenda itself is routine (a corner-lot setback ordinance under Old Business; a facade-update site plan and the Community Development annual report under New Business). The data-center amendment is not on this particular agenda \u2014 it's still working through Council per the Aug 25 staff comment above. Watch subsequent Council agendas this fall.",
+        label: "Next Planning Commission meeting: Sept 22, 2026, 7:00 PM (est.)",
+        detail: "Computed from the Commission's stated recurring pattern (4th Tuesday of each month). The City Council's next date could not be confirmed — the council schedule page is stale and the CivicClerk portal is JavaScript-rendered and unreadable to automated fetch.",
         source: "https://www.berkleymich.org/boards_and_commissions/planning.php", sourceLabel: "City of Berkley — Planning Commission page",
         packetChecked: true
       },
