@@ -773,6 +773,7 @@ const COMMUNITIES = [
         date: "2026-09-21", type: "cwa-action", isNew: true,
         label: "PC agenda: noise ordinance amendment discussion",
         detail: "CONFIRMED 2026-09-20 (Mo's own downloaded agenda): Sept 21, 2026 PC agenda item 2 under New Business is a discussion-only item, \"Noise Ordinance Amendment\" \u2014 no text of the proposed amendment attached to the agenda itself. Given the data-center ordinance's mandatory sound study and well-documented noise-standard fights (the deleted Table 2 ambient standard, the city's own $28,500 ambient noise study), this is very likely a follow-on to that fight, not a routine update; worth pulling the actual discussion memo/minutes once posted. Only other New Business item on the agenda is an unrelated food-truck temporary land use permit at 28055 S. Wixom Rd.",
+        alertNote: "Likely follow-on to the data-center noise-standard fight — watch for the actual discussion memo once posted.",
         source: "https://www.wixomgov.org/Home/Components/Calendar/Event/4941/18", sourceLabel: "City of Wixom — Sept 21, 2026 PC agenda (Mo's own download)"
       }
     ]
@@ -1098,9 +1099,16 @@ const COMMUNITIES = [
       {
         date: "2026-09-22", type: "meeting", isNew: true,
         label: "Next Planning Commission meeting: Sept 22, 2026, 7:00 PM",
-        detail: "Brandon Township Hall.",
+        detail: "Brandon Township Hall (mailing address Ortonville, MI).",
         source: "https://brandontownship.us/", sourceLabel: "Brandon Township — event calendar",
         packetChecked: true
+      },
+      {
+        date: "2026-09-22", type: "cwa-action", isNew: true,
+        label: "Agenda item: Data Center Moratorium Update",
+        detail: "CONFIRMED 2026-09-20 (Mo's own downloaded agenda): Board of Trustees adopted a 1-year data-center moratorium 2026-05-09 (unanimous; reasons cited: no zoning definition for data centers, noise/grid-strain concerns, minimal job creation ~12/facility per Trustee Steve Unruh). Board just extended it ~180 more days (unanimous, ~2026-09-19) specifically so the Planning Commission can finish drafting a real ordinance. This Sept 22 agenda item is almost certainly that status update, not a new site-specific threat. Same agenda has an unrelated public hearing, PPC26-003 (preliminary site plan, applicant Jake Vaughn, 1652 S Ortonville Rd) — no data-center connection found, but only the agenda line was reviewed, not the actual site plan.",
+        alertNote: "Data-center moratorium status update on tonight's agenda — township extended its moratorium ~180 days this week.",
+        source: "https://brandontownship.us/", sourceLabel: "Brandon Township — Sept 22, 2026 PC agenda (Mo's own download)"
       }
     ]
   },
@@ -1297,8 +1305,8 @@ const COMMUNITIES = [
       },
       {
         date: "2026-09-22", type: "meeting", isNew: true,
-        label: "Next Planning Commission meeting: Sept 22, 2026, 7:00 PM",
-        detail: "No agenda/packet document link found on the city's schedule page as of 2026-09-20 (meeting is listed but undocumented beyond the date/time). Given the active moratorium, worth checking again closer to the meeting for a posted agenda.",
+        label: "Planning Commission meeting, 7:00 PM — agenda reviewed, no moratorium item",
+        detail: "CONFIRMED 2026-09-20 (Mo's own downloaded agenda): only substantive item is a Corewell Health Tower & Parking Structure PUD concept plan (Dequindre/South Blvd). Nothing about the data-center moratorium or its Sept 10 extension is on this specific agenda — that's being handled at the Board/Council level, not this PC meeting.",
         source: "https://apps.troymi.gov/BoardsAndCommittees/MeetingSchedule?boardAndCommitteeName=Planning+Commission", sourceLabel: "City of Troy — Planning Commission schedule",
         packetChecked: true
       },
@@ -1361,6 +1369,7 @@ const COMMUNITIES = [
         date: "2026-09-22", type: "meeting", isNew: true,
         label: "PC meeting Sept 22, 2026 — no data-center item on THIS agenda",
         detail: "CONFIRMED 2026-09-20: the Sept 22, 2026 agenda itself is routine (a corner-lot setback ordinance under Old Business; a facade-update site plan and the Community Development annual report under New Business). The data-center amendment is not on this particular agenda \u2014 it's still working through Council per the Aug 25 staff comment above. Watch subsequent Council agendas this fall.",
+        alertNote: "Packet confirms (Aug 25 minutes): the data-center zoning amendment is proceeding to City Council this fall.",
         source: "https://www.berkleymich.org/boards_and_commissions/planning.php", sourceLabel: "City of Berkley — Planning Commission page",
         packetChecked: true
       },
@@ -1631,8 +1640,8 @@ const COMMUNITIES = [
       },
       {
         date: "2026-09-22", type: "meeting", isNew: true,
-        label: "Next Planning Commission meeting: Sept 22, 2026, 7:30 PM (est., low confidence)",
-        detail: "Pattern (2nd and 4th Tuesday, 7:30 PM) sourced from the same 2025-labeled schedule document, not reconfirmed for 2026.",
+        label: "Planning Commission meeting, 7:30 PM — packet reviewed, no data-center content",
+        detail: "CONFIRMED 2026-09-20 (Mo's own downloaded 31-page PC packet): the only public hearing is a zoning text amendment adding carryout restaurants to the B-1 district and expanding retail uses in BRD-2 — pure economic-development housekeeping, unrelated to data centers. No data-center item on this agenda.",
         source: "https://www.cityofclawson.com/your_government/boards_and_commissions.php", sourceLabel: "City of Clawson — boards & commissions page",
         packetChecked: true
       }
@@ -2676,8 +2685,8 @@ const COMMUNITIES = [
       },
       {
         date: "2026-09-22", type: "meeting", isNew: true,
-        label: "Next Planning Commission meeting: Sept 22, 2026 (est.)",
-        detail: "Inferred 4th-Tuesday pattern from dated 2026 agenda/minutes filenames; exact time not confirmed.",
+        label: "Planning Commission meeting, 6:00 PM — agenda reviewed, no data-center content",
+        detail: "CONFIRMED 2026-09-20 (Mo's own downloaded agenda): pre-meeting 5:00 PM, regular meeting 6:00 PM. Items are a CDBG/CAPER public hearing, a conditional rezoning for a single-family site condo development (PRSA 25-09-02), and a special-approval request to keep chickens on a residential lot. Nothing data-center related.",
         source: "https://www.waterfordmi.gov/303/Planning-Commission", sourceLabel: "Waterford Township — Planning Commission page",
         packetChecked: true
       }
