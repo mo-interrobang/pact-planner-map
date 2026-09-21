@@ -481,7 +481,7 @@ body {
   <div style="font-size:11.5px;margin-bottom:8px;"><a href="index.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">← Planner Map</a><span style="color:var(--text-3);margin:0 8px;">|</span><a href="timeline.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">CWA Pattern Timeline</a><span style="color:var(--text-3);margin:0 8px;">|</span><span style="color:var(--text-3);">Oakland County Watch (this page)</span><span style="color:var(--text-3);margin:0 8px;">|</span><a href="cassin.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">Steve Cassin Watch</a><span style="color:var(--text-3);margin:0 8px;">|</span><a href="cross-municipality-patterns.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">Cross-Municipality Patterns</a></div>
   <h1>Oakland County — Data Center Watch <span class="cwa-badge" style="background:#34d399;">PROVEN vs UNPROVEN</span></h1>
   <p class="subtitle">A county-focused companion to the statewide map: what is documented (green), what is circulating unverified (red), when each fight moved, and where every municipality sits. Hover timeline events for detail — click a dot to pin the card and follow its source link.</p>
-  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-09-20 by P.A.C.T. from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
+  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-09-21 by P.A.C.T. from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
 </div>
 </div>
 
@@ -1268,11 +1268,16 @@ const COMMUNITIES = [
     planner: "Benjamin R. Carlisle",
     title: "CWA — President, AICP, LEED-AP (Planning Consultant)",
     cwaStatus: "active",
-    statusLabel: "CWA — ACTIVE, DATA CENTER MORATORIUM",
+    statusLabel: "CWA — UNCONFIRMED, SOURCE PROBLEM FLAGGED (do not cite as active)",
     events: [
       {
-        date: "2026-09-20", type: "community", isNew: true,
-        label: "CORRECTION: Troy has an active data-center moratorium — the \'no DC activity\' status below was wrong",
+        date: "2026-09-21", type: "community", isNew: true,
+        label: "\u26a0 SOURCE PROBLEM: the entire Troy moratorium claim below traces to a mis-sourced outlet — likely Troy, Illinois, not Troy, Michigan",
+        detail: "Checked 2026-09-21. Every event below (Mar 13/18 adoption, Jun 18 update, Sept 10/17 extension) cites only \'The Troy Times Tribune\' (timestribunenews.com). Fetched that outlet directly: its own coverage is Metro East Illinois (St. Jacob, Triad \u2014 Madison County IL communities near Troy, IL), not southeast Michigan. Cross-checked two independent sources for a genuine Troy MI confirmation and found neither: (1) datacenterbans.com's Michigan moratorium tracker \u2014 a comprehensive list of ~29 MI municipalities with active moratoria \u2014 does not include Troy anywhere; (2) troymi.gov's own Planning Commission agenda packets (Apr/May/Aug 2026, pulled via search) show no moratorium or data-center item, though full packet text wasn't fully readable (image-based PDF). Net: do not treat any part of the Troy moratorium narrative below as confirmed \u2014 not just the Sept 10 extension flagged 2026-09-20, but the original Mar 2026 adoption too. The 2026-09-20 correction entry immediately below is itself now superseded pending re-verification directly from troymi.gov council/PC minutes or a genuine Michigan outlet (Michigan Advance's Sept 21 weekly roundup does not mention Troy either)."
+      },
+      {
+        date: "2026-09-20", type: "community",
+        label: "SUPERSEDED 2026-09-21 (source problem found) \u2014 original correction note, left for the record",
         detail: "Found 2026-09-20 via routine packet-link check: Troy Planning Commission approved a six-month moratorium on data processing centers Mar 13, 2026, and City Council approved it Mar 18, 2026 — both missed by the Jul 2026 18-meeting review below, which apparently searched the wrong window or terminology. See the dated events that follow for the moratorium's history and Sept 2026 extension.",
         source: "https://www.timestribunenews.com/2026/03/13/troy-planning-commission-approves-six-month-moratorium-on-data-processing-centers/", sourceLabel: "Troy Times Tribune, Mar 13, 2026"
       },
