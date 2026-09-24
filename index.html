@@ -826,6 +826,14 @@
             <input type="checkbox" id="toggle-substations" />
             <span class="layer-row-label" style="color:#fde047">🔌 Substations (345kV+)</span>
           </label>
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-dte-fermi" />
+            <span class="layer-row-label" style="color:#fbbf24">☢ DTE / Fermi overlay</span>
+          </label>
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-itc-miso" />
+            <span class="layer-row-label" style="color:#c084fc">🗼 ITC / MISO queue (Washtenaw + Wayne)</span>
+          </label>
         </div>
       </div>
 
@@ -912,6 +920,14 @@
       <span class="legend-label">Same firm (network)</span>
     </div>
     <div class="legend-sep"></div>
+    <div class="legend-title">DTE / Fermi / ITC overlays</div>
+    <div class="legend-row"><span style="width:12px;text-align:center;color:#facc15;font-size:12px">☢</span><span class="legend-label">Fermi 2, dashed ring = approx. 10-mile EPZ</span></div>
+    <div class="legend-row"><div class="legend-dot" style="background:#0d9488;border-radius:2px"></div><span class="legend-label">DTE generation (Monroe, Belle River, Blue Water, Greenwood)</span></div>
+    <div class="legend-row"><div class="legend-dot" style="background:#14b8a6;transform:rotate(45deg);border-radius:1px"></div><span class="legend-label">Case in DTE territory</span></div>
+    <div class="legend-row"><div class="legend-dot" style="background:#2563eb;transform:rotate(45deg);border-radius:1px"></div><span class="legend-label">Case in Consumers Energy territory</span></div>
+    <div class="legend-row"><div class="legend-dot" style="background:#a855f7;border-radius:2px"></div><span class="legend-label">ITC / MISO queue point (dashed purple = schematic line)</span></div>
+    <div style="font-size:10px;color:#94a3b8;line-height:1.45;margin:4px 0 2px">Each popup tags items CONFIRMED or WATCH and names the source.<br>Sept 24, 2026 IRP: Detroit News says DTE's summary did not mention data centers; DTE said on its Q2 call the IRP base case includes Oracle and Google. Verify against filed text.<br>Fermi ring: Emergency planning only. No documented link to any data-center case, including Gibraltar, Frenchtown, Dundee.</div>
+    <div class="legend-sep"></div>
     <div style="font-size:10px;color:#475569;line-height:1.5">
       Click any marker for full details.<br>
       Last updated: <span id="last-updated-legend"></span>
@@ -933,7 +949,7 @@
 // this one line, by hand, whenever MUNICIPALITIES changes. Every
 // "Updated"/"Last updated" label on the page reads from this one constant —
 // nothing else needs to be touched, and nothing else should be hand-edited.
-const LAST_UPDATED = "2026-09-23"; // format: YYYY-MM-DD — set this by hand on every data update
+const LAST_UPDATED = "2026-09-24"; // format: YYYY-MM-DD — set this by hand on every data update
 
 const FIRMS = {
   "Carlisle/Wortman Associates": { color: "#E53935", short: "CWA" },
@@ -34268,6 +34284,80 @@ switchRing.bindTooltip(`<b>Switch Pyramid — Hyperscale Pressure Zone</b><br>8 
 const switchPyramidLayer = L.layerGroup([switchRing, switchFill]);
 
 // ═══════════════════════════════════════════════════════════════
+//  DTE / FERMI OVERLAY and ITC / MISO QUEUE OVERLAY (added 2026-09-24)
+//  Every item is tagged CONFIRMED or WATCH with its source named.
+//  Excludes Fermi America / "Fermi Inc." (Texas), unrelated.
+// ═══════════════════════════════════════════════════════════════
+const DTEF_POINTS = [{"id": "fermi2", "kind": "nuclear", "lat": 41.9667, "lng": -83.2667, "title": "Fermi 2 nuclear plant (DTE Electric)", "sub": "Lagoona Beach, Frenchtown Twp, Monroe County", "items": [["CONFIRMED", "Operator: DTE Electric Company. NRC docket 05000341. Operating license expires 03/20/2045.", "NRC, Fermi Unit 2 reactor page (nrc.gov/info-finder/reactors/ferm2.html)"], ["CONFIRMED", "Licensed thermal power 3,486 MWt.", "NRC, Fermi Unit 2 reactor page"], ["WATCH", "Electrical capacity not reconciled. NRC UFSAR Ch. 1 (ML16165A449): 1,217 MWe gross, approximately 1,170 MWe net. DTE Fermi 2 web page: 1.1 million kilowatts. DTE/MSP 2026 emergency booklet: more than 1,200 megawatts. No single figure is used here.", "NRC UFSAR Ch. 1 ML16165A449; DTE Fermi 2 web page; DTE/MSP 2026 emergency booklet"], ["WATCH", "Plotted at 41 deg 58'N, 83 deg 16'W (minute precision only), rounded from the UFSAR site coordinate 41 deg 57'48\"N, 83 deg 15'31\"W.", "NRC UFSAR Ch. 1 ML16165A449"], ["WATCH", "2036 uprate of about +177 MW is reported by the Detroit News (Sept 24, 2026) from DTE's new IRP. Not yet verified against the filed IRP text on MPSC e-dockets; case number not confirmed.", "Detroit News, Sept 24, 2026 (secondary). Verify: MPSC e-dockets"]]}, {"id": "monroe", "kind": "gen", "lat": 41.8928, "lng": -83.3487, "title": "Monroe Power Plant (DTE, coal)", "sub": "3500 E. Front Street, Monroe, Monroe County", "items": [["CONFIRMED", "Four coal-fired boilers, Units 1-4, combined 3,140 megawatts.", "EGLE Renewable Operating Permit renewal application B2816, DTE, Feb 16, 2024"], ["CONFIRMED", "Units 3 and 4 retire by Dec 31, 2028. Units 1 and 2 retire by Dec 31, 2032.", "MPSC order approving settlement, Case U-21193, July 26, 2023"], ["WATCH", "Whether DTE's Sept 2026 IRP changes these retirement dates. Not verified against filed text.", "MPSC e-dockets (pending)"], ["WATCH", "Marker sits on the HIFLD 345 kV switchyard point next to the plant, not an EIA plant coordinate.", "HIFLD substations (this map's Power Grid layer)"]]}, {"id": "belleriver", "kind": "gen", "lat": 42.772, "lng": -82.4952, "title": "Belle River Power Plant (DTE, coal to gas peaker)", "sub": "4505 King Road, China Township, St. Clair County", "items": [["CONFIRMED", "Conversion from a coal-fired baseload plant to a natural gas peaker approved, with $125 million in 2025-26 conversion costs preapproved. The order describes it as a 1,270 MW plant.", "MPSC order, Case U-21193, July 26, 2023"], ["CONFIRMED", "DTE's air permit application describes two coal boilers nominally rated at a combined 1,394 MW (697 MW each). This figure differs from the MPSC's 1,270 MW; not reconciled.", "EGLE PTI application APP-2024-0273, DTE, Nov 8, 2024"], ["WATCH", "Unit dates. The application schedules the Unit 1 conversion outage for early Sept to mid Dec 2025 and Unit 2 for early Sept to mid Dec 2026. Completion of either unit is not confirmed.", "EGLE PTI application APP-2024-0273"], ["WATCH", "Proximity note only: the 2024 Sabre56/Next Grid pitch to China Township was also for a King Road site (PACT FOIA review). No documented link to this plant.", "PACT FOIA review (China Township minutes, Sept 16, 2024)"], ["WATCH", "Marker sits on the HIFLD East China 345 kV switchyard point, not an EIA plant coordinate.", "HIFLD substations"]]}, {"id": "bluewater", "kind": "gen", "lat": 42.7643, "lng": -82.4746, "title": "Blue Water Energy Center (DTE, gas combined cycle)", "sub": "East China Township, St. Clair County", "items": [["CONFIRMED", "1,150 MW. Commercial operation began June 6, 2022.", "DTE newsroom release, 2022"], ["WATCH", "Exact plant coordinate not verified from EIA. Plotted at the HIFLD 'ST. CLAIR' 345 kV substation point in East China Twp as a proxy.", "HIFLD substations"]]}, {"id": "greenwood", "kind": "gen", "lat": 43.103, "lng": -82.7018, "title": "Greenwood Energy Center (DTE, gas/oil)", "sub": "7000 Kilgore Road, Avoca, St. Clair County", "items": [["CONFIRMED", "815.4 MW. Dual fuel, primary fuel natural gas, can also run on fuel oil.", "EGLE Staff Activity Report B6145, July 3, 2024"], ["WATCH", "Plotted at the HIFLD 'GREENWOOD' 345 kV substation point, not an EIA plant coordinate.", "HIFLD substations"]]}];
+const DTEF_CASES = [{"id": "vanburen", "util": "DTE", "lat": 42.2175, "lng": -83.459, "title": "Van Buren Twp: Google / Panattoni ('Project Cannoli')", "items": [["CONFIRMED", "DTE Electric application for approval of special contracts for electric service, customer Google LLC, maximum load approximately 1.0 gigawatt, Van Buren Twp.", "MPSC e-dockets, Case U-22058 (DTE application)"], ["CONFIRMED", "ITC: new 345 kV Cannoli switching station and two 345 kV feeds tapping the Brownstown-Wayne #1 and #2 345 kV lines. First feed late 2027, second late 2028; switching station Q1-Q3 2028.", "ITC Holdings project page, Project Cannoli"], ["WATCH", "MPSC decision on U-22058. A Sept 10, 2026 vote was expected (Planet Detroit, Sept 9, 2026); no order located yet.", "MPSC e-dockets U-22058 (check for final order)"]]}, {"id": "saline", "util": "DTE", "lat": 42.168, "lng": -83.738, "title": "Saline Twp: Oracle ('The Barn')", "items": [["CONFIRMED", "MPSC approved DTE special contracts Dec 18, 2025 for Green Chile Ventures LLC (Oracle subsidiary), 1,383 MW, with conditions: 19-year minimum term, 80% minimum billing demand, DTE bears unrecovered costs.", "MPSC news release, Dec 18, 2025, Case U-21990"], ["WATCH", "Court of Appeals challenge to the contracts (AG Nessel, Sierra Club, NRDC, MEC). Status tracked on the Saline municipality marker.", "This map's Saline Twp record"]]}, {"id": "ypsi", "util": "DTE", "lat": 42.2225, "lng": -83.581, "title": "Ypsilanti Twp: University of Michigan / Los Alamos computing center", "items": [["CONFIRMED", "Six-month moratorium on large electric utility structures adopted Aug 18, 2026 (Resolution 2026-21). The original 20-acre site is proposed to become a DTE substation and yard about 500 feet from low- to moderate-income housing.", "Ypsilanti Township, Data Center Information page"], ["CONFIRMED", "YCUA 12-month moratorium on water and sewer service to data centers, voted April 22 (Resolution 26-08).", "Ypsilanti Township, Data Center Information page"], ["WATCH", "The ~110 MW substation figure comes from WEMU (Aug 19, 2026), not from the township or DTE.", "WEMU, Aug 19, 2026 (secondary)"]]}, {"id": "allenpark", "util": "DTE", "lat": 42.2285, "lng": -83.2045, "title": "Allen Park: Solstice Data (26 MW)", "items": [["CONFIRMED", "DTE 'Construction Proposal' (Method of Service) dated Dec 10, 2025, from DeMarco Carter, DTE Marketing Program Manager: approximately 26 MVA primary service via three 13.2 kV circuits (FLMREXXXX-NEW, FLMRE8337, FLMRE8376) plus FLMRE8355 as backup at DTE expense. Total cost without CIAC allowance $629,050.49; estimated 12-month construction.", "FOIA production: PACT/foia/Solstice Files CWA/Submittal for 3.5.26 PC Review/Construction Proposal - Solstice Data - Allen Park Executed.pdf"], ["CONFIRMED", "The same proposal states it is 'valid until March 10, 2026' and that timeframes 'are not specific dates or any promise of service.' The acceptance block shows Roger Ryan, Chief Commercial Officer, Solstice Data LLC, dated 14 January 2026.", "FOIA production: PACT/foia/Solstice Files CWA/Submittal for 3.5.26 PC Review/Construction Proposal - Solstice Data - Allen Park Executed.pdf"], ["WATCH", "The DTE proposal is addressed to 6900 Enterprise Dr.; the site plan application is for 7500 Enterprise Dr. Unexplained in the record.", "FOIA production: same file; CWA site plan reviews"], ["WATCH", "The 'Filmore substation' name and the claim that its distribution capacity is 'currently stranded/unused' are Solstice's own words (David Gibson email, Jan 16, 2026). The DTE proposal names only circuit IDs. No DTE service commitment letter, DTE countersignature, or interconnection agreement was found in the FOIA production, and no renewal after the March 10, 2026 expiry.", "FOIA production: mbaker/DTE Rate & Reliability Explanation .pdf; full-production text and OCR sweep, Sept 24, 2026"]]}, {"id": "solon", "util": "Consumers", "lat": 43.245, "lng": -85.595, "title": "Solon Twp (Kent Co.): Venerly LLC ('Project Peninsula')", "items": [["CONFIRMED", "Consumers Energy territory case, per the PACT developer tracker (Named Developer Cases).", "PACT_Data_Center_Developer_Tracker.xlsx"], ["WATCH", "Consumers disclosed a 1 GW data-center agreement on its Q2 2025 earnings call (Aug 5, 2025) without naming the customer or site. The link to Solon is reported as 'believed tied,' not confirmed by Consumers.", "Consumers Energy Q2 2025 earnings call (as reported by DCD, Aug 2025)"]]}, {"id": "gaines", "util": "Consumers", "lat": 42.8164, "lng": -85.6172, "title": "Gaines Twp (Kent Co.): Microsoft rezoning", "items": [["WATCH", "Consumers Energy coordination on electrical capacity appears among the proposed rezoning conditions (this map's Gaines Twp record), and WWMT reported Consumers commenting on the project. No Consumers Energy primary document located, so utility role stays WATCH.", "This map's Gaines Twp record; WWMT (secondary)"]]}];
+const DTEF_RING = {"center": [41.9667, -83.2667], "radius_m": 16093, "items": [["CONFIRMED", "Monroe County: Ash, Berlin, Frenchtown, and Monroe Townships, the southeastern corner of Exeter Township, and the eastern portion of Raisinville Township, as well as the City of Monroe, Carleton Village, South Rockwood Village and Estral Beach Village.", "'Emergency Preparedness For Monroe and Wayne Counties 2026' (DTE with Michigan State Police EMHSD, Monroe County EM, Wayne County EM)"], ["CONFIRMED", "Wayne County: Gibraltar, Flat Rock and Rockwood, and part of Brownstown Township.", "Same booklet"], ["WATCH", "The circle is an approximate 10-mile radius. The official EPZ follows the jurisdiction lines listed above, not this circle.", "Map drawing note"]], "foot": "Emergency planning only. No documented link to any data-center case, including Gibraltar, Frenchtown, Dundee."};
+const ITC_POINTS = [{"id": "majestic", "lat": 42.3779, "lng": -83.9808, "title": "Majestic substation (ITC), Dexter Twp", "sub": "Madden Road, Dexter Township, Washtenaw County", "items": [["CONFIRMED", "HIFLD lists MAJESTIC, 345/138 kV, 8 lines, Dexter.", "HIFLD substations (this map's Power Grid layer)"], ["CONFIRMED", "ITC reconductored transmission lines running east of the Majestic Substation on Madden Road, about 8 of 32 miles in Dexter Township, by helicopter. Sustained work Dec 13, 2024 to Jan 31, 2025. Stated purpose: resilience to extreme weather and more capacity for future demand.", "Dexter Township notice to residents re: ITC transmission line upgrades"], ["WATCH", "Voltage (345 kV) is not stated in the township notice. The Wayne County endpoint ('Wayne Station') and Q4 2025 completion come from The Sun Times News (Oct 29, 2024), not ITC.", "The Sun Times News, Oct 29, 2024 (secondary)"], ["WATCH", "MISO queue at the Majestic-Lemoyne 345 kV line tap (Washtenaw): J1062, 200 MW solar, Invenergy, COD listed June 2023 (stale); S1067 ('Surplus; J1062'), 75 MW battery, queued Oct 2, 2024, COD Sept 30, 2027, shown Active. Tap location not published, so no separate marker.", "Cleanview and interconnection.fyi (aggregators of the MISO GI queue). MISO queue not directly reachable this session"]]}, {"id": "milan", "lat": 42.1113, "lng": -83.6532, "title": "Milan substation (ITC)", "sub": "Milan, Washtenaw County", "items": [["CONFIRMED", "HIFLD lists MILAN, 345/120 kV, 8 lines.", "HIFLD substations"], ["WATCH", "Southern end of the Majestic-Milan 345 kV line named as the J3923 point of interconnection.", "interconnection.fyi (MISO queue aggregator)"]]}, {"id": "j3923", "lat": 42.29, "lng": -83.94, "title": "MISO J3923: proposed 1.4 GW gas plant, Lima Twp (withdrawn)", "sub": "Lima Township, Washtenaw County (approximate, not the parcel)", "items": [["WATCH", "MISO J3923 'Majestic-Milan 345 kV Line': gas, 1,414 MW, Washtenaw County, TO ITC Transmission, proposed COD March 1, 2030. Aggregator lists queue date Feb 28, 2025 and status 'Active In Queue'; Michigan Advance says MISO filings were dated Feb 28, 2026. Date conflict not resolved.", "interconnection.fyi; Michigan Advance, July 7, 2026. MISO queue not directly reachable this session"], ["WATCH", "Consumers Energy was the proposer and announced withdrawal July 1, 2026 ('withdraw our application to study the costs'), per its statement quoted by Michigan Advance. MISO withdrawal status not verified.", "Michigan Advance, July 7, 2026 (quoting Consumers Energy)"], ["WATCH", "Site described as 120 acres off South Lima Center Road. Marker is township-level only.", "Michigan Advance, July 7, 2026"]]}, {"id": "coventry", "lat": 42.3531, "lng": -83.6231, "title": "Coventry to Hager 120 kV rebuild (ITC)", "sub": "Washtenaw and Wayne counties, including Northville Twp", "items": [["CONFIRMED", "6.5 miles of Optical Ground Wire (OPGW) from Coventry to Nitro substation, about 6.4 miles of 120 kV rebuild along Six Mile Road (wood to steel poles), plus new 120 kV segments via Nitro, Hines and Duvall. Construction Q4 2024 to Q4 2025.", "ITC Holdings project page, Coventry to Hager 120kV Rebuild"], ["WATCH", "OPGW carries fiber for protection and communications. ITC does not describe this as a SCADA project, and no primary source was found for any other SCADA upgrade in Washtenaw or Wayne. Hager, Nitro, Hines, Duvall locations not plotted.", "ITC project page; search of ITC, DTE, MPSC, FOIA production (0 SCADA hits)"]]}, {"id": "brownstown", "lat": 42.116, "lng": -83.2488, "title": "Brownstown substation (ITC)", "sub": "Brownstown Twp / Trenton area, Wayne County", "items": [["CONFIRMED", "HIFLD lists BROWNSTOWN, 345/120 kV, 17 lines. ITC's Project Cannoli taps the Brownstown-Wayne #1 and #2 345 kV lines.", "HIFLD substations; ITC Holdings Project Cannoli page"], ["CONFIRMED", "Inside the Fermi 2 10-mile EPZ list only as 'part of Brownstown Township'. Emergency planning only.", "DTE/MSP 2026 emergency booklet"]]}, {"id": "wayne", "lat": 42.3101, "lng": -83.4652, "title": "Wayne substation (ITC), Canton Twp", "sub": "Canton Township, Wayne County", "items": [["CONFIRMED", "HIFLD lists WAYNE, 345 kV, 15 lines. Northern end of the Brownstown-Wayne 345 kV lines tapped by Project Cannoli.", "HIFLD substations; ITC Holdings Project Cannoli page"], ["WATCH", "Named as the eastern end of the 32-mile Majestic reconductoring by The Sun Times News, not by ITC or the township.", "The Sun Times News, Oct 29, 2024 (secondary)"]]}];
+const ITC_LINES = [{"pts": [[42.3779, -83.9808], [42.3101, -83.4652]], "tag": "WATCH", "label": "Majestic to Wayne reconductoring (32 mi, ITC)", "note": "Schematic straight line between HIFLD points, not the actual route. Endpoint per The Sun Times News."}, {"pts": [[42.3779, -83.9808], [42.1113, -83.6532]], "tag": "WATCH", "label": "Majestic-Milan 345 kV line (J3923 POI)", "note": "Schematic straight line between HIFLD points, not the actual route."}, {"pts": [[42.116, -83.2488], [42.3101, -83.4652]], "tag": "CONFIRMED", "label": "Brownstown-Wayne #1 and #2 345 kV (tapped by Project Cannoli)", "note": "Schematic straight line between HIFLD points, not the actual route. Line names per ITC Project Cannoli page."}];
+
+function dtefEsc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+function dtefItemsHtml(items) {
+  return items.map(it => {
+    const tag = it[0];
+    const col = tag === 'CONFIRMED' ? '#4ade80' : '#fbbf24';
+    return `<div style="margin:5px 0;"><span style="color:${col};font-weight:700;font-size:10px;letter-spacing:.04em">${tag}</span> ${dtefEsc(it[1])}<br><span style="color:#94a3b8;font-size:10.5px">Source: ${dtefEsc(it[2])}</span></div>`;
+  }).join('');
+}
+function dtefPopup(title, sub, items, foot) {
+  return `<div style="max-width:330px;font-size:12px;line-height:1.4"><b>${dtefEsc(title)}</b>` +
+    (sub ? `<br><span style="color:#94a3b8">${dtefEsc(sub)}</span>` : '') +
+    dtefItemsHtml(items) +
+    (foot ? `<div style="color:#fca5a5;font-size:11px;margin-top:6px;border-top:1px solid #334155;padding-top:4px">${dtefEsc(foot)}</div>` : '') +
+    `</div>`;
+}
+function dtefIcon(html, size) {
+  return L.divIcon({ className: 'dtef-icon', html: html, iconSize: [size, size], iconAnchor: [size / 2, size / 2], popupAnchor: [0, -size / 2] });
+}
+
+const dteFermiLayer = L.layerGroup();
+const dtefRing = L.circle(DTEF_RING.center, {
+  radius: DTEF_RING.radius_m, color: '#facc15', weight: 2, opacity: 0.85, dashArray: '8, 6', fillColor: '#facc15', fillOpacity: 0.04
+});
+dtefRing.bindPopup(dtefPopup('Fermi 2 emergency planning zone (approx. 10-mile ring)', 'Jurisdictions named in the official booklet', DTEF_RING.items, DTEF_RING.foot), { className: 'dark-tooltip', maxWidth: 360 });
+dtefRing.addTo(dteFermiLayer);
+
+DTEF_POINTS.forEach(p => {
+  const html = p.kind === 'nuclear'
+    ? '<div style="width:26px;height:26px;border-radius:50%;background:#facc15;border:2px solid #111827;display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1;color:#111827">☢</div>'
+    : '<div style="width:16px;height:16px;border-radius:3px;background:#0d9488;border:2px solid #f8fafc"></div>';
+  const mk = L.marker([p.lat, p.lng], { icon: dtefIcon(html, p.kind === 'nuclear' ? 26 : 16), zIndexOffset: 900 });
+  mk.bindPopup(dtefPopup(p.title, p.sub, p.items), { className: 'dark-tooltip', maxWidth: 360 });
+  mk.bindTooltip(p.title, { direction: 'top', className: 'dark-tooltip' });
+  mk.addTo(dteFermiLayer);
+});
+
+DTEF_CASES.forEach(c => {
+  const col = c.util === 'Consumers' ? '#2563eb' : '#14b8a6';
+  const html = `<div style="width:13px;height:13px;background:${col};border:2px solid #f8fafc;transform:rotate(45deg)"></div>`;
+  const mk = L.marker([c.lat, c.lng], { icon: dtefIcon(html, 16), zIndexOffset: 800 });
+  const sub = c.util === 'Consumers' ? 'Utility: Consumers Energy territory' : 'Utility: DTE Electric';
+  mk.bindPopup(dtefPopup(c.title, sub, c.items), { className: 'dark-tooltip', maxWidth: 360 });
+  mk.bindTooltip(c.title, { direction: 'top', className: 'dark-tooltip' });
+  mk.addTo(dteFermiLayer);
+});
+
+const itcMisoLayer = L.layerGroup();
+ITC_LINES.forEach(l => {
+  const pl = L.polyline(l.pts, { color: '#a855f7', weight: 3, opacity: 0.8, dashArray: '6, 6' });
+  pl.bindPopup(dtefPopup(l.label, '', [[l.tag, l.label, 'see endpoint popups']], l.note), { className: 'dark-tooltip', maxWidth: 340 });
+  pl.addTo(itcMisoLayer);
+});
+ITC_POINTS.forEach(p => {
+  const html = '<div style="width:14px;height:14px;border-radius:3px;background:#a855f7;border:2px solid #f8fafc"></div>';
+  const mk = L.marker([p.lat, p.lng], { icon: dtefIcon(html, 14), zIndexOffset: 850 });
+  mk.bindPopup(dtefPopup(p.title, p.sub, p.items), { className: 'dark-tooltip', maxWidth: 360 });
+  mk.bindTooltip(p.title, { direction: 'top', className: 'dark-tooltip' });
+  mk.addTo(itcMisoLayer);
+});
+
+
+// ═══════════════════════════════════════════════════════════════
 //  HELPERS
 // ═══════════════════════════════════════════════════════════════
 
@@ -34890,6 +34980,25 @@ document.getElementById('toggle-switch').addEventListener('change', e => {
     map.flyTo([42.790, -85.479], 10, { duration: 1.2 });
   } else {
     switchPyramidLayer.remove();
+  }
+});
+
+// DTE / Fermi and ITC / MISO overlays
+document.getElementById('toggle-dte-fermi').addEventListener('change', e => {
+  if (e.target.checked) {
+    dteFermiLayer.addTo(map);
+    map.flyTo([42.25, -83.3], 8, { duration: 1.2 });
+  } else {
+    dteFermiLayer.remove();
+  }
+});
+
+document.getElementById('toggle-itc-miso').addEventListener('change', e => {
+  if (e.target.checked) {
+    itcMisoLayer.addTo(map);
+    map.flyTo([42.24, -83.6], 9, { duration: 1.2 });
+  } else {
+    itcMisoLayer.remove();
   }
 });
 
