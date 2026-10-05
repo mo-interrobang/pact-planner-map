@@ -473,12 +473,13 @@ body {
 .leaflet-popup-content { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; line-height: 1.45; }
 .oak-tt { background: rgba(15,23,42,0.85); border: 1px solid #475569; color: #e2e8f0; font-size: 10px; font-weight: 700; border-radius: 4px; padding: 1px 5px; box-shadow: none; }
 .oak-tt::before { display: none; }
+.site-nav{font-size:12.5px;margin-bottom:10px;display:flex;flex-wrap:wrap;gap:6px 14px}.site-nav a{color:#67e8f9;text-decoration:none;font-weight:600}.site-nav a:hover{text-decoration:underline}.site-nav .here{color:var(--text-3)}
 </style>
 </head>
 <body>
 
 <div class="page-header">
-  <div style="font-size:11.5px;margin-bottom:8px;"><a href="index.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">← Planner Map</a><span style="color:var(--text-3);margin:0 8px;">|</span><a href="timeline.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">CWA Pattern Timeline</a><span style="color:var(--text-3);margin:0 8px;">|</span><span style="color:var(--text-3);">Oakland County Watch (this page)</span><span style="color:var(--text-3);margin:0 8px;">|</span><a href="cassin.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">Steve Cassin Watch</a><span style="color:var(--text-3);margin:0 8px;">|</span><a href="cross-municipality-patterns.html" style="color:#67e8f9;text-decoration:none;font-weight:600;">Cross-Municipality Patterns</a></div>
+  <nav class="site-nav" aria-label="Site"><a href="index.html">Planner Map</a><a class="here" aria-current="page" href="oakland.html">Oakland County</a><a href="timeline.html">CWA Pattern Timeline</a><a href="cross-municipality-patterns.html">Metro Detroit Connections</a><a href="developers.html">Developer Tracker</a></nav>
   <h1>Oakland County — Data Center Watch <span class="cwa-badge" style="background:#34d399;">PROVEN vs UNPROVEN</span></h1>
   <p class="subtitle">A county-focused companion to the statewide map: what is documented (green), what is circulating unverified (red), when each fight moved, and where every municipality sits. Hover timeline events for detail — click a dot to pin the card and follow its source link.</p>
   <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-10-05 by P.A.C.T. from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
@@ -3546,7 +3547,7 @@ const OAKLAND = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "UPDATED 2026-08-04: Board unanimously approved a 1-year moratorium on data center development (Resolution 424-26) on/around May 9, 2026, requested by the Planning Commission to allow time to draft an ordinance. Local news (The Citizen) directly names 'Carlisle Wortman' as having presented to the township on data-center noise and electrical/grid impacts — a documented instance of CWA shaping the township's policy response. A follow-on 'Data Center Definition Ordinance' (interim, defines the use for enforcement) was posted June 2026; both PDFs are scanned/non-OCR and could not be read for CWA-template language this pass. No full HRDF-style standards ordinance (materials %, PUE, dBA, lot size, setbacks, renewable %) is public yet — moratorium runs to ~May 2027. See PACT-Vault Documents/CWA-Ordinance-Pattern-Comparison.",
-        notes: "CWA master plan client. In-house Director: Jason Wilton, AICP (jwilton@brandonfire.us, 248-627-4916). Brandon Township routes planning/building through fire department domain. | COORDINATE CORRECTED 2026-09-11 (statewide close-pair audit, see reference_map_coordinate_corrections.md): moved to Wikipedia infobox township centroid.",
+        notes: "CWA master plan client. In-house Director: Jason Wilton, AICP (jwilton@brandonfire.us, 248-627-4916). Brandon Township routes planning/building through fire department domain. | COORDINATE CORRECTED 2026-09-11 (statewide close-pair audit): moved to Wikipedia infobox township centroid.",
         work_history: null,
         sources: ["CWA blog — cwaplan.com/blog/tag/master+plan", "https://thecitizenonline.com/articles/news/township-oks-temporary-data-center-moratorium/", "https://brandontownship.us/wp-content/uploads/2026/05/Resolution-424-26-Moratorium-on-Data-Centers.pdf", "https://brandontownship.us/wp-content/uploads/2026/06/Data-Center-Definition-Ordinance.pdf"]
       },
@@ -4374,7 +4375,7 @@ const OAKLAND = [
         cwa_alumni: false,
         data_center_case: true,
         data_center_notes: "CONFIRMED 2026-09-13 (Oakland County completeness research, NEW CWA client discovery): Carlisle/Wortman Associates is the Township's current planning consultant. The Township Board approved a 6-month moratorium on new data center developments July 21, 2026, citing Springfield Township's roughly $6B data center proposal as the regional catalyst. No specific Independence Township data center project has been identified; the moratorium is precautionary.",
-        notes: "independencetownship.com appears JS-rendered; no server-side content retrievable, but Carlisle/Wortman Associates was confirmed as current Township Planner via other sources 2026-09-13 (Oakland County completeness research). | COORDINATE CORRECTED 2026-09-11 (statewide close-pair audit, see reference_map_coordinate_corrections.md): moved to Wikipedia infobox township centroid.",
+        notes: "independencetownship.com appears JS-rendered; no server-side content retrievable, but Carlisle/Wortman Associates was confirmed as current Township Planner via other sources 2026-09-13 (Oakland County completeness research). | COORDINATE CORRECTED 2026-09-11 (statewide close-pair audit): moved to Wikipedia infobox township centroid.",
         work_history: null,
         sources: ["https://www.indtwp.com"]
       },
@@ -4454,7 +4455,7 @@ const OAKLAND = [
         cwa_alumni: false,
         data_center_case: false,
         data_center_notes: null,
-        notes: "Department also references an unnamed 'Township Planning Consultant' who attends developer pre-application meetings. (Firm listed as: In-House (Township Staff).) | COORDINATE CORRECTED 2026-09-11 (statewide close-pair audit, see reference_map_coordinate_corrections.md): moved to Wikipedia infobox township centroid.",
+        notes: "Department also references an unnamed 'Township Planning Consultant' who attends developer pre-application meetings. (Firm listed as: In-House (Township Staff).) | COORDINATE CORRECTED 2026-09-11 (statewide close-pair audit): moved to Wikipedia infobox township centroid.",
         work_history: null,
         sources: ["https://www.oriontownship.org/departments/planning___zoning/index.php"]
       },
