@@ -482,7 +482,7 @@ body {
   <nav class="site-nav" aria-label="Site"><a href="index.html">Planner Map</a><a class="here" aria-current="page" href="oakland.html">Oakland County</a><a href="timeline.html">CWA Pattern Timeline</a><a href="cross-municipality-patterns.html">Metro Detroit Connections</a><a href="developers.html">Developer Tracker</a></nav>
   <h1>Oakland County — Data Center Watch <span class="cwa-badge" style="background:#34d399;">PROVEN vs UNPROVEN</span></h1>
   <p class="subtitle">A county-focused companion to the statewide map: what is documented (green), what is circulating unverified (red), when each fight moved, and where every municipality sits. Hover timeline events for detail — click a dot to pin the card and follow its source link.</p>
-  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-10-05 by P.A.C.T. from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
+  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-10-06 by P.A.C.T. from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
 </div>
 </div>
 
@@ -980,6 +980,13 @@ const COMMUNITIES = [
         label: "Signature collection begins",
         detail: "Organizers begin collecting ~9,000 signatures from District 1 (parts of Troy, Royal Oak, Birmingham, Clawson), targeting a November 2026 recall election.",
         source: "https://www.wxyz.com/news/region/oakland-county/recall-organizers-targeting-oakland-countys-dave-woodward-to-start-collecting-signatures-july-25", sourceLabel: "WXYZ, Jul 2026"
+      },
+      {
+        date: "2026-10-05", type: "surveillance", isNew: true,
+        label: "Sheriff's Office: ex-employee used Flock for immigration searches",
+        detail: "The Detroit News reported Oct 5, 2026 that the Oakland County Sheriff's Office says a former employee used the Flock ALPR system for immigration-related searches. Earlier CBS Detroit coverage (Oct 2, 2026) said the office was investigating a former deputy for unauthorized Flock access made after the person was no longer employed by the county, with possible criminal charges under review. A separate Detroit News report on Oct 6, 2026 says five Michigan police agencies used Flock readers for immigration searches; which agencies were named could not be confirmed (paywalled), so do not assume Oakland County agencies beyond the Sheriff's Office are among them. Relevant to the April 2026 Flock drone vote and the recall's ICE-cooperation concerns above.",
+        source: "https://www.detroitnews.com/story/news/local/oakland-county/2026/10/05/ex-oakland-sheriffs-employee-used-flock-for-immigration-searches-department-says/92103293007/", sourceLabel: "Detroit News, Oct 5, 2026; CBS Detroit, Oct 2, 2026",
+        alertNote: "FLOCK/ICE: Sheriff's Office says a former employee used Flock for immigration searches (Detroit News, Oct 5). Investigation ongoing; possible criminal charges. Statewide, Detroit News reports 5 MI agencies ran Flock immigration searches (Oct 6; agencies unconfirmed here)."
       },
       {
         date: "2026-11-03", type: "future",
@@ -2118,6 +2125,13 @@ const COMMUNITIES = [
         label: "Named among communities that cancelled Flock Safety contract",
         detail: "Michigan Public reports Milford is among metro Detroit communities (with Clawson, Ferndale, Westland) that have cancelled a Flock Safety ALPR camera contract, in coverage tied to Sumpter Township's own cancellation. An unverified social-media post described a unanimous council vote cancelling a 5-camera contract, with a separate 10-camera contract renewal expected in August 2026 — treat that detail as unconfirmed.",
         source: "https://www.michiganpublic.org/politics-government/2026-08-19/communities-across-michigan-move-to-ditch-flock-cameras", sourceLabel: "Michigan Public, Aug 19, 2026"
+      },
+      {
+        date: "2026-10-05", type: "surveillance", isNew: true,
+        label: "Village Council unanimously ends both Flock Safety contracts",
+        detail: "At its Oct 5, 2026 meeting the Village Council voted unanimously to end both of the village's Flock Safety ALPR contracts: a 5-camera contract ($18,250/yr) and a 10-camera contract ($36,500/yr). The police chief requested the termination, citing poor customer service from Flock rather than objections to the technology, and said he would likely seek a contract with another plate-reader vendor such as Axon or Motorola. Residents who spoke opposed Flock on privacy grounds. This confirms and supersedes the unverified Aug 2026 social-media detail in the entry above (5-camera and 10-camera contracts). Detroit News headline: 'Another Metro Detroit community says no to Flock cameras.'",
+        source: "https://www.govtech.com/public-safety/community-near-detroit-rejects-use-of-flock-safety-cameras", sourceLabel: "Government Technology (via Detroit News), Oct 6, 2026",
+        alertNote: "FLOCK/ALPR: Village Council voted unanimously Oct 5, 2026 to end both Flock contracts (5 + 10 cameras). Chief cited Flock's customer service, not the technology, and may switch to Axon or Motorola plate readers, so ALPR use may continue under a different vendor."
       },
       {
         date: "2026-09-21", type: "meeting", isNew: true,
