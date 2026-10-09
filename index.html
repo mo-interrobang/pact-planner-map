@@ -667,7 +667,10 @@
       cursor: pointer;
     }
     #disclaimer-close:hover { background: #1e40af; }
-  </style>
+  .site-sign-icon { background: none; border: none; filter: drop-shadow(0 1px 2px rgba(0,0,0,.6)); }
+.site-tooltip { min-width: 280px; max-width: 360px; white-space: normal; }
+.site-legend-icon { display:inline-block; width:12px; height:9px; border:1px solid #fff; border-radius:1px; vertical-align:middle; margin-right:3px; }
+</style>
 </head>
 <body>
 
@@ -857,6 +860,28 @@
         </div>
       </div>
 
+      <!-- Section 2b: Data Center Sites (listings + context projects) -->
+      <div class="layer-section">
+        <div class="layer-section-header" data-section="dc-sites">
+          <span class="layer-section-title">🪧 Data Center Sites</span>
+          <span class="layer-section-arrow" id="arrow-dc-sites">▾</span>
+        </div>
+        <div class="layer-section-body" id="body-dc-sites">
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-site-sale" checked />
+            <span class="layer-row-label" style="color:#f87171"><span class="site-legend-icon" style="background:#dc2626"></span> For sale, marketed for data centers (6)</span>
+          </label>
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-site-former" checked />
+            <span class="layer-row-label" style="color:#fbbf24"><span class="site-legend-icon" style="background:#d97706"></span> Former data centers for sale (4)</span>
+          </label>
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-site-project" checked />
+            <span class="layer-row-label" style="color:#60a5fa"><span class="site-legend-icon" style="background:#2563eb"></span> Proposed / active projects (10)</span>
+          </label>
+        </div>
+      </div>
+
       <!-- Section 3: Risk Facilities -->
       <div class="layer-section">
         <div class="layer-section-header" data-section="risk-facilities">
@@ -947,7 +972,7 @@
 // this one line, by hand, whenever MUNICIPALITIES changes. Every
 // "Updated"/"Last updated" label on the page reads from this one constant —
 // nothing else needs to be touched, and nothing else should be hand-edited.
-const LAST_UPDATED = "2026-10-06"; // format: YYYY-MM-DD — set this by hand on every data update
+const LAST_UPDATED = "2026-10-09"; // format: YYYY-MM-DD — set this by hand on every data update
 
 const FIRMS = {
   "Carlisle/Wortman Associates": { color: "#E53935", short: "CWA" },
@@ -34357,6 +34382,63 @@ ITC_POINTS.forEach(p => {
   mk.addTo(itcMisoLayer);
 });
 
+// ═══════════════════════════════════════════════════════════════
+//  DATA CENTER SITES: individual properties, kept on their own layer (separate from municipality dots)
+//  Source: Michigan_Data_Center_Listings_Map sheet (Listings + Context Projects tabs), seen Oct 8, 2026.
+//  Street addresses geocoded Oct 9, 2026 (US Census / ArcGIS); see each popup for location accuracy.
+// ═══════════════════════════════════════════════════════════════
+const SITE_LISTINGS = [{"id": "L01", "name": "Allen Park Tech Center, Enterprise Dr (Southfield Rd & I-94)", "city": "Allen Park", "county": "Wayne", "type": "Land (industrial)", "marketed": "Data Center site available for sale. 7 and 17-acre lots described as ideal for data center opportunities.", "size": "25.29 ac total; lots of 7.43 and 17.85 ac", "price": "$8,000,000 on Crexi ($450,000/ac). A CommercialCafe copy from Jan 2025 showed $150,000/ac", "power": "Up to 50 MVA from DTE (LoopNet/Showcase wording)", "broker": "Crexi, LoopNet, Showcase, CommercialCafe", "date": "Crexi: listed Oct 9, 2022; last updated Nov 7, 2025 in a cached copy. A newer edit (about 150 days before Oct 8, 2026) was also seen.", "lat": 42.279916, "lng": -83.199466, "acc": "Street-level (Enterprise Dr centroid, ArcGIS geocoder; individual lots not pinned)", "links": ["https://www.crexi.com/properties/923855/michigan-enterprise-drive", "https://www.loopnet.com/Listing/Enterprise-Drive-Allen-Park-MI/26098956/"], "verify": "Compare parcel IDs to 7500 Enterprise Dr (Solstice site). Find owner and broker. Ask DTE what was actually committed. Explain the price gap.", "seen": "Oct 8, 2026", "cat": "sale"}, {"id": "L02", "name": "2700 S Saginaw Rd, High-Power Advanced Manufacturing Campus", "city": "Midland", "county": "Midland", "type": "Industrial building + land", "marketed": "Listing text names data center or high-performance computing among suitable uses. Former battery plant with cleanrooms.", "size": "452,084 SF on 56.22 ac", "price": "Price on request (also on a Bid It Up auction page)", "power": "14 MW on site, expandable to 28 MW", "broker": "LoopNet (Canada/FR mirrors), Cityfeet, Bid It Up", "date": "Trade press coverage Mar 30, 2026", "lat": 43.608167, "lng": -84.208371, "acc": "Address-level (US Census geocoder)", "links": ["https://www.loopnet.ca/Listing/2700-S-Saginaw-Rd-Midland-MI/38792735"], "verify": "Not marketed mainly as a data center. Check whether the auction ended and who bought.", "seen": "Oct 8, 2026", "cat": "sale"}, {"id": "L03", "name": "Project Full Circle, Harbor Farmz, 2839 Full Circle Dr", "city": "Kalamazoo", "county": "Kalamazoo", "type": "Former cannabis facility", "marketed": "Offered for data center development. Listing says it has full zoning approval to be used as or developed into a data center.", "size": "32,850 SF on 4 ac", "price": "Not disclosed", "power": "1 MW now, 1.5 MW within a year, up to 15 MW within 36 months", "broker": "NAI Global; Wolverine Consulting advising", "date": "DCD article June 11, 2026", "lat": 42.262625, "lng": -85.541446, "acc": "Address-level (ArcGIS geocoder)", "links": ["https://www.datacenterdynamics.com/en/news/owners-of-indoor-cannabis-farm-in-michigan-offer-site-up-for-data-center-use/", "https://gandernewsroom.com/2026/03/02/how-many-ai-data-centers-are-planned-in-michigan-we-counted"], "verify": "City says any buyer must bring a new site plan to Planning Commission. Check the zoning claim against city records.", "seen": "Oct 8, 2026", "cat": "sale"}, {"id": "L04", "name": "3939 68th St SE and 6739 East Paris Ave (2 land parcels)", "city": "Caledonia", "county": "Kent", "type": "Land", "marketed": "Appears on LoopNet's Michigan data centers for sale category page.", "size": "Not seen", "price": "$2,495,000", "power": "Not seen", "broker": "LoopNet category page", "date": "Cached category page, date unknown", "lat": 42.841137, "lng": -85.567651, "acc": "Address-level (US Census geocoder, 3939 68th St SE; 6739 E Paris Ave geocodes ~200 m away)", "links": ["https://www.loopnet.com/search/listings/data-centers/mi/for-sale/"], "verify": "Open the LoopNet category page for the full listing, acreage, and broker. Check if still available.", "seen": "Oct 8, 2026", "cat": "sale"}, {"id": "L05", "name": "1350 Stephenson Hwy", "city": "Troy", "county": "Oakland", "type": "Flex building", "marketed": "Listed under LoopNet data centers for sale. Built 1980.", "size": "43,500 SF", "price": "$3,850,000", "power": "Not seen", "broker": "LoopNet category page", "date": "Cached category page, date unknown", "lat": 42.546531, "lng": -83.120289, "acc": "Address-level (US Census geocoder)", "links": ["https://www.loopnet.com/search/listings/data-centers/mi/for-sale/"], "verify": "Confirm current status and what data center infrastructure exists.", "seen": "Oct 8, 2026", "cat": "sale"}, {"id": "L06", "name": "21420 Melrose Ave, Building C", "city": "Southfield", "county": "Oakland", "type": "Industrial building", "marketed": "Listed under LoopNet data centers for sale. Built 1986.", "size": "15,956 SF", "price": "$1,196,700", "power": "Not seen", "broker": "LoopNet category page", "date": "Cached category page, date unknown", "lat": 42.448457, "lng": -83.253829, "acc": "Address-level (ArcGIS geocoder)", "links": ["https://www.loopnet.com/search/listings/data-centers/mi/for-sale/"], "verify": "Liquid Web has a data center on Melrose Ave in Southfield. Check relation.", "seen": "Oct 8, 2026", "cat": "sale"}, {"id": "L07", "name": "1112 Union St (former MSP data center)", "city": "Monroe", "county": "Monroe", "type": "Office / former data center", "marketed": "Former data center with redundant cooling, backup generator, fiber from AT&T and Charter.", "size": "5,420 to 5,430 SF on 1 ac", "price": "$399,000", "power": "DTE service (no MW figure)", "broker": "Signature Associates; LoopNet", "date": "DCD article Jan 24, 2024", "lat": 41.91033, "lng": -83.414942, "acc": "Address-level (US Census geocoder)", "links": ["https://www.datacenterdynamics.com/en/news/data-centers-up-for-sale-in-michigan-and-colorado/", "https://www.loopnet.com/search/listings/data-centers/mi/for-sale/"], "verify": "Small site. May have sold since 2024.", "seen": "Oct 8, 2026", "cat": "former"}, {"id": "L08", "name": "1872 Enterprise Dr (former HP spin-off data center)", "city": "Rochester Hills", "county": "Oakland", "type": "Former data center", "marketed": "Data center occupied by an HP spin-off seeking a new landlord or buyer.", "size": "Not seen", "price": "$7,300,000", "power": "Not seen", "broker": "AMC Real Estate Investment Services (LoopNet and Crexi)", "date": "DCD article, date not confirmed", "lat": 42.641585, "lng": -83.168091, "acc": "Address-level (US Census geocoder)", "links": ["https://www.datacenterdynamics.com/en/news/former-ibm-hp-ford-xerox-data-centers-for-sale-around-michigan-and-kentucky/"], "verify": "Confirm current status and the date of the DCD article.", "seen": "Oct 8, 2026", "cat": "former"}, {"id": "L09", "name": "5225 Auto Club Dr (former Xerox facility, office and data center)", "city": "Dearborn", "county": "Wayne", "type": "Office / former data center", "marketed": "Priced 'well below replacement cost.'", "size": "Not seen", "price": "$3,100,000", "power": "Not seen", "broker": "Signature Associates", "date": "DCD article, date not confirmed", "lat": 42.325328, "lng": -83.221318, "acc": "Address-level (ArcGIS geocoder)", "links": ["https://www.datacenterdynamics.com/en/news/former-ibm-hp-ford-xerox-data-centers-for-sale-around-michigan-and-kentucky/"], "verify": "Dearborn is near Allen Park. Confirm status and owner.", "seen": "Oct 8, 2026", "cat": "former"}, {"id": "L10", "name": "Former Ford office campus data center space (address not given)", "city": "Detroit area", "county": "Wayne", "type": "Office campus / data center space", "marketed": "Class A lower-level space that was a data center for a Fortune 500 company, with power, backup, raised floors.", "size": "Not seen", "price": "$849,000", "power": "Not seen", "broker": "Dirt Realty", "date": "DCD article, date not confirmed", "lat": 42.3314, "lng": -83.0458, "acc": "Very rough (Detroit center)", "links": ["https://www.datacenterdynamics.com/en/news/former-ibm-hp-ford-xerox-data-centers-for-sale-around-michigan-and-kentucky/"], "verify": "Find the actual address via Dirt Realty.", "seen": "Oct 8, 2026", "cat": "former"}];
+const SITE_PROJECTS = [{"id": "C01", "name": "Solstice Data, 7500 Enterprise Dr", "city": "Allen Park", "county": "Wayne", "dev": "Solstice Data", "scale": "26 MW, 2 stories, about 53,000 SF data hall", "status": "Planning Commission voted 7-2 to deny (per Planet Detroit via tracker)", "lat": 42.267546, "lng": -83.210288, "acc": "Address-level (ArcGIS geocoder)", "links": ["https://morethanjustparks.com/data-center-tracker/allen-park-data-center-solstice-data-rejected-mi--429931a5-b06f-4407-9d23-5f3623ea0453"], "notes": "Same street as listing L01.", "seen": "Oct 8, 2026", "cat": "project"}, {"id": "C02", "name": "Project Cannoli (Google / Panattoni)", "city": "Van Buren Twp", "county": "Wayne", "dev": "Google, Panattoni, DTE", "scale": "About 1 GW; preliminary site plan approved Feb 2026", "status": "In development; DTE special contract before MPSC", "lat": 42.2175, "lng": -83.459, "acc": "Site area approx (matches this map's existing Van Buren case marker)", "links": ["https://planetdetroit.org/2026/03/google-dte-data-center-van-buren/"], "notes": "Closest large project to Allen Park.", "seen": "Oct 8, 2026", "cat": "project"}, {"id": "C03", "name": "Stargate Saline Township", "city": "Saline Twp", "county": "Washtenaw", "dev": "Related Digital, Oracle, OpenAI", "scale": "1,383 MW contracted load", "status": "Under construction, approved via consent judgment", "lat": 42.168, "lng": -83.738, "acc": "Site area approx (matches this map's existing Saline case marker)", "links": ["https://datacenternews.org/data-center-projects/michigan-data-center-projects/"], "notes": "", "seen": "Oct 8, 2026", "cat": "project"}, {"id": "C04", "name": "Project Cherry Blossom, 1500 N Dixie Hwy", "city": "Frenchtown Twp", "county": "Monroe", "dev": "Cloverleaf Infrastructure", "scale": "About 200 ac, former ProMedica hospital property near I-75 and N Dixie Hwy", "status": "Proposed", "lat": 41.92667, "lng": -83.353695, "acc": "Address-level (ArcGIS geocoder; address from this map's Frenchtown record)", "links": ["https://datacenternews.org/data-center-projects/michigan-data-center-projects/"], "notes": "", "seen": "Oct 8, 2026", "cat": "project"}, {"id": "C05", "name": "Project Flex", "city": "Lyon Twp (New Hudson)", "county": "Oakland", "dev": "Verrus (Walbridge)", "scale": "6 buildings, about 1.8M SF", "status": "Site plan conditionally approved Sept 2025", "lat": 42.503, "lng": -83.6058, "acc": "Area approx (south of Grand River Ave between S Hill and Milford Rds)", "links": ["https://datacenternews.org/data-center-projects/michigan-data-center-projects/"], "notes": "", "seen": "Oct 8, 2026", "cat": "project"}, {"id": "C06", "name": "Metrobloks, Inkster Rd between 11 Mile and I-696", "city": "Southfield", "county": "Oakland", "dev": "Metrobloks LLC", "scale": "100 MW, about 218,000 SF, 13 ac", "status": "Site plan approved by city council", "lat": 42.481, "lng": -83.3189, "acc": "Corridor approx (Inkster Rd just south of 11 Mile Rd)", "links": ["https://gandernewsroom.com/2026/03/02/how-many-ai-data-centers-are-planned-in-michigan-we-counted"], "notes": "", "seen": "Oct 8, 2026", "cat": "project"}, {"id": "C07", "name": "Raeden Detroit 3, former McLouth Steel site, 27800 W Jefferson Ave", "city": "Gibraltar", "county": "Wayne", "dev": "Raeden (landowner Cal Realty)", "scale": "100 MW, DTE power", "status": "Moratorium; Raeden sued city", "lat": 42.106607, "lng": -83.198848, "acc": "Address-level (ArcGIS geocoder; address from this map's Gibraltar record)", "links": ["https://www.datacentermap.com/usa/michigan/detroit/"], "notes": "See also lawsuit coverage on Baxtel.", "seen": "Oct 8, 2026", "cat": "project"}, {"id": "C08", "name": "Deep Green data center, Cedar and Larch Streets", "city": "Lansing", "county": "Ingham", "dev": "Deep Green (UK)", "scale": "24 MW with 16 MW fuel cell, 2.5 ac", "status": "Planning Commission recommended rezoning (5-2) in March 2026", "lat": 42.7325, "lng": -84.5555, "acc": "City approx", "links": ["https://www.yahoo.com/news/articles/lansing-city-planning-commission-recommends-110622234.html"], "notes": "", "seen": "Oct 8, 2026", "cat": "project"}, {"id": "C09", "name": "Microsoft, former Steelcase Pyramid land", "city": "Gaines Charter Twp", "county": "Kent", "dev": "Microsoft", "scale": "316 ac bought for $45.3M", "status": "Community meeting held Mar 3, 2026", "lat": 42.81, "lng": -85.62, "acc": "Township approx", "links": ["https://www.datacenterdynamics.com/en/news/microsoft-acquires-316-acres-outside-grand-rapids-michigan/"], "notes": "", "seen": "Oct 8, 2026", "cat": "project"}, {"id": "C10", "name": "Hyperscale Data, 415 E Prairie Ronde St", "city": "Dowagiac", "county": "Cass", "dev": "Hyperscale Data (Alliance Cloud Services)", "scale": "83 ac owned; expansion to 340 MW planned", "status": "Operating and expanding", "lat": 41.991007, "lng": -86.1008, "acc": "Address-level (US Census geocoder)", "links": ["https://www.datacenterdynamics.com/en/news/hyperscale-data-purchases-485-acres-in-southwest-michigan-to-expand-data-center-campus/"], "notes": "", "seen": "Oct 8, 2026", "cat": "project"}];
+
+const SITE_CATS = {
+  sale:    { color: '#dc2626', line1: 'FOR',  line2: 'SALE', label: 'FOR SALE' },
+  former:  { color: '#d97706', line1: 'FOR',  line2: 'SALE', label: 'FORMER DATA CENTER FOR SALE' },
+  project: { color: '#2563eb', line1: 'DATA', line2: 'CTR',  label: 'PROPOSED / ACTIVE PROJECT' }
+};
+function siteSignSvg(cat) {
+  const c = SITE_CATS[cat];
+  return '<svg xmlns="http://www.w3.org/2000/svg" width="30" height="34" viewBox="0 0 30 34">' +
+    '<rect x="3" y="2" width="3" height="31" rx="1" fill="#78350f" stroke="#1c1917" stroke-width="0.8"/>' +
+    '<rect x="3" y="4" width="25" height="3" rx="1" fill="#78350f" stroke="#1c1917" stroke-width="0.8"/>' +
+    '<line x1="11" y1="7" x2="11" y2="10" stroke="#1c1917" stroke-width="1"/>' +
+    '<line x1="24" y1="7" x2="24" y2="10" stroke="#1c1917" stroke-width="1"/>' +
+    `<rect x="8" y="10" width="20" height="14" rx="1.5" fill="${c.color}" stroke="#fff" stroke-width="1.4"/>` +
+    `<text x="18" y="16" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="5" font-weight="700" fill="#fff">${c.line1}</text>` +
+    `<text x="18" y="22" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="5.4" font-weight="700" fill="#fff">${c.line2}</text>` +
+    (cat === 'former' ? '<circle cx="27" cy="11" r="3.2" fill="#111827" stroke="#fff" stroke-width="0.8"/><text x="27" y="12.8" text-anchor="middle" font-family="Arial" font-size="4.6" font-weight="700" fill="#fbbf24">!</text>' : '') +
+    '</svg>';
+}
+
+function siteHtml(s, withLinks) {
+  const cat = SITE_CATS[s.cat];
+  const row = (k, v) => (v ? `<div style="margin:3px 0"><span style="color:#94a3b8;font-size:10.5px;text-transform:uppercase;letter-spacing:.03em">${k}</span><br>${dtefEsc(v)}</div>` : '');
+  const host = u => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return u; } };
+  const links = withLinks
+    ? s.links.map(u => `<a href="${u}" target="_blank" rel="noopener" style="color:#60a5fa">${dtefEsc(host(u))}</a>`).join(' · ')
+    : s.links.map(u => dtefEsc(host(u))).join(' · ');
+  const body = s.cat === 'project'
+    ? row('Developer or applicant', s.dev) + row('Scale', s.scale) + row('Status (as seen)', s.status) + row('Notes', s.notes)
+    : row('Type', s.type) + row('Asking price', s.price) + row('Size', s.size) + row('Power claim', s.power) +
+      row('How it is marketed', s.marketed) + row('Platform / broker', s.broker) + row('Date info', s.date) + row('Verify next', s.verify);
+  return `<div style="max-width:340px;font-size:12px;line-height:1.35;white-space:normal">` +
+    `<div style="color:${cat.color};filter:brightness(1.5);font-weight:700;font-size:10.5px;letter-spacing:.05em">🪧 ${cat.label} · ${s.id}</div>` +
+    `<b style="font-size:13px">${dtefEsc(s.name)}</b><br><span style="color:#94a3b8">${dtefEsc(s.city)}, ${dtefEsc(s.county)} County</span>` +
+    body +
+    `<div style="margin-top:5px;padding-top:4px;border-top:1px solid #334155;font-size:10.5px;color:#94a3b8">Source: ${links}<br>` +
+    `Seen ${dtefEsc(s.seen)}. Location: ${dtefEsc(s.acc)}.` +
+    (withLinks ? '' : '<br><i>Click the sign to open source links.</i>') + `</div></div>`;
+}
+
+const siteLayers = { sale: L.layerGroup(), former: L.layerGroup(), project: L.layerGroup() };
+SITE_LISTINGS.concat(SITE_PROJECTS).forEach(s => {
+  const icon = L.divIcon({ className: 'site-sign-icon', html: siteSignSvg(s.cat), iconSize: [30, 34], iconAnchor: [5, 33], popupAnchor: [10, -30], tooltipAnchor: [12, -18] });
+  const mk = L.marker([s.lat, s.lng], { icon: icon, zIndexOffset: s.cat === 'project' ? 940 : 960 });
+  mk.bindTooltip(siteHtml(s, false), { direction: 'right', className: 'dark-tooltip site-tooltip', opacity: 0.97 });
+  mk.bindPopup(siteHtml(s, true), { className: 'dark-tooltip', maxWidth: 360 });
+  mk.addTo(siteLayers[s.cat]);
+});
+Object.values(siteLayers).forEach(l => l.addTo(map));
+
 
 // ═══════════════════════════════════════════════════════════════
 //  HELPERS
@@ -35001,6 +35083,13 @@ document.getElementById('toggle-itc-miso').addEventListener('change', e => {
   } else {
     itcMisoLayer.remove();
   }
+});
+
+// Data center site layers
+[['toggle-site-sale', 'sale'], ['toggle-site-former', 'former'], ['toggle-site-project', 'project']].forEach(([id, cat]) => {
+  document.getElementById(id).addEventListener('change', e => {
+    if (e.target.checked) { siteLayers[cat].addTo(map); } else { siteLayers[cat].remove(); }
+  });
 });
 
 // ─── Floating Layers Panel Accordion ──────────────────────────
