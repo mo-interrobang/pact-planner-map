@@ -34433,7 +34433,7 @@ const siteLayers = { sale: L.layerGroup(), former: L.layerGroup(), project: L.la
 SITE_LISTINGS.concat(SITE_PROJECTS).forEach(s => {
   const icon = L.divIcon({ className: 'site-sign-icon', html: siteSignSvg(s.cat), iconSize: [30, 34], iconAnchor: [5, 33], popupAnchor: [10, -30], tooltipAnchor: [12, -18] });
   const mk = L.marker([s.lat, s.lng], { icon: icon, zIndexOffset: s.cat === 'project' ? 940 : 960 });
-  mk.bindTooltip(siteHtml(s, false), { direction: 'right', className: 'dark-tooltip site-tooltip', opacity: 0.97 });
+  mk.bindTooltip(siteHtml(s, false), { direction: 'auto', className: 'dark-tooltip site-tooltip', opacity: 0.97 });
   mk.bindPopup(siteHtml(s, true), { className: 'dark-tooltip', maxWidth: 360 });
   mk.addTo(siteLayers[s.cat]);
 });
