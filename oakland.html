@@ -482,7 +482,7 @@ body {
   <nav class="site-nav" aria-label="Site"><a href="index.html">Planner Map</a><a class="here" aria-current="page" href="oakland.html">Oakland County</a><a href="timeline.html">CWA Pattern Timeline</a><a href="cross-municipality-patterns.html">Metro Detroit Connections</a><a href="developers.html">Developer Tracker</a></nav>
   <h1>Oakland County — Data Center Watch <span class="cwa-badge" style="background:#34d399;">PROVEN vs UNPROVEN</span></h1>
   <p class="subtitle">A county-focused companion to the statewide map: what is documented (green), what is circulating unverified (red), when each fight moved, and where every municipality sits. Hover timeline events for detail — click a dot to pin the card and follow its source link.</p>
-  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-10-06 by P.A.C.T. from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
+  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-10-14 by P.A.C.T. from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
 </div>
 </div>
 
@@ -2451,6 +2451,18 @@ const COMMUNITIES = [
         label: "Next Board of Trustees meeting: Oct 14, 2026, 6:00 PM (est.)",
         detail: "Computed from the Board's stated recurring pattern (2nd Wednesday); the Sept 9 occurrence has already passed.",
         source: "https://oxfordtwpmi.gov/board-of-trustees/", sourceLabel: "Oxford Township — Board of Trustees page"
+      },
+      {
+        date: "2026-10-08", type: "meeting", isNew: true,
+        label: "PC meeting CANCELLED (Oct 8)",
+        detail: "Daily open-item sweep, 2026-10-09: the Township's 2026 Planning Commission schedule shows the Oct 8, 2026 meeting cancelled. No data-center hearing took place.",
+        source: "https://oxfordtwpmi.gov/", sourceLabel: "Oxford Township — 2026 PC meeting schedule"
+      },
+      {
+        date: "2026-10-22", type: "meeting", isNew: true, packetChecked: true,
+        label: "Next PC meeting: Oct 22, 2026, 6:30 PM (agenda not posted yet)",
+        detail: "Next regular Planning Commission meeting after the Oct 8 cancellation. As of Oct 9 no agenda was posted and nothing confirms the data-center ordinance or overlay map is on it. Still no hearing date set for the ordinance itself; the moratorium expires ~Feb 2027.",
+        source: "https://oxfordtwpmi.gov/", sourceLabel: "Oxford Township — 2026 PC meeting schedule"
       }
     ]
   },
