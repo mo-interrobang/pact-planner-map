@@ -482,7 +482,7 @@ body {
   <nav class="site-nav" aria-label="Site"><a href="index.html">Planner Map</a><a class="here" aria-current="page" href="oakland.html">Oakland County</a><a href="timeline.html">CWA Pattern Timeline</a><a href="cross-municipality-patterns.html">Metro Detroit Connections</a><a href="developers.html">Developer Tracker</a></nav>
   <h1>Oakland County — Data Center Watch <span class="cwa-badge" style="background:#34d399;">PROVEN vs UNPROVEN</span></h1>
   <p class="subtitle">A county-focused companion to the statewide map: what is documented (green), what is circulating unverified (red), when each fight moved, and where every municipality sits. Hover timeline events for detail — click a dot to pin the card and follow its source link.</p>
-  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-10-14 by P.A.C.T. from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
+  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-10-21 by P.A.C.T. from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
 </div>
 </div>
 
@@ -652,7 +652,7 @@ body {
       <li><strong>Springfield Aug 25 PC packet</strong> (30MB+) — contains the draft data center ordinance, now a CWA product: <a href="https://cms1files.revize.com/springfieldtwp/PC_Packet_August_2026.pdf" target="_blank">direct link</a>. Check it against the CWA template fingerprints.</li>
       <li><strong>Register of Deeds, 8300 Andersonville Rd</strong> — the deed into 84 Andersonville LLC (who sold it, when, for how much) and any recorded mortgage. Confirms whether the site was recently transferred and who financed it.</li>
       <li><strong>Groveland Township FOIA</strong> — all data-center developer communications, Jan 2024–present. Names the two developers the resident described and tests whether the corridor investor's Groveland land is involved.</li>
-      <li><strong>Van Buren Township (Wayne Co.) data-center tax break</strong> — BOTH resolved 2026-10-01: the project is "Project Cannoli" (Google end user, Panattoni developer, DTE utility partner). (1) The Wayne County Commission OVERRODE Executive Warren Evans's veto 13-0 (Fox 2 Detroit), reinstating the ~$125M local tax break — commissioners stressed the override is not an endorsement of the project itself. (2) The MPSC APPROVED DTE's power-supply contracts, Case U-22058 (michigan.gov/mpsc, Oct 1, 2026): a 20-year term, 80% minimum billing demand, an early-termination clause requiring at least 15 years of minimum charges, Google financing up to 1,600 MW of renewables + 480 MW of battery storage, and a projected $1.7B customer benefit over 20 years — MPSC Chair Dan Scripps said the terms "ensure that other customers aren't subsidizing this large addition to the state's energy grid." NEXT: Van Buren Township's own Planning Commission is scheduled to review the project's final site plan Oct 14, 2026 — worth watching.</li>
+      <li><strong>Van Buren Township (Wayne Co.) data-center tax break</strong> — BOTH resolved 2026-10-01: the project is "Project Cannoli" (Google end user, Panattoni developer, DTE utility partner). (1) The Wayne County Commission OVERRODE Executive Warren Evans's veto 13-0 (Fox 2 Detroit), reinstating the ~$125M local tax break — commissioners stressed the override is not an endorsement of the project itself. (2) The MPSC APPROVED DTE's power-supply contracts, Case U-22058 (michigan.gov/mpsc, Oct 1, 2026): a 20-year term, 80% minimum billing demand, an early-termination clause requiring at least 15 years of minimum charges, Google financing up to 1,600 MW of renewables + 480 MW of battery storage, and a projected $1.7B customer benefit over 20 years — MPSC Chair Dan Scripps said the terms "ensure that other customers aren't subsidizing this large addition to the state's energy grid." UPDATE 2026-10-15: the Van Buren Township Planning Commission APPROVED the final site plan 5-1 on Oct 14, 2026 (Bridge Michigan), described as the last major permitting hurdle: six buildings, a substation and equipment yards on 150 of 282 acres, Walbridge as lead contractor, Google targeting first power by Dec 2027. No MPSC rehearing petition found as of Oct 21 (window runs to about Oct 31).</li>
       <li><strong>Springfield clerk records request</strong> — all data-center developer communications and meeting records, Dec 2025-present (tests the "1 meeting vs 3 developers" discrepancy from the clerk's own file).</li>
       <li><strong>Independence Township minutes/recordings</strong> — any reference to Springfield data center offers (the "$6B" remark).</li>
       <li><strong>York Township (Washtenaw) minutes</strong> — any Sansone Group application and its outcome.</li>
@@ -862,8 +862,27 @@ const COMMUNITIES = [
       {
         date: "2026-10-01", type: "future", isNew: true,
         label: "Verrus's next Planning Commission date still unconfirmed",
-        detail: "Daily open-item sweep (through Oct 1, 2026): Project Flex was not on the Sept 14 PC agenda (confirmed by the township) and no replacement date has surfaced since. The township's own official 2026 PC schedule lists Oct 26, 2026 as the next regularly scheduled meeting, but it is unconfirmed whether Project Flex/Verrus will be on that agenda.",
+        detail: "SUPERSEDED 2026-10-21: the source page for this item (lyontwp-higginsmi.gov) is Lyon Township in ROSCOMMON County (Higgins Lake), not Oakland County's Lyon Township, so the Oct 26 schedule and the later 'no agenda posted' checks did not come from this township. Original note: Daily open-item sweep (through Oct 1, 2026): Project Flex was not on the Sept 14 PC agenda (confirmed by the township) and no replacement date has surfaced since. The township's own official 2026 PC schedule lists Oct 26, 2026 as the next regularly scheduled meeting, but it is unconfirmed whether Project Flex/Verrus will be on that agenda.",
         source: "https://lyontwp-higginsmi.gov/minutes-and-reports/", sourceLabel: "Lyon Township — official minutes & reports"
+      },
+      {
+        date: "2026-10-21",
+        type: "developer",
+        isNew: true,
+        label: "Verrus submits a 6th site plan for Project Flex",
+        detail: "Crain's Detroit, Oct 21, 2026, headline: 'Verrus submits 6th site plan for Lyon Township data center.' The article itself could not be read for this update, so the revision's contents and any hearing date are unconfirmed. This follows the 5th revision (Aug 13, 2026) that was pulled from the Sept 14 PC agenda.",
+        alertNote: "Verrus filed a 6th Project Flex site plan (Crain's, Oct 21). Hearing date not confirmed; next regular PC date by pattern is Mon Oct 26.",
+        source: "https://www.crainsdetroit.com/technology/cdb-verrus-data-center-lyon-township-plan-20261021/",
+        sourceLabel: "Crain's Detroit, Oct 21, 2026 (headline)"
+      },
+      {
+        date: "2026-10-26",
+        type: "meeting",
+        isNew: true,
+        label: "Planning Commission, Mon Oct 26, 2026, 7:00 PM (by 2nd/4th-Monday pattern; agenda unconfirmed)",
+        detail: "Regular date computed from the Commission's 2nd/4th Monday pattern. lyontwp.org blocks automated review, so whether the 6th Project Flex site plan is on this agenda has to be checked by hand.",
+        source: "https://www.lyontwp.org/government/township_boards_and_commissions/planning_commission_.php",
+        sourceLabel: "Lyon Township, Planning Commission page"
       }
     ]
   },
@@ -992,6 +1011,25 @@ const COMMUNITIES = [
         date: "2026-11-03", type: "future",
         label: "⚠ Potential recall election",
         detail: "If signatures qualify, the recall goes to District 1 voters in November 2026. Structural reality either way: a county commissioner has NO zoning authority over Wixom, Lyon, or Springfield — county-land disposal (parks, airport parcels) is where county-level influence actually operates."
+      },
+      {
+        date: "2026-10-07",
+        type: "surveillance",
+        isNew: true,
+        label: "Flock/ICE follow-up: Troy PD, Southfield PD and Sheriff named; former deputy under investigation",
+        detail: "FOX 2 (Oct 7, citing the Detroit News analysis) names Troy PD (a DEA case involving ICE), Southfield PD (a human-trafficking case) and the Sheriff's Office (the former-employee case) among agencies with ICE-linked Flock searches. The Sheriff's Office confirmed it is investigating a former deputy for unauthorized Flock access after leaving county employment, with criminal charges possible; residents raised it at the Oct 6 Public Safety and Health Committee. The Board is expected to vote in December on extending the Flock drone program.",
+        source: "https://www.fox2detroit.com/news/metro-detroit-police-accused-using-flock-cameras-help-ice-make-arrests",
+        sourceLabel: "FOX 2, Oct 7, 2026; WXYZ; ClickOnDetroit, Oct 6, 2026"
+      },
+      {
+        date: "2026-10-20",
+        type: "surveillance",
+        isNew: true,
+        label: "WXYZ: Woodward, Luebs and Undersheriff took vendor-paid Motorola trip before ALPR-related vote",
+        detail: "WXYZ investigation (Oct 20, 2026): Board Chair Dave Woodward, Commissioner Penny Luebs and the Undersheriff visited Motorola Solutions HQ Sept 10-11; per the Sheriff's Office, Motorola paid for the overnight stay and meals. On Sept 17 the Board voted on a $2.9M auto-theft (ATPA) grant that includes up to $200K for a Motorola ALPR database; Luebs voted yes. The trip was not disclosed before the vote.",
+        alertNote: "ALPR/vendor: WXYZ reports county officials took a Motorola-paid trip before a Sept 17 vote that included up to $200K for a Motorola ALPR database.",
+        source: "https://www.wxyz.com/news/local-news/investigations/oakland-county-officials-flew-to-motorola-dined-with-vendor-before-key-vote",
+        sourceLabel: "WXYZ, Oct 20, 2026"
       }
     ]
   },
@@ -1273,6 +1311,15 @@ const COMMUNITIES = [
         detail: "Regular business and study sessions alternate every Wednesday at 6:30 PM in the Municipal Complex.",
         source: "https://www.cityofsouthfield.com/calendar", sourceLabel: "City of Southfield — official calendar",
         packetChecked: true
+      },
+      {
+        date: "2026-10-07",
+        type: "surveillance",
+        isNew: true,
+        label: "Named in ICE-linked Flock search reporting",
+        detail: "FOX 2 (Oct 7, 2026, citing the Detroit News analysis of Flock audit logs) names Southfield PD among Michigan agencies whose Flock searches were linked to ICE, in a human-trafficking case. This is about Flock/ALPR use, not data centers.",
+        source: "https://www.fox2detroit.com/news/metro-detroit-police-accused-using-flock-cameras-help-ice-make-arrests",
+        sourceLabel: "FOX 2, Oct 7, 2026"
       }
     ]
   },
@@ -1334,6 +1381,15 @@ const COMMUNITIES = [
         label: "Next City Council meeting: Sept 28, 2026, 7:30 PM",
         detail: "Per the city's official boards & committees meeting schedule.",
         source: "https://apps.troymi.gov/BoardsAndCommittees/MeetingSchedule?boardAndCommitteeName=City+Council", sourceLabel: "City of Troy — City Council schedule"
+      },
+      {
+        date: "2026-10-07",
+        type: "surveillance",
+        isNew: true,
+        label: "Named in ICE-linked Flock search reporting",
+        detail: "FOX 2 (Oct 7, 2026, citing the Detroit News analysis of Flock audit logs) names Troy PD among Michigan agencies whose Flock searches were linked to ICE, in a DEA case involving ICE. This is about Flock/ALPR use, not data centers.",
+        source: "https://www.fox2detroit.com/news/metro-detroit-police-accused-using-flock-cameras-help-ice-make-arrests",
+        sourceLabel: "FOX 2, Oct 7, 2026"
       }
     ]
   },
@@ -1406,6 +1462,16 @@ const COMMUNITIES = [
         detail: "RESOLVES the Sept 21 flagged meeting above: the data-center zoning amendment did land on that agenda. Council held the first reading of a new zoning section, Sec. 8.23 \u201cData Centers,\u201d setting noise limits and generator-emission standards for the use. No second-reading/adoption date has been posted yet \u2014 watch subsequent Council agendas.",
         alertNote: "First reading held \u2014 second reading/adoption not yet scheduled.",
         source: "N/A \u2014 City of Berkley Council minutes/packet", sourceLabel: "City of Berkley \u2014 City Council, Sept 21, 2026"
+      },
+      {
+        date: "2026-10-19",
+        type: "meeting",
+        isNew: true,
+        label: "City Council, Oct 19, 2026, 7:00 PM: watch for Sec. 8.23 second reading",
+        detail: "The city's Oct 5 recap confirms the data-center ordinance's second reading was NOT on that agenda and named Oct 19 as the next meeting. As of Oct 21 no Oct 19 agenda or recap was readable (CivicClerk portal needs a browser; recaps usually lag about 4 days). Outcome unknown, not negative.",
+        alertNote: "Data-center ordinance (Sec. 8.23) second reading could have been at the Oct 19 Council meeting. Outcome not yet posted.",
+        source: "https://www.berkleymi.gov/news/city-council-meeting-recap:-october-5--2026-regular-meeting",
+        sourceLabel: "City of Berkley, Oct 5, 2026 Council recap"
       }
     ]
   },
@@ -1822,6 +1888,15 @@ const COMMUNITIES = [
         label: "Next Planning Commission meeting: Oct 6, 2026, 6:30 PM (est.)",
         detail: "Computed from the Commission's stated recurring pattern (1st Tuesday, 6:30 PM); the Sept 1 occurrence has already passed.",
         source: "https://www.hazelpark.org/visitors/meeting_information.php", sourceLabel: "City of Hazel Park — meeting information page"
+      },
+      {
+        date: "2026-10-13",
+        type: "surveillance",
+        isNew: true,
+        label: "Residents urge Council not to renew Flock; study session promised",
+        detail: "At the Oct 13, 2026 Council meeting residents urged the city not to renew its Flock contract. Council agreed to hold a public study session within 30 to 45 days, with a renewal vote in December. Study session date not set. Source is an AI-generated meeting summary, so treat details as unverified until the minutes post.",
+        source: "https://citizenportal.ai/articles/11119760/Michigan/Oakland-County/Hazel-Park/Hazel-Park-schedules-study-session-after-residents-urge-end-to-Flock-license-plate-readers",
+        sourceLabel: "CitizenPortal (AI summary, unverified)"
       }
     ]
   },
@@ -2084,12 +2159,12 @@ const COMMUNITIES = [
     planner: "Matt Lonnerstater",
     title: "CWA Alumni / In-House",
     cwaStatus: "none",
-    statusLabel: "NON-CWA",
+    statusLabel: "NON-CWA (CWA-ALUMNI PLANNER), 12-MONTH MORATORIUM",
     events: [
       {
         date: "2026-09-13", type: "community",
         label: "No documented data-center activity",
-        detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Madison Heights as of Sept 2026. Lonnerstater previously worked for Carlisle/Wortman Associates before joining Madison Heights as in-house City Planner. He was the sole author of all staff memos in the June 15, 2026 Planning Commission packet. If a data center developer approaches Madison Heights, his prior CWA experience and remaining professional relationships with Auerbach/Montagno are worth monitoring."
+        detail: "SUPERSEDED by the Aug 24, 2026 moratorium below. Original note: No data-center moratorium, ordinance, or development proposal found on the public record for Madison Heights as of Sept 2026. Lonnerstater previously worked for Carlisle/Wortman Associates before joining Madison Heights as in-house City Planner. He was the sole author of all staff memos in the June 15, 2026 Planning Commission packet. If a data center developer approaches Madison Heights, his prior CWA experience and remaining professional relationships with Auerbach/Montagno are worth monitoring."
       },
       {
         date: "2026-09-14", type: "meeting", isNew: true,
@@ -2104,6 +2179,24 @@ const COMMUNITIES = [
         detail: "Rescheduled from the originally-planned Sept 21 date, per the city's Municode Meetings portal.",
         source: "https://madisonheights-mi.municodemeetings.com/", sourceLabel: "City of Madison Heights — Municode Meetings portal",
         packetChecked: true
+      },
+      {
+        date: "2026-08-24",
+        type: "protection",
+        isNew: true,
+        label: "12-month data-center moratorium adopted (unanimous)",
+        detail: "City Council unanimously adopted a 12-month data-center moratorium on Aug 24, 2026. As of Oct 2, 2026 the city reported no data-center applications received. (Earlier sweeps also noted a 9-member Data Center Commission; the Oct 2 C&G article does not mention it, so its status is unconfirmed.)",
+        source: "https://www.candgnews.com/articles/government-news/madison-heights-seeks-safeguards-against-data-centers/",
+        sourceLabel: "C&G Newspapers, Oct 2, 2026"
+      },
+      {
+        date: "2026-10-11",
+        type: "surveillance",
+        isNew: true,
+        label: "City ending Flock: disconnecting its 3 ALPR cameras, no renewal",
+        detail: "The city announced it is disconnecting its 3 city-owned Flock ALPR cameras (out of active use since Sept 23) and will not renew, saying Flock did not meet its privacy and safeguard concerns. Private business cameras are not affected.",
+        source: "https://oaklandcounty115.com/2026/10/11/madison-heights-ends-flock-camera-usage/",
+        sourceLabel: "Oakland County Times, Oct 11, 2026"
       }
     ]
   },
@@ -2459,10 +2552,19 @@ const COMMUNITIES = [
         source: "https://oxfordtwpmi.gov/", sourceLabel: "Oxford Township — 2026 PC meeting schedule"
       },
       {
-        date: "2026-10-22", type: "meeting", isNew: true, packetChecked: true,
-        label: "Next PC meeting: Oct 22, 2026, 6:30 PM (agenda not posted yet)",
-        detail: "Next regular Planning Commission meeting after the Oct 8 cancellation. As of Oct 9 no agenda was posted and nothing confirms the data-center ordinance or overlay map is on it. Still no hearing date set for the ordinance itself; the moratorium expires ~Feb 2027.",
+        date: "2026-10-22", type: "meeting", isNew: true, label: "PC meeting CANCELLED (Oct 22)",
+        detail: "UPDATE 2026-10-15: the Township's Planning Commission page now marks the Oct 22 meeting cancelled, like Oct 8. Original note: Next regular Planning Commission meeting after the Oct 8 cancellation. As of Oct 9 no agenda was posted and nothing confirms the data-center ordinance or overlay map is on it. Still no hearing date set for the ordinance itself; the moratorium expires ~Feb 2027.",
         source: "https://oxfordtwpmi.gov/", sourceLabel: "Oxford Township — 2026 PC meeting schedule"
+      },
+      {
+        date: "2026-11-12",
+        type: "meeting",
+        isNew: true,
+        packetChecked: true,
+        label: "Next PC meeting: Nov 12, 2026, 6:30 PM (agenda not posted yet)",
+        detail: "Per the Township's own 2026 PC schedule PDF, Nov 12 and Dec 10 are the only remaining 2026 meetings (Nov 26 and Dec 24 skipped for holidays). As of Oct 21 no Nov 12 agenda is posted and nothing confirms the data-center ordinance or overlay is on it. The moratorium expires Feb 2027.",
+        source: "https://oxfordtwpmi.gov/planning-commission/",
+        sourceLabel: "Oxford Township, Planning Commission page"
       }
     ]
   },
