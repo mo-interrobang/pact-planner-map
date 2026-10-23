@@ -482,7 +482,7 @@ body {
   <nav class="site-nav" aria-label="Site"><a href="index.html">Planner Map</a><a class="here" aria-current="page" href="oakland.html">Oakland County</a><a href="timeline.html">CWA Pattern Timeline</a><a href="cross-municipality-patterns.html">Metro Detroit Connections</a><a href="developers.html">Developer Tracker</a></nav>
   <h1>Oakland County — Data Center Watch <span class="cwa-badge" style="background:#34d399;">PROVEN vs UNPROVEN</span></h1>
   <p class="subtitle">A county-focused companion to the statewide map: what is documented (green), what is circulating unverified (red), when each fight moved, and where every municipality sits. Hover timeline events for detail — click a dot to pin the card and follow its source link.</p>
-  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-10-21 from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
+  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-10-23 from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
 </div>
 </div>
 
@@ -882,6 +882,7 @@ const COMMUNITIES = [
         label: "Planning Commission, Mon Oct 26, 2026, 7:00 PM (by 2nd/4th-Monday pattern; agenda unconfirmed)",
         detail: "Regular date computed from the Commission's 2nd/4th Monday pattern. lyontwp.org blocks automated review, so whether the 6th Project Flex site plan is on this agenda has to be checked by hand.",
         source: "https://www.lyontwp.org/government/township_boards_and_commissions/planning_commission_.php",
+        alertNote: "Verrus submitted a 6th Project Flex site plan (Crain's, Oct 21, paywalled). Not confirmed whether it is on this agenda; check lyontwp.org by hand.",
         sourceLabel: "Lyon Township, Planning Commission page"
       }
     ]
@@ -950,9 +951,11 @@ const COMMUNITIES = [
         packetChecked: true
       },
       {
-        date: "2026-10-27", type: "future", isNew: true,
-        label: "⚠ Next Planning Commission review of Data Center Ordinance",
-        detail: "Subcommittee's revised draft returns to the full PC after circulating to the Fire Department, Township Engineer, and Township Attorney."
+        date: "2026-10-27", type: "meeting", isNew: true,
+        label: "PC Oct 27, 2026: 'Data Center Draft Ordinance Amendments' (Old Business 1), packet reviewed",
+        detail: "UPDATE 2026-10-23 (3-week sweep): agenda posted Oct 21. Oct 20 memo from Township Planner Megan Masson-Minock (CWA drafting): subcommittee (Chair Galley, Trustee Sclesky, Commissioner Donato, Brandon Boucher) met Sept 10 and Oct 13 and edited two drafts; 'CWA will draft amendments for review by the Planning Commission at their November meeting' after Fire Department, Township Engineer and Township Attorney review. No vote requested Oct 27. Sept 22 minutes record proposed water standards, closed-loop CO2 refrigerant systems, 90 percent on-site renewable power, and developer responsibility for rate increases. Neither document mentions 8300 Andersonville. Original note: Subcommittee's revised draft returns to the full PC after circulating to the Fire Department, Township Engineer, and Township Attorney.",
+        alertNote: "Data-center ordinance amendments on the PC agenda (discussion only; CWA redraft due at the November PC).",
+        source: "https://cms1files.revize.com/springfieldtwp/PC_Packet-October_2026.pdf", sourceLabel: "Springfield Township, Oct 2026 PC packet"
       },
       {
         date: "2026-10-08", type: "meeting", isNew: true,
@@ -1238,16 +1241,22 @@ const COMMUNITIES = [
     statusLabel: "NON-CWA — DATA CENTER ACTIVITY",
     events: [
       {
+        date: "2026-11-12", type: "meeting", isNew: true, packetChecked: true,
+        label: "Planning Commission rescheduled from Nov 4 to Thu Nov 12, 2026, 6:00 PM (agenda not posted yet)",
+        detail: "Per the city's rescheduling notice. Oct 6 and Oct 20 Council agendas had no data-center item.",
+        source: "https://www.pontiac.mi.us/Notice%20of%20November%202026%20PC%20Rescheduling.pdf", sourceLabel: "City of Pontiac, Nov 2026 PC rescheduling notice"
+      },
+      {
         date: "2026-09-13", type: "community",
         label: "Logged in the Sept 13, 2026 completeness sweep",
         detail: "NEW 2026-09-13: Pontiac adopted a 6-month data center moratorium Jan 21, 2026 (confirmed by Detroit News and the statewide datacenterbans.com tracker, which as of Sept 7, 2026 still lists it 'active'). A plain 6-month count would put expiration around July 21, 2026 — meaning either the moratorium was extended or the tracker is stale; NOT YET CONFIRMED which. A separate flag from a borrowed county-wide tracking spreadsheet claiming a 'detention center, moratorium exp June 2027' issue in Pontiac was run down and found no supporting record anywhere — almost certainly a copy-paste artifact carrying a date into the wrong column in that source spreadsheet, not a real second issue; treat it as noise."
       },
       {
         date: "2026-09-22", type: "meeting", isNew: true,
-        label: "Next City Council meeting: Sept 22, 2026, 6:00 PM",
-        detail: "Council Chambers, City Hall, per the city's official 2026 Council meeting schedule.",
-        source: "https://cms3.revize.com/revize/pontiacminew/2026%20Pontiac%20City%20Council%20Meeting%20Schedule%20050526.pdf", sourceLabel: "City of Pontiac — 2026 Council schedule",
-        alertNote: "DATA CENTER zoning ordinance advancing — confirmed via the Sept 8, 2026 City Council packet: council approved first reading of a \"Zoning Ordinance Text Amendment to Define and Regulate Data Centers as a Special Exception Use in the M-2 (General Industrial) District.\" A second reading could plausibly come up at this Sept 22 meeting, but as of Sept 15, 2026 the Sept 22 packet was not yet posted, so that is not confirmed. No mention of Flock, ALPR, ICE, or immigration enforcement was found in the Sept 8 packet. Source: https://cms3.revize.com/revize/pontiacminew/Agenda%20Packet%209-8-2026%20Regular%20a.pdf"
+        label: "City Council Sept 22, 2026: Special Committee on Data Centers created (Res. 26-205, 6-0)",
+        detail: "UPDATE 2026-10-23: minutes approved in the Oct 6 packet show Res. 26-205 establishing a Temporary City Council Special Committee on Data Centers (Austin, Campbell, Goodman, Deputy Mayor Seay; alternate Jones) to review proposals, zoning, infrastructure impacts, resident and expert input, and the proposed Data Center Ordinance; it dissolves after Council's final vote on that ordinance. No second reading recorded. Original note: Council Chambers, City Hall, per the city's official 2026 Council meeting schedule.",
+        source: "https://cms3.revize.com/revize/pontiacminew/Council%20Agenda%20Packet%2010-6-2026%20Regular%20b.pdf", oldSource: "https://cms3.revize.com/revize/pontiacminew/2026%20Pontiac%20City%20Council%20Meeting%20Schedule%20050526.pdf", sourceLabel: "City of Pontiac — 2026 Council schedule",
+        alertNote: "SUPERSEDED by the Oct 23 finding above (special committee formed; no second reading). Original: DATA CENTER zoning ordinance advancing — confirmed via the Sept 8, 2026 City Council packet: council approved first reading of a \"Zoning Ordinance Text Amendment to Define and Regulate Data Centers as a Special Exception Use in the M-2 (General Industrial) District.\" A second reading could plausibly come up at this Sept 22 meeting, but as of Sept 15, 2026 the Sept 22 packet was not yet posted, so that is not confirmed. No mention of Flock, ALPR, ICE, or immigration enforcement was found in the Sept 8 packet. Source: https://cms3.revize.com/revize/pontiacminew/Agenda%20Packet%209-8-2026%20Regular%20a.pdf"
       },
       {
         date: "2026-10-07", type: "meeting", isNew: true,
@@ -1430,6 +1439,13 @@ const COMMUNITIES = [
     statusLabel: "CWA — ACTIVE, FIRST READING HELD SEPT 21 (SEC. 8.23)",
     events: [
       {
+        date: "2026-11-16", type: "meeting", isNew: true, packetChecked: true,
+        label: "Next regular City Council meeting: Nov 16, 2026 (agenda not posted yet)",
+        detail: "Watch for the second reading of O-13-26 (Sec. 8.23 Data Centers), pending since the 6-0 first reading Sept 21.",
+        alertNote: "Possible second reading of the data-center ordinance (Sec. 8.23).",
+        source: "https://berkleymi.api.civicclerk.com/v1/Events", sourceLabel: "City of Berkley, CivicClerk events"
+      },
+      {
         date: "2026-09-13", type: "community",
         label: "CWA client — no data-center proposal, moratorium, or ordinance found",
         detail: "SUPERSEDED by the 2026-08-25 finding below. Original note: Confirmed Carlisle/Wortman Associates client (Benjamin R. Carlisle). No documented data-center application, moratorium, or ordinance activity found as of Sept 2026 — logged here as a CWA-relationship watch point, not an active case. Confirmed CWA client — Ben Carlisle (CWA President) serves Berkley per his CV and CWA About page. Day-to-day planning is actually done by CWA principal Megan Masson-Minock."
@@ -1467,11 +1483,11 @@ const COMMUNITIES = [
         date: "2026-10-19",
         type: "meeting",
         isNew: true,
-        label: "City Council, Oct 19, 2026, 7:00 PM: watch for Sec. 8.23 second reading",
-        detail: "The city's Oct 5 recap confirms the data-center ordinance's second reading was NOT on that agenda and named Oct 19 as the next meeting. As of Oct 21 no Oct 19 agenda or recap was readable (CivicClerk portal needs a browser; recaps usually lag about 4 days). Outcome unknown, not negative.",
-        alertNote: "Data-center ordinance (Sec. 8.23) second reading could have been at the Oct 19 Council meeting. Outcome not yet posted.",
-        source: "https://www.berkleymi.gov/news/city-council-meeting-recap:-october-5--2026-regular-meeting",
-        sourceLabel: "City of Berkley, Oct 5, 2026 Council recap"
+        label: "City Council, Oct 19, 2026: Sec. 8.23 second reading NOT on agenda (resolved)",
+        detail: "RESOLVED 2026-10-23: the Oct 19 agenda and minutes synopsis (CivicClerk) show no second reading of O-13-26 (Sec. 8.23 Data Centers); the only zoning item was a first reading on Sec. 5.09.E.2 (corner-lot side yards). The Oct 5 minutes also do not mention it. No Nov 2 regular meeting; next regular Council meeting Nov 16. Original note: The city's Oct 5 recap confirms the data-center ordinance's second reading was NOT on that agenda and named Oct 19 as the next meeting. As of Oct 21 no Oct 19 agenda or recap was readable. Outcome unknown, not negative.",
+        alertNote: "Data-center ordinance (Sec. 8.23) second reading was not on the Oct 19 agenda. Still pending; next regular Council meeting Nov 16.",
+        source: "https://berkleymi.api.civicclerk.com/v1/Meetings/GetMeetingFileStream(fileId=7419,plainText=false)",
+        sourceLabel: "City of Berkley, Oct 19, 2026 Council agenda (CivicClerk)"
       }
     ]
   },
@@ -1552,9 +1568,9 @@ const COMMUNITIES = [
       },
       {
         date: "2026-10-07", type: "meeting", isNew: true,
-        label: "Next Planning Commission meeting: Oct 7, 2026 (est.)",
-        detail: "Computed from a 1st-Wednesday pattern seen in posted 2026 agenda packets; exact time uncertain (recent agendas alternate 6:00/7:00 PM).",
-        source: "https://www.auburnhills.org/", sourceLabel: "City of Auburn Hills — 2026 agenda packets"
+        label: "PC Oct 7, 2026, packet reviewed: contains Aug 12 data-center text amendment recommendation",
+        detail: "UPDATE 2026-10-23: the Oct 7 PC packet includes Aug 12 PC minutes showing a 6-0 recommendation of a zoning text amendment 'to address new provisions for clean industrial uses and establish comprehensive standards for data centers.' Minutes say it is 'not intended to prohibit data centers'; it would remove data centers as a permitted use in the T&R District and require a recorded Development Agreement. Staff: DTE upgrades for loads over 10-15 MW could take 24 months to 4 years. Oct 7 business itself was the Kemp industrial site plan and the amended Master Land Use Plan (no data-center content). City Council adoption not confirmed. Nov 11 PC cancelled. Original note: Computed from a 1st-Wednesday pattern seen in posted 2026 agenda packets.",
+        source: "https://www.auburnhills.org/wp-content/uploads/2026/10/October-7-2026-AH-Planning-Commission-Info-Packet.pdf", sourceLabel: "City of Auburn Hills, Oct 7, 2026 PC packet"
       }
     ]
   },
