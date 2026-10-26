@@ -483,7 +483,7 @@ body {
   <nav class="site-nav" aria-label="Site"><a href="index.html">Planner Map</a><a href="oakland.html">Oakland County</a><a class="here" aria-current="page" href="timeline.html">CWA Pattern Timeline</a><a href="cross-municipality-patterns.html">Metro Detroit Connections</a><a href="developers.html">Developer Tracker</a></nav>
   <h1>CWA Pattern — Michigan Communities vs. Data Center Developers <span class="cwa-badge">CARLISLE/WORTMAN ASSOCIATES</span></h1>
   <p class="subtitle">When each community was approached, who CWA placed as planner, and how each case unfolded. Hover events for full detail — click a dot to pin the card open and follow its source link.</p>
-  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Updated 2026-10-05. Merged with the Auerbach Line; Wixom, Troy and Berkley now sync from the Oakland County page; Romulus and Lenox Township lanes added; Allen Park brought through Sept 8. New entries are marked <span class="tt-new-badge" style="margin:0 4px;">NEW</span></div>
+  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Updated 2026-10-26. Merged with the Auerbach Line; Wixom, Troy and Berkley now sync from the Oakland County page; Romulus and Lenox Township lanes added; Allen Park brought through Sept 8. New entries are marked <span class="tt-new-badge" style="margin:0 4px;">NEW</span></div>
 </div>
 
 <div class="view-switch" role="tablist" aria-label="Timeline view">
@@ -1376,16 +1376,32 @@ const COMMUNITIES = [
    {
     "date": "2026-08-06",
     "type": "community",
-    "label": "PC public hearing held — outcome not yet publicly posted",
-    "detail": "The Planning Commission holds its public hearing on the data center / high-resource-demand facilities draft ordinance at 6:30 PM. Supervisor Trish Reilly: \"This ordinance is designed to prioritize the protection of public safety, health, infrastructure, natural resources, our neighborhood character to the greatest extent possible by the law.\" CWA (Ben Carlisle) drafted both this ordinance and the Allen Park Section 52-913 framework (Auerbach) — the comparison between the two documents shows how CWA adjusts its approach by client. As of Aug 14, 2026, no minutes, vote result, or news coverage confirms whether the Commission approved, amended, or tabled the draft — flag as hearing-held-outcome-pending, not as adopted.",
+    "label": "PC public hearing; recommended 6-0 with three amendments (confirmed Oct 26)",
+    "detail": "The Planning Commission holds its public hearing on the data center / high-resource-demand facilities draft ordinance at 6:30 PM. Supervisor Trish Reilly: \"This ordinance is designed to prioritize the protection of public safety, health, infrastructure, natural resources, our neighborhood character to the greatest extent possible by the law.\" CWA (Ben Carlisle) drafted both this ordinance and the Allen Park Section 52-913 framework (Auerbach) — the comparison between the two documents shows how CWA adjusts its approach by client. As of Aug 14, 2026, no minutes, vote result, or news coverage confirms whether the Commission approved, amended, or tabled the draft — flag as hearing-held-outcome-pending, not as adopted. UPDATE 2026-10-26: the outcome-pending note above is SUPERSEDED. The Aug 6 minutes (in the Oct 28 Board packet) show the PC voted 6-0 (Jaffer absent) to recommend the ordinance with three amendments: address flooding in the intent statement, add \"quality\" after \"water,\" and remove the PUD reference in B.2. Carlisle told the hearing the low-frequency noise limit was 45 dBC day / 35 night, \"stricter than other ordinances,\" and that several communities were waiting for Pittsfield to pass it as a statewide model.",
     "source": "https://www.wemu.org/wemu-news/2026-08-06/pittsfield-township-considering-zoning-amendments-to-address-data-centers",
     "sourceLabel": "WEMU, \"Pittsfield Township considering zoning amendments to address data centers,\" Aug 6, 2026"
    },
    {
-    "date": "2026-11-01",
+    "date": "2026-09-09",
+    "type": "protection",
+    "isNew": true,
+    "label": "Board public hearing and first reading, approved 7-0",
+    "detail": "The Board of Trustees holds a public hearing on ZOA #26-236 (High Resource Demand Facilities, new Sec. 40-11.51) and approves the first reading 7-0. Per the Board memo from Ben Carlisle, the ordinance limits these uses to the I-Industrial district as a conditional use, with Planning Commission review and Board approval.",
+    "sourceLabel": "Pittsfield Charter Township, Oct 28, 2026 Board packet (Carlisle memo, p. 323-324)"
+   },
+   {
+    "date": "2026-10-28",
     "type": "future",
-    "label": "⚠ Extended moratorium expires — ordinance must be adopted",
-    "detail": "Extended moratorium expires approximately November 2026. CWA-drafted ordinance must be adopted before this date or the township is exposed. With no pending application, Pittsfield has the luxury of getting it right — unlike Allen Park, where Solstice applied before any ordinance existed."
+    "isNew": true,
+    "label": "Board second reading and new public hearing; low-frequency noise limit loosened",
+    "detail": "Second reading of ZOA #26-236 and ZOA #26-237 (a general temporary-moratorium procedure), plus a public hearing on #26-236. Moved to the Community Center, 701 W. Ellsworth Rd, because of early voting, and not livestreamed. The packet redline shows the low-frequency noise limit raised from 45 dBC day / 35 dBC night to 65 dBC / 55 dBC, with a new 20 dB cap on the dBA-dBC gap. It also strikes the old by-right Data Processing and Computing Centers use (C-2, I, BD), limits the grid-reliability denial power to what does not conflict with MPSC rules, and exempts solar panels from equipment enclosure. Other changes made without redline marks: PUD path removed (conditional use in I-Industrial only), flood-risk and agricultural language, water flow calculations, and Fire Department and IFC requirements.",
+    "sourceLabel": "Pittsfield Charter Township, Oct 28, 2026 Board packet (ZOA #26-236 redline, pp. 303-320)"
+   },
+   {
+    "date": "2026-11-15",
+    "type": "future",
+    "label": "⚠ Extended moratorium expires Nov 15; ordinance must be adopted",
+    "detail": "UPDATE 2026-10-26: exact expiration confirmed as Nov 15, 2026 (Board extension approved May 13, 2026, effective May 19 through Nov 15, per the Oct 28 Board memo); this entry was previously dated ~Nov 1. Extended moratorium expires approximately November 2026. CWA-drafted ordinance must be adopted before this date or the township is exposed. With no pending application, Pittsfield has the luxury of getting it right — unlike Allen Park, where Solstice applied before any ordinance existed."
    }
   ]
  },
