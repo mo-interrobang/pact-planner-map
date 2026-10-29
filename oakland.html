@@ -482,7 +482,7 @@ body {
   <nav class="site-nav" aria-label="Site"><a href="index.html">Planner Map</a><a class="here" aria-current="page" href="oakland.html">Oakland County</a><a href="timeline.html">CWA Pattern Timeline</a><a href="cross-municipality-patterns.html">Metro Detroit Connections</a><a href="developers.html">Developer Tracker</a></nav>
   <h1>Oakland County — Data Center Watch <span class="cwa-badge" style="background:#34d399;">PROVEN vs UNPROVEN</span></h1>
   <p class="subtitle">A county-focused companion to the statewide map: what is documented (green), what is circulating unverified (red), when each fight moved, and where every municipality sits. Hover timeline events for detail — click a dot to pin the card and follow its source link.</p>
-  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-10-23 from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
+  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-10-29 from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
 </div>
 </div>
 
@@ -879,10 +879,10 @@ const COMMUNITIES = [
         date: "2026-10-26",
         type: "meeting",
         isNew: true,
-        label: "Planning Commission, Mon Oct 26, 2026, 7:00 PM (by 2nd/4th-Monday pattern; agenda unconfirmed)",
-        detail: "Regular date computed from the Commission's 2nd/4th Monday pattern. lyontwp.org blocks automated review, so whether the 6th Project Flex site plan is on this agenda has to be checked by hand.",
+        label: "Planning Commission, Mon Oct 26, 2026, 7:00 PM (held by pattern; outcome unconfirmed)",
+        detail: "Regular date computed from the Commission's 2nd/4th Monday pattern. lyontwp.org blocks automated review, so whether the 6th Project Flex site plan is on this agenda has to be checked by hand. UPDATE 2026-10-29: No agenda, minutes, or news coverage of this meeting found as of Oct 29. Outcome on the 6th site plan still unconfirmed.",
         source: "https://www.lyontwp.org/government/township_boards_and_commissions/planning_commission_.php",
-        alertNote: "Verrus submitted a 6th Project Flex site plan (Crain's, Oct 21, paywalled). Not confirmed whether it is on this agenda; check lyontwp.org by hand.",
+        alertNote: "Meeting date passed. Whether Verrus's 6th Project Flex site plan was heard is unconfirmed: no agenda, minutes, or coverage found as of Oct 29. Check lyontwp.org by hand.",
         sourceLabel: "Lyon Township, Planning Commission page"
       }
     ]
@@ -954,7 +954,7 @@ const COMMUNITIES = [
         date: "2026-10-27", type: "meeting", isNew: true,
         label: "PC Oct 27, 2026: 'Data Center Draft Ordinance Amendments' (Old Business 1), packet reviewed",
         detail: "UPDATE 2026-10-23 (3-week sweep): agenda posted Oct 21. Oct 20 memo from Township Planner Megan Masson-Minock (CWA drafting): subcommittee (Chair Galley, Trustee Sclesky, Commissioner Donato, Brandon Boucher) met Sept 10 and Oct 13 and edited two drafts; 'CWA will draft amendments for review by the Planning Commission at their November meeting' after Fire Department, Township Engineer and Township Attorney review. No vote requested Oct 27. Sept 22 minutes record proposed water standards, closed-loop CO2 refrigerant systems, 90 percent on-site renewable power, and developer responsibility for rate increases. Neither document mentions 8300 Andersonville. Original note: Subcommittee's revised draft returns to the full PC after circulating to the Fire Department, Township Engineer, and Township Attorney.",
-        alertNote: "Data-center ordinance amendments on the PC agenda (discussion only; CWA redraft due at the November PC).",
+        alertNote: "Held Oct 27, along with a joint special Township Board/PC meeting (confirmed on springfield-twp.us). Minutes not posted yet. CWA redraft due at the November PC.",
         source: "https://cms1files.revize.com/springfieldtwp/PC_Packet-October_2026.pdf", sourceLabel: "Springfield Township, Oct 2026 PC packet"
       },
       {
@@ -1441,7 +1441,7 @@ const COMMUNITIES = [
       {
         date: "2026-11-16", type: "meeting", isNew: true, packetChecked: true,
         label: "Next regular City Council meeting: Nov 16, 2026 (agenda not posted yet)",
-        detail: "Watch for the second reading of O-13-26 (Sec. 8.23 Data Centers), pending since the 6-0 first reading Sept 21.",
+        detail: "Watch for the second reading of O-13-26 (Sec. 8.23 Data Centers), pending since the 6-0 first reading Sept 21. UPDATE 2026-10-29: the city's Oct 19 recap confirms the only ordinance item that night was an unrelated corner-lot setback first reading (Ch. 138 Sec. 5.09.E.2); Sec. 8.23 was not mentioned.",
         alertNote: "Possible second reading of the data-center ordinance (Sec. 8.23).",
         source: "https://berkleymi.api.civicclerk.com/v1/Events", sourceLabel: "City of Berkley, CivicClerk events"
       },
@@ -2577,10 +2577,20 @@ const COMMUNITIES = [
         type: "meeting",
         isNew: true,
         packetChecked: true,
-        label: "Next PC meeting: Nov 12, 2026, 6:30 PM (agenda not posted yet)",
-        detail: "Per the Township's own 2026 PC schedule PDF, Nov 12 and Dec 10 are the only remaining 2026 meetings (Nov 26 and Dec 24 skipped for holidays). As of Oct 21 no Nov 12 agenda is posted and nothing confirms the data-center ordinance or overlay is on it. The moratorium expires Feb 2027.",
+        label: "PC meeting CANCELLED (Nov 12); replaced by special PC hearing Nov 16",
+        detail: "UPDATE 2026-10-29: The Township's Planning Commission page now marks the Nov 12 regular meeting cancelled, and a special meeting with the data-center public hearing is posted for Mon Nov 16 (see that event). SUPERSEDED original note: Per the Township's own 2026 PC schedule PDF, Nov 12 and Dec 10 are the only remaining 2026 meetings (Nov 26 and Dec 24 skipped for holidays). As of Oct 21 no Nov 12 agenda is posted and nothing confirms the data-center ordinance or overlay is on it. The moratorium expires Feb 2027.",
         source: "https://oxfordtwpmi.gov/planning-commission/",
         sourceLabel: "Oxford Township, Planning Commission page"
+      },
+      {
+        date: "2026-11-16",
+        type: "meeting",
+        isNew: true,
+        label: "SPECIAL PC meeting + PUBLIC HEARING: data-center ordinance and Data Center Overlay District, Mon Nov 16, 2026, 6:30 PM",
+        detail: "Daily sweep, 2026-10-29: agenda posted on the Township's Planning Commission page. Public hearing on (1) the data-center zoning text amendment package: data center definition, noise/vibration/EMI standards, special-land-use overlay rules (Sec. 5.41), suspension/revocation provisions, and new engineering and fire/life-safety appendices; and (2) a zoning map amendment creating a Data Center Overlay District on I-1/I-2 parcels along Xcelsior Dr, Hummer Lake Rd, Metamora Rd, and M-24. First scheduled hearing since the Sept 10 meeting sent the draft back to staff. The one-year moratorium (adopted Feb 11, 2026) expires Feb 2027.",
+        alertNote: "Public hearing on the data-center ordinance AND the new Data Center Overlay District map (I-1/I-2 along Xcelsior Dr, Hummer Lake Rd, Metamora Rd, M-24).",
+        source: "https://oxfordtwpmi.gov/planning-commission/",
+        sourceLabel: "Oxford Township, Planning Commission page (special meeting agenda)"
       }
     ]
   },
@@ -4681,7 +4691,7 @@ const OAKLAND = [
         data_center_notes: "UPDATED 2026-08-24 — MAJOR: (1) PLANNER FLIP TO CWA, mid-fight: Jan 12, 2026 special meeting approved a Carlisle/Wortman consulting agreement to run Building Department functions; then Mar 12, 2026 the board voted 7-0 to TERMINATE Giffels Webster and hire Carlisle/Wortman as planning consultant — Ben Carlisle presented personally, citing CWA experience with 'gravel mining and data centers'; Megan Masson-Minock (same CWA principal as Berkley) proposed as primary consultant; Supervisor Ric Davis championed the switch on rural-character/retainer-cost grounds. This happened with a data center moratorium, documented developer interest, AND the Levy mine application all pending. (2) MORATORIUM: 180-day data center moratorium passed early Jan 2026 (Detroit News 1/7/26; adoption meeting likely Dec 2025 — original resolution number still needed); Resolution 2026-09 (July 9, 2026) amends and EXTENDS it through Dec 10, 2026, with a revised draft ordinance to the PC and a possible August public hearing. (3) DEVELOPER INTEREST: pre-moratorium meetings with developers interested in an ~80-84 acre site off Andersonville Rd (Planet Detroit); township resident-Q&A page concedes 'a general inquiry, not a formal application'; township has NO municipal water/sewer. (4) Aug 25, 2026 PC agenda: 'Draft Data Center Zoning Ordinance Amendments' (old business) + Sheetz Final Site Plan (8500 Dixie Hwy) + Levy mine updates, all same night; the 30MB+ packet holds the draft ordinance — CHECK IT FOR CWA HRDF TEMPLATE FINGERPRINTS. UPDATE 2026-09-10 (sweep): Supervisor Ric Davis reported (Aug 26-27) the Andersonville Rd/White Lake Rd parcel owner previously eyed for data-center use now intends a 'high-end storage and office building' instead — that specific site appears off the table. Separately, the township received an Aug 18 resident letter urging stronger groundwater-protection language be added to the CWA draft ordinance (which covers both data centers and mining). (5) Separate fight: Burroughs Materials Co. (Levy-affiliated) 304-acre sand/gravel mine (244 ac Springfield + 60 ac Rose Twp) at 6651 Ormond Rd, wet-process, ~20 yrs, opposed by residents since mid-2025; preliminary site-plan review 5/19/25 was by then-planner Giffels Webster. Sources: https://www.springfield-twp.us/departments/clerk/minutes.php ; https://cms1files.revize.com/springfieldtwp/Minutes_TB_3-12-2026-FINAL.pdf (planner flip) ; https://cms1files.revize.com/springfieldtwp/July%202026%20-%20FINAL.pdf (Res 2026-09 extension) ; https://cms1files.revize.com/springfieldtwp/PC_Agenda_August_2026.pdf ; https://planetdetroit.org/2026/01/data-center-moratorium-northville/ ; https://www.springfield-twp.us/departments/supervisor/resident_questions.php ; https://www.sierraclub.org/michigan/southeast-michigan/blog/2025/09/springfield-twp-opposition-proposed-levy-burroughs-gravel",
         notes: "Planner confirmed via Mar 12, 2026 board minutes (7-0 vote replacing Giffels Webster with CWA); CWA also took over Building Dept functions Jan 12, 2026. Full minutes archive is public at springfield-twp.us/departments/clerk/minutes.php (revize CMS).",
         work_history: null,
-        sources: ["https://www.springfieldtwp.org/"]
+        sources: ["https://www.springfield-twp.us/"]
       },
 {
         id: 1649,
