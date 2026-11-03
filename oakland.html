@@ -482,7 +482,7 @@ body {
   <nav class="site-nav" aria-label="Site"><a href="index.html">Planner Map</a><a class="here" aria-current="page" href="oakland.html">Oakland County</a><a href="timeline.html">CWA Pattern Timeline</a><a href="cross-municipality-patterns.html">Metro Detroit Connections</a><a href="developers.html">Developer Tracker</a></nav>
   <h1>Oakland County — Data Center Watch <span class="cwa-badge" style="background:#34d399;">PROVEN vs UNPROVEN</span></h1>
   <p class="subtitle">A county-focused companion to the statewide map: what is documented (green), what is circulating unverified (red), when each fight moved, and where every municipality sits. Hover timeline events for detail — click a dot to pin the card and follow its source link.</p>
-  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-10-29 from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
+  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Compiled 2026-08-24, updated 2026-11-02 from official minutes, agendas, court filings, and press — every green card links to its source. Red cards state what evidence would settle them.</div>
 </div>
 </div>
 
@@ -895,6 +895,13 @@ const COMMUNITIES = [
     cwaStatus: "active",
     statusLabel: "CWA — HIRED MID-FIGHT",
     events: [
+      {
+        date: "2026-11-17", type: "meeting", isNew: true,
+        label: "Regular PC meeting Nov 17, 2026, 7:00 PM: CWA data-center redraft due",
+        detail: "Month sweep, 2026-11-02: per the Oct 20 subcommittee memo in the Oct 27 PC packet, CWA's revised data-center amendments (after Fire Dept., Engineer and Attorney review) go to the full PC Nov 17, with cross-referenced text and a changes-from-August list. No public hearing date set; draft to be posted for public review first. The Oct 27 joint Board/PC special session was a roles-and-procedures training, not a data-center item. Moratorium expires Dec 10, 2026.",
+        alertNote: "CWA data-center ordinance redraft goes to the full Planning Commission.",
+        source: "https://www.springfield-twp.us/departments/clerk/public_notices.php", sourceLabel: "Springfield Township public notices"
+      },
       {
         date: "2025-05-19", type: "developer",
         label: "Levy/Burroughs 304-acre gravel mine review",
@@ -2623,7 +2630,8 @@ const COMMUNITIES = [
         type: "meeting",
         isNew: true,
         label: "SPECIAL PC meeting + PUBLIC HEARING: data-center ordinance and Data Center Overlay District, Mon Nov 16, 2026, 6:30 PM",
-        detail: "Daily sweep, 2026-10-29: agenda posted on the Township's Planning Commission page. Public hearing on (1) the data-center zoning text amendment package: data center definition, noise/vibration/EMI standards, special-land-use overlay rules (Sec. 5.41), suspension/revocation provisions, and new engineering and fire/life-safety appendices; and (2) a zoning map amendment creating a Data Center Overlay District on I-1/I-2 parcels along Xcelsior Dr, Hummer Lake Rd, Metamora Rd, and M-24. First scheduled hearing since the Sept 10 meeting sent the draft back to staff. The one-year moratorium (adopted Feb 11, 2026) expires Feb 2027.",
+        detail: "Daily sweep, 2026-10-29: agenda posted on the Township's Planning Commission page. Public hearing on (1) the data-center zoning text amendment package: data center definition, noise/vibration/EMI standards, special-land-use overlay rules (Sec. 5.41), suspension/revocation provisions, and new engineering and fire/life-safety appendices; and (2) a zoning map amendment creating a Data Center Overlay District on I-1/I-2 parcels along Xcelsior Dr, Hummer Lake Rd, Metamora Rd, and M-24. First scheduled hearing since the Sept 10 meeting sent the draft back to staff. The one-year moratorium (adopted Feb 11, 2026) expires Feb 2027. UPDATE 2026-11-02 (month sweep): packet now posted. Venue: Oxford High School Performing Arts Center. Carlisle/Wortman memo (Matteo Passalacqua and Benny Bono) dated Oct 27; overlay is smaller than the Sept 10 version. Standards include a 300 ft residential setback, closed-loop cooling with at least 50% non-potable water, PUE 1.2 or less, 1-mile well analysis, low-frequency noise limits, 125% decommissioning security.",
+        packet: "https://oxfordtwpmi.gov/wp-content/uploads/2026/10/November-16-2026-PC-Meeting-Packet.pdf",
         alertNote: "Public hearing on the data-center ordinance AND the new Data Center Overlay District map (I-1/I-2 along Xcelsior Dr, Hummer Lake Rd, Metamora Rd, M-24).",
         source: "https://oxfordtwpmi.gov/planning-commission/",
         sourceLabel: "Oxford Township, Planning Commission page (special meeting agenda)"
@@ -2885,12 +2893,24 @@ const COMMUNITIES = [
     planner: "Jeffrey Polkowski, AICP",
     title: "In-House (City Staff)",
     cwaStatus: "none",
-    statusLabel: "NON-CWA",
+    statusLabel: "NON-CWA — MORATORIUM (MAR 23, 2026); EXTENSION UNCONFIRMED",
     events: [
       {
+        date: "2026-03-23", type: "protection", isNew: true,
+        label: "Board adopts six-month data-center moratorium",
+        detail: "Month sweep, 2026-11-02: Waterford's Board adopted a six-month moratorium on new data centers to study impacts (township archive item; Citizen Portal summary). Set to expire about Oct 1, 2026.",
+        source: "https://www.waterfordmi.gov/Archive.aspx?ADID=1696", sourceLabel: "Waterford Township archive"
+      },
+      {
+        date: "2026-09-28", type: "meeting", isNew: true,
+        label: "Moratorium extension (Ord. 2026-Z-012) on Board agenda, outcome unconfirmed",
+        detail: "Month sweep, 2026-11-02: a Sept 4 staff memo recommended the Board introduce and possibly adopt Ordinance 2026-Z-012 and a resolution extending the moratorium six more months at its Sept 28 meeting, after a unanimous Aug 25 PC recommendation. The vote itself is not confirmed in any document found.",
+        source: "https://waterfordmi.gov/AgendaCenter/ViewFile/Item/11225?fileID=40369", sourceLabel: "Waterford Township staff memo, Sept 4, 2026"
+      },
+      {
         date: "2026-09-13", type: "community",
-        label: "No documented data-center activity",
-        detail: "No data-center moratorium, ordinance, or development proposal found on the public record for Waterford Township as of Sept 2026. Confirmed in-house Director of Development Services for Waterford Township."
+        label: "SUPERSEDED by the 2026-11-02 finding above: No documented data-center activity",
+        detail: "SUPERSEDED: the Mar 23, 2026 moratorium above was missed in this check. Original note: No data-center moratorium, ordinance, or development proposal found on the public record for Waterford Township as of Sept 2026. Confirmed in-house Director of Development Services for Waterford Township."
       },
       {
         date: "2026-07-10", type: "immigration", isNew: true,
