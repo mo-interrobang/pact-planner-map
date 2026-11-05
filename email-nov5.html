@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Allen Park Data Center Email</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* Layout: single civic-notice column, a stamped meeting slip on top, one big send block, the letter below */
+:root{
+  --bg:#f3f5f4; --surface:#ffffff; --fg:#17201c; --muted:#56635d; --line:#d3dbd7;
+  --accent:#1d5c46; --accent-fg:#ffffff; --warn:#8a4b0f;
+  --display:"Archivo",system-ui,sans-serif; --body:"Source Serif 4",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111715; --surface:#1a2320; --fg:#e6ece9; --muted:#9fb0a8; --line:#2e3b36;
+  --accent:#5fbf98; --accent-fg:#0d1512; --warn:#e3a65f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111715; --surface:#1a2320; --fg:#e6ece9; --muted:#9fb0a8; --line:#2e3b36;
+  --accent:#5fbf98; --accent-fg:#0d1512; --warn:#e3a65f; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+.wrap{max-width:680px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
+h1,h2,.label,button,.btn{font-family:var(--display)}
+.eyebrow{font-family:var(--display);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700}
+h1{font-size:clamp(28px,6vw,40px);line-height:1.1;margin:6px 0 10px;text-wrap:balance;font-weight:800}
+h2{font-size:18px;margin:0 0 10px;font-weight:700}
+p{margin:0}
+.slip{border:2px solid var(--fg);padding:14px 16px;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-family:var(--display);font-size:15px}
+.slip dt{color:var(--muted);font-weight:500}
+.slip dd{margin:0;font-weight:700}
+.send{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-block;text-decoration:none;font-weight:700;font-size:16px;padding:13px 18px;border-radius:4px;border:2px solid var(--accent);color:var(--accent);background:transparent;cursor:pointer}
+.btn.primary{background:var(--accent);color:var(--accent-fg)}
+.btn:focus-visible,button:focus-visible{outline:3px solid var(--warn);outline-offset:2px}
+.note{font-size:14px;color:var(--muted)}
+.field{display:flex;flex-direction:column;gap:6px}
+.label{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.copy{font-family:var(--display);font-size:13px;font-weight:700;padding:5px 10px;border-radius:4px;border:1px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer}
+.box{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:12px;font-size:15px;white-space:pre-wrap;word-break:break-word;user-select:all;min-width:0}
+.box.letter{font-size:16px;user-select:text}
+ul.who{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+ul.who li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 12px;border-bottom:1px solid var(--line);padding-bottom:6px;font-size:15px}
+ul.who span{color:var(--muted);font-family:var(--display);font-size:14px;word-break:break-all}
+.steps{margin:0;padding-left:20px;display:grid;gap:4px;font-size:15px}
+</style>
+<style>*{box-sizing:border-box}body{margin:0}</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Allen Park residents</div>
+    <h1>Can't make Thursday's meeting? Send this email instead.</h1>
+    <p>The Planning Commission is reviewing the draft data center ordinance. Your written comment counts. It takes two minutes.</p>
+  </header>
+
+  <dl class="slip">
+    <dt>What</dt><dd>Planning Commission, Item 9.1: Data Center / HRDF Ordinance</dd>
+    <dt>When</dt><dd>Thursday, November 5, 2026, 7:00 PM</dd>
+    <dt>Where</dt><dd>Allen Park City Hall, 15915 Southfield Rd, Allen Park, MI 48101</dd>
+  </dl>
+
+  <section class="send">
+    <h2>1. Open the email, already filled in</h2>
+    <div class="btns">
+      <a class="btn primary" id="gmail" href="#" target="_blank" rel="noopener">Open in Gmail</a>
+      <a class="btn" id="outlook" href="#" target="_blank" rel="noopener">Open in Outlook</a>
+      <a class="btn" id="mailto" href="#">Open my email app</a>
+    </div>
+    <ol class="steps">
+      <li>Add your name and street address at the bottom.</li>
+      <li>Change anything you like. Your own words carry more weight.</li>
+      <li>Hit Send.</li>
+    </ol>
+    <p class="note">Button didn't work? Use the copy buttons below and paste into any email.</p>
+  </section>
+
+  <section class="field">
+    <div class="label">To <button class="copy" data-copy="to">Copy addresses</button></div>
+    <div class="box" id="to"></div>
+  </section>
+
+  <section class="field">
+    <div class="label">Subject <button class="copy" data-copy="subject">Copy subject</button></div>
+    <div class="box" id="subject"></div>
+  </section>
+
+  <section class="field">
+    <div class="label">Message <button class="copy" data-copy="body">Copy message</button></div>
+    <div class="box letter" id="body"></div>
+  </section>
+
+  <section>
+    <h2>Who this goes to</h2>
+    <ul class="who" id="who"></ul>
+    <p class="note" style="margin-top:10px">The City Clerk forwards comments to the full Planning Commission. Planning commissioners are volunteers and don't have published city emails.</p>
+  </section>
+</div>
+
+<script>
+const PEOPLE = [
+  ["Mayor Gail McLeod","gmcleod@cityofallenpark.org"],
+  ["Mayor Pro Tem Nancy Knick","nknick@cityofallenpark.org"],
+  ["Councilman Gerald Barr Jr.","gbarr@cityofallenpark.org"],
+  ["Councilman Dan Loyd (also on Planning Commission)","dloyd@cityofallenpark.org"],
+  ["Councilman Gary Schlack","gschlack@cityofallenpark.org"],
+  ["Councilman Matthew Valerius","mvalerius@cityofallenpark.org"],
+  ["Councilman Ed Wurtzbacher","ewurtzbacher@cityofallenpark.org"],
+  ["City Clerk Michael Mizzi (for the Planning Commission)","mmizzi@cityofallenpark.org"],
+  ["City Planner Mike Auerbach","mauerbach@cwaplan.com"]
+];
+const TO = PEOPLE.map(p=>p[1]).join(", ");
+const SUBJECT = "Public comment for Nov 5 Planning Commission, Item 9.1 (Data Center Ordinance)";
+const BODY = `Dear Mayor, Council Members, and Planning Commissioners,
+
+I can't attend the November 5 Planning Commission meeting. Please accept this as my public comment on Item 9.1, the High Resource Demand Facility / Data Center ordinance, and include it in the record.
+
+Before this draft moves forward, please:
+
+- Fill in the electric demand limit. It still says "[PENDING]."
+- Put back a minimum lot size.
+- Remove the "no adverse impacts" exemption for small-scale data centers, or say exactly who decides and how.
+- Remove the new rule that lets noise limits go up near I-94, the Southfield Freeway, the rail lines and the airport.
+- Add renewable energy and efficiency requirements, like other communities have.
+- Include Melvindale High School, and every school, park, clinic and day care, in the 500-foot buffer.
+- Keep the stronger water, sewer, noise and 1,000-foot notice changes.
+
+The moratorium ends December 8. Please don't let that deadline rush an unfinished ordinance.
+
+Thank you,
+
+[Your name]
+[Your street address], Allen Park, MI 48101`;
+
+document.getElementById("to").textContent = TO;
+document.getElementById("subject").textContent = SUBJECT;
+document.getElementById("body").textContent = BODY;
+document.getElementById("who").innerHTML = PEOPLE.map(p=>`<li>${p[0]}<span>${p[1]}</span></li>`).join("");
+
+const toList = PEOPLE.map(p=>p[1]).join(",");
+const e = encodeURIComponent;
+document.getElementById("gmail").href = `https://mail.google.com/mail/?view=cm&fs=1&to=${e(toList)}&su=${e(SUBJECT)}&body=${e(BODY)}`;
+document.getElementById("outlook").href = `https://outlook.live.com/mail/0/deeplink/compose?to=${e(toList)}&subject=${e(SUBJECT)}&body=${e(BODY)}`;
+document.getElementById("mailto").href = `mailto:${toList}?subject=${e(SUBJECT)}&body=${e(BODY)}`;
+
+const SRC = {to:TO, subject:SUBJECT, body:BODY};
+document.querySelectorAll(".copy").forEach(b=>b.addEventListener("click",()=>{
+  const key=b.dataset.copy, label=b.textContent;
+  const done=()=>{b.textContent="Copied";setTimeout(()=>b.textContent=label,1500)};
+  const fallback=()=>{const r=document.createRange();r.selectNodeContents(document.getElementById(key));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="Selected. Press copy";setTimeout(()=>b.textContent=label,2500)};
+  try{navigator.clipboard.writeText(SRC[key]).then(done,fallback)}catch(err){fallback()}
+}));
+</script>
+</body>
+</html>
