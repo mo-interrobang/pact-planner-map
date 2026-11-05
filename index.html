@@ -835,6 +835,10 @@
             <input type="checkbox" id="toggle-itc-miso" />
             <span class="layer-row-label" style="color:#c084fc">🗼 ITC / MISO queue (Washtenaw + Wayne)</span>
           </label>
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-itc-copperton" />
+            <span class="layer-row-label" style="color:#fb923c">⚡ ITC Copperton 345 kV proposed routes (mid-MI)</span>
+          </label>
         </div>
       </div>
 
@@ -949,6 +953,7 @@
     <div class="legend-row"><div class="legend-dot" style="background:#14b8a6;transform:rotate(45deg);border-radius:1px"></div><span class="legend-label">Case in DTE territory</span></div>
     <div class="legend-row"><div class="legend-dot" style="background:#2563eb;transform:rotate(45deg);border-radius:1px"></div><span class="legend-label">Case in Consumers Energy territory</span></div>
     <div class="legend-row"><div class="legend-dot" style="background:#a855f7;border-radius:2px"></div><span class="legend-label">ITC / MISO queue point (dashed purple = schematic line)</span></div>
+    <div class="legend-row"><div class="legend-line" style="border-top:3px solid #f97316;width:18px"></div><span class="legend-label">ITC Copperton preliminary route segments: <span style="color:#f97316">Ludington</span> · <span style="color:#ec4899">Nelson Rd</span> · <span style="color:#22d3ee">Tittabawassee</span> (ITC's own GIS, loaded live; options, not final routes)</span></div>
     <div style="font-size:10px;color:#94a3b8;line-height:1.45;margin:4px 0 2px">Each popup tags items CONFIRMED or WATCH and names the source.<br>Sept 24, 2026 IRP: Detroit News says DTE's summary did not mention data centers; DTE said on its Q2 call the IRP base case includes Oracle and Google. Verify against filed text.<br>Fermi ring: Emergency planning only. No documented link to any data-center case, including Gibraltar, Frenchtown, Dundee.</div>
     <div class="legend-sep"></div>
     <div style="font-size:10px;color:#475569;line-height:1.5">
@@ -972,7 +977,7 @@
 // this one line, by hand, whenever MUNICIPALITIES changes. Every
 // "Updated"/"Last updated" label on the page reads from this one constant —
 // nothing else needs to be touched, and nothing else should be hand-edited.
-const LAST_UPDATED = "2026-11-02"; // format: YYYY-MM-DD — set this by hand on every data update
+const LAST_UPDATED = "2026-11-05"; // format: YYYY-MM-DD — set this by hand on every data update
 
 const FIRMS = {
   "Carlisle/Wortman Associates": { color: "#E53935", short: "CWA" },
@@ -34393,6 +34398,98 @@ ITC_POINTS.forEach(p => {
 });
 
 // ═══════════════════════════════════════════════════════════════
+//  ITC COPPERTON PROJECTS (345 kV, MISO LRTP Tranche 2.1) — added 2026-11-05
+//  Route segments load LIVE from ITC's public ArcGIS layer behind its interactive map
+//  (experience.arcgis.com/experience/ceb0ed96141d467e98a91bed2a6c63c0), so the map always
+//  shows ITC's current preliminary network. Substations are embedded. If the live load
+//  fails, schematic straight lines are drawn instead and labeled as such.
+// ═══════════════════════════════════════════════════════════════
+const ITC_CP_SVC = 'https://services.arcgis.com/04HiymDgLlsbhaV4/arcgis/rest/services/ITC_Experience/FeatureServer';
+const ITC_CP_PAGE = 'https://www.mifuturegrid.com/copperton-projects-2/';
+const ITC_CP_MAP = 'https://experience.arcgis.com/experience/ceb0ed96141d467e98a91bed2a6c63c0';
+const ITC_CP_PROJECTS = [
+  { layer: 4, key: 'LU', name: 'Copperton-Ludington', color: '#f97316', from: 'LUDINGTON', miles: '~159 mi',
+    desc: 'Ludington substation (Mason Co.) to Copperton substation (Midland Co.). 345 kV double-circuit. ITC adding 345 kV equipment at Copperton (also called Salt River).' },
+  { layer: 3, key: 'NR', name: 'Copperton-Nelson Road', color: '#ec4899', from: 'NELSON ROAD', miles: '~55 mi',
+    desc: 'Nelson Road substation (Gratiot Co.) to Copperton substation (Midland Co.). 345 kV double-circuit.' },
+  { layer: 2, key: 'TI', name: 'Copperton-Tittabawassee', color: '#22d3ee', from: 'TITTABAWASSEE', miles: '~40 mi',
+    desc: 'Tittabawassee substation to Copperton substation, both in Midland Co. 345 kV double-circuit.' }
+];
+const ITC_CP_SUBS = {
+  'COPPERTON':     { lat: 43.7332, lng: -84.5494, sub: 'Midland Co. · new 345 kV equipment (a.k.a. Salt River)' },
+  'TITTABAWASSEE': { lat: 43.5738, lng: -84.1814, sub: 'Midland Twp, Midland Co. · existing 345/138 kV' },
+  'NELSON ROAD':   { lat: 43.2108, lng: -84.8301, sub: 'near Carson City, Gratiot Co. · existing 345 kV' },
+  'LUDINGTON':     { lat: 43.8899, lng: -86.4414, sub: 'Ludington, Mason Co. · existing 345 kV' }
+};
+const ITC_CP_TIMELINE = [
+  ['CONFIRMED', 'Status', 'Early planning. Segments are preliminary and NOT filed with or approved by the MPSC. No final route chosen.'],
+  ['CONFIRMED', 'Parent program', 'MISO Long Range Transmission Plan Tranche 2.1 (approved Dec 2024).'],
+  ['CONFIRMED', 'Oct 5-22, 2026', 'Community Listening Sessions held. Landowners within 1 mile of a potential segment were mailed letters.'],
+  ['CONFIRMED', 'Nov 5, 2026', 'Online feedback survey deadline.'],
+  ['CONFIRMED', 'Spring 2027', 'Landowner open houses with route options.'],
+  ['CONFIRMED', 'Fall 2027', 'Public meetings on proposed and alternate routes, then ITC seeks MPSC siting authority (MPSC has 1 year to decide).']
+];
+function itcCpPopup(title, sub, items) {
+  return `<div style="max-width:350px;font-size:12px;line-height:1.4"><b>${dtefEsc(title)}</b>` +
+    (sub ? `<br><span style="color:#94a3b8">${dtefEsc(sub)}</span>` : '') +
+    items.map(it => `<div style="margin:5px 0;"><span style="color:${it[0] === 'CONFIRMED' ? '#4ade80' : '#fbbf24'};font-weight:700;font-size:10px;letter-spacing:.04em">${it[0]}</span> <b>${dtefEsc(it[1])}</b><br><span style="color:#cbd5e1;font-size:11px">${dtefEsc(it[2])}</span></div>`).join('') +
+    `</div>`;
+}
+const itcCoppertonLayer = L.layerGroup();
+let itcCpLoaded = false;
+function itcCpLinks() {
+  return `<div style="margin-top:5px;padding-top:4px;border-top:1px solid #334155;font-size:10.5px;color:#94a3b8">` +
+    `Source: <a href="${ITC_CP_PAGE}" target="_blank" rel="noopener" style="color:#60a5fa">mifuturegrid.com (ITC)</a> · ` +
+    `<a href="${ITC_CP_MAP}" target="_blank" rel="noopener" style="color:#60a5fa">ITC interactive map</a><br>Added Nov 5, 2026. Preliminary and subject to change per ITC.</div>`;
+}
+Object.entries(ITC_CP_SUBS).forEach(([name, s]) => {
+  const html = '<div style="width:16px;height:16px;border-radius:50%;background:#f97316;border:2px solid #f8fafc;box-shadow:0 0 0 2px #111827"></div>';
+  const mk = L.marker([s.lat, s.lng], { icon: dtefIcon(html, 16), zIndexOffset: 860 });
+  const projs = ITC_CP_PROJECTS.filter(p => name === 'COPPERTON' || p.from === name);
+  const items = projs.map(p => ['CONFIRMED', p.name + ' (' + p.miles + ')', p.desc]);
+  if (name === 'TITTABAWASSEE') items.push(['WATCH', 'Proximity only', 'About 3 mi from for-sale listing L02 (2700 S Saginaw Rd, Midland), which names data centers among suitable uses. No documented link.']);
+  mk.bindPopup(itcCpPopup('ITC Copperton: ' + name.charAt(0) + name.slice(1).toLowerCase() + ' substation', s.sub, items.concat(name === 'COPPERTON' ? ITC_CP_TIMELINE : [])) + itcCpLinks(), { className: 'dark-tooltip', maxWidth: 380 });
+  mk.bindTooltip(name + ' substation (ITC Copperton)', { direction: 'top', className: 'dark-tooltip' });
+  mk.addTo(itcCoppertonLayer);
+});
+function itcCpSchematic(note) {
+  const c = ITC_CP_SUBS['COPPERTON'];
+  ITC_CP_PROJECTS.forEach(p => {
+    const f = ITC_CP_SUBS[p.from];
+    L.polyline([[f.lat, f.lng], [c.lat, c.lng]], { color: p.color, weight: 3, opacity: 0.85, dashArray: '6, 6' })
+      .bindPopup(itcCpPopup(p.name + ' (schematic)', p.miles + ' · 345 kV', [['CONFIRMED', 'Project', p.desc], ['WATCH', 'Line shown', note]]) + itcCpLinks(), { className: 'dark-tooltip', maxWidth: 360 })
+      .addTo(itcCoppertonLayer);
+  });
+}
+async function loadItcCopperton() {
+  if (itcCpLoaded) return;
+  itcCpLoaded = true;
+  try {
+    const sa = await fetch(`${ITC_CP_SVC}/5/query?where=1%3D1&outFields=OBJECTID&outSR=4326&geometryPrecision=4&maxAllowableOffset=0.002&f=geojson`).then(r => r.json());
+    L.geoJSON(sa, { style: { color: '#f97316', weight: 1, opacity: 0.5, dashArray: '3, 5', fillColor: '#f97316', fillOpacity: 0.04 }, interactive: false }).addTo(itcCoppertonLayer);
+  } catch (e) { /* study area optional */ }
+  let ok = 0;
+  for (const p of ITC_CP_PROJECTS) {
+    try {
+      const gj = await fetch(`${ITC_CP_SVC}/${p.layer}/query?where=1%3D1&outFields=name,Notes&outSR=4326&geometryPrecision=5&maxAllowableOffset=0.0005&f=geojson`).then(r => r.json());
+      if (!gj.features || !gj.features.length) continue;
+      L.geoJSON(gj, {
+        style: { color: p.color, weight: 2.5, opacity: 0.85 },
+        onEachFeature: (f, lyr) => {
+          const pr = f.properties || {};
+          const items = [['CONFIRMED', 'Project', p.desc], ['CONFIRMED', 'Segment', (pr.name || 'unnamed') + ' (one option in ITC\'s preliminary network; ' + gj.features.length + ' segments on this project)']];
+          if (pr.Notes) items.push(['WATCH', 'Routing note in ITC\'s GIS data', pr.Notes]);
+          lyr.bindPopup(itcCpPopup(p.name + ' preliminary route segment', p.miles + ' · 345 kV double-circuit', items) + itcCpLinks(), { className: 'dark-tooltip', maxWidth: 360 });
+          lyr.bindTooltip(p.name + ' · ' + (pr.name || ''), { sticky: true, className: 'dark-tooltip' });
+        }
+      }).addTo(itcCoppertonLayer);
+      ok++;
+    } catch (e) { /* fall through */ }
+  }
+  if (!ok) itcCpSchematic('ITC\'s live route data could not be loaded, so a straight schematic line is shown. Open ITC\'s interactive map for real segments.');
+}
+
+// ═══════════════════════════════════════════════════════════════
 //  DATA CENTER SITES: individual properties, kept on their own layer (separate from municipality dots)
 //  Source: Michigan_Data_Center_Listings_Map sheet (Listings + Context Projects tabs), seen Oct 8, 2026.
 //  Street addresses geocoded Oct 9, 2026 (US Census / ArcGIS); see each popup for location accuracy.
@@ -35092,6 +35189,16 @@ document.getElementById('toggle-itc-miso').addEventListener('change', e => {
     map.flyTo([42.24, -83.6], 9, { duration: 1.2 });
   } else {
     itcMisoLayer.remove();
+  }
+});
+
+document.getElementById('toggle-itc-copperton').addEventListener('change', e => {
+  if (e.target.checked) {
+    itcCoppertonLayer.addTo(map);
+    loadItcCopperton();
+    map.flyTo([43.6, -85.3], 8, { duration: 1.2 });
+  } else {
+    itcCoppertonLayer.remove();
   }
 });
 
