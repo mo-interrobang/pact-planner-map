@@ -52,7 +52,7 @@ ul.who span{color:var(--muted);font-family:var(--display);font-size:14px;word-br
   <header>
     <div class="eyebrow">Allen Park residents</div>
     <h1>Can't make Thursday's meeting? Send this email instead.</h1>
-    <p>The Planning Commission is reviewing the draft data center ordinance. Your written comment counts. It takes two minutes.</p>
+    <p>The Planning Commission is reviewing the draft data center ordinance, and the moratorium runs out December 8. Your written comment counts. It takes two minutes.</p>
   </header>
 
   <dl class="slip">
@@ -82,6 +82,11 @@ ul.who span{color:var(--muted);font-family:var(--display);font-size:14px;word-br
   </section>
 
   <section class="field">
+    <div class="label">Cc <button class="copy" data-copy="cc">Copy Cc addresses</button></div>
+    <div class="box" id="cc"></div>
+  </section>
+
+  <section class="field">
     <div class="label">Subject <button class="copy" data-copy="subject">Copy subject</button></div>
     <div class="box" id="subject"></div>
   </section>
@@ -92,27 +97,32 @@ ul.who span{color:var(--muted);font-family:var(--display);font-size:14px;word-br
   </section>
 
   <section>
-    <h2>Who this goes to</h2>
+    <h2>To: Planning Commission</h2>
     <ul class="who" id="who"></ul>
-    <p class="note" style="margin-top:10px">The City Clerk forwards comments to the full Planning Commission. Planning commissioners are volunteers and don't have published city emails.</p>
+    <p class="note" style="margin-top:10px">Most planning commissioners are volunteers without published city emails. The City Clerk forwards comments to the full commission.</p>
+    <h2 style="margin-top:22px">Cc: City Council and city planner</h2>
+    <ul class="who" id="whocc"></ul>
   </section>
 </div>
 
 <script>
-const PEOPLE = [
+const TO_PEOPLE = [
+  ["Commissioner Dan Loyd (Planning Commission and City Council)","dloyd@cityofallenpark.org"],
+  ["City Clerk Michael Mizzi (forwards to the full Planning Commission)","mmizzi@cityofallenpark.org"]
+];
+const CC_PEOPLE = [
   ["Mayor Gail McLeod","gmcleod@cityofallenpark.org"],
   ["Mayor Pro Tem Nancy Knick","nknick@cityofallenpark.org"],
   ["Councilman Gerald Barr Jr.","gbarr@cityofallenpark.org"],
-  ["Councilman Dan Loyd (also on Planning Commission)","dloyd@cityofallenpark.org"],
   ["Councilman Gary Schlack","gschlack@cityofallenpark.org"],
   ["Councilman Matthew Valerius","mvalerius@cityofallenpark.org"],
   ["Councilman Ed Wurtzbacher","ewurtzbacher@cityofallenpark.org"],
-  ["City Clerk Michael Mizzi (for the Planning Commission)","mmizzi@cityofallenpark.org"],
   ["City Planner Mike Auerbach","mauerbach@cwaplan.com"]
 ];
-const TO = PEOPLE.map(p=>p[1]).join(", ");
+const TO = TO_PEOPLE.map(p=>p[1]).join(", ");
+const CC = CC_PEOPLE.map(p=>p[1]).join(", ");
 const SUBJECT = "Public comment for Nov 5 Planning Commission, Item 9.1 (Data Center Ordinance)";
-const BODY = `Dear Mayor, Council Members, and Planning Commissioners,
+const BODY = `Dear Planning Commissioners, Mayor, and Council Members,
 
 I can't attend the November 5 Planning Commission meeting. Please accept this as my public comment on Item 9.1, the High Resource Demand Facility / Data Center ordinance, and include it in the record.
 
@@ -126,7 +136,7 @@ Before this draft moves forward, please:
 - Include Melvindale High School, and every school, park, clinic and day care, in the 500-foot buffer.
 - Keep the stronger water, sewer, noise and 1,000-foot notice changes.
 
-The moratorium ends December 8. Please don't let that deadline rush an unfinished ordinance.
+Extend the moratorium. It ends December 8, and this ordinance is nowhere near finished. Key numbers are still blank, there are drafting errors, and it still needs a public hearing and two Council readings. Residents should not lose their protection because the city ran out of time. City Council: please put a moratorium extension on your next agenda and keep it in place until a complete ordinance is adopted.
 
 Thank you,
 
@@ -134,17 +144,21 @@ Thank you,
 [Your street address], Allen Park, MI 48101`;
 
 document.getElementById("to").textContent = TO;
+document.getElementById("cc").textContent = CC;
 document.getElementById("subject").textContent = SUBJECT;
 document.getElementById("body").textContent = BODY;
-document.getElementById("who").innerHTML = PEOPLE.map(p=>`<li>${p[0]}<span>${p[1]}</span></li>`).join("");
+const li=a=>a.map(p=>`<li>${p[0]}<span>${p[1]}</span></li>`).join("");
+document.getElementById("who").innerHTML = li(TO_PEOPLE);
+document.getElementById("whocc").innerHTML = li(CC_PEOPLE);
 
-const toList = PEOPLE.map(p=>p[1]).join(",");
+const toList = TO_PEOPLE.map(p=>p[1]).join(",");
+const ccList = CC_PEOPLE.map(p=>p[1]).join(",");
 const e = encodeURIComponent;
-document.getElementById("gmail").href = `https://mail.google.com/mail/?view=cm&fs=1&to=${e(toList)}&su=${e(SUBJECT)}&body=${e(BODY)}`;
-document.getElementById("outlook").href = `https://outlook.live.com/mail/0/deeplink/compose?to=${e(toList)}&subject=${e(SUBJECT)}&body=${e(BODY)}`;
-document.getElementById("mailto").href = `mailto:${toList}?subject=${e(SUBJECT)}&body=${e(BODY)}`;
+document.getElementById("gmail").href = `https://mail.google.com/mail/?view=cm&fs=1&to=${e(toList)}&cc=${e(ccList)}&su=${e(SUBJECT)}&body=${e(BODY)}`;
+document.getElementById("outlook").href = `https://outlook.live.com/mail/0/deeplink/compose?to=${e(toList)}&cc=${e(ccList)}&subject=${e(SUBJECT)}&body=${e(BODY)}`;
+document.getElementById("mailto").href = `mailto:${toList}?cc=${e(ccList)}&subject=${e(SUBJECT)}&body=${e(BODY)}`;
 
-const SRC = {to:TO, subject:SUBJECT, body:BODY};
+const SRC = {to:TO, cc:CC, subject:SUBJECT, body:BODY};
 document.querySelectorAll(".copy").forEach(b=>b.addEventListener("click",()=>{
   const key=b.dataset.copy, label=b.textContent;
   const done=()=>{b.textContent="Copied";setTimeout(()=>b.textContent=label,1500)};
