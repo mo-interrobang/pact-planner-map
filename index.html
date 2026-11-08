@@ -840,6 +840,10 @@
             <input type="checkbox" id="toggle-itc-copperton" />
             <span class="layer-row-label" style="color:#fb923c">⚡ ITC Copperton 345 kV proposed routes (mid-MI)</span>
           </label>
+          <label class="layer-row">
+            <input type="checkbox" id="toggle-gas-pipelines" />
+            <span class="layer-row-label" style="color:#f87171">🔥 Natural gas pipelines + MISO pipeline notices</span>
+          </label>
         </div>
       </div>
 
@@ -955,6 +959,7 @@
     <div class="legend-row"><div class="legend-dot" style="background:#2563eb;transform:rotate(45deg);border-radius:1px"></div><span class="legend-label">Case in Consumers Energy territory</span></div>
     <div class="legend-row"><div class="legend-dot" style="background:#a855f7;border-radius:2px"></div><span class="legend-label">ITC / MISO queue point (dashed purple = schematic line)</span></div>
     <div class="legend-row"><div class="legend-line" style="border-top:3px solid #f97316;width:18px"></div><span class="legend-label">ITC Copperton preliminary route segments: <span style="color:#f97316">Ludington</span> · <span style="color:#ec4899">Nelson Rd</span> · <span style="color:#22d3ee">Tittabawassee</span> (ITC's own GIS, loaded live; options, not final routes)</span></div>
+    <div class="legend-row"><div class="legend-line" style="border-top:3px solid #ef4444;width:18px"></div><span class="legend-label">Natural gas pipelines (EIA, loaded live): <span style="color:#ef4444">interstate</span> · <span style="color:#fca5a5">intrastate</span> (dashed). Bold = pipeline MISO monitors for gas-fired generators</span></div>
     <div style="font-size:10px;color:#94a3b8;line-height:1.45;margin:4px 0 2px">Each popup tags items CONFIRMED or WATCH and names the source.<br>Sept 24, 2026 IRP: Detroit News says DTE's summary did not mention data centers; DTE said on its Q2 call the IRP base case includes Oracle and Google. Verify against filed text.<br>Fermi ring: Emergency planning only. No documented link to any data-center case, including Gibraltar, Frenchtown, Dundee.</div>
     <div class="legend-sep"></div>
     <div style="font-size:10px;color:#475569;line-height:1.5">
@@ -978,7 +983,7 @@
 // this one line, by hand, whenever MUNICIPALITIES changes. Every
 // "Updated"/"Last updated" label on the page reads from this one constant —
 // nothing else needs to be touched, and nothing else should be hand-edited.
-const LAST_UPDATED = "2026-11-05"; // format: YYYY-MM-DD — set this by hand on every data update
+const LAST_UPDATED = "2026-11-08"; // format: YYYY-MM-DD — set this by hand on every data update
 
 const FIRMS = {
   "Carlisle/Wortman Associates": { color: "#E53935", short: "CWA" },
@@ -34491,6 +34496,116 @@ async function loadItcCopperton() {
 }
 
 // ═══════════════════════════════════════════════════════════════
+//  NATURAL GAS PIPELINES + MISO GAS PIPELINE NOTICES — added 2026-11-08
+//  MISO's Gas Pipeline page (misoenergy.org/markets-and-operations/notifications/gas-pipeline/)
+//  lists the interstate pipelines MISO watches because they fuel gas generators in its footprint,
+//  each pipeline's critical notices, and the generators on it. MISO publishes no line geometry
+//  (only a static PNG), so the routes come LIVE from EIA's pipeline layer (Esri Federal User
+//  Community feature service, checked monthly). The MISO notices and generator lists are a
+//  snapshot taken Nov 8, 2026; links go to the live notice boards.
+// ═══════════════════════════════════════════════════════════════
+const GAS_SVC = 'https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/Natural_Gas_Interstate_and_Intrastate_Pipelines_1/FeatureServer/0';
+const GAS_MISO_PAGE = 'https://www.misoenergy.org/markets-and-operations/notifications/gas-pipeline/';
+const GAS_MISO_PNG = 'https://cdn.misoenergy.org/ngpipelines_map631064.png';
+const GAS_EIA_PAGE = 'https://www.arcgis.com/home/item.html?id=9833ca6c8103490b8ad145a30f0522ee';
+// Michigan envelopes (Lower Peninsula, Upper Peninsula). Border segments in IN/OH/WI/Ontario can appear.
+const GAS_BOXES = ['-87.0,41.6,-82.3,45.9', '-90.5,45.0,-83.4,47.5'];
+// EIA operator name -> MISO pipeline abbreviation
+const GAS_OP_TO_MISO = {
+  'ANR Pipeline Co': 'ANR', 'ANR Storage Co': 'ANR', 'Great Lakes Gas Trans Co': 'GLGT',
+  'Northern Natural Gas Co': 'NNG', 'Natural Gas PL Co of Am': 'NGPL', 'Panhandle Eastern PL Co': 'PEPC',
+  'Vector Pipeline Co': 'VECTOR', 'Northern Border PL Co': 'NBPL', 'Trunkline Gas Co': 'TG',
+  'Viking Gas Transmission Co': 'VGT', 'NEXUS Gas Transmission': 'NXUS'
+};
+// MISO snapshot, Nov 8, 2026. notices: [posted, type, subject]
+const GAS_MISO = {
+  ANR: { name: 'ANR Pipeline Co.', board: 'https://ebb.anrpl.com/Notices/Notices.asp?sPipelineCode=ANR&sSubCategory=Critical',
+    gens: ['Acadia (1,107 MW)', 'Batesville (837 MW)', 'De Pere (196 MW)', 'Fox (520 MW)', 'Henry County (129 MW)', 'Lawrence County (261 MW)', 'Marshfield (60 MW)', 'Neenah (317 MW)', 'New Covert (1,080 MW)', 'Sheboygan Falls (300 MW)', 'West Marinette-MGE (88 MW)', 'West Marinette-WPS (200 MW)', 'Weston (82 MW)'],
+    notices: [['2026-11-05', 'Planned Service Outage', 'LIFTED CAPACITY REDUCTION Michigan Leg North – Bridgman Northbound'], ['2026-11-05', 'Planned Service Outage', 'LIFTED: CAPACITY REDUCTION Michigan Leg South - St. John Eastbound'], ['2026-11-05', 'Planned Service Outage', 'CAPACITY REDUCTION - Southeast Area – Eunice Compressor Station']], count: 123 },
+  GLGT: { name: 'Great Lakes Gas Transmission', board: 'https://www.tcplus.com/Great%20Lakes/Notice/Critical',
+    gens: ['Midland Cogen (1,710 MW)', 'Solway (50 MW)'],
+    notices: [['2026-11-06', 'Maintenance', 'UPDATED: CAPACITY REDUCTION GLGT – Emerson Eastbound'], ['2026-11-06', 'Planned Outage', 'MAINTENANCE SCHEDULE for Great Lakes Gas Transmission'], ['2026-11-02', 'Maintenance', 'UPDATED: CAPACITY REDUCTION GLGT – Emerson Eastbound']], count: 6 },
+  NNG: { name: 'Northern Natural Gas', board: 'http://www.northernnaturalgas.com/infopostings/Notices/Pages/Critical.aspx',
+    gens: ['Angus Anson (432 MW)', 'Black Dog (305 MW)', 'Blue Lake (343 MW)', 'Cambridge (190 MW)', 'Cannon Falls (356 MW)', 'Cottage Grove (273 MW)', 'Electrifarm (243 MW)', 'Elk River (220 MW)', 'Faribault (255 MW)', 'Fox Lake (88 MW)', 'Greater Des Moines (570 MW)', 'Grinnell (50 MW)', 'High Bridge (540 MW)', 'Inver Hills (428 MW)', 'Mankato (367 MW)', 'Pleasant Valley (493 MW)', 'River Hills (150 MW)', 'Riverside (624 MW)', 'Sycamore (190 MW)', 'Whitewater Cogen (257 MW)'],
+    notices: [['2026-10-30', 'Operational Flow Order', 'CARLTON RESOLUTION OBLIGATION'], ['2026-09-30', 'Force Majeure', 'UPDATE 9: FORCE MAJEURE - CARLTON AREA']], count: 3 },
+  NGPL: { name: 'Natural Gas Pipeline Co. of America', board: 'https://pipeline2.kindermorgan.com/Notices/Notices.aspx?type=C&code=NGPL',
+    gens: ['Freedom (47 MW)', 'Gibson City (270 MW)', 'Goose Creek (552 MW)', 'Grand Tower (506 MW)', 'Harry L Oswald (548 MW)', 'Holland Energy (710 MW)', 'Kinmundy (260 MW)', 'Pinckneyville (368 MW)', 'SummitLake (82 MW)'],
+    notices: [['2026-11-08', 'Pipeline Conditions', 'CURRENT PIPELINE CONDITIONS']], count: 50 },
+  NBPL: { name: 'Northern Border Pipeline', board: 'https://ebb.tceconnects.com/infopost/ReportViewer.aspx?/InfoPost/Notices&assetNbr=3029&CritFlag=1',
+    gens: ['Lakefield Junction (594 MW)'],
+    notices: [['2026-11-06', 'Operational Flow Order', 'LIFTED: Northern Border High Inventory OFO Watch (November 6, 2026)']], count: 25 },
+  VGT: { name: 'Viking Gas Transmission', board: 'https://dtmidstream.trellisenergy.com/ptms/public/infopost/getNotices.do?tspId=9&noticeCategoryId=308201',
+    gens: ['Elk Mound (70 MW)'],
+    notices: [['2026-11-06', 'Capacity Constraint', 'COMPLETE: Planned Service Outage – Milaca CS #2217 South Bound Flow']], count: 15 },
+  NXUS: { name: 'NEXUS Gas Transmission', board: 'https://infopost.enbridge.com/infopost/NoticesList.asp?pipe=NXUS&type=CRI',
+    gens: [],
+    notices: [['2026-09-08', 'Capacity Constraint', 'Nexus Customer Specific Operational Flow Order -- LIFTED -- 9/8'], ['2026-08-19', 'Capacity Constraint', 'Nexus Customer Specific Operational Flow Order -- EFF 8/20']], count: 2 },
+  PEPC: { name: 'Panhandle Eastern Pipe Line', board: null, gens: ['Alsey (120 MW)', 'Audrain (736 MW)', 'Interstate (134 MW)', 'Noblesville (310 MW)'], notices: [], count: 0 },
+  VECTOR: { name: 'Vector Pipeline', board: null, gens: ['Jackson (560 MW)'], notices: [], count: 0 },
+  TG: { name: 'Trunkline Gas', board: null, gens: ['Batesville (837 MW)', 'Raccoon Creek (368 MW)', 'Shelby (360 MW)'], notices: [], count: 0 }
+};
+const gasPipelinesLayer = L.layerGroup();
+let gasLoaded = false;
+function gasLinks() {
+  return `<div style="margin-top:5px;padding-top:4px;border-top:1px solid #334155;font-size:10.5px;color:#94a3b8">` +
+    `Routes: <a href="${GAS_EIA_PAGE}" target="_blank" rel="noopener" style="color:#60a5fa">EIA pipeline layer</a> (major transmission lines only, not local distribution mains; approximate alignment). ` +
+    `Notices: <a href="${GAS_MISO_PAGE}" target="_blank" rel="noopener" style="color:#60a5fa">MISO Gas Pipeline page</a> · ` +
+    `<a href="${GAS_MISO_PNG}" target="_blank" rel="noopener" style="color:#60a5fa">MISO pipeline map (image)</a><br>MISO snapshot Nov 8, 2026.</div>`;
+}
+function gasPopup(op, type, status) {
+  const abbr = GAS_OP_TO_MISO[op];
+  const m = abbr ? GAS_MISO[abbr] : null;
+  const items = [['CONFIRMED', 'Operator (EIA)', op + ' · ' + (type || 'type n/a') + (status ? ' · ' + status : '')]];
+  if (m) {
+    items.push(['CONFIRMED', 'MISO monitors this pipeline (' + abbr + ')', 'Listed on MISO\'s Gas Pipeline notifications page because it supplies gas generators in the MISO footprint.']);
+    if (m.gens.length) items.push(['CONFIRMED', 'Gas generators MISO lists on this pipeline', m.gens.join(', ')]);
+    if (m.notices.length) {
+      m.notices.forEach(n => items.push(['WATCH', n[0] + ' · ' + n[1], n[2]]));
+      items.push(['CONFIRMED', 'Notice count', m.count + ' notices in MISO\'s feed as of Nov 8, 2026 (latest shown above). Check the live board for current status.']);
+    } else {
+      items.push(['WATCH', 'Notices', 'No notices for this pipeline in MISO\'s feed on Nov 8, 2026.']);
+    }
+  } else {
+    items.push(['WATCH', 'MISO', 'Not on MISO\'s monitored-pipeline list. Shown from EIA data only.']);
+  }
+  const board = m && m.board ? `<div style="font-size:10.5px;margin-top:3px"><a href="${m.board}" target="_blank" rel="noopener" style="color:#60a5fa">Live critical notices (${dtefEsc(m.name)})</a></div>` : '';
+  return itcCpPopup(op, (type || '') + ' natural gas pipeline', items) + board + gasLinks();
+}
+async function loadGasPipelines() {
+  if (gasLoaded) return;
+  gasLoaded = true;
+  let ok = 0;
+  const seen = new Set();
+  for (const box of GAS_BOXES) {
+    try {
+      const url = `${GAS_SVC}/query?where=1%3D1&geometry=${box}&geometryType=esriGeometryEnvelope&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=FID,Operator,TYPEPIPE,Status&outSR=4326&geometryPrecision=4&maxAllowableOffset=0.002&f=geojson`;
+      const gj = await fetch(url).then(r => r.json());
+      if (!gj.features || !gj.features.length) continue;
+      gj.features = gj.features.filter(f => { const id = f.properties && f.properties.FID; if (seen.has(id)) return false; seen.add(id); return true; });
+      L.geoJSON(gj, {
+        style: f => {
+          const p = f.properties || {};
+          const inter = p.TYPEPIPE === 'Interstate';
+          const miso = !!GAS_OP_TO_MISO[p.Operator];
+          return { color: inter ? '#ef4444' : '#fca5a5', weight: miso ? 3 : (inter ? 2 : 1.5), opacity: 0.85, dashArray: inter ? null : '5, 4' };
+        },
+        onEachFeature: (f, lyr) => {
+          const p = f.properties || {};
+          lyr.bindPopup(gasPopup(p.Operator || 'Operator not listed', p.TYPEPIPE, p.Status), { className: 'dark-tooltip', maxWidth: 380 });
+          lyr.bindTooltip('🔥 ' + (p.Operator || 'Gas pipeline') + (GAS_OP_TO_MISO[p.Operator] ? ' (MISO-monitored)' : ''), { sticky: true, className: 'dark-tooltip' });
+        }
+      }).addTo(gasPipelinesLayer);
+      ok++;
+    } catch (e) { /* try next box */ }
+  }
+  if (!ok) {
+    gasLoaded = false;
+    L.popup({ className: 'dark-tooltip' }).setLatLng(map.getCenter())
+      .setContent('<div style="font-size:12px">The EIA pipeline data could not be loaded right now. Toggle the layer again to retry.</div>' + gasLinks()).openOn(map);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
 //  DATA CENTER SITES: individual properties, kept on their own layer (separate from municipality dots)
 //  Source: Michigan_Data_Center_Listings_Map sheet (Listings + Context Projects tabs), seen Oct 8, 2026.
 //  Street addresses geocoded Oct 9, 2026 (US Census / ArcGIS); see each popup for location accuracy.
@@ -35200,6 +35315,15 @@ document.getElementById('toggle-itc-copperton').addEventListener('change', e => 
     map.flyTo([43.6, -85.3], 8, { duration: 1.2 });
   } else {
     itcCoppertonLayer.remove();
+  }
+});
+
+document.getElementById('toggle-gas-pipelines').addEventListener('change', e => {
+  if (e.target.checked) {
+    gasPipelinesLayer.addTo(map);
+    loadGasPipelines();
+  } else {
+    gasPipelinesLayer.remove();
   }
 });
 
