@@ -994,6 +994,7 @@ const FIRMS = {
   "SafeBuilt":                   { color: "#92400e", short: "SafeBuilt" },
   "Macomb County Planning":      { color: "#0f766e", short: "Co. Plan." },
   "In-House (City Staff)":       { color: "#475569", short: "In-House" },
+  "In-House (Township Staff)":   { color: "#475569", short: "In-House" },
   "Fishbeck":                    { color: "#00ACC1", short: "Fishbeck" },
   "Rowe Professional Services":  { color: "#FF7043", short: "Rowe" },
   "Wade Trim":                   { color: "#26A69A", short: "Wade Trim" },
@@ -35130,7 +35131,7 @@ function getFilteredData() {
   const search = currentSearch.toLowerCase();
   const filtered = MUNICIPALITIES.filter(m => {
     // Firm filter
-    const firmKey = m.cwa_alumni ? "CWA Alumni / In-House" : (m.firm || "Unknown");
+    const firmKey = m.cwa_alumni ? "CWA Alumni / In-House" : (FIRMS[m.firm] ? m.firm : "Unknown");
     if (!activeFirms.has(firmKey)) return false;
 
     // DC only toggle
