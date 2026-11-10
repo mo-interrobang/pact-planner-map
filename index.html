@@ -983,7 +983,7 @@
 // this one line, by hand, whenever MUNICIPALITIES changes. Every
 // "Updated"/"Last updated" label on the page reads from this one constant —
 // nothing else needs to be touched, and nothing else should be hand-edited.
-const LAST_UPDATED = "2026-11-08"; // format: YYYY-MM-DD — set this by hand on every data update
+const LAST_UPDATED = "2026-11-10"; // format: YYYY-MM-DD — set this by hand on every data update
 
 const FIRMS = {
   "Carlisle/Wortman Associates": { color: "#E53935", short: "CWA" },
@@ -1845,10 +1845,10 @@ const MUNICIPALITIES = [
         cwa_flag: true,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "UPDATED 2026-08-04: At the Dec 15, 2025 Planning Commission meeting, CWA planner John Enos personally raised data centers as an 'emerging land use issue,' warned they're currently permitted BY RIGHT in office/commercial/industrial districts (\"difficult to deny\"), cited neighboring Huron Township's moratorium as a model, and recommended reclassifying data centers to a Special Land Use (\"easier to regulate and/or deny\"). PC voted 7-0 recommending Council investigate a 6-month moratorium. No confirmed Council action or draft ordinance text found as of Aug 2026 — Romulus does not appear on statewide moratorium trackers yet. This is CWA's own planner personally initiating the moratorium/reclassification playbook, ahead of any live proposal — an early-stage version of the pattern documented elsewhere. UPDATE 2026-09-10 (Wayne County doc audit): Feb 4, 2026 PC minutes reference an upcoming board seminar workshop on data centers. Feb 18, 2026 PC minutes show CWA's Feb 9, 2026 review supporting final approval of the Bradford Airport Logistics rezoning (11.88 acres, C-3 Highway Business to M-2 General Industrial, described as airport logistics/distribution rather than data-center use specifically) -- part of the same Dec 15, 2025 rezoning docket alongside the Merriman School property rezoning (residential to M-1 Light Industrial, self-storage; postponed). Sources: https://www.romulusgov.com/AgendaCenter/ViewFile/Minutes/_02042026-321, https://www.romulusgov.com/AgendaCenter/ViewFile/Minutes/_02182026-324 CROSS-SITE 2026-10-05: Romulus sits on the Detroit Region Aerotropolis board, which heard a DTE presentation on data center developments Mar 5, 2026. Enos's Dec 2025 reference to Huron Twp's moratorium points to a neighbor with a 2023 regional finalist data center site (see Huron Charter Twp).",
+        data_center_notes: "UPDATED 2026-08-04: At the Dec 15, 2025 Planning Commission meeting, CWA planner John Enos personally raised data centers as an 'emerging land use issue,' warned they're currently permitted BY RIGHT in office/commercial/industrial districts (\"difficult to deny\"), cited neighboring Huron Township's moratorium as a model, and recommended reclassifying data centers to a Special Land Use (\"easier to regulate and/or deny\"). PC voted 7-0 recommending Council investigate a 6-month moratorium. No confirmed Council action or draft ordinance text found as of Aug 2026 — Romulus does not appear on statewide moratorium trackers yet. This is CWA's own planner personally initiating the moratorium/reclassification playbook, ahead of any live proposal — an early-stage version of the pattern documented elsewhere. UPDATE 2026-09-10 (Wayne County doc audit): Feb 4, 2026 PC minutes reference an upcoming board seminar workshop on data centers. Feb 18, 2026 PC minutes show CWA's Feb 9, 2026 review supporting final approval of the Bradford Airport Logistics rezoning (11.88 acres, C-3 Highway Business to M-2 General Industrial, described as airport logistics/distribution rather than data-center use specifically) -- part of the same Dec 15, 2025 rezoning docket alongside the Merriman School property rezoning (residential to M-1 Light Industrial, self-storage; postponed). Sources: https://www.romulusgov.com/AgendaCenter/ViewFile/Minutes/_02042026-321, https://www.romulusgov.com/AgendaCenter/ViewFile/Minutes/_02182026-324 CROSS-SITE 2026-10-05: Romulus sits on the Detroit Region Aerotropolis board, which heard a DTE presentation on data center developments Mar 5, 2026. Enos's Dec 2025 reference to Huron Twp's moratorium points to a neighbor with a 2023 regional finalist data center site (see Huron Charter Twp). UPDATE 2026-11-10 (Saginaw/Genesee + statewide sweep): City Council voted unanimously Nov 9, 2026 for a 180-day data-center moratorium, effective immediately. The draft covered only facilities needing 1 GW or more; Council amended it to cover data centers of any size. The resolution directs the Planning Commission to study how to measure electrical demand and environmental impacts and to consider zoning rules. Mayor Robert McCraight said the city has no data centers and no proposals; Councilmembers Kathleen Abdo and William Wadsworth raised an outright ban. This is the Council action CWA planner John Enos recommended to the PC in Dec 2025 (see above). Source: WDIV, Nov 9, 2026.",
         notes: "Carlisle/Wortman Associates serves as outside planning consultant. John Enos (Planning Consultant) and Douglas Lewan (Community Planner) from CWA were named in a September 2025 planning commission agenda for Future Land Use Map amendments and zoning reviews. City also has an in-house Planner, Carol Maise (phone: 734-955-4530). John Enos also serves Milan as planning consultant — same individual staffing multiple CWA clients.",
         work_history: "Carlisle/Wortman Associates (current)",
-        sources: ["romulusgov.com/209/Planning", "romulusgov.com/AgendaCenter September 2025 PC packet", "https://www.romulusgov.com/AgendaCenter/ViewFile/Minutes/_12152025-316", "Detroit Region Aerotropolis Development Corp. board minutes, Mar 5, 2026 (detroitaero.org)"]
+        sources: ["romulusgov.com/209/Planning", "romulusgov.com/AgendaCenter September 2025 PC packet", "https://www.romulusgov.com/AgendaCenter/ViewFile/Minutes/_12152025-316", "Detroit Region Aerotropolis Development Corp. board minutes, Mar 5, 2026 (detroitaero.org)", "https://www.clickondetroit.com/news/local/2026/11/10/romulus-approves-180-day-moratorium-on-data-centers/"]
       },
       {
         id: 44,
@@ -3800,10 +3800,11 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
-        data_center_case: false,
+        data_center_case: true,
+        data_center_notes: "NEW 2026-11-10 (Genesee sweep; action was Jan 2026, missing from map): Township Board imposed a 12-month moratorium on data-center applications around Jan 20-21, 2026 (Siting Radar/datacenterbans list Jan 21). Board can shorten or extend it. Purpose: give Township Attorney Anthony Chubb and Planning & Zoning Director Jeremy Smith time to draft zoning rules; the ordinance has no data-center definition. Chubb cited energy and water demand, especially in the master-planned \"tech village\" area. Superintendent Dennis Liimatta: no applications received. Supervisor Scott Bennett: \"We aren't saying no.\" Expires ~Jan 2027 unless extended; no draft ordinance found yet.",
         notes: "Jeremy Smith confirmed as Director of Planning and Zoning — in-house township staff. Chanel Sheofsky serves as clerical support. Planning & Zoning: 810-424-2600 ext. 2908. Among fastest-growing areas in Genesee County with active residential development along Dort Highway and M-54 corridor.",
         work_history: null,
-        sources: ["grandblanctwpmi.gov/289/Planning-Zoning", "grandblanctwpmi.gov/Directory.aspx?did=26"]
+        sources: ["grandblanctwpmi.gov/289/Planning-Zoning", "grandblanctwpmi.gov/Directory.aspx?did=26", "https://www.wnem.com/2026/01/22/grand-blanc-twp-passes-moratorium-data-centers/", "https://geneseecountyview.com/articles/news/gb-twp-board-imposes-12-month-moratorium-on-data-centers/"]
       },
       {
         id: 145,
@@ -3858,10 +3859,10 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "Planning Commission recommended a moratorium Jan 22, 2026; Board of Trustees approved 5-0 on Feb 17, 2026 — a 12-month temporary moratorium on establishing/operating data centers, directing staff to define \"data center,\" study impacts, and draft siting regulations (in effect as of July 2026).",
+        data_center_notes: "Planning Commission recommended a moratorium Jan 22, 2026; Board of Trustees approved 5-0 on Feb 17, 2026 — a 12-month temporary moratorium on establishing/operating data centers, directing staff to define \"data center,\" study impacts, and draft siting regulations (in effect as of July 2026). UPDATE 2026-11-10 (Saginaw/Genesee + statewide sweep): Feb 17, 2026 board minutes confirm Ordinance No. 867 adopted on second reading (introduced Feb 3); yes votes Lorraine, Krug, Tucker, Goupil, Reid; Clark and Kesler absent. It can be lifted early if zoning amendments pass. Planning Commission reviewed draft data-center zoning amendment ZO26-001 on Apr 23, 2026 (Zoning Administrator memo Apr 17). Adoption of the zoning amendment not confirmed. Moratorium runs to ~Feb 2027 unless extended.",
         notes: "Township surrounding Fenton City in south Genesee County. Planning consultant not confirmed. Active residential growth from Livingston County spillover. | mdeem@fentontownship.org, (810) 629-1537 x8.",
         work_history: null,
-        sources: ["Fenton Township website", "https://tctimes.com/articles/news/fenton-township-approves-moratorium-on-data-centers/"]
+        sources: ["Fenton Township website", "https://tctimes.com/articles/news/fenton-township-approves-moratorium-on-data-centers/", "https://www.fentontownship.org/media/15346", "https://www.fentontownship.org/media/16021"]
       },
       {
         id: 148,
@@ -3896,10 +3897,11 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
-        data_center_case: false,
+        data_center_case: true,
+        data_center_notes: "NEW 2026-11-10 (Genesee sweep; action was Feb 2026): Township Board voted unanimously Feb 9, 2026 for a moratorium of up to one year on renewable-energy uses broadly (large solar, crypto and similar), prompted by data-center concerns. Attorney Bill Delzer: it would \"block any kind of renewable energy use in the township.\" BESS not mentioned. Expires ~Feb 2027 unless renewed. Also: Sept 14, 2026 Board heard a Flock Safety license-plate-reader presentation (WNEM).",
         notes: "Amy Bontempo of ROWE Professional Services (Flint-based, 540 S. Saginaw St.) confirmed as planning consultant — introduced at February 11, 2026 planning commission meeting with 'over 20 years of experience in planning in the public and private sector.' She replaced Matt Place who retired December 1, 2025 (announced at October 2, 2025 PC meeting). Bontempo actively guiding ordinance amendments through May and June 2026 meetings. ROWE is a Genesee County-based engineering and planning firm.",
         work_history: "Replaces Matt Place (retired Dec 1, 2025)",
-        sources: ["davisontwp-mi.gov planning commission minutes Oct 2025, Feb 2026, May 2026, June 2026", "rowepsc.com"]
+        sources: ["davisontwp-mi.gov planning commission minutes Oct 2025, Feb 2026, May 2026, June 2026", "rowepsc.com", "https://geneseecountyview.com/articles/news/board-passes-renewable-energy-use-moratorium/"]
       },
       {
         id: 150,
@@ -5878,10 +5880,10 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: true,
-        data_center_notes: "Proactive 6-month moratorium on all data center zoning enacted Jan 13, 2026 (no application pending; pre-emptive). Extended July 2026 by 6-3 council vote. Policy intent: direct data centers to brownfield/post-industrial sites. Council Member Carly Rose Hammond initiated. UPDATE 2026-10-06 (24-hr news sweep; vote itself was Sept 28-29, resurfaced in Michigan Advance's Oct 5 weekly roundup): City Council voted 8-0 to approve a permanent data-center zoning ordinance as the moratorium nears its end. Applicants must submit a good-neighbor policy, a water consumption and thermal management report, an electric and natural gas service report, and citizen participation measures. Sources: WNEM, Sept 29, 2026 -- https://www.wnem.com/2026/09/29/saginaw-approves-new-rules-future-data-centers-moratorium-nears-end/ ; Mid-Michigan Now -- https://midmichigannow.com/news/local/saginaw-city-council-passes-rules-on-data-centers-and-sets-approval-process",
+        data_center_notes: "Proactive 6-month moratorium on all data center zoning enacted Jan 13, 2026 (no application pending; pre-emptive). Extended July 2026 by 6-3 council vote. Policy intent: direct data centers to brownfield/post-industrial sites. Council Member Carly Rose Hammond initiated. UPDATE 2026-10-06 (24-hr news sweep; vote itself was Sept 28-29, resurfaced in Michigan Advance's Oct 5 weekly roundup): City Council voted 8-0 to approve a permanent data-center zoning ordinance as the moratorium nears its end. Applicants must submit a good-neighbor policy, a water consumption and thermal management report, an electric and natural gas service report, and citizen participation measures. Sources: WNEM, Sept 29, 2026 -- https://www.wnem.com/2026/09/29/saginaw-approves-new-rules-future-data-centers-moratorium-nears-end/ ; Mid-Michigan Now -- https://midmichigannow.com/news/local/saginaw-city-council-passes-rules-on-data-centers-and-sets-approval-process UPDATE 2026-11-10 (Saginaw/Genesee + statewide sweep): Ordinance detail (ABC12, Sept 29): data centers are now a special land use (zoning administrator review, Planning Commission approval); applicants must address water use, energy demand, noise, wastewater, emergency response and decommissioning; general 500 ft setback from residential; effective Oct 9, 2026. The moratorium stays in place through the end of 2026. A Sept 2026 resident town hall (panelist Jeff Guilfoyle, Public Sector Consultants) confirmed no proposal pending.",
         notes: "In-house Planning Department. Planner name not publicly listed on website.",
         work_history: null,
-        sources: ["https://www.wnem.com/2026/01/13/city-saginaw-placing-moratorium-data-centers/", "https://www.abc12.com/news/local/saginaw-moratorium-proactively-blocks-data-center-projects/article_7b230f5d-0639-443c-a499-1a5a281bad49.html", "https://www.wnem.com/2026/09/29/saginaw-approves-new-rules-future-data-centers-moratorium-nears-end/", "https://midmichigannow.com/news/local/saginaw-city-council-passes-rules-on-data-centers-and-sets-approval-process"]
+        sources: ["https://www.wnem.com/2026/01/13/city-saginaw-placing-moratorium-data-centers/", "https://www.abc12.com/news/local/saginaw-moratorium-proactively-blocks-data-center-projects/article_7b230f5d-0639-443c-a499-1a5a281bad49.html", "https://www.wnem.com/2026/09/29/saginaw-approves-new-rules-future-data-centers-moratorium-nears-end/", "https://midmichigannow.com/news/local/saginaw-city-council-passes-rules-on-data-centers-and-sets-approval-process", "https://www.abc12.com/news/local/saginaw-city-council-approves-new-data-center-regulations/article_0d50d8f3-10e2-4a82-8866-22c0fba884e0.html", "https://midmichigannow.com/news/local/saginaw-residents-learn-more-about-potential-impacts-of-a-data-center-during-townhall"]
       },
       {
         id: 251,
@@ -5897,11 +5899,11 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
-        data_center_case: false,
-        data_center_notes: null,
+        data_center_case: true,
+        data_center_notes: "NEW 2026-11-10 (Saginaw sweep): Data-center zoning text amendment Z-26-06 (definitions; CB-1 Campus Business and M-1 Science & Industry districts; special use permit standards). PC public hearing Sept 2, 2026; Board first reading Sept 14, 2026; adoption scheduled Sept 28, 2026 per the township Community Development page (adoption not independently confirmed). Defines types of data centers with guidelines for each (WNEM). No proposal pending found.",
         notes: "In-house planning staff includes Bill Schutt, Ray Hausbeck, and Rhanya Faulk. | COORDINATE CORRECTED 2026-09-11 (statewide close-pair audit): moved to Wikipedia infobox township centroid.",
         work_history: null,
-        sources: []
+        sources: ["https://www.saginawtownship.org/departments/community_development/index.php", "https://www.wnem.com/2026/09/14/live-wnem-morning-extra-saginaw-township-board-consider-data-center-zoning-rules/"]
       },
       {
         id: 252,
@@ -5958,10 +5960,10 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
-        data_center_notes: null,
+        data_center_notes: "WATCH 2026-11-10 (single tracker, unverified): Siting Radar lists a Village Council hearing notice for a data-center moratorium on Dec 1, 2026. Neighboring Chesaning Township adopted a 12-month moratorium May 7, 2026 (see Chesaning Township).",
         notes: "Rowe Incorporated credited on 2025 Master Plan. OHM Advisors may also have been involved in recent work. Planner name not confirmed.",
         work_history: null,
-        sources: []
+        sources: ["https://sitingradar.com/states/mi/moratoria"]
       },
       {
         id: 255,
@@ -6038,10 +6040,10 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
-        data_center_notes: null,
+        data_center_notes: "WATCH 2026-11-10 (single tracker, unverified): Siting Radar lists Blumfield Twp as having adopted a data-center moratorium; no date, minutes or news source found.",
         notes: "Sole practitioner; gmail-based contact per blumfieldtwp.org. No firm affiliation identified.",
         work_history: null,
-        sources: []
+        sources: ["https://sitingradar.com/states/mi/moratoria"]
       },
       {
         id: 259,
@@ -9722,10 +9724,10 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
-        data_center_notes: null,
+        data_center_notes: "WATCH 2026-11-10 (resident tip + verification): No data-center ordinance or moratorium found on record. Siting Radar lists a \"proposed\" moratorium with no vote outcome seen; the township website posts no agendas or minutes. Nearby infrastructure, verified: (1) Forest Waste Products Superfund site in Otisville (120 acres, landfill plus 9 former lagoons, NPL since 1983); EPA proposed an interim groundwater cleanup for 1,4-dioxane and vinyl chloride in May 2026 (public meeting May 20 at Forest Twp Hall, comments closed June 10). (2) EDF \"Otisville\" solar, 125 MW on 2,000+ acres around N. Belsay and E. Wilson Rds, in Thetford Twp reaching into Forest Twp, before the MPSC for state siting. (3) Consumers Energy's proposed 900+ MW gas plant in Thetford Twp (see Thetford Township). Context: Federal EO 14318 (July 23, 2025), Sec. 7(b), directs EPA to identify Brownfield and Superfund sites for use by data-center projects. No source found tying this Superfund cleanup to a data-center plan; resident concern only. Not verified: claimed nearby BESS, KWA pipeline work, Line 5 distance.",
         notes: "Minimal/community-events-focused site; no planning/zoning page found. Supervisor Mary Ann Price.",
         work_history: null,
-        sources: ["https://www.foresttwp.com"]
+        sources: ["https://www.foresttwp.com", "https://www.epa.gov/newsreleases/epa-proposes-cleanup-plan-forest-waste-products-superfund-site-otisville-michigan", "https://geneseecountyview.com/articles/news/epa-proposes-cleanup-plan-for-superfund-site-in-otisville/", "https://www.wnem.com/2026/04/21/residents-share-worries-about-proposed-solar-farm-genesee-co/", "https://www.govinfo.gov/content/pkg/FR-2025-07-28/html/2025-14212.htm", "https://sitingradar.com/states/mi/moratoria"]
       },
       {
         id: 445,
@@ -9762,7 +9764,7 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
-        data_center_notes: "UPDATE 2026-10-23 (3-week sweep): Siting Radar lists an Oct 13, 2026 Board first reading of a data-center item; agenda could not be opened. Not verified.",
+        data_center_notes: "UPDATE 2026-10-23 (3-week sweep): Siting Radar lists an Oct 13, 2026 Board first reading of a data-center item; agenda could not be opened. Not verified. UPDATE 2026-11-10 (Saginaw/Genesee + statewide sweep): Still unverified. Siting Radar continues to list it as \"proposed\" (Oct 13 first reading); no adoption, minutes or news found.",
         notes: "Kim Thompson (ZBA contact) and Melinda Walker (Planning Board contact) appear administrative, not a named planning director. (Firm listed as: In-House (tentative).)",
         work_history: null,
         sources: ["https://geneseetwpmi.gov/departments/zoning/", "https://sitingradar.com/data-center-moratoria"]
@@ -9821,11 +9823,11 @@ const MUNICIPALITIES = [
         status: "active",
         cwa_flag: false,
         cwa_alumni: false,
-        data_center_case: false,
-        data_center_notes: null,
+        data_center_case: true,
+        data_center_notes: "NEW 2026-11-10 (Genesee sweep): (1) Consumers Energy proposes a 900+ MW peaking natural-gas plant in Thetford Twp, part of its Sept 3, 2026 Energy Supply Plan (IRP) filed with the MPSC. Sept 29, 2026 town hall at the township hall: Consumers targets township and MPSC approval by Sept 2027, construction July 2028, operation Dec 2030; \"It will not be used every day\" (spokesperson Brian Wheeler). (2) EDF \"Otisville\" solar: 125 MW on 2,000+ acres around N. Belsay and E. Wilson Rds, reaching into Forest Twp, in MPSC state siting; supervisor urged residents to comment to the MPSC (Apr 2026). (3) MLive, Apr 21, 2026: township considering a data-center moratorium. A resident reports it has since been adopted; no minutes, notice or news confirming adoption found. Verify.",
         notes: "Notable pending item is a proposed EDF solar farm site plan, not a data center. (Firm listed as: Wade-Trim / IMPACT Municipal and Planning Consultants.)",
         work_history: null,
-        sources: ["https://thetfordtwpmi.gov/planning-commission/"]
+        sources: ["https://thetfordtwpmi.gov/planning-commission/", "https://www.abc12.com/news/local/thetford-township-residents-get-answers-on-proposed-natural-gas-plant/article_ca9dc8bd-11f2-4d30-aa0f-23cdb48a1b21.html", "https://www.wnem.com/2026/09/03/consumers-energy-announces-20-year-energy-plan-new-plants-mid-michigan/", "https://www.wnem.com/2026/04/21/residents-share-worries-about-proposed-solar-farm-genesee-co/", "https://now.solar/2026/04/22/with-solar-farm-decision-in-state-hands-thetford-township-considers-data-center-moratorium-mlive-com/"]
       },
       {
         id: 450,
@@ -28535,10 +28537,10 @@ const MUNICIPALITIES = [
         cwa_flag: false,
         cwa_alumni: false,
         data_center_case: false,
-        data_center_notes: null,
+        data_center_notes: "WATCH 2026-11-10 (single tracker, unverified): Siting Radar lists Frankenmuth Twp as having adopted a data-center moratorium; no date or primary source found. Caution: Frankenlust Twp (Bay Co.) got data-center zoning inquiry letters in Dec 2025, so this could be a name mix-up.",
         notes: "(989) 573-0196.",
         work_history: null,
-        sources: ["frankenmuthtwp.com/building-zoning/"]
+        sources: ["frankenmuthtwp.com/building-zoning/", "https://sitingradar.com/states/mi/moratoria"]
       },
       {
         id: 1384,
