@@ -483,7 +483,7 @@ body {
   <nav class="site-nav" aria-label="Site"><a href="index.html">Planner Map</a><a href="oakland.html">Oakland County</a><a class="here" aria-current="page" href="timeline.html">CWA Pattern Timeline</a><a href="cross-municipality-patterns.html">Metro Detroit Connections</a><a href="developers.html">Developer Tracker</a></nav>
   <h1>CWA Pattern — Michigan Communities vs. Data Center Developers <span class="cwa-badge">CARLISLE/WORTMAN ASSOCIATES</span></h1>
   <p class="subtitle">When each community was approached, who CWA placed as planner, and how each case unfolded. Hover events for full detail — click a dot to pin the card open and follow its source link.</p>
-  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Updated 2026-11-02. Merged with the Auerbach Line; Wixom, Troy and Berkley now sync from the Oakland County page; Romulus and Lenox Township lanes added; Allen Park brought through Sept 8. New entries are marked <span class="tt-new-badge" style="margin:0 4px;">NEW</span></div>
+  <div style="font-size:9px;color:var(--text-3);margin-top:6px;letter-spacing:0.04em;">Updated 2026-11-16 (Howell Township lane added: CWA-drafted, Green Oak lineage; Allen Park, Saline Twp and Lenox brought current). Merged with the Auerbach Line; Wixom, Troy and Berkley now sync from the Oakland County page; Romulus and Lenox Township lanes added; Allen Park brought through Sept 8. New entries are marked <span class="tt-new-badge" style="margin:0 4px;">NEW</span></div>
 </div>
 
 <div class="view-switch" role="tablist" aria-label="Timeline view">
@@ -633,6 +633,15 @@ const COMMUNITIES = [
   "cwaStatus": "terminated",
   "statusLabel": "TERMINATED",
   "events": [
+   {
+    "date": "2026-11-16",
+    "type": "legal",
+    "isNew": true,
+    "label": "Trustees reaffirm Oracle's 12-year, 50% abatement and move to establish the IDD",
+    "detail": "Saline Township trustees unanimously reaffirmed the 12-year, 50% tax abatement for the Oracle/OpenAI project and moved to establish an Industrial Development District, despite residents' objection that the IDD public hearing step was skipped (the basis of attorney Ellis Boal's STC objection). Meeting date not given in the summary found; plotted on the report date. STC meets Nov 17.",
+    "source": "https://www.yahoo.com/news/us/articles/michigan-data-centers-weekly-download-110054280.html",
+    "sourceLabel": "Michigan Advance Weekly Download, Nov 16, 2026 (citing Detroit News)"
+   },
    {
     "date": "2025-06-11",
     "type": "developer",
@@ -895,6 +904,15 @@ const COMMUNITIES = [
   "cwaStatus": "active",
   "statusLabel": "ACTIVE",
   "events": [
+   {
+    "date": "2026-11-10",
+    "type": "protection",
+    "isNew": true,
+    "label": "Council extends the data-center moratorium six more months (unanimous)",
+    "detail": "City Council voted unanimously Nov 10, 2026 to extend the June 9 moratorium by six months, after the PC recommended it Nov 5, to finish ordinance language on noise, water and electricity. New expiration date not stated in coverage; about June 2027 by inference.",
+    "source": "https://downriversundaytimes.com/2026/11/13/allen-park-city-council-adds-six-months-to-data-center-moratorium/",
+    "sourceLabel": "Downriver Sunday Times, Nov 13, 2026; Detroit News, Nov 12"
+   },
    {
     "date": "2026-11-05",
     "type": "future",
@@ -1739,6 +1757,15 @@ const COMMUNITIES = [
   "statusLabel": "ACTIVE",
   "events": [
    {
+    "date": "2026-11-16",
+    "type": "developer",
+    "isNew": true,
+    "label": "Public hearing on rezoning ~1,402 acres (applicant: Lenox and Chesterfield Economic Development Alliance LLC)",
+    "detail": "40+ parcel owners signed on; the conceptual plan shows about 10 buildings (~2M sq ft) plus an electrical substation. Supervisor Anthony Reeder Jr. says no site plan or project has been submitted, but MLive reports the applicant's attorneys previously wrote him that they were working to develop a data center campus in the township's development district. Outcome pending.",
+    "source": "https://www.wxyz.com/news/lenox-township-to-weigh-rezoning-of-1-402-acres-for-light-industrial-project-amid-data-center-fears",
+    "sourceLabel": "WXYZ, Nov 10, 2026; MLive via Michigan Advance"
+   },
+   {
     "date": "2024-01-01",
     "type": "developer",
     "label": "Developer first approaches Township under euphemisms",
@@ -1788,6 +1815,88 @@ const COMMUNITIES = [
     "detail": "Recall petitions are reported filed against four of Lenox Township's five sitting trustees.",
     "sourceLabel": "News reports, Aug 2026",
     "isNew": true
+   }
+  ]
+ },
+ {
+  "name": "Howell Township",
+  "county": "Livingston County",
+  "planner": "Paul Montagno",
+  "title": "Principal, CWA (with Brady Heath, Township Planner)",
+  "cwaStatus": "active",
+  "statusLabel": "ACTIVE",
+  "events": [
+   {
+    "date": "2025-09-23",
+    "type": "community",
+    "isNew": true,
+    "label": "PC unanimously recommends denying the ~1,000-acre data center rezoning",
+    "detail": "After an eight-hour meeting with 500+ residents, the Planning Commission voted to recommend denial of Randee LLC's rezoning for a reported Meta hyperscale campus. Township officials had signed NDAs with the developer.",
+    "source": "https://www.datacenterdynamics.com/en/news/1000-acre-data-center-campus-planned-outside-detroit-michigan-set-to-be-blocked/",
+    "sourceLabel": "Data Center Dynamics"
+   },
+   {
+    "date": "2025-11-20",
+    "type": "protection",
+    "isNew": true,
+    "label": "Board adopts six-month moratorium; developer withdraws in December",
+    "detail": "Unanimous six-month moratorium (with a waiver clause). The developer withdrew the proposal Dec 8, 2025.",
+    "source": "https://www.whmi.com/news/article/49159",
+    "sourceLabel": "WHMI, Nov 21, 2025"
+   },
+   {
+    "date": "2025-12-14",
+    "type": "community",
+    "isNew": true,
+    "label": "Resident Research Committee (RRC) begins submitting research to the PC",
+    "detail": "The RRC's first letters (Dec 13-14, 2025) open about 11 months of resident drafting work alongside CWA.",
+    "source": "https://www.howelltownshipmi.org/contentfiledata/download/279",
+    "sourceLabel": "RRC letter, Dec 14, 2025"
+   },
+   {
+    "date": "2026-03-31",
+    "type": "cwa-action",
+    "isNew": true,
+    "label": "'Re-organized CW Draft (with RRC Edits)': half-mile setbacks, 25% renewables",
+    "detail": "CWA's High Impact Land Use Overlay draft, reworked by the RRC. Table X set setbacks from residential and sensitive parcels at 1,500 ft (medium), 2,000 ft (major), 2,640 ft (campus); 25% renewable minimum; PUE 1.2. The RRC's sources list says the purpose section was drawn from Green Oak Twp's CWA HRDF ordinance (Sec. 38-203).",
+    "source": "https://howelltownshipmi.org/wp-content/uploads/2026/05/Packet-5.12.26.pdf",
+    "sourceLabel": "PC Subcommittee packet, May 12, 2026"
+   },
+   {
+    "date": "2026-05-07",
+    "type": "cwa-action",
+    "isNew": true,
+    "label": "CWA memo (Montagno, Heath) on incorporating RRC suggestions",
+    "detail": "CWA's Paul Montagno (Principal) and Brady Heath (Township Planner) send the PC and Data Center Subcommittee a revised 5/7/26 draft, noting many RRC suggestions were incorporated and others remain outstanding. Montagno also co-drafted Green Oak's adopted HRDF ordinance.",
+    "source": "https://www.howelltownshipmi.org/contentfiledata/download/302",
+    "sourceLabel": "CWA memo, May 7, 2026"
+   },
+   {
+    "date": "2026-10-13",
+    "type": "protection",
+    "isNew": true,
+    "label": "Board extends moratorium six months (to about late May 2027)",
+    "detail": "Unanimous extension past the Nov 20 expiration, ending sooner if permanent rules take effect.",
+    "source": "https://thelivingstonpost.com/howell-township-extends-data-center-moratorium/",
+    "sourceLabel": "Livingston Post, Oct 14, 2026"
+   },
+   {
+    "date": "2026-11-16",
+    "type": "cwa-action",
+    "isNew": true,
+    "label": "Hearing draft posted: setbacks cut to 200 ft from the overlay edge; renewable minimum dropped",
+    "detail": "The Nov 16 'CW HILU Draft with RRC Notes' replaces the March table's 1,500 to 2,640 ft residential setbacks with 200 ft from the overlay boundary plus the district minimum from property lines (RRC note: Industrial Flex can sit 50 ft from homes; RRC asks for +300/+500 ft). The 25% renewable minimum becomes 'encouraged.' Stronger elsewhere: 50% lot coverage, PUE 1.2 plus TUE/WUE caps, noise 55/50/40 in dBA, dBC and dBZ plus a 60 dBZ low-frequency cap, generator testing 9am-1pm, 150% bond. Same pattern as Wixom's August setback retreat. Separately, the township directed its attorney to draft an NDA ban for officials, staff and contractors.",
+    "source": "https://howelltownshipmi.org/wp-content/uploads/2026/11/2026.11.16-November-CW-HILU-Draft-with-RRC-Notes-Submittal.pdf",
+    "sourceLabel": "Howell Twp hearing draft, Nov 16, 2026"
+   },
+   {
+    "date": "2026-11-17",
+    "type": "future",
+    "isNew": true,
+    "label": "PC public hearing on the High Impact Land Use ordinance, 6:30 PM",
+    "detail": "Township Hall, 3525 Byron Rd. Not an adoption vote: PC action, county planning review and a Board vote still follow.",
+    "source": "https://thelivingstonpost.com/howell-township-sets-nov-17-hearing-on-data-center-ordinance/",
+    "sourceLabel": "Livingston Post, Oct 30, 2026"
    }
   ]
  }
