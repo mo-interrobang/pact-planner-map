@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Use the Planner Map</title>
+<style>
+  body{margin:0;background:#0f172a;color:#cbd5e1;font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.55;font-size:15px}
+  .wrap{max-width:820px;margin:0 auto;padding:32px 20px 60px}
+  h1{color:#f1f5f9;font-size:26px;margin:0 0 4px}
+  .sub{color:#94a3b8;margin:0 0 24px}
+  h2{color:#f1f5f9;font-size:18px;margin:32px 0 10px;padding-bottom:6px;border-bottom:1px solid #1e293b}
+  a{color:#60a5fa}
+  .back{display:inline-block;margin-bottom:20px;font-size:13px;text-decoration:none}
+  .warn{background:#422006;border:1px solid #92400e;color:#fde68a;border-radius:8px;padding:12px 16px;margin:0 0 8px}
+  ol.steps{padding-left:22px} ol.steps li{margin-bottom:8px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  td{padding:7px 10px;border-bottom:1px solid #1e293b;vertical-align:top}
+  td:first-child{white-space:nowrap;color:#f1f5f9;font-weight:600;width:1%}
+  .q{color:#f1f5f9;font-weight:600;margin:16px 0 2px}
+  .q + p{margin-top:2px}
+  .cwa{color:#f87171;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">&larr; Back to the map</a>
+<h1>How to Use the Planner Map</h1>
+<p class="sub">A five-minute guide to finding your community, reading what you see, and knowing what the map does and does not say.</p>
+
+<div class="warn"><strong>Start here:</strong> this is a research tool, not a verified directory. It is updated by hand from public records. Always check anything important against the municipality's own documents before you rely on it.</div>
+
+<h2>Quick start</h2>
+<ol class="steps">
+  <li><strong>Close the welcome notice.</strong> Click "I understand, take me to the map."</li>
+  <li><strong>Find your community.</strong> Type a city, township, village, planner name, or planning firm in the search box at the top left. The list and the map narrow as you type.</li>
+  <li><strong>Click a name in the list</strong> (or any dot on the map). The map zooms in and opens a details card.</li>
+  <li><strong>Read the details card.</strong> It shows who does planning for that community, the firm, flags, any data center case notes, research notes, and links to meeting documents where available.</li>
+  <li><strong>Turn on extra layers</strong> from the "Layers" menu on the map (power lines, pipelines, proposed sites, and more). They are off by default so the map stays readable.</li>
+</ol>
+
+<h2>The left sidebar</h2>
+<table>
+  <tr><td>Search box</td><td>Matches community, planner, or firm name.</td></tr>
+  <tr><td>Counters</td><td>Mapped, CWA Active, Data Center Cases, DTE Builds, BESS Cases. They update to match whatever is currently filtered.</td></tr>
+  <tr><td>Filter by Firm</td><td>Check or uncheck planning firms to show or hide their communities. "All" and "None" are shortcuts.</td></tr>
+  <tr><td>Sort</td><td>Alphabetical, data center cases first, or CWA communities first.</td></tr>
+  <tr><td>&#9888; CWA Only</td><td>Shows only communities that use Carlisle/Wortman Associates (CWA) as their planner.</td></tr>
+  <tr><td>Data Gaps</td><td>Communities where the planner is still unknown. Clicking it briefly highlights them in orange on the map.</td></tr>
+  <tr><td>&#11015; Export CSV</td><td>Downloads the full list as a spreadsheet.</td></tr>
+  <tr><td>Page buttons</td><td>Oakland County, CWA Timeline, Auerbach Line, Metro Detroit Connections, and Developer Tracker open related pages with more detail.</td></tr>
+</table>
+
+<h2>Reading the dots and icons</h2>
+<table>
+  <tr><td>Dot color</td><td>Which planning firm serves that community. The legend at the bottom right shows each color.</td></tr>
+  <tr><td><span class="cwa">Red outline / &#9888;</span></td><td>An active CWA client.</td></tr>
+  <tr><td>&#128310;</td><td>A former CWA planner now working in-house for the community ("CWA alumni").</td></tr>
+  <tr><td>&#9889;</td><td>The community has a data center case: a proposal, an ordinance, a moratorium, or a lawsuit. The details card explains which.</td></tr>
+  <tr><td>&#128268;</td><td>A DTE Energy build or proposal.</td></tr>
+  <tr><td>&#128267;</td><td>A battery energy storage (BESS) case. Hover the icon for the reason.</td></tr>
+  <tr><td>&#10005; / faded</td><td>The planning contract has ended.</td></tr>
+  <tr><td>Gray / "Unknown"</td><td>We have not confirmed who does the planning yet.</td></tr>
+  <tr><td>Lines between dots</td><td>Solid lines connect communities served by the same individual planner. Turn on "Same-firm network lines" to connect everyone served by the same firm.</td></tr>
+</table>
+
+<h2>The Layers menu</h2>
+<table>
+  <tr><td>Map Layers</td><td>Connection lines, plus "only" filters to show just data center, DTE, or BESS communities.</td></tr>
+  <tr><td>Power Grid</td><td>Major transmission lines and substations (345 kV and up), the DTE/Fermi overlay, ITC/MISO grid queue points, ITC's proposed Copperton routes, and natural gas pipelines. Some of these load live from outside sources and can take a few seconds.</td></tr>
+  <tr><td>Prediction Zones</td><td>Areas flagged as worth watching, such as the Grid Proximity Watch List. These are research watch areas, not confirmed projects.</td></tr>
+  <tr><td>Data Center Sites</td><td>Properties marketed for data centers, former data centers for sale, and proposed or active projects.</td></tr>
+  <tr><td>Risk Facilities</td><td>Existing large AI and data center operations in Michigan, for comparison.</td></tr>
+</table>
+<p>Popups on these layers label each item <strong>CONFIRMED</strong> or <strong>WATCH</strong> and name the source.</p>
+
+<h2>Common questions</h2>
+<p class="q">Does a dot mean a data center is coming to my town?</p>
+<p>No. Most dots simply show who does that community's planning. Only the &#9889; icon means there is a data center case, and the details card says what kind.</p>
+<p class="q">Why is my community marked CWA? Is that bad?</p>
+<p>It means CWA is the community's contracted planner. That alone is not wrongdoing. The map tracks it because CWA has drafted data center ordinances for many communities, and residents may want to compare those drafts. Read your own community's documents and decide for yourself.</p>
+<p class="q">Being near a power line or on a watch list means a project is planned?</p>
+<p>No. Grid layers and watch lists show where conditions could attract interest. They are not evidence of a proposal.</p>
+<p class="q">My community says "Unknown." Why?</p>
+<p>We could not confirm the planner from public records yet. If you know, please send a correction.</p>
+<p class="q">Something is wrong or out of date.</p>
+<p>Use the "Submit a Correction" button on the welcome notice. Include your source (a meeting agenda, minutes, or a contract) so the fix can be verified.</p>
+<p class="q">The map is slow or blank on my phone.</p>
+<p>It holds a lot of data. Give it a few seconds, or use a laptop or desktop for the best experience. Turning off layers you are not using helps.</p>
+<p class="q">Where do I find the actual documents?</p>
+<p>Many details cards have a "Meeting Documents" section with links. Otherwise, check your community's website for planning commission and council agendas, packets, and minutes.</p>
+</div>
+</body>
+</html>
