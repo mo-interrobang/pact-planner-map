@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data Center Risk Index</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+/* VOICE: plain working tool, matches the planner map site
+   IDEA: a dispatcher's board: the state lit up by exposure
+   PICTURE: the map itself, full height
+   COLOUR and TYPE: slate #0f172a ground, amber to red heat, Segoe UI/Arial
+   LAYOUT: map fills screen, side panel left; panel stacks under map on phones */
+:root{--bg:#0f172a;--panel:#111c33;--line:#334155;--ink:#e2e8f0;--mute:#94a3b8;--acc:#fbbf24;--blue:#60a5fa}
+*{box-sizing:border-box;min-width:0}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 'Segoe UI',Arial,sans-serif;display:flex;overflow:hidden}
+#side{width:340px;flex:none;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;height:100%}
+#side header{padding:16px 16px 10px;border-bottom:1px solid var(--line)}
+h1{font-size:20px;line-height:1.15;margin:0 0 6px}
+.sub{color:var(--mute);font-size:13px;margin:0}
+.ctrl{padding:10px 16px;border-bottom:1px solid var(--line);display:grid;gap:8px}
+.ctrl label{display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer}
+.ctrl input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc)}
+input[type=search]{width:100%;font:16px 'Segoe UI',Arial,sans-serif;padding:8px 10px;border-radius:6px;border:1px solid var(--line);background:#0b1326;color:var(--ink)}
+input:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.range{display:flex;align-items:center;gap:8px;font-size:13px}
+.range input{flex:1;accent-color:var(--acc)}
+.range b{width:2.2em;text-align:right}
+.legend{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mute)}
+.ramp{flex:1;height:10px;border-radius:5px;background:linear-gradient(90deg,#1e3a5f,#3b82f6,#fbbf24,#f97316,#dc2626)}
+#listhead{padding:10px 16px 4px;font-size:13px;color:var(--mute)}
+#list{overflow-y:auto;flex:1;padding:0 8px 12px}
+.row{display:grid;grid-template-columns:2.2em 1fr 3em;gap:6px;align-items:center;padding:7px 8px;border-radius:6px;cursor:pointer;border:0;background:none;color:inherit;font:inherit;text-align:left;width:100%}
+.row:hover,.row:focus-visible{background:#1c2a47;outline:none}
+.row .n{color:var(--mute);font-size:12px;text-align:right}
+.row .s{font-weight:700;text-align:right}
+.row small{display:block;color:var(--mute);font-size:12px}
+#map{flex:1;height:100%;background:#0b1222}
+.note{font-size:12px;color:var(--mute);padding:8px 16px;border-top:1px solid var(--line);margin:0;max-height:40vh;overflow:auto}.note summary{cursor:pointer;color:var(--ink);font-weight:600;padding:4px 0}.note p{margin:6px 0}
+.nav{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;margin-bottom:10px}.nav a{color:var(--blue);text-decoration:none}.nav a:hover{text-decoration:underline}
+.leaflet-container{font:13px 'Segoe UI',Arial,sans-serif;background:#0b1222}
+.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#111c33;color:var(--ink);border:1px solid var(--line)}
+.leaflet-popup-content{margin:12px 14px;min-width:240px}
+.pop h3{margin:0 0 2px;font-size:16px}
+.pop .meta{color:var(--mute);font-size:12px;margin-bottom:8px}
+.pop .big{font-size:26px;font-weight:700;line-height:1}
+.bar{display:grid;grid-template-columns:7.5em 1fr 2.6em;gap:6px;align-items:center;font-size:12px;margin:3px 0}
+.bar i{display:block;height:7px;border-radius:4px;background:#1e293b;position:relative;overflow:hidden}
+.bar i em{position:absolute;inset:0 auto 0 0;background:var(--acc)}
+.bar span:last-child{text-align:right;color:var(--mute);white-space:nowrap}
+.pop .st{margin-top:8px;font-size:12px}
+.tag{display:inline-block;background:#7f1d1d;color:#fecaca;border-radius:4px;padding:1px 6px;font-size:11px;margin-left:4px}
+.leaflet-tooltip{background:#111c33;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+@media(max-width:700px){body{flex-direction:column-reverse;overflow:auto;height:auto}#map{height:62vh;flex:none}#side{width:100%;height:auto;border-right:0}#list{max-height:50vh}}
+</style></head>
+<body>
+<aside id="side">
+<header><nav class="nav" aria-label="Site"><a href="index.html">Planner Map</a><a href="oakland.html">Oakland County</a><a href="timeline.html">CWA Timeline</a><a href="developers.html">Developer Tracker</a></nav><h1>Where Michigan towns are most exposed to data center siting</h1>
+<p class="sub">Weakness score 0 to 100 for 1,648 municipalities. Grid access, planning capacity, planner, nearby proposals, nearby listings, and protection gaps. Data as of Nov 22, 2026. Moratorium status for 127 towns comes from a Nov 22 search of trackers and news.</p></header>
+<div class="ctrl">
+<input type="search" id="q" placeholder="Find a municipality" aria-label="Find a municipality">
+<div class="range"><span>Min score</span><input type="range" id="min" min="0" max="90" step="5" value="40" aria-label="Minimum score"><b id="minv">40</b></div>
+<div class="legend"><span>Low</span><div class="ramp"></div><span>High</span></div>
+<label><input type="checkbox" id="tgt" checked> Ring towns that already have a named proposal</label>
+<label><input type="checkbox" id="end" checked> Dashed ring: moratorium lapsed or ending by Mar 31, 2027</label>
+<label><input type="checkbox" id="grid" checked> 345 kV+ substations and lines</label>
+<label><input type="checkbox" id="lst" checked> For-sale data center listings</label>
+</div>
+<div id="listhead">Top 40 with no named proposal yet</div>
+<div id="list"></div>
+<details class="note"><summary>How the score works</summary>
+<p>Points out of 100: grid access (30, distance to 345 kV+ substations and lines, HIFLD), planning capacity (20, townships and villages relying on outside or county planners score higher), Carlisle/Wortman as planner (10), named-developer proposals within 15 miles (15), a for-sale site marketed for data centers within 5 miles (5), and protection gap (20, no moratorium or ordinance scores highest; a moratorium that has lapsed or ends within 90 days scores nearly as high).</p>
+<p>Check: towns that have already drawn a named developer outscore other towns about 81% of the time on the factors other than protection.</p>
+<p>Moratorium status for 127 towns comes from a Nov 22, 2026 search of the mjbommar/moratorium-data-2026 inventory, datacenterbans.com, Michigan Public, Michigan Advance, Fox17 and Savrn. Many end dates are estimated from the adoption date and term, and some towns may have renewed since. Confirm with the township or city clerk before relying on any status.</p>
+<p>This is a risk index built from public data, not a prediction. A high score is not evidence that any developer, planner or official is doing anything.</p></details>
+</aside>
+<div id="map" role="region" aria-label="Map"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+{
+const $=id=>document.getElementById(id);
+const stops=[[0,[30,58,95]],[35,[59,130,246]],[55,[251,191,36]],[70,[249,115,22]],[85,[220,38,38]]];
+function col(v){for(let i=1;i<stops.length;i++){const[a,ca]=stops[i-1],[b,cb]=stops[i];if(v<=b){const t=Math.max(0,(v-a)/(b-a));return`rgb(${ca.map((c,j)=>Math.round(c+(cb[j]-c)*t)).join(',')})`}}return'rgb(220,38,38)'}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const map=L.map('map',{preferCanvas:true,zoomControl:true,attributionControl:false}).setView([44.3,-85.6],6);
+const R=L.canvas({padding:.5});
+Promise.all([fetch('mi-counties.json').then(r=>r.json()),fetch('weakness-data.json').then(r=>r.json())]).then(([co,D])=>{
+  L.geoJSON(co,{style:{color:'#334155',weight:1,fillColor:'#16213a',fillOpacity:1},interactive:false}).addTo(map);
+  map.fitBounds(L.geoJSON(co).getBounds(),{padding:[10,10]});
+  const gridL=L.layerGroup();
+  D.l.forEach(p=>L.polyline(p,{color:'#60a5fa',weight:1.2,opacity:.45,renderer:R,interactive:false}).addTo(gridL));
+  D.s.forEach(([la,ln,n,kv])=>L.circleMarker([la,ln],{radius:3.5,color:'#93c5fd',weight:1,fillColor:'#0f172a',fillOpacity:1,renderer:R}).bindTooltip(`${esc(n)} substation, ${kv} kV`).addTo(gridL));
+  const lstL=L.layerGroup();
+  D.li.forEach(([la,ln,n,c])=>L.marker([la,ln],{icon:L.divIcon({className:'',html:'<svg width="16" height="16" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" transform="rotate(45 8 8)" fill="#4ade80" stroke="#0f172a" stroke-width="1.5"/></svg>',iconSize:[16,16],iconAnchor:[8,8]})}).bindTooltip(`For sale: ${esc(n)}, ${esc(c)}`).addTo(lstL));
+  const F=['Grid access','Planning capacity','CWA planner','Cluster pressure','Listing nearby','Protection gap'],MX=[30,20,10,15,5,20];
+  const pts=D.m.map(r=>{
+    const [name,county,la,ln,tot,g,c,w,cl,li,pr,prop,st,firm,dsub,exp,rank,note]=r;
+    const ending=/expires within 90 days or lapsed/.test(st)||(exp&&exp<='2027-03-31'&&/Moratorium/.test(st));
+    const vals=[g,c,w,cl,li,pr];
+    const html=`<div class="pop"><h3>${esc(name)}${prop?'<span class="tag">named proposal</span>':''}</h3><div class="meta">${esc(county)} County · rank ${rank} of ${D.m.length}</div>
+<div class="big" style="color:${col(tot)}">${tot}</div>
+${vals.map((v,i)=>`<div class="bar"><span>${F[i]}</span><i><em style="width:${(v/MX[i]*100).toFixed(0)}%"></em></i><span>${v}/${MX[i]}</span></div>`).join('')}
+<div class="st"><b>Protection:</b> ${esc(st)}${exp?`<br><b>Moratorium ends:</b> ${esc(exp)}`:''}<br><b>Planner:</b> ${esc(firm||'Unknown')}<br><b>Nearest 345 kV+ substation:</b> ${dsub} mi</div>${note?`<details style="margin-top:6px;font-size:12px"><summary>Search detail</summary>${esc(note)}</details>`:''}</div>`;
+    const m=L.circleMarker([la,ln],{radius:3+tot/14,color:'#0f172a',weight:.6,fillColor:col(tot),fillOpacity:.9,renderer:R}).bindPopup(html,{maxWidth:300});
+    m.bindTooltip(`${esc(name)}: ${tot}`);
+    const ring=prop?L.circleMarker([la,ln],{radius:5+tot/14,color:'#f8fafc',weight:1.6,fill:false,renderer:R,interactive:false}):null;
+    const dash=ending?L.circleMarker([la,ln],{radius:8+tot/14,color:'#fbbf24',weight:1.6,dashArray:'3 3',fill:false,renderer:R,interactive:false}):null;
+    return{name,county,tot,prop,m,ring,rank,dash};
+  });
+  const pl=L.layerGroup().addTo(map),rl=L.layerGroup().addTo(map);
+  function draw(){
+    const mn=+$('min').value;$('minv').textContent=mn;pl.clearLayers();rl.clearLayers();
+    pts.slice().reverse().forEach(p=>{if(p.tot>=mn){p.m.addTo(pl);if(p.ring&&$('tgt').checked)p.ring.addTo(rl);if(p.dash&&$('end').checked)p.dash.addTo(rl)}});
+  }
+  function tog(id,layer){const f=()=>$(id).checked?layer.addTo(map):map.removeLayer(layer);$(id).addEventListener('change',f);f()}
+  tog('grid',gridL);tog('lst',lstL);
+  $('min').addEventListener('input',draw);$('tgt').addEventListener('change',draw);$('end').addEventListener('change',draw);draw();
+  function go(p){if(p.tot<+$('min').value){$('min').value=Math.floor(p.tot/5)*5;draw()}map.setView(p.m.getLatLng(),10);p.m.openPopup()}
+  function list(items,head){$('listhead').textContent=head;$('list').innerHTML=items.map((p,i)=>`<button class="row" data-i="${pts.indexOf(p)}"><span class="n">${p.rank}</span><span>${esc(p.name)}<small>${esc(p.county)} County${p.prop?' · named proposal':''}</small></span><span class="s" style="color:${col(p.tot)}">${p.tot}</span></button>`).join('')||'<p class="sub" style="padding:8px">No match.</p>'}
+  const top=pts.filter(p=>!p.prop).slice(0,40);
+  $('list').addEventListener('click',e=>{const b=e.target.closest('.row');if(b)go(pts[+b.dataset.i])});
+  $('q').addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();q?list(pts.filter(p=>p.name.toLowerCase().includes(q)).slice(0,40),'Search results'):list(top,'Top 40 with no named proposal yet')});
+  list(top,'Top 40 with no named proposal yet');
+}).catch(()=>{$('list').innerHTML='<p class="sub" style="padding:8px">The map data did not load. Reload the page.</p>'});
+}
+</script>
+</body></html>
