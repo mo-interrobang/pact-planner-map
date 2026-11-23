@@ -22,6 +22,7 @@ h1{font-size:20px;line-height:1.15;margin:0 0 6px}
 .ctrl input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc)}
 input[type=search]{width:100%;font:16px 'Segoe UI',Arial,sans-serif;padding:8px 10px;border-radius:6px;border:1px solid var(--line);background:#0b1326;color:var(--ink)}
 input:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.sel{display:flex;align-items:center;gap:8px;font-size:13px}.sel select{flex:1;font:14px 'Segoe UI',Arial,sans-serif;padding:6px 8px;border-radius:6px;border:1px solid var(--line);background:#0b1326;color:var(--ink);min-height:36px}
 .range{display:flex;align-items:center;gap:8px;font-size:13px}
 .range input{flex:1;accent-color:var(--acc)}
 .range b{width:2.2em;text-align:right}
@@ -59,6 +60,7 @@ input:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
 <div class="ctrl">
 <input type="search" id="q" placeholder="Find a municipality" aria-label="Find a municipality">
 <div class="range"><span>Min score</span><input type="range" id="min" min="0" max="90" step="5" value="40" aria-label="Minimum score"><b id="minv">40</b></div>
+<label class="sel">Show <select id="flt" aria-label="Filter by protection"><option value="all">All towns</option><option value="none">Only towns with no moratorium or ordinance</option><option value="prot">Only towns with a moratorium or ordinance</option></select></label>
 <div class="legend"><span>Low</span><div class="ramp"></div><span>High</span></div>
 <label><input type="checkbox" id="tgt" checked> Ring towns that already have a named proposal</label>
 <label><input type="checkbox" id="end" checked> Dashed ring: moratorium lapsed or ending by Mar 31, 2027</label>
@@ -104,22 +106,25 @@ ${vals.map((v,i)=>`<div class="bar"><span>${F[i]}</span><i><em style="width:${(v
     m.bindTooltip(`${esc(name)}: ${tot}`);
     const ring=prop?L.circleMarker([la,ln],{radius:5+tot/14,color:'#f8fafc',weight:1.6,fill:false,renderer:R,interactive:false}):null;
     const dash=ending?L.circleMarker([la,ln],{radius:8+tot/14,color:'#fbbf24',weight:1.6,dashArray:'3 3',fill:false,renderer:R,interactive:false}):null;
-    return{name,county,tot,prop,m,ring,rank,dash};
+    const unprot=/^(None found|None on file|Case on file, no adopted)/.test(st);
+    return{name,county,tot,prop,m,ring,rank,dash,unprot};
   });
   const pl=L.layerGroup().addTo(map),rl=L.layerGroup().addTo(map);
   function draw(){
-    const mn=+$('min').value;$('minv').textContent=mn;pl.clearLayers();rl.clearLayers();
-    pts.slice().reverse().forEach(p=>{if(p.tot>=mn){p.m.addTo(pl);if(p.ring&&$('tgt').checked)p.ring.addTo(rl);if(p.dash&&$('end').checked)p.dash.addTo(rl)}});
+    const mn=+$('min').value,f=$('flt').value;const ok=p=>f==='all'||(f==='none'?p.unprot:!p.unprot);$('minv').textContent=mn;pl.clearLayers();rl.clearLayers();
+    pts.slice().reverse().forEach(p=>{if(p.tot>=mn&&ok(p)){p.m.addTo(pl);if(p.ring&&$('tgt').checked)p.ring.addTo(rl);if(p.dash&&$('end').checked)p.dash.addTo(rl)}});
   }
   function tog(id,layer){const f=()=>$(id).checked?layer.addTo(map):map.removeLayer(layer);$(id).addEventListener('change',f);f()}
   tog('grid',gridL);tog('lst',lstL);
-  $('min').addEventListener('input',draw);$('tgt').addEventListener('change',draw);$('end').addEventListener('change',draw);draw();
-  function go(p){if(p.tot<+$('min').value){$('min').value=Math.floor(p.tot/5)*5;draw()}map.setView(p.m.getLatLng(),10);p.m.openPopup()}
+  $('min').addEventListener('input',draw);$('tgt').addEventListener('change',draw);$('end').addEventListener('change',draw);$('flt').addEventListener('change',()=>{draw();refresh()});draw();
+  function go(p){if(!okf(p)){$('flt').value='all';refresh()}if(p.tot<+$('min').value){$('min').value=Math.floor(p.tot/5)*5}draw();map.setView(p.m.getLatLng(),10);p.m.openPopup()}
   function list(items,head){$('listhead').textContent=head;$('list').innerHTML=items.map((p,i)=>`<button class="row" data-i="${pts.indexOf(p)}"><span class="n">${p.rank}</span><span>${esc(p.name)}<small>${esc(p.county)} County${p.prop?' · named proposal':''}</small></span><span class="s" style="color:${col(p.tot)}">${p.tot}</span></button>`).join('')||'<p class="sub" style="padding:8px">No match.</p>'}
-  const top=pts.filter(p=>!p.prop).slice(0,40);
+  const okf=p=>{const f=$('flt').value;return f==='all'||(f==='none'?p.unprot:!p.unprot)};
+  const head=()=>({all:'Top 40 with no named proposal yet',none:'Top 40 unprotected, no named proposal yet',prot:'Top 40 protected, no named proposal yet'})[$('flt').value];
+  function refresh(){const q=$('q').value.trim().toLowerCase();q?list(pts.filter(p=>p.name.toLowerCase().includes(q)).slice(0,40),'Search results'):list(pts.filter(p=>!p.prop&&okf(p)).slice(0,40),head())}
   $('list').addEventListener('click',e=>{const b=e.target.closest('.row');if(b)go(pts[+b.dataset.i])});
-  $('q').addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();q?list(pts.filter(p=>p.name.toLowerCase().includes(q)).slice(0,40),'Search results'):list(top,'Top 40 with no named proposal yet')});
-  list(top,'Top 40 with no named proposal yet');
+  $('q').addEventListener('input',refresh);
+  refresh();
 }).catch(()=>{$('list').innerHTML='<p class="sub" style="padding:8px">The map data did not load. Reload the page.</p>'});
 }
 </script>
